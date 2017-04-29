@@ -1,4 +1,3 @@
 *.class
-serverSocket/node_modules/
-
-
+InternetOfThings-box/node_modules/
+InternetOfThings-box/npm-debug.log
