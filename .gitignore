@@ -1,0 +1,4 @@
+*.class
+serverSocket/node_modules/
+
+
