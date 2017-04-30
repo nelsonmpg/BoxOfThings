@@ -13,13 +13,13 @@ window.TerminalView = Backbone.View.extend({
             self.socketTerm.setcommand('echo "`whoami`@`hostname`: [`pwd`] $ "');
         }, {
             history: true,
-            greetings: 'Welcome to the web shell WiDetection',
+            greetings: 'Welcome to the web shell Box',
             prompt: '$ ',
             exit: false
         });
         //self.socketTerm.setcommand("cd /home/linaro/");
         self.socketTerm.setcommand('echo "`whoami`@`hostname`: [`pwd`] $ "');
-        self.terminal.active();
+  //      self.terminal.active();
         $('#cmdterminalID').focus();
     },
     terminalstdout: function (data) {
