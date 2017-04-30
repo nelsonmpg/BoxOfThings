@@ -14,10 +14,10 @@ window.TerminalView = Backbone.View.extend({
         }, {
             history: true,
             greetings: 'Welcome to the web shell WiDetection',
-            prompt: 'WiDetection $ ',
+            prompt: '$ ',
             exit: false
         });
-        self.socketTerm.setcommand("cd /home/linaro/");
+        //self.socketTerm.setcommand("cd /home/linaro/");
         self.socketTerm.setcommand('echo "`whoami`@`hostname`: [`pwd`] $ "');
         self.terminal.active();
         $('#cmdterminalID').focus();
