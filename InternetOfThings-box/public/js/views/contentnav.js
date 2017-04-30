@@ -10,6 +10,7 @@ window.ContentNavView = Backbone.View.extend({
     return this;
   },
   setView: function(viewName) {
+    alert(viewName);
     $(".atualView").text(viewName);    
     $(".mapSite li.active.nome-separador").removeClass("active");
     $(".mapSite").append("<li class='active nome-separador'>"+viewName+"</li>");
