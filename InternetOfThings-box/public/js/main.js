@@ -152,11 +152,10 @@ var Router = Backbone.Router.extend({
     cmdterminal: function () {
         var self = this;
         self.verificaLogin(function () {
+            self.contentnav.setView("Terminal");
             self.terminalcmd = new TerminalView({socket: self.socketclt});
             $('#content').html(self.terminalcmd.render().el);
             self.terminalcmd.init();
-            console.log("Teste");
-            self.contentnav.setView("Terminal");
         });
     },
     // verifica se o login e valido
