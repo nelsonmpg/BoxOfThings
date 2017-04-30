@@ -4,7 +4,6 @@ require('colors');
 var cp = require('child_process');
 var fs = require('fs');
 var ini = require('ini');
-var Worker = require('workerjs');
 
 module.exports.validpathsystem = function (req, res) {
     var pathfile = req.params.path.replace(/§/g, "/").replace("£", ".");

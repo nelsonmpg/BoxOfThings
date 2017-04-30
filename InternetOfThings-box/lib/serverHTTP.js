@@ -7,9 +7,10 @@ var fs = require('fs');
 var socketio = require('socket.io');
 var serverIo = require('./serverio');
 var bodyParser = require('body-parser');
-var r = require('rethinkdb');
+//var r = require('rethinkdb');
 var cp = require('child_process');
 var ini = require('ini');
+var dbUsers = require('./db.js');
 var osquerys = require("./linuxquery");
 
 /**
@@ -55,6 +56,15 @@ ServerHTTP.prototype.start = function () {
   // fornece ao cliente a pagina index.html
   this.app.use(express.static(__dirname + './../public'));
 
+// Envia as configuracoes da base de dados para o script de acesso aos dados dos useres
+  dbUsers.dbData = this.dbData;
+
+// Login do utilizador
+  this.app.post("/login", dbUsers.loginUser);
+
+// devolve a lista de sites existentes no servidor do login
+  //this.app.get("/getsitelist", dbUsers.getsitelist);
+
   // verifica se o caminho para uma diretoria existe
   this.app.get("/validpathsystem/:path", osquerys.validpathsystem);
 
@@ -91,66 +101,18 @@ ServerHTTP.prototype.start = function () {
 // Devolde a ultima atualizacao do git
   this.app.get("/getGitLastUpdate", osquerys.getLastGitUpdate);
   
-// Verifica se no ficheiro de configuracao foi selecionada a opcao de auto start
-  this.checkServerSocketAutoStart();
-
- console.log("____                                                                                          ".green.bold);
- console.log("|  _ \\                                                                                       ".green.bold);
- console.log("| |_) | _____  __                                                                             ".green.bold);
- console.log("|  _ < / _ \\ \\/ /                                                                           ".green.bold);
- console.log("| |_) | (_) >  <                                                                              ".green.bold);
- console.log("|____/ \\___/_/\\_\\                    _      ____   __   _______ _     _                    ".green.bold);
- console.log("|_   _|     | |                     | |    / __ \\ / _| |__   __| |   (_)                     ".green.bold);
- console.log("  | |  _ __ | |_ ___ _ __ _ __   ___| |_  | |  | | |_     | |  | |__  _ _ __   __ _ ___       ".green.bold);
- console.log("  | | | '_ \\| __/ _ \\ '__| '_ \\ / _ \\ __| | |  | |  _|    | |  | '_ \\| | '_ \\ / _` / __|".green.bold);
- console.log(" _| |_| | | | ||  __/ |  | | | |  __/ |_  | |__| | |      | |  | | | | | | | | (_| \\__ \\    ".green.bold);
- console.log("|_____|_| |_|\\__\\___|_|  |_| |_|\\___|\\__|  \\____/|_|      |_|  |_| |_|_|_| |_|\\__, |___/".green.bold);
- console.log("                                                                               __/ |          ".green.bold);
- console.log("                                                                              |___/           ".green.bold);
-
+  console.log("                       .__                          ".green.bold);
+  console.log("                       [__)                         ".green.bold);
+  console.log("                       [__)                         ".green.bold);
+  console.log("._.    ,              ,   .__.._  .___..            ".green.bold);
+  console.log(" | ._ -+- _ ._.._  _ -+-  |  ||,    |  |_ *._  _  __".green.bold);
+  console.log("_|_[ ) | (/,[  [ )(/, |   |__||     |  [ )|[ )(_]_) ".green.bold);
+  console.log("                              \\./             ._|  ".green.bold);
+  console.log("                              /'\\                  ".green.bold);
+  
   console.log('\nServer HTTP Wait %d'.green.bold, self.port);
 };
 
-/**
- * Verifica se no ficheiro de configuracao foi selecionada a opcao de auto start
- * @returns {undefined}
- */
-ServerHTTP.prototype.checkServerSocketAutoStart = function () {
-  var fileconfig = './ConfigSKT.ini';
-  // verifica se o ficheiro de configuracao existe
-  var configexist = checkconfigexist(fileconfig);
-
-  // se o ficheiro existe 
-  if (configexist) {
-    var config = ini.parse(fs.readFileSync(fileconfig, 'utf-8'));
-    if (config.global.autostart) {
-      console.log("cfg - " + config.global.autostart);
-      // vrifica a lista das interfaces wlan
-      cp.exec("sudo ifconfig -a | grep 'wlan' | tr -s ' ' | cut -d' ' -f1,5", function (error, stdout, stderr) {
-        console.log(stdout);
-        var lanw = stdout.toString().split(" ")[0];
-        // verifica se a interface monitor esta criada
-        cp.exec("sudo ifconfig -a | grep 'mon' | tr -s ' ' | cut -d' ' -f1", function (error, stdout, stderr) {
-          console.log(stdout);
-          if (stdout.toString().trim() == "") {
-            cp.exec("sudo airmon-ng start '" + lanw + "' | grep 'monitor' | tr -s ' '| cut -d' ' -f5", function (error, stdout, stderr) {
-              console.log(stdout);
-              if (error !== null) {
-                console.log('exec error: ' + error);
-              }
-            });
-          }
-          // inicia o script de insercao na base de dados
-          cp.fork('./lib/mainSKT.js');
-          console.log("Start Monitor");
-        });
-        if (error !== null) {
-          console.log('exec error: ' + error);
-        }
-      });
-    }
-  }
-};
 
 /**
  * Monitoriza o processo e para receber as informacoes para a criacao do servidor HTTP
