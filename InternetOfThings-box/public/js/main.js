@@ -155,6 +155,7 @@ var Router = Backbone.Router.extend({
             self.terminalcmd = new TerminalView({socket: self.socketclt});
             $('#content').html(self.terminalcmd.render().el);
             self.terminalcmd.init();
+            console.log("Teste");
             self.contentnav.setView("Terminal");
         });
     },
