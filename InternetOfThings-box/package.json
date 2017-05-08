@@ -17,6 +17,7 @@
     "debug": "*",
     "express": "*",
     "ini": "*",
+    "mysql": "^2.13.0",
     "request": "^2.60.0",
     "shell-interval": "*",
     "socket.io": "*",
