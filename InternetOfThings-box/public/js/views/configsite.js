@@ -46,7 +46,6 @@ window.ConfigSiteView = Backbone.View.extend({
               error_launch(json.message);
             }, {}
     );
-  },  
   },
   render: function () {
     var self = this;
