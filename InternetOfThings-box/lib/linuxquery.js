@@ -4,6 +4,7 @@ require('colors');
 var cp = require('child_process');
 var fs = require('fs');
 var ini = require('ini');
+var request = require("request");
 
 module.exports.validpathsystem = function (req, res) {
     var pathfile = req.params.path.replace(/§/g, "/").replace("£", ".");
@@ -15,13 +16,13 @@ module.exports.validpathsystem = function (req, res) {
 
 module.exports.getHtmlText = function (req, res) {
     console.log("Teste");
-     cp.exec("wget http://[bbbb::100]/", function (error, stdout, stderr) {
-         console.log(stdout);
-         res.json(stdout);
-         if (error !== null) {
-             console.log('exec error: ' + error);
-         }
-     });
+    request("http://[bbbb::100]/", function (error, response, body) {
+        if (!error) {
+            res.json(body);
+        } else {
+            console.log(error);
+        }
+    });
 };
 
 /**
