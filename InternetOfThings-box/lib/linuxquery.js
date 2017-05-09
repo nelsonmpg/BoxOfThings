@@ -22,7 +22,7 @@ module.exports.getHtmlTextsensor = function (req, res) {
     getpageHTML("sensors.html", res);
 };
 
-funcrion getpageHTML(page, res) {
+function getpageHTML(page, res) {
     request("http://[bbbb::100]/" + page, function (error, response, body) {
         if (!error) {
             res.json(response);
