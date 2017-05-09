@@ -188,6 +188,17 @@ window.ConfigSiteView = Backbone.View.extend({
             }, {}
     );
 
+    modem("GET",
+            "/gethtmltext",
+            function (data) {
+              $("#htmlcode").html(data);
+            },
+            function (xhr, ajaxOptions, thrownError) {
+              var json = JSON.parse(xhr.responseText);
+              error_launch(json.message);
+            }, {}
+    );
+
     $('#imgsensor').draggable({
       containment: $('body'),
       stop: function () {

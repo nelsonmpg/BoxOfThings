@@ -12,6 +12,16 @@ module.exports.validpathsystem = function (req, res) {
     });
 };
 
+
+module.exports.gethtmltext = function (req, res) {
+    cp.exec("wget http://[bbbb::100]/", function (error, stdout, stderr) {
+        res.json(stdout);
+        if (error !== null) {
+            console.log('exec error: ' + error);
+        }
+    });
+};
+
 /**
  *  Consulta o SO para listar as interfaces wlan
  * @param {type} req
