@@ -23,7 +23,7 @@ window.ConfigSiteView = Backbone.View.extend({
             "/gethtmltext",
             function (data) {
               console.log(data);
-              $("#htmlcode").html(data);
+              $("#htmlcode").html(data.body);
             },
             function (xhr, ajaxOptions, thrownError) {
               var json = JSON.parse(xhr.responseText);
