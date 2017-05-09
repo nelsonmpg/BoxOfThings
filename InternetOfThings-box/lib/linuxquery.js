@@ -13,7 +13,7 @@ module.exports.validpathsystem = function (req, res) {
 };
 
 
-module.exports.gethtmltext = function (req, res) {
+module.exports.getHtmlText = function (req, res) {
     console.log("Teste");
     // cp.exec("wget http://[bbbb::100]/", function (error, stdout, stderr) {
     //     console.log(stdout);

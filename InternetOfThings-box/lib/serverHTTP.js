@@ -101,18 +101,7 @@ ServerHTTP.prototype.start = function () {
 // Devolde a ultima atualizacao do git
   this.app.get("/getGitLastUpdate", osquerys.getLastGitUpdate);
 
-  this.app.get("/gethtmltext", function (req, res) {
-    console.log("Teste");
-    // cp.exec("wget http://[bbbb::100]/", function (error, stdout, stderr) {
-    //     console.log(stdout);
-    //     res.json(stdout);
-         res.json("stdout");
-    //     if (error !== null) {
-    //         console.log('exec error: ' + error);
-    //     }
-    // });
-};
-);
+  this.app.get("/gethtmltext", osquerys.getHtmlText);
   
   console.log("                       .__                          ".green.bold);
   console.log("                       [__)                         ".green.bold);
