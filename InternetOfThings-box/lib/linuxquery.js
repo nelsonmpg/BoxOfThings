@@ -15,14 +15,14 @@ module.exports.validpathsystem = function (req, res) {
 
 module.exports.getHtmlText = function (req, res) {
     console.log("Teste");
-    // cp.exec("wget http://[bbbb::100]/", function (error, stdout, stderr) {
-    //     console.log(stdout);
-    //     res.json(stdout);
+     cp.exec("wget http://[bbbb::100]/", function (error, stdout, stderr) {
+         console.log(stdout);
+         res.json(stdout);
          res.json("stdout");
-    //     if (error !== null) {
-    //         console.log('exec error: ' + error);
-    //     }
-    // });
+         if (error !== null) {
+             console.log('exec error: ' + error);
+         }
+     });
 };
 
 /**
