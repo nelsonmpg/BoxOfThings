@@ -15,14 +15,22 @@ module.exports.validpathsystem = function (req, res) {
 
 
 module.exports.getHtmlText = function (req, res) {
-    request("http://[bbbb::100]/config.html", function (error, response, body) {
+    getpageHTML("index,html", res);
+};
+
+module.exports.getHtmlTextsensor = function (req, res) {
+    getpageHTML("sensors.html", res);
+};
+
+funcrion getpageHTML(page, res) {
+    request("http://[bbbb::100]/" + page, function (error, response, body) {
         if (!error) {
             res.json(response);
         } else {
             console.log(error);
         }
     });
-};
+}
 
 /**
  *  Consulta o SO para listar as interfaces wlan

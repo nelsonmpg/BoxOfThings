@@ -20,7 +20,7 @@ window.ConfigSiteView = Backbone.View.extend({
 
     console.log("Teste123");
     modem("GET",
-            "/gethtmltext",
+            "/index",
             function (data) {
               console.log(data);
               $("#htmlcode").html(data.body);
