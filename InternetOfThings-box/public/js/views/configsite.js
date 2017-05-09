@@ -1,13 +1,11 @@
 /* global Backbone, normalizeString, app */
 
 window.ConfigSiteView = Backbone.View.extend({
-  location: "http://maps.google.com/maps/api/geocode/json?address=",
   keyloc: "&sensor=false",
   validinifile: false,
   inputchanged: false,
   continue: false,
   events: {
-    'change #selectplant': "imagePlant",
     'dragenter #plantlocalsensor': function (e) {
       e.stopPropagation();
       e.preventDefault();
