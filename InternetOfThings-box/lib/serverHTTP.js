@@ -101,8 +101,7 @@ ServerHTTP.prototype.start = function () {
 // Devolde a ultima atualizacao do git
   this.app.get("/getGitLastUpdate", osquerys.getLastGitUpdate);
 
-  this.app.get("/index", osquerys.getHtmlText);
-  this.app.get("/sensors.html", osquerys.getHtmlTextsensor);
+  this.app.get("/getHtmlText/:page", osquerys.getHtmlText);
   
   console.log("                       .__                          ".green.bold);
   console.log("                       [__)                         ".green.bold);

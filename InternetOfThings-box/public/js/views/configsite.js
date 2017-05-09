@@ -5,7 +5,8 @@ window.ConfigSiteView = Backbone.View.extend({
   //validinifile: false,
   //inputchanged: false,
   //continue: false,
-  events: {    
+  events: {  
+  "click .gm a": "setHtmlPage"  
   },
   initialize: function () {
   },  
@@ -18,9 +19,8 @@ window.ConfigSiteView = Backbone.View.extend({
     //showInfoMsg(false, '.my-modal');
     $.AdminLTE.boxWidget.activate();
 
-    console.log("Teste123");
     modem("GET",
-            "/index",
+            "/getHtmlText/index.html",
             function (data) {
               console.log(data);
               $("#htmlcode").html(data.body);
@@ -31,6 +31,23 @@ window.ConfigSiteView = Backbone.View.extend({
             }, {}
     );
   },  
+  setHtmlPage: function(e) {
+    e.preventDefault();
+    var self = this;    
+
+    modem("GET",
+            "/getHtmlText/" + $(e.target).text(),
+            function (data) {
+              console.log(data);
+              $("#htmlcode").html(data.body);
+            },
+            function (xhr, ajaxOptions, thrownError) {
+              var json = JSON.parse(xhr.responseText);
+              error_launch(json.message);
+            }, {}
+    );
+  },  
+  },
   render: function () {
     var self = this;
     $(this.el).html(this.template());

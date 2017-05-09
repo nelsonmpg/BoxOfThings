@@ -3,14 +3,13 @@
 var cp = require('child_process');
 var http = require('http');
 var request = require("request");
-var r = require('rethinkdb');
 var fs = require('fs');
 var ini = require('ini');
 var crypto = require('crypto');
 //var url = "http://web.stanford.edu/dept/its/projects/desktop/snsr/nmap-mac-prefixes.txt";
 //var url = "http://sid.ethz.ch/debian/bugs/oui/arp-scan-1.6/ieee-oui.txt";
 //var url = "http://uci.narod.ru/mac.html";
-var url = "https://code.wireshark.org/review/gitweb?p=wireshark.git;a=blob_plain;f=manuf";
+// var url = "https://code.wireshark.org/review/gitweb?p=wireshark.git;a=blob_plain;f=manuf";
 
 /**
  * Servidor que envia as informacoes para a base de dados
