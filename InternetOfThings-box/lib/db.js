@@ -18,13 +18,15 @@ var self = this;
  * @returns {undefined}
  */
 module.exports.loginUser = function (req, res) {
-  // // Recebendo os parâmetros de um query string
-  //   var id = req.params.id;
-  //   // Fazendo uma consulta no banco de dados
-  //   var params = {usuario : {id: id}};
-  //   collectionUser.find(params).toArray(function(err, result){
-  //      res.render('ver', { usuario : result.usuario });
-  //   });
+  console.log(req.params);
+  // Recebendo os parâmetros de um query string
+    var user = req.params.user;
+    // Fazendo uma consulta no banco de dados
+    var params = {usuario : {user: user}};
+    collectionUser.find(params).toArray(function(err, result){
+      console.log(result);
+       //es.render('ver', { usuario : result.usuario });
+    });
 
  if (req.body.email === "admin" && req.body.pass === "db69fc039dcbd2962cb4d28f5891aae1") {
   res.json("userok");
