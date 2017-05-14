@@ -23,7 +23,7 @@ module.exports.loginUser = function (req, res) {
 
   var params = {email: req.body.email, pass: req.body.pass};
   collectionUser.find(params).toArray(function(err, result){
-    console.log(result);
+    console.log(result._id);
        //es.render('ver', { usuario : result.usuario });
   });
 
