@@ -25,14 +25,14 @@ module.exports.loginUser = function (req, res) {
     console.log(result[0].email);
     console.log(result[0].pass);
     console.log(err);
+      
+   if (req.body.email === "admin@admin.pt" && req.body.pass === "db69fc039dcbd2962cb4d28f5891aae1") {
+    res.json(result);
+   }
        //es.render('ver', { usuario : result.usuario });
   });
-
- if (req.body.email === "admin@admin.pt" && req.body.pass === "db69fc039dcbd2962cb4d28f5891aae1") {
-  res.json("userok");
- }
-
 };
+
 
 // module.exports.insertUser = function (req, res) {
 //   // Recebendo os parâmetros da requisição
