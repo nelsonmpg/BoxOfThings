@@ -37,9 +37,10 @@ module.exports.loginUser = function (req, res) {
 
 module.exports.insertUser = function (req, res) {
   // Recebendo os parâmetros da requisição
-  var user ={ 
-    req.body.email,
-    req.body.pass
+
+  var user = { 
+    email : req.body.email,
+    pass : req.body.pass
   }
   // Persistindo o novo usuário
   collectionUser.insert({user : user});
