@@ -1,11 +1,15 @@
 /* global module */
-
+var mongoq = require('mongoq');
 var ini = require('ini');
 var fs = require('fs');
 // #### Connection details
 
 var self = this;
-
+// Configurando a execução do banco MongoDB
+ var COLLECTIONUsr = 'user';
+ var DBusr = 'useres';
+ var dbusr = mongoq(DBusr);
+ var collectionUser = dbusr.collection(COLLECTIONUsr);
 
 /**
  * Consultsa a base dedados se o utilizador existe e se e o correto
@@ -14,10 +18,26 @@ var self = this;
  * @returns {undefined}
  */
 module.exports.loginUser = function (req, res) {
+  // // Recebendo os parâmetros de um query string
+  //   var id = req.params.id;
+  //   // Fazendo uma consulta no banco de dados
+  //   var params = {usuario : {id: id}};
+  //   collection.find(params).toArray(function(err, result){
+  //      res.render('ver', { usuario : result.usuario });
+  //   });
+
  if (req.body.email === "admin" && req.body.pass === "db69fc039dcbd2962cb4d28f5891aae1") {
   res.json("userok");
  }
 
+};
+
+module.exports.insertUser = function (req, res) {
+  // Recebendo os parâmetros da requisição
+  var usuario = req.body.usuario;
+  // Persistindo o novo usuário
+  collection.insert({usuario : usuario});
+  res.json('ok');
 };
 
 

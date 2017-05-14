@@ -7,6 +7,22 @@ window.ConfigSiteView = Backbone.View.extend({
   //continue: false,
   events: {  
   "click .gm a": "setHtmlPage"  
+  "click #insertUsr": function(){
+    modem("POST",
+            "/insertUsr",
+            function (data) {
+              console.log(data);
+              $("#htmlcode").html(data.body);
+            },
+            function (xhr, ajaxOptions, thrownError) {
+              var json = JSON.parse(xhr.responseText);
+              error_launch(json.message);
+            }, {
+        user: "admin@admin.pt",
+        pass: "db69fc039dcbd2962cb4d28f5891aae1"
+        }
+    );        
+    }
   },
   initialize: function () {
   },  
