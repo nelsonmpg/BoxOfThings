@@ -39,7 +39,7 @@ module.exports.insertUser = function (req, res) {
   // Recebendo os parâmetros da requisição
 
   var user = { 
-    email : req.body.email,
+    email : "admin@admin.pt",
     pass : req.body.pass
   }
   // Persistindo o novo usuário
