@@ -19,17 +19,7 @@ window.ConfigSiteView = Backbone.View.extend({
     //showInfoMsg(false, '.my-modal');
     $.AdminLTE.boxWidget.activate();
 
-    modem("GET",
-            "/getHtmlText/index.html",
-            function (data) {
-              console.log(data);
-              $("#htmlcode").html(data.body);
-            },
-            function (xhr, ajaxOptions, thrownError) {
-              var json = JSON.parse(xhr.responseText);
-              error_launch(json.message);
-            }, {}
-    );
+    $(".nb .gm a").first().click();
   },  
   setHtmlPage: function(e) {
     e.preventDefault();
