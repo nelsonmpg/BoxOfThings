@@ -24,6 +24,7 @@ window.LoginView = Backbone.View.extend({
 
     modem('POST', "/login",
             function (data) {
+              console.log(data);
               if (data.length > 0) {
                 self.loginuser(data);
               } else {
