@@ -52,7 +52,7 @@ window.ConfigSiteView = Backbone.View.extend({
     var self = this;    
 
     modem("GET",
-            "/getHtmlText/" + $(e.target).text(),
+            "/getHtmlText/" + $(e.target).attr('href'),
             function (data) {
               $("#htmlcode").html(data.body);
             },

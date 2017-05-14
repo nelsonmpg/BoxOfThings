@@ -18,8 +18,8 @@ var self = this;
  * @returns {undefined}
  */
 module.exports.loginUser = function (req, res) {
-  console.log(req.body.email);
-  console.log(req.body.pass);
+  console.log("email - " + req.body.email);
+  console.log("pass - " + req.body.pass);
   // Recebendo os parâmetros de um query string
     var email = req.body.email;
     // Fazendo uma consulta no banco de dados
