@@ -26,7 +26,7 @@ module.exports.loginUser = function (req, res, next) {
     if (!result[0]){ 
       return next(new Error('failed to find user')); 
     }        
-    res.json(result); 
+    res.json("userOk"); 
 
    //if (req.body.email === "admin@admin.pt" && req.body.pass === "db69fc039dcbd2962cb4d28f5891aae1") {
     
