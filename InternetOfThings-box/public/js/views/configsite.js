@@ -54,7 +54,7 @@ window.ConfigSiteView = Backbone.View.extend({
     modem("GET",
             "/getHtmlText/" + $(e.target).text(),
             function (data) {
-              $("#htmlcode").html(data);
+              $("#htmlcode").html(data.body);
             },
             function (xhr, ajaxOptions, thrownError) {
               var json = JSON.parse(xhr.responseText);

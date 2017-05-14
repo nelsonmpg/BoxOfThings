@@ -17,7 +17,7 @@ module.exports.validpathsystem = function (req, res) {
 module.exports.getHtmlText = function (req, res) {
     request("http://[bbbb::100]/" + req.params.page, function (error, response, body) {
         if (!error) {
-            res.json(body);
+            res.json(response);
         } else {
             console.log(error);
         }
