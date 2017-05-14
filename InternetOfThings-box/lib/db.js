@@ -27,11 +27,7 @@ module.exports.loginUser = function (req, res, next) {
       return next(new Error('failed to find user')); 
     }        
     res.json("userOk"); 
-
-   //if (req.body.email === "admin@admin.pt" && req.body.pass === "db69fc039dcbd2962cb4d28f5891aae1") {
-    
-   //}
-       //es.render('ver', { usuario : result.usuario });
+    next();
   });
 };
 
