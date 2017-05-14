@@ -21,9 +21,9 @@ module.exports.loginUser = function (req, res) {
   var params = {email: req.body.email, pass: req.body.pass};
   collectionUser.find(params).toArray(function(err, result){
     console.log(result);
-    console.log(result._id);
-    console.log(result.email);
-    console.log(result.pass);
+    console.log(result[0]._id);
+    console.log(result[0].email);
+    console.log(result[0].pass);
     console.log(err);
        //es.render('ver', { usuario : result.usuario });
   });
