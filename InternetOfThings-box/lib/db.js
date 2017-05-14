@@ -20,32 +20,30 @@ var self = this;
 module.exports.loginUser = function (req, res) {
   console.log("email - " + req.body.email);
   console.log("pass - " + req.body.pass);
-  // Recebendo os parâmetros de um query string
-    var email = req.body.email;
-    // Fazendo uma consulta no banco de dados
-    var params = {email: email};
-    collectionUser.find(params).toArray(function(err, result){
-      console.log(result);
-       //es.render('ver', { usuario : result.usuario });
-    });
 
- if (req.body.email === "admin" && req.body.pass === "db69fc039dcbd2962cb4d28f5891aae1") {
+  var params = {email: req.body.email, pass: req.body.pass};
+  collectionUser.find(params).toArray(function(err, result){
+    console.log(result);
+       //es.render('ver', { usuario : result.usuario });
+  });
+
+ if (req.body.email === "admin@admin.pt" && req.body.pass === "db69fc039dcbd2962cb4d28f5891aae1") {
   res.json("userok");
  }
 
 };
 
-module.exports.insertUser = function (req, res) {
-  // Recebendo os parâmetros da requisição
+// module.exports.insertUser = function (req, res) {
+//   // Recebendo os parâmetros da requisição
 
-  var user = { 
-    email : "admin@admin.pt",
-    pass : req.body.pass
-  }
-  // Persistindo o novo usuário
-  collectionUser.insert(user);
-  res.json('ok');
-};
+//   var user = { 
+//     email : "admin@admin.pt",
+//     pass : req.body.pass
+//   }
+//   // Persistindo o novo usuário
+//   collectionUser.insert(user);
+//   res.json('ok');
+// };
 
 
 // Create Base64 Object
