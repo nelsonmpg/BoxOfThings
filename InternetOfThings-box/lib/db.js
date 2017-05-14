@@ -18,12 +18,13 @@ var self = this;
  * @returns {undefined}
  */
 module.exports.loginUser = function (req, res) {
-  console.log("email - " + req.body.email);
-  console.log("pass - " + req.body.pass);
-
   var params = {email: req.body.email, pass: req.body.pass};
   collectionUser.find(params).toArray(function(err, result){
+    console.log(result);
     console.log(result._id);
+    console.log(result.email);
+    console.log(result.pass);
+    console.log(err);
        //es.render('ver', { usuario : result.usuario });
   });
 
