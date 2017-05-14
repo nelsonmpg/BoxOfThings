@@ -6,7 +6,7 @@ window.ConfigSiteView = Backbone.View.extend({
   //inputchanged: false,
   //continue: false,
   events: {  
-  "click .gm a": "setHtmlPage"  
+  "click .gm a": "setHtmlPage",  
   "click #insertUsr": function(){
     modem("POST",
             "/insertUsr",
