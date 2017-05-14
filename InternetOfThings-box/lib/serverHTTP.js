@@ -61,8 +61,8 @@ ServerHTTP.prototype.start = function () {
 
 // Login do utilizador
   this.app.post("/login", dbUsers.loginUser);
-  
-  this.app.post("/insertUsr", dbUsers.insertUser);
+
+  //this.app.post("/insertUsr", dbUsers.insertUser);
 
 // devolve a lista de sites existentes no servidor do login
   //this.app.get("/getsitelist", dbUsers.getsitelist);
