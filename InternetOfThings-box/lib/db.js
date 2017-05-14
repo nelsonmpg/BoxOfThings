@@ -17,18 +17,20 @@ var self = this;
  * @param {type} res
  * @returns {undefined}
  */
-module.exports.loginUser = function (req, res) {
+module.exports.loginUser = function (req, res, next) {
   var params = {email: req.body.email, pass: req.body.pass};
   collectionUser.find(params).toArray(function(err, result){
-    console.log(result);
-    console.log(result[0]._id);
-    console.log(result[0].email);
-    console.log(result[0].pass);
-    console.log(err);
-      
-   if (req.body.email === "admin@admin.pt" && req.body.pass === "db69fc039dcbd2962cb4d28f5891aae1") {
-    res.json(result);
-   }
+    if (err) {
+      return next(err);
+    } 
+    if (!result[0]){ 
+      return next(new Error('failed to find user')); 
+    }        
+    res.json(result); 
+
+   //if (req.body.email === "admin@admin.pt" && req.body.pass === "db69fc039dcbd2962cb4d28f5891aae1") {
+    
+   //}
        //es.render('ver', { usuario : result.usuario });
   });
 };
