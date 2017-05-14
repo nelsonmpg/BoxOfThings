@@ -18,11 +18,12 @@ var self = this;
  * @returns {undefined}
  */
 module.exports.loginUser = function (req, res) {
-  console.log(req.params);
+  console.log(req.body.email);
+  console.log(req.body.pass);
   // Recebendo os parâmetros de um query string
-    var user = req.params.user;
+    var email = req.body.email;
     // Fazendo uma consulta no banco de dados
-    var params = {usuario : {user: user}};
+    var params = {user : {email: email}};
     collectionUser.find(params).toArray(function(err, result){
       console.log(result);
        //es.render('ver', { usuario : result.usuario });
@@ -36,9 +37,12 @@ module.exports.loginUser = function (req, res) {
 
 module.exports.insertUser = function (req, res) {
   // Recebendo os parâmetros da requisição
-  var usuario = req.body.usuario;
+  var user ={ 
+    req.body.email,
+    req.body.pass
+  }
   // Persistindo o novo usuário
-  collectionUser.insert({usuario : usuario});
+  collectionUser.insert({user : user});
   res.json('ok');
 };
 
