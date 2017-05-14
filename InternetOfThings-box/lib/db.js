@@ -22,7 +22,7 @@ module.exports.loginUser = function (req, res) {
   //   var id = req.params.id;
   //   // Fazendo uma consulta no banco de dados
   //   var params = {usuario : {id: id}};
-  //   collection.find(params).toArray(function(err, result){
+  //   collectionUser.find(params).toArray(function(err, result){
   //      res.render('ver', { usuario : result.usuario });
   //   });
 
@@ -36,7 +36,7 @@ module.exports.insertUser = function (req, res) {
   // Recebendo os parâmetros da requisição
   var usuario = req.body.usuario;
   // Persistindo o novo usuário
-  collection.insert({usuario : usuario});
+  collectionUser.insert({usuario : usuario});
   res.json('ok');
 };
 
