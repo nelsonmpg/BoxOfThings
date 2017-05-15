@@ -32,17 +32,17 @@ module.exports.loginUser = function (req, res, next) {
 };
 
 
-module.exports.insertUser = function (req, res) {
-  // Recebendo os parâmetros da requisição
+// module.exports.insertUser = function (req, res) {
+//   // Recebendo os parâmetros da requisição
 
-  var user = { 
-    email : "admin@admin.pt",
-    pass : req.body.pass
-  }
-  // Persistindo o novo usuário
-  collectionUser.insert(user);
-  res.json('ok');
-};
+//   var user = { 
+//     email : "admin@admin.pt",
+//     pass : req.body.pass
+//   }
+//   // Persistindo o novo usuário
+//   collectionUser.insert(user);
+//   res.json('ok');
+// };
 
 
 // Create Base64 Object

@@ -6,22 +6,22 @@ window.ConfigSiteView = Backbone.View.extend({
   //inputchanged: false,
   //continue: false,
   events: {  
-    "click .gm a": "setHtmlPage",
-    "click #adduser": function(){
-      modem("POST",
-            "/insertUsr",
-            function (data) {
-              $("#htmlcode").html(data.body);
-            },
-            function (xhr, ajaxOptions, thrownError) {
-              var json = JSON.parse(xhr.responseText);
-              error_launch(json.message);
-            }, { 
-                email : "admin@admin.pt",
-                pass : stringToMd5(btoa("admin"))
-              }
-    );
-    }
+    "click .gm a": "setHtmlPage"//,
+    // "click #adduser": function(){
+    //   modem("POST",
+    //         "/insertUsr",
+    //         function (data) {
+    //           $("#htmlcode").html(data.body);
+    //         },
+    //         function (xhr, ajaxOptions, thrownError) {
+    //           var json = JSON.parse(xhr.responseText);
+    //           error_launch(json.message);
+    //         }, { 
+    //             email : "admin@admin.pt",
+    //             pass : stringToMd5(btoa("admin"))
+    //           }
+    // );
+    // }
   },
   initialize: function () {
   },  
