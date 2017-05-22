@@ -51,7 +51,7 @@ window.ConfigSiteView = Backbone.View.extend({
     var endereco = $("#endereco").val(),
     folder = $("#folder").val(),
     resource = $("#resource").val(),
-    params = ($("#params").val() === "" ? "''" : $("#params").val()),
+    params = $("#params").val(),
     payload = $("#payload").val(),
     mMethod = $("#mMethod").val(),
     mObserve = $("#mObserve").val(),
