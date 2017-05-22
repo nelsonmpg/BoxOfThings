@@ -7,7 +7,7 @@ window.ConfigSiteView = Backbone.View.extend({
   //continue: false,
   events: {  
     "click .gm a": "setHtmlPage",
-    "click button": "getDataSensores"/*,
+    "click button": "getDataSensores",
     "click #adduser": function(){
       modem("POST",
             "/insertUsr",
@@ -22,7 +22,7 @@ window.ConfigSiteView = Backbone.View.extend({
                 pass : stringToMd5(btoa("admin"))
               }
     );
-    }*/
+    }/**/
   },
   initialize: function () {
   },  

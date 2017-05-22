@@ -74,12 +74,12 @@ var gatSensorDaata = function(endereco, folder, resource, params, payload, mMeth
     var requestString = 'coap://' + endereco + ':5683/' + folder + '/' + resource + params;
     console.log(requestString);
 
-    Sensor.insertData({
+    /*Sensor.insertData({
         name:"a", 
         ip: "asd.asdf.asf.asdf", 
         value: "12", 
         date: new Date()
-    })
+    })*/
 
     url = URL.parse(requestString);
     url.method = mMethod;
