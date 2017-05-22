@@ -1,15 +1,22 @@
 /* global module */
-var mongoq = require('mongoq');
-var ini = require('ini');
-var fs = require('fs');
-// #### Connection details
+var User,
+  ini = require('ini'),
+  fs = require('fs'),
+  md5 = require('md5'),
+  btoa = require('btoa');
 
 var self = this;
-// Configurando a execução do banco MongoDB
- var COLLECTIONUsr = 'user';
- var DBusr = 'useres';
- var dbusr = mongoq(DBusr);
- var collectionUser = dbusr.collection(COLLECTIONUsr);
+
+module.exports.configDB = function(cfg){
+  User = require('./models/modelObj').User;
+  this.config = cfg;
+  User = new User(cfg);
+
+  User.InsertUser({
+    email : self.config.user,
+    pass : md5(btoa(self.config.pass))
+  }, null, null);
+};
 
 /**
  * Consultsa a base dedados se o utilizador existe e se e o correto
@@ -18,31 +25,18 @@ var self = this;
  * @returns {undefined}
  */
 module.exports.loginUser = function (req, res, next) {
-  var params = {email: req.body.email, pass: req.body.pass};
-  collectionUser.find(params).toArray(function(err, result){
-    if (err) {
-      return next(err);
-    } 
-    if (!result[0]){ 
-      return next(new Error('failed to find user')); 
-    }        
-    res.json("userOk"); 
-    next();
-  });
+   var params = {email: req.body.email, pass: req.body.pass};
+  User.loginUser(params, res, next);
 };
 
 
-// module.exports.insertUser = function (req, res) {
-//   // Recebendo os parâmetros da requisição
+module.exports.insertUser = function (req, res, next) {
+  User.InsertUser({
+    email : "admin@admin.pt",
+    pass : req.body.pass
+  }, res, next);
 
-//   var user = { 
-//     email : "admin@admin.pt",
-//     pass : req.body.pass
-//   }
-//   // Persistindo o novo usuário
-//   collectionUser.insert(user);
-//   res.json('ok');
-// };
+};
 
 
 // Create Base64 Object

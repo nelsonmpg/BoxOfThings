@@ -6,13 +6,6 @@ var fs = require('fs');
 var ini = require('ini');
 var request = require("request");
 
-module.exports.validpathsystem = function (req, res) {
-    var pathfile = req.params.path.replace(/§/g, "/").replace("£", ".");
-    fs.exists(pathfile, function (exists) {
-        res.send(exists);
-    });
-};
-
 
 module.exports.getHtmlText = function (req, res) {
     request("http://[bbbb::100]/" + req.params.page, function (error, response, body) {
@@ -20,66 +13,6 @@ module.exports.getHtmlText = function (req, res) {
             res.json(response);
         } else {
             console.log(error);
-        }
-    });
-};
-
-
-/**
- *  Consulta o SO para listar as interfaces wlan
- * @param {type} req
- * @param {type} res
- * @returns {undefined}
- */
-module.exports.getdispwlan = function (req, res) {
-    cp.exec("sudo ifconfig -a | grep 'wlan' | tr -s ' ' | cut -d' ' -f1,5", function (error, stdout, stderr) {
-        res.json(stdout);
-        if (error !== null) {
-            console.log('exec error: ' + error);
-        }
-    });
-};
-
-/**
- * Consulta o SO para saber se existe a interface monitor criada
- * @param {type} req
- * @param {type} res
- * @returns {undefined}
- */
-module.exports.getdispmon = function (req, res) {
-    cp.exec("sudo ifconfig -a | grep 'mon' | tr -s ' ' | cut -d' ' -f1", function (error, stdout, stderr) {
-        res.json(stdout);
-        if (error !== null) {
-            console.log('exec error: ' + error);
-        }
-    });
-};
-
-/**
- * Consulta o SO para saber se a interface monitor se encontra em funcionamento
- * @param {type} req
- * @param {type} res
- * @returns {undefined}
- */
-module.exports.checkmonitorstart = function (req, res) {
-    cp.exec("ps aux | grep 'air' | grep -v 'color' | grep -v 'grep'", function (error, stdout, stderr) {
-        res.json(stdout);
-    });
-};
-
-/**
- * Constroi a interface monitor
- * @param {type} req
- * @param {type} res
- * @returns {undefined}
- */
-module.exports.createmonitor = function (req, res) {
-    console.log("Create Monitor");
-    // para executar este comando e necessario adicionar previlegios de root ao utilizador
-    cp.exec("sudo airmon-ng start '" + req.body.wifi + "' | grep 'monitor' | tr -s ' '| cut -d' ' -f9", function (error, stdout, stderr) {
-        res.json(stdout);
-        if (error !== null) {
-            console.log('exec error: ' + error);
         }
     });
 };
@@ -151,66 +84,6 @@ module.exports.savesettings = function (req, res) {
             res.json(err);
         }
         res.json("save");
-    });
-};
-
-/**
- * Inicia a interface monitor
- * @param {type} req
- * @param {type} res
- * @returns {undefined}
- */
-module.exports.startmonitor = function (req, res) {
-    cp.fork('./lib/mainSKT.js');
-    res.json("Start Monitor");
-    console.log("Start Monitor");
-};
-
-/**
- * Para a interface monitor
- * @param {type} req
- * @param {type} res
- * @returns {undefined}
- */
-module.exports.stoptmonitor = function (req, res) {
-    console.log("Stop monitor");
-    cp.exec("sudo ./stopAir.sh", function (error, stdout, stderr) {
-        res.json(stdout);
-        if (error !== null) {
-            console.log('exec error: ' + error);
-        }
-    });
-};
-
-/**
- * Reinicia o SO
- * @param {type} req
- * @param {type} res
- * @returns {undefined}
- */
-module.exports.restartsystem = function (req, res) {
-    res.json("reboot");
-    console.log("System Reboot");
-    cp.exec("sudo reboot", function (error, stdout, stderr) {
-        if (error !== null) {
-            console.log('exec error: ' + error);
-        }
-    });
-};
-
-/**
- * Desliga o SO
- * @param {type} req
- * @param {type} res
- * @returns {undefined}
- */
-module.exports.poweroffsystem = function (req, res) {
-    res.json("PowerOff");
-    console.log("System Poweroff");
-    cp.exec("sudo poweroff", function (error, stdout, stderr) {
-        if (error !== null) {
-            console.log('exec error: ' + error);
-        }
     });
 };
 

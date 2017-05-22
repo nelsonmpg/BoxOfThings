@@ -12,15 +12,20 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "*",
+    "btoa": "^1.1.2",
+    "coap": "^0.21.0",
     "colors": "*",
     "crypto": "0.0.3",
     "debug": "*",
     "express": "*",
     "ini": "*",
+    "md5": "^2.2.1",
+    "mongoose": "^4.9.9",
     "mongoq": "^0.2.5",
-    "request": "^2.60.0",
+    "request": "^2.81.0",
     "shell-interval": "*",
     "socket.io": "*",
+    "threads": "^0.7.3",
     "underscore": "*"
   }
 }

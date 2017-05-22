@@ -18,35 +18,35 @@ var Router = Backbone.Router.extend({
     configform: undefined,
     loginform: undefined,
     about: undefined,
-    socketclt: null,
+//    socketclt: null,
     terminalcmd: undefined,
     initialize: function () {
         var self = this;
-        self.appEventBus = _.extend({}, Backbone.Events);
-        self.socketclt = new socketClient({vent: self.appEventBus});
+        // self.appEventBus = _.extend({}, Backbone.Events);
+        // self.socketclt = new socketClient({vent: self.appEventBus});
 
-        // update dos graficos em realtime
-        self.appEventBus.on("updateRealTimeChart", function (data, local, site) {
-            console.log("Event");
-        });
-        self.appEventBus.on('stdout', function (data) {
-            self.terminalcmd.terminalstdout(data);
-        });
-        self.appEventBus.on('stderr', function (data) {
-            self.terminalcmd.terminalstderr(data);
-        });
-        self.appEventBus.on('disconnect', function () {
-            self.terminalcmd.terminaldisconnect();
-        });
-        self.appEventBus.on('enable', function () {
-            self.terminalcmd.terminalenable();
-        });
-        self.appEventBus.on('disable', function () {
-            self.terminalcmd.terminaldisable();
-        });
-        self.appEventBus.on('prompt', function (data) {
-            self.terminalcmd.terminalsetprompt(data);
-        });
+        // // update dos graficos em realtime
+        // self.appEventBus.on("updateRealTimeChart", function (data, local, site) {
+        //     console.log("Event");
+        // });
+        // self.appEventBus.on('stdout', function (data) {
+        //     self.terminalcmd.terminalstdout(data);
+        // });
+        // self.appEventBus.on('stderr', function (data) {
+        //     self.terminalcmd.terminalstderr(data);
+        // });
+        // self.appEventBus.on('disconnect', function () {
+        //     self.terminalcmd.terminaldisconnect();
+        // });
+        // self.appEventBus.on('enable', function () {
+        //     self.terminalcmd.terminalenable();
+        // });
+        // self.appEventBus.on('disable', function () {
+        //     self.terminalcmd.terminaldisable();
+        // });
+        // self.appEventBus.on('prompt', function (data) {
+        //     self.terminalcmd.terminalsetprompt(data);
+        // });
 
     },
     showView: function (view, elem, sub) {
@@ -82,11 +82,11 @@ var Router = Backbone.Router.extend({
         this.footer = undefined;
         this.loginform = undefined;
         this.terminalcmd = undefined;
-        if (this.socketclt) {
-            this.socketclt.disconnect();
-        }
+//        if (this.socketclt) {
+ //           this.socketclt.disconnect();
+ //       }
 
-// linpa todo o conteudo das varias View da pagina web
+// limpa todo o conteudo das varias View da pagina web
         $('header').html("");
         $('#content').html("");
         $('aside.main-sidebar').html("");
@@ -115,7 +115,7 @@ var Router = Backbone.Router.extend({
     inicio: function () {
         var self = this;
         self.verificaLogin(function () {
-            self.socketclt.connect();
+//            self.socketclt.connect();
             self.header = new HeaderView({
                 logo: (window.profile.logo == "") ? "./img/user.png" : window.profile.logo
             });
@@ -153,7 +153,7 @@ var Router = Backbone.Router.extend({
         var self = this;
         self.verificaLogin(function () {
             self.contentnav.setView("Terminal");
-            self.terminalcmd = new TerminalView({socket: self.socketclt});
+  //          self.terminalcmd = new TerminalView({socket: self.socketclt});
             $('#content').html(self.terminalcmd.render().el);
             self.terminalcmd.init();
         });

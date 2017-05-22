@@ -6,22 +6,23 @@ window.ConfigSiteView = Backbone.View.extend({
   //inputchanged: false,
   //continue: false,
   events: {  
-    "click .gm a": "setHtmlPage"//,
-    // "click #adduser": function(){
-    //   modem("POST",
-    //         "/insertUsr",
-    //         function (data) {
-    //           $("#htmlcode").html(data.body);
-    //         },
-    //         function (xhr, ajaxOptions, thrownError) {
-    //           var json = JSON.parse(xhr.responseText);
-    //           error_launch(json.message);
-    //         }, { 
-    //             email : "admin@admin.pt",
-    //             pass : stringToMd5(btoa("admin"))
-    //           }
-    // );
-    // }
+    "click .gm a": "setHtmlPage",
+    "click button": "getDataSensores"/*,
+    "click #adduser": function(){
+      modem("POST",
+            "/insertUsr",
+            function (data) {
+              $("#htmlcode").html(data.body);
+            },
+            function (xhr, ajaxOptions, thrownError) {
+              var json = JSON.parse(xhr.responseText);
+              error_launch(json.message);
+            }, { 
+                email : "admin@admin.pt",
+                pass : stringToMd5(btoa("admin"))
+              }
+    );
+    }*/
   },
   initialize: function () {
   },  
@@ -34,16 +35,16 @@ window.ConfigSiteView = Backbone.View.extend({
     //showInfoMsg(false, '.my-modal');
     $.AdminLTE.boxWidget.activate();
 
-    modem("GET",
-            "/getHtmlText/index.html",
-            function (data) {
-              $("#htmlcode").html(data.body);
-            },
-            function (xhr, ajaxOptions, thrownError) {
-              var json = JSON.parse(xhr.responseText);
-              error_launch(json.message);
-            }, {}
-    );
+    // modem("GET",
+    //         "/getHtmlText/index.html",
+    //         function (data) {
+    //           $("#htmlcode").html(data.body);
+    //         },
+    //         function (xhr, ajaxOptions, thrownError) {
+    //           var json = JSON.parse(xhr.responseText);
+    //           error_launch(json.message);
+    //         }, {}
+    // );
   },  
   setHtmlPage: function(e) {
     e.preventDefault();
@@ -59,6 +60,29 @@ window.ConfigSiteView = Backbone.View.extend({
               error_launch(json.message);
             }, {}
     );
+  },
+  getDataSensores: function(e){
+    var self = this;
+    var endereco = $("#endereco").val(),
+    folder = $("#folder").val(),
+    resource = $("#resource").val(),
+    params = ($("#params").val() === "" ? "''" : $("#params").val()),
+    payload = $("#payload").val(),
+    mMethod = $("#mMethod").val(),
+    mObserve = $("#mObserve").val(),
+    func = e.target.id === "getdata" ? "getDataSensor" : "threadgetDataSensor";
+
+    modem("GET",
+            "/api/sensor/" + func + "/" + endereco + "/" + folder + "/" + resource + "/" + params + "/" + payload + "/" + mMethod + "/" + mObserve,
+            function (data) {
+              console.log(data);
+            },
+            function (xhr, ajaxOptions, thrownError) {
+              var json = JSON.parse(xhr.responseText);
+              error_launch(json.message);
+            }, {}
+    );
+
   },
   render: function () {
     var self = this;

@@ -7,29 +7,37 @@ var fs = require('fs');
 var socketio = require('socket.io');
 var serverIo = require('./serverio');
 var bodyParser = require('body-parser');
-//var r = require('rethinkdb');
 var cp = require('child_process');
 var ini = require('ini');
-var dbUsers = require('./db.js');
 var osquerys = require("./linuxquery");
+var dbUsers;
+var coapSensor;
 
 /**
  * Construtor do servidor HTTP
- * @param {type} configdb Consiguracao da base de dados
+ * @param {type} config Consiguracao da base de dados
  * @returns {ServerHTTP}
  */
-var ServerHTTP = function (configdb) {
+var ServerHTTP = function (config) {
   this.app = express();
   this.server = http.Server(this.app);
   this.io = socketio(this.server);
-  this.port = 8080;
-  this.dbConfig = configdb;
-  // variavel de comunicacao com a base de dados
-  this.dbData = {
+  this.dbConfig = config;
+  this.port = this.dbConfig.portlocalserver;
+  this.configDB = {
+    dataBaseType: this.dbConfig.dataBaseType,
     host: this.dbConfig.host,
-    port: this.dbConfig.port,
-    authKey: this.dbConfig.authKey
+    user: this.dbConfig.user,
+    pass: this.dbConfig.pass,
+    dbname : this.dbConfig.dbname
   };
+  
+  dbUsers = require('./db.js');
+  // Carrega para o script as configuraacoes da base de dados
+  dbUsers.configDB(this.configDB);
+
+  coapSensor = require('./coapCalls.js');
+  coapSensor.configDB(this.configDB);
 };
 
 /**
@@ -56,49 +64,24 @@ ServerHTTP.prototype.start = function () {
   // fornece ao cliente a pagina index.html
   this.app.use(express.static(__dirname + './../public'));
 
-// Envia as configuracoes da base de dados para o script de acesso aos dados dos useres
-  dbUsers.dbData = this.dbData;
-
 // Login do utilizador
   this.app.post("/login", dbUsers.loginUser);
 
-  // this.app.post("/insertUsr", dbUsers.insertUser);
+  this.app.post("/insertUsr", dbUsers.insertUser);
 
-// devolve a lista de sites existentes no servidor do login
-  //this.app.get("/getsitelist", dbUsers.getsitelist);
 
-  // verifica se o caminho para uma diretoria existe
-  this.app.get("/validpathsystem/:path", osquerys.validpathsystem);
+  this.app.get("/api/sensor/getDataSensor/:endereco/:folder/:resource/:params/:payload/:mMethod/:mObserve", coapSensor.getdataFromSensor);
 
-// Consulta o SO para listar as interfaces wlan
-  this.app.get("/dispOswlan", osquerys.getdispwlan);
 
-// Consulta o SO para saber se existe a interface monitor criada
-  this.app.get("/dispOsmon", osquerys.getdispmon);
+  this.app.get("/api/sensor/threadgetDataSensor/:endereco/:folder/:resource/:params/:payload/:mMethod/:mObserve", coapSensor.threadgetdataFromSensor);
+
+
 
 // Devolve as configuracoes do ficheiro Ini
   this.app.get("/paramsinifile", osquerys.getinifileparams);
 
 // Guarda as configuracoess no ficheiro Ini
   this.app.post("/savesettings", osquerys.savesettings);
-
-// Constroi a interface monitor
-  this.app.post("/createmonitor", osquerys.createmonitor);
-
-// Inicia a interface monitor
-  this.app.post("/startmonitor", osquerys.startmonitor);
-
-// Para a interface monitor
-  this.app.post("/stopmonitor", osquerys.stoptmonitor);
-
-// Consulta o SO para saber se a interface monitor se encontra em funcionamento
-  this.app.get("/checkmonitorstart", osquerys.checkmonitorstart);
-
-// Reinicia o SO
-  this.app.get("/restartsystem", osquerys.restartsystem);
-
-// Desliga o SO
-  this.app.get("/poweroffsystem", osquerys.poweroffsystem);
 
 // Devolde a ultima atualizacao do git
   this.app.get("/getGitLastUpdate", osquerys.getLastGitUpdate);
@@ -117,7 +100,6 @@ ServerHTTP.prototype.start = function () {
   console.log('\nServer HTTP Wait %d'.green.bold, self.port);
 };
 
-
 /**
  * Monitoriza o processo e para receber as informacoes para a criacao do servidor HTTP
  * @param {type} param1
@@ -127,6 +109,7 @@ process.on("message", function (data) {
   var srv = new ServerHTTP(data.serverdata);
   srv.start();
 });
+
 module.exports = ServerHTTP;
 
 /**
