@@ -8,21 +8,6 @@ window.ConfigSiteView = Backbone.View.extend({
   events: {  
     "click .gm a": "setHtmlPage",
     "click button": "getDataSensores",
-    "click #adduser": function(){
-      modem("POST",
-            "/insertUsr",
-            function (data) {
-              $("#htmlcode").html(data.body);
-            },
-            function (xhr, ajaxOptions, thrownError) {
-              var json = JSON.parse(xhr.responseText);
-              error_launch(json.message);
-            }, { 
-                email : "admin@admin.pt",
-                pass : stringToMd5(btoa("admin"))
-              }
-    );
-    }/**/
   },
   initialize: function () {
   },  
@@ -35,16 +20,16 @@ window.ConfigSiteView = Backbone.View.extend({
     //showInfoMsg(false, '.my-modal');
     $.AdminLTE.boxWidget.activate();
 
-    // modem("GET",
-    //         "/getHtmlText/index.html",
-    //         function (data) {
-    //           $("#htmlcode").html(data.body);
-    //         },
-    //         function (xhr, ajaxOptions, thrownError) {
-    //           var json = JSON.parse(xhr.responseText);
-    //           error_launch(json.message);
-    //         }, {}
-    // );
+     modem("GET",
+             "/getHtmlText/index.html",
+             function (data) {
+               $("#htmlcode").html(data.body);
+             },
+             function (xhr, ajaxOptions, thrownError) {
+               var json = JSON.parse(xhr.responseText);
+               error_launch(json.message);
+             }, {}
+     );
   },  
   setHtmlPage: function(e) {
     e.preventDefault();
