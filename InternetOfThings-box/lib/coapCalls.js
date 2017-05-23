@@ -100,6 +100,7 @@ var gatSensorDaata = function(endereco, folder, resource, params, payload, mMeth
 
         res.on('data', function(msg) {
             console.log(msg);
+            res.json(msg);
         })
         // print only status code on empty response
         if (!res.payload.length) {
