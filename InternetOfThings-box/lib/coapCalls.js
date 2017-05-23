@@ -106,6 +106,7 @@ var gatSensorDaata = function(endereco, folder, resource, params, payload, mMeth
         if (!res.payload.length) {
             process.stderr.write('\x1b[1m(' + res.code + ')\x1b[0m\n');
             console.log(res.payload);
+            response.json(res.payload);
         }
     })
 
