@@ -48,13 +48,13 @@ window.ConfigSiteView = Backbone.View.extend({
   },
   getDataSensores: function(e){
     var self = this;
-    var endereco = $.trim($("#endereco").val()) === "" ? undefined : $("#endereco").val(),
-    folder = $.trim($("#folder").val()) === "" ? undefined : $("#folder").val(),
-    resource = $.trim($("#resource").val()) === "" ? undefined : $("#resource").val(),
-    params = $.trim($("#params").val()) === "" ? undefined : $("#params").val(),
-    payload = $.trim($("#payload").val()) === "" ? undefined : $("#payload").val(),
-    mMethod = $.trim($("#mMethod").val()) === "" ? undefined : $("#mMethod").val(),
-    mObserve = $.trim($("#mObserve").val()) === "" ? undefined : $("#mObserve").val(),
+    var endereco = $.trim($("#endereco").val()) === "" ? "undefined" : $("#endereco").val(),
+    folder = $.trim($("#folder").val()) === "" ? "undefined" : $("#folder").val(),
+    resource = $.trim($("#resource").val()) === "" ? "undefined" : $("#resource").val(),
+    params = $.trim($("#params").val()) === "" ? "undefined" : $("#params").val(),
+    payload = $.trim($("#payload").val()) === "" ? "undefined" : $("#payload").val(),
+    mMethod = $.trim($("#mMethod").val()) === "" ? "undefined" : $("#mMethod").val(),
+    mObserve = $.trim($("#mObserve").val()) === "" ? "undefined" : $("#mObserve").val(),
     func = e.target.id === "getdata" ? "getDataSensor" : "threadgetDataSensor";
 
     modem("GET",

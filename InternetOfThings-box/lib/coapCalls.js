@@ -15,25 +15,25 @@ module.exports.configDB = function(cfg){
 };
 
 module.exports.getdataFromSensor = function(req, res) {
-    var endereco = req.params.endereco === undefined ? "" : req.params.endereco, 
-        folder = req.params.folder === undefined ? "" : req.params.folder, 
-        resource = req.params.resource === undefined ? "" : req.params.resource, 
-        params = req.params.params === undefined ? "" : req.params.params, 
-        payload = req.params.payload === undefined ? "" : req.params.payload, 
-        mMethod = req.params.mMethod === undefined ? "GET" : req.params.mMethod, 
-        mObserve = req.params.mObserve === undefined ? "" : req.params.mObserve;
+    var endereco = req.params.endereco === "undefined" ? "" : req.params.endereco, 
+        folder = req.params.folder === "undefined" ? "" : req.params.folder, 
+        resource = req.params.resource === "undefined" ? "" : req.params.resource, 
+        params = req.params.params === "undefined" ? "" : req.params.params, 
+        payload = req.params.payload === "undefined" ? "" : req.params.payload, 
+        mMethod = req.params.mMethod === "undefined" ? "GET" : req.params.mMethod, 
+        mObserve = req.params.mObserve === "undefined" ? "" : req.params.mObserve;
 
     gatSensorDaata(endereco, folder, resource, params, payload, mMethod, mObserve, res);
 };
 
 module.exports.threadgetdataFromSensor = function(req, res ) {
-    var endereco = req.params.endereco === undefined ? "" : req.params.endereco, 
-        folder = req.params.folder === undefined ? "" : req.params.folder, 
-        resource = req.params.resource === undefined ? "" : req.params.resource, 
-        params = req.params.params === undefined ? "" : req.params.params, 
-        payload = req.params.payload === undefined ? "" : req.params.payload, 
-        mMethod = req.params.mMethod === undefined ? "GET" : req.params.mMethod, 
-        mObserve = req.params.mObserve === undefined ? "" : req.params.mObserve;
+    var endereco = req.params.endereco === "undefined" ? "" : req.params.endereco, 
+        folder = req.params.folder === "undefined" ? "" : req.params.folder, 
+        resource = req.params.resource === "undefined" ? "" : req.params.resource, 
+        params = req.params.params === "undefined" ? "" : req.params.params, 
+        payload = req.params.payload === "undefined" ? "" : req.params.payload, 
+        mMethod = req.params.mMethod === "undefined" ? "GET" : req.params.mMethod, 
+        mObserve = req.params.mObserve === "undefined" ? "" : req.params.mObserve;
 
         thread = spawn(function(input, done) {
         done({
