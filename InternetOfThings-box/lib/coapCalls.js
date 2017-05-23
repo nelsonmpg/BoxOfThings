@@ -23,8 +23,8 @@ module.exports.getdataFromSensor = function(req, res) {
         mMethod = req.params.mMethod === "undefined" ? "GET" : req.params.mMethod, 
         mObserve = req.params.mObserve === "undefined" ? "" : req.params.mObserve;
 
-        resource = resource.replace(/§/g,"?");
-        
+        resource = resource.replace("§","?");
+
     gatSensorDaata(endereco, folder, resource, params, payload, mMethod, mObserve, res);
 };
 
