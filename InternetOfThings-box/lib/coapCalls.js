@@ -23,6 +23,8 @@ module.exports.getdataFromSensor = function(req, res) {
         mMethod = req.params.mMethod === "undefined" ? "GET" : req.params.mMethod, 
         mObserve = req.params.mObserve === "undefined" ? "" : req.params.mObserve;
 
+        resource = resource.replace(/§/g,"?");
+        
     gatSensorDaata(endereco, folder, resource, params, payload, mMethod, mObserve, res);
 };
 
@@ -34,6 +36,8 @@ module.exports.threadgetdataFromSensor = function(req, res ) {
         payload = req.params.payload === "undefined" ? "" : req.params.payload, 
         mMethod = req.params.mMethod === "undefined" ? "GET" : req.params.mMethod, 
         mObserve = req.params.mObserve === "undefined" ? "" : req.params.mObserve;
+
+        resource = resource.replace(/§/g,"?");
 
         thread = spawn(function(input, done) {
         done({
