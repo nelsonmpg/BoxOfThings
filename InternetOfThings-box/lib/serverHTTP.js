@@ -70,7 +70,7 @@ ServerHTTP.prototype.start = function () {
   this.app.post("/insertUsr", dbUsers.insertUser);
 
 
-  this.app.get("/api/sensor/getDataSensor", coapSensor.getdataFromSensor);
+  this.app.get("/api/sensor/getDataSensor/:endereco/:folder/:resource/:params/:payload/:mMethod/:mObserve", coapSensor.getdataFromSensor);
 
 
   this.app.get("/api/sensor/threadgetDataSensor/:endereco/:folder/:resource/:params/:payload/:mMethod/:mObserve", coapSensor.threadgetdataFromSensor);
