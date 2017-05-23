@@ -58,7 +58,7 @@ window.ConfigSiteView = Backbone.View.extend({
     func = e.target.id === "getdata" ? "getDataSensor" : "threadgetDataSensor";
 
     modem("GET",
-            "/api/sensor/" + func + "/" + endereco + "/" + folder + "/" + resource + "/" + params + "/" + payload + "/" + mMethod + "/" + mObserve,
+            "/api/sensor/" + func,
             function (data) {
               console.log(data);
             },

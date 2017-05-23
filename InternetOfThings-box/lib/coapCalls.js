@@ -15,13 +15,20 @@ module.exports.configDB = function(cfg){
 };
 
 module.exports.getdataFromSensor = function(req, res) {
-    var endereco = req.params.endereco, 
+   /* var endereco = req.params.endereco, 
         folder = req.params.folder, 
         resource = req.params.resource, 
         params = req.params.params, 
         payload = req.params.payload, 
         mMethod = req.params.mMethod, 
-        mObserve = req.params.mObserve;
+        mObserve = req.params.mObserve;*/
+    var endereco = "[aaaa::212:4b00:60d:b305]", 
+        folder = "test", 
+        resource = "ola", 
+        params = "", 
+        payload = "", 
+        mMethod = "GET", 
+        mObserve = "";
 
     gatSensorDaata(endereco, folder, resource, params, payload, mMethod, mObserve, res);
 };
