@@ -48,13 +48,13 @@ window.ConfigSiteView = Backbone.View.extend({
   },
   getDataSensores: function(e){
     var self = this;
-    var endereco = $("#endereco").val(),
-    folder = $("#folder").val(),
-    resource = $("#resource").val(),
-    params = $("#params").val(),
-    payload = $("#payload").val(),
-    mMethod = $("#mMethod").val(),
-    mObserve = $("#mObserve").val(),
+    var endereco = '"' + $("#endereco").val() + '"',
+    folder = '"' + $("#folder").val() + '"',
+    resource = '"' + $("#resource").val() + '"',
+    params = '"' + $("#params").val() + '"',
+    payload = '"' + $("#payload").val() + '"',
+    mMethod = '"' + $("#mMethod").val() + '"',
+    mObserve = '"' + $("#mObserve").val() + '"',
     func = e.target.id === "getdata" ? "getDataSensor" : "threadgetDataSensor";
 
     modem("GET",
