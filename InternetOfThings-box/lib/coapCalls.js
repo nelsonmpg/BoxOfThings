@@ -25,10 +25,10 @@ module.exports.getdataFromSensor = function(req, res) {
     var endereco = "[aaaa::212:4b00:60d:b305]", 
         folder = "test", 
         resource = "ola", 
-        params = "", 
-        payload = "", 
+        params = undefined, 
+        payload = undefined, 
         mMethod = "GET", 
-        mObserve = "";
+        mObserve = undefined;
 
     gatSensorDaata(endereco, folder, resource, params, payload, mMethod, mObserve, res);
 };
