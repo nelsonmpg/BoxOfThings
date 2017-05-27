@@ -1,20 +1,34 @@
-var coap = require('coap'),
-request = coap.request,
-URL = require('url'),
-    method = 'GET', // default
-    url,
-    req,
-    spawn = require('threads').spawn,
-    Sensor;
+var coap = require('coap');
+var request = coap.request;
+var URL = require('url');
+var method = 'GET'; // default
+var url;
+var req;
+var spawn = require('threads').spawn;
+var Sensor;
 
-    var self = this;
+var self = this;
 
-    module.exports.configDB = function(cfg){
-      Sensor = require('./models/modelObj').Sensor;
-      Sensor = new Sensor(cfg);
-  };
+module.exports.configDB = function(cfg){
+  Sensor = require('./models/modelObj').Sensor;
+  Sensor = new Sensor(cfg);
+};
 
-  module.exports.getdataFromSensor = function(req, res) {
+module.exports.serverListening = function(sock){
+  console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
+  sock.on('data', function(data) {
+    console.log('DATA ' + sock.remoteAddress + ': ' + data);
+    setTimeout(function(){
+      sock.write(JSON.stringify({aa:cont, zz:cont++}));
+  }, 3000);
+});
+  sock.on('close', function(data) {
+    console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
+});
+};
+
+
+module.exports.getdataFromSensor = function(req, res) {
     var endereco = req.params.endereco === "undefined" ? "" : req.params.endereco, 
     folder = req.params.folder === "undefined" ? "" : req.params.folder, 
     resource = req.params.resource === "undefined" ? "" : req.params.resource, 

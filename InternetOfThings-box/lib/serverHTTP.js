@@ -118,8 +118,8 @@ console.log("                              \\./             ._|  ".green.bold);
 console.log("                              /'\\                  ".green.bold);
 
 console.log('\nServer HTTP Wait %d'.green.bold, self.port);
-net.createServer(serverListening).listen(this.tunnelssh.localport, this.tunnelssh.localip);
-console.log('Server listening on ' + this.tunnelssh.localport +':'+ this.tunnelssh.localip);;
+net.createServer(coapSensor.serverListening).listen(this.tunnelssh.localport, this.tunnelssh.localip);
+console.log('Server listening on %d:%d'..blue.bold, this.tunnelssh.localport, this.tunnelssh.localip);;
 };
 
 /**
@@ -152,16 +152,3 @@ console.log('Server listening on ' + this.tunnelssh.localport +':'+ this.tunnels
   }
   return config;
 };
-
-function serverListening (sock){
-  console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
-  sock.on('data', function(data) {
-    console.log('DATA ' + sock.remoteAddress + ': ' + data);
-    setTimeout(function(){
-      sock.write(JSON.stringify({aa:cont, zz:cont++}));
-    }, 3000);
-  });
-  sock.on('close', function(data) {
-    console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
-  });
-}
