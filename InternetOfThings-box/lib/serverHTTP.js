@@ -15,6 +15,8 @@ var dbUsers;
 var coapSensor;
 var self = this;
 
+var cont = 0;
+
 /**
  * Construtor do servidor HTTP
  * @param {type} config Consiguracao da base de dados
