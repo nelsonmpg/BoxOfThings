@@ -16,7 +16,7 @@ module.exports.configDB = function(cfg){
 };
 
 module.exports.serverListening = function(sock){
-  console.log('CONNECTED: %d:%d'italic.rainbow, sock.remoteAddress, sock.remotePort);
+  console.log('CONNECTED: %d:%d'.italic.rainbow, sock.remoteAddress, sock.remotePort);
   sock.on('data', function(data) {
     console.log('DATA ' + sock.remoteAddress + ': ' + data);
     setTimeout(function(){
