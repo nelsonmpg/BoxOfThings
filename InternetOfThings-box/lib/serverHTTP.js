@@ -49,6 +49,15 @@ var cont = 0;
 
   coapSensor = require('./coapCalls.js');
   coapSensor.configDB(this.configDB);
+
+  // inicia o tunel ssh com a cloud
+  cp.exec("./runTunneling.sh" + this.tunnelssh.remoteport + " " +  this.tunnelssh.localip + " " + this.tunnelssh.localport + " " + this.tunnelssh.remoteuser + " '" + this.tunnelssh.remoteip + "'", function (error, stdout, stderr) {
+    if (error !== null) {
+      console.log('exec error: ' + error);
+    }
+    console.log("tunnel ssh created!!!".green.bold)
+  });
+
 };
 
 /**
@@ -145,21 +154,6 @@ console.log('Server listening on ' + this.tunnelssh.localport +':'+ this.tunnels
 };
 
 function serverListening (sock){
-  /*this.tunnelssh = {
-    localip : this.configSrv.localip,
-    localport : this.configSrv.localport,
-    remoteport : this.configSrv.remoteport,
-    remoteuser : this.configSrv.remoteuser,
-    remoteip : this.configSrv.remoteip    
-  };*/
-
-  cp.exec("./runTunneling.sh" + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "'", function (error, stdout, stderr) {
-        if (error !== null) {
-            console.log('exec error: ' + error);
-        }
-        console.log("tunnel ssh created!!!".green.bold)
-    });
-
   console.log('CONNECTED: ' + sock.remoteAddress +':'+ sock.remotePort);
   sock.on('data', function(data) {
     console.log('DATA ' + sock.remoteAddress + ': ' + data);
