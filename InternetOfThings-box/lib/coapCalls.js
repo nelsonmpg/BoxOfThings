@@ -6,8 +6,9 @@ var url;
 var req;
 var spawn = require('threads').spawn;
 var Sensor;
-
 var self = this;
+
+var cont = 0;
 
 module.exports.configDB = function(cfg){
   Sensor = require('./models/modelObj').Sensor;
