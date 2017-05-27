@@ -1,4 +1,5 @@
 // grab the things we need
+require('colors');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var self = this;
@@ -31,7 +32,7 @@ var User = function(cfg) {
         if (err) {
             throw err;
         }
-        console.log("Successfully connected to MongoDB");
+        console.log("Successfully connected to MongoDB".italic.magenta);
     });
 };
 
