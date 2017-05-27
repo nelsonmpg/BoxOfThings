@@ -34,7 +34,7 @@ var self = this;
     dbname : this.configSrv.dbname
   }; 
   this.tunnelssh = {
-    localip : this.configSrv.localip
+    localip : this.configSrv.localip,
     localport : this.configSrv.localport,
     remoteport : this.configSrv.remoteport,
     remoteuser : this.configSrv.remoteuser,
