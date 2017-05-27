@@ -117,7 +117,7 @@ console.log("                              /'\\                  ".green.bold);
 
 console.log('\nServer HTTP Wait %d'.green.bold, self.port);
 net.createServer(coapSensor.serverListening).listen(this.tunnelssh.localport, this.tunnelssh.localip);
-console.log('Server listening on %d:%s'.blue.bold, this.tunnelssh.localport, this.tunnelssh.localip);;
+console.log('Server listening Tunnel SSH on %d:%s'.blue.bold, this.tunnelssh.localport, this.tunnelssh.localip);;
 };
 
 /**
