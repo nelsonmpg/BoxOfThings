@@ -153,7 +153,7 @@ function serverListening (sock){
     remoteip : this.configSrv.remoteip    
   };*/
 
-  cp.exec("./runTunneling.sh" + this.tunnelssh.remoteport + " " +  this.tunnelssh.localip + " " + this.tunnelssh.localport + " " + this.tunnelssh.remoteuser + " '" + this.tunnelssh.remoteip + "'", function (error, stdout, stderr) {
+  cp.exec("./runTunneling.sh" + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "'", function (error, stdout, stderr) {
         if (error !== null) {
             console.log('exec error: ' + error);
         }
