@@ -10,7 +10,7 @@ var crypto = require('crypto');
  * 
  * @returns {undefined}
  */
-var Main = function () {
+ var Main = function () {
   var args;
   // Verifica se o ficheiro de ligacao com a base de dados para iniciar a comunicacao
   if (this.checkconfigexist('./MainConfig.ini')) {
@@ -22,7 +22,12 @@ var Main = function () {
       host: this.config2.database.host,
       dbname : this.config2.database.dbname,
       user: this.config2.userportal.user,
-      pass: this.config2.userportal.pass
+      pass: this.config2.userportal.pass,
+      localip : this.config2.sshtunnel.localip,
+      localport : this.config2.sshtunnel.localport,
+      remoteport : this.config2.sshtunnel.remoteport,
+      remoteuser : this.config2.sshtunnel.remoteuser,
+      remoteip : this.config2.sshtunnel.remoteip
     };
 
     // inicia p script e envia as configuracores do ficheiro ini
@@ -38,7 +43,7 @@ var Main = function () {
  * @param {type} file
  * @returns {Boolean}
  */
-Main.prototype.checkconfigexist = function (file) {
+ Main.prototype.checkconfigexist = function (file) {
   var config;
   try {
     // try to get the override configuration file if it exists

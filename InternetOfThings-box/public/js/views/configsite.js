@@ -20,15 +20,15 @@ window.ConfigSiteView = Backbone.View.extend({
     //showInfoMsg(false, '.my-modal');
     $.AdminLTE.boxWidget.activate();
 
-     modem("GET",
-             "/getHtmlText/index.html",
-             function (data) {
-               $("#htmlcode").html(data.body);
-             },
-             function (xhr, ajaxOptions, thrownError) {
-               var json = JSON.parse(xhr.responseText);
-               error_launch(json.message);
-             }, {}
+    modem("GET",
+     "/getHtmlText/index.html",
+     function (data) {
+       $("#htmlcode").html(data.body);
+     },
+     function (xhr, ajaxOptions, thrownError) {
+       var json = JSON.parse(xhr.responseText);
+       error_launch(json.message);
+     }, {}
      );
   },  
   setHtmlPage: function(e) {
@@ -36,15 +36,15 @@ window.ConfigSiteView = Backbone.View.extend({
     var self = this;    
 
     modem("GET",
-            "/getHtmlText/" + $(e.target).attr('href'),
-            function (data) {
-              $("#htmlcode").html(data.body);
-            },
-            function (xhr, ajaxOptions, thrownError) {
-              var json = JSON.parse(xhr.responseText);
-              error_launch(json.message);
-            }, {}
-    );
+      "/getHtmlText/" + $(e.target).attr('href'),
+      function (data) {
+        $("#htmlcode").html(data.body);
+      },
+      function (xhr, ajaxOptions, thrownError) {
+        var json = JSON.parse(xhr.responseText);
+        error_launch(json.message);
+      }, {}
+      );
   },
   getDataSensores: function(e){
     var self = this;
@@ -58,15 +58,15 @@ window.ConfigSiteView = Backbone.View.extend({
     func = e.target.id === "getdata" ? "getDataSensor" : "threadgetDataSensor";
 
     modem("GET",
-            "/api/sensor/" + func + "/" + endereco + "/" + folder + "/" + resource.replace("?","§") + "/" + params + "/" + payload + "/" + mMethod + "/" + mObserve,
-            function (data) {
-              console.log(data);
-            },
-            function (xhr, ajaxOptions, thrownError) {
-              var json = JSON.parse(xhr.responseText);
-              error_launch(json.message);
-            }, {}
-    );
+      "/api/sensor/" + func + "/" + endereco + "/" + folder + "/" + resource.replace("?","§") + "/" + params + "/" + payload + "/" + mMethod + "/" + mObserve,
+      function (data) {
+        console.log(data);
+      },
+      function (xhr, ajaxOptions, thrownError) {
+        var json = JSON.parse(xhr.responseText);
+        error_launch(json.message);
+      }, {}
+      );
 
   },
   render: function () {

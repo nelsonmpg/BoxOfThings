@@ -1,9 +1,9 @@
 /* global module */
 var User,
-  ini = require('ini'),
-  fs = require('fs'),
-  md5 = require('md5'),
-  btoa = require('btoa');
+ini = require('ini'),
+fs = require('fs'),
+md5 = require('md5'),
+btoa = require('btoa');
 
 var self = this;
 
@@ -24,13 +24,13 @@ module.exports.configDB = function(cfg){
  * @param {type} res
  * @returns {undefined}
  */
-module.exports.loginUser = function (req, res, next) {
+ module.exports.loginUser = function (req, res, next) {
    var params = {email: req.body.email, pass: req.body.pass};
-  User.loginUser(params, res, next);
-};
+   User.loginUser(params, res, next);
+ };
 
 
-module.exports.insertUser = function (req, res, next) {
+ module.exports.insertUser = function (req, res, next) {
   User.InsertUser({
     email : "admin@admin.pt",
     pass : req.body.pass

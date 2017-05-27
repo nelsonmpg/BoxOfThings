@@ -71,13 +71,13 @@ User.prototype.InsertUser = function(params, res, next) {
 
 /*-------------------------------------------------------------------------------------*/
 var Sensor = function(cfg){
-    var self = this;
-    this.SensorDB = mongoose.model('Sensor', sensorSchema);
+  var self = this;
+  this.SensorDB = mongoose.model('Sensor', sensorSchema);
 };
 
 Sensor.prototype.insertData = function(data){
-    
-    var self = this;
+
+  var self = this;
     // Recebendo os parâmetros da requisição
     // create a new user
     var newSensorData = self.SensorDB(data);
