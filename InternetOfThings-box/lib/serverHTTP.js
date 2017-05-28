@@ -110,6 +110,10 @@ console.log("                              /'\\                  ".green.bold);
 
 console.log('\nServer HTTP Wait %d'.green.bold, self.port);
 
+get_line('./createTunnel.log', 1, function(err, line){
+  console.log('The line: ' + line);
+})
+
 net.createServer(coapSensor.serverListening).listen(self.tunnelssh.localport, self.tunnelssh.localip);
 console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.bold, self.tunnelssh.localip, self.tunnelssh.localport, self.tunnelssh.remoteip, self.tunnelssh.remoteport);
 };
@@ -159,3 +163,35 @@ ServerHTTP.prototype.createReverseTunnel = function(){
   }
   return config;
 };
+
+function get_line(filename, line_no, callback) {
+  var stream = fs.createReadStream(filename, {
+    flags: 'r',
+    encoding: 'utf-8',
+    fd: null,
+    mode: 0666,
+    bufferSize: 64 * 1024
+  });
+
+  var fileData = '';
+  stream.on('data', function(data){
+    fileData += data;
+
+      // The next lines should be improved
+      var lines = fileData.split("\n");
+
+      if(lines.length >= +line_no){
+        stream.destroy();
+        callback(null, lines[+line_no]);
+      }
+    });
+
+  stream.on('error', function(){
+    callback('Error', null);
+  });
+
+  stream.on('end', function(){
+    callback('File end reached without finding line', null);
+  });
+
+}
