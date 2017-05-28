@@ -118,6 +118,7 @@ ServerHTTP.prototype.createReverseTunnel = function(){
   var self = this;
   // inicia o tunel ssh com a cloud
   cp.exec("./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "'", function (error, stdout, stderr) {
+    console.log(error, stdout, stderr);
    if (error !== null) {
     console.log('exec error: ' + error);
     // self.tunnelssh.remoteport = 1 * self.tunnelssh.remoteport + 1;
