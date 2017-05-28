@@ -173,7 +173,7 @@ function get_line(filename, line_no, callback) {
       throw new Error('File end reached without finding line');
     }
     for (var i in lines) {
-      console.log(" - " + lines[i]);
+      console.log(i + " - " + lines[i]);
     }
     callback(null, lines[+line_no]);
 }
