@@ -4,7 +4,8 @@ for x in "$(ps aux | grep  "ssh -fN -R" | grep -v pts/0 |  tr -s " " " " | cut -
    sudo kill -9 $x
 done
 
-#ssh -fN -R $1:$2:$3 $4@$5
+echo "ssh -fN -R $1:$2:$3 $4@$5"
+`ssh -fN -R $1:$2:$3 $4@$5 2> createTunnel.log`
 
 # Ciar tunel
 # Porta Remota para acesso 							= 8000
