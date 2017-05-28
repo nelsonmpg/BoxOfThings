@@ -116,9 +116,8 @@ console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.b
 
 ServerHTTP.prototype.createReverseTunnel = function(){  
   var self = this;
-  console.log("teste");
   // inicia o tunel ssh com a cloud
-  cp.exec("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "'", function (error, stdout, stderr) {
+  cp.execFile("sh ./runTunneling.sh ", [self.tunnelssh.remoteport ,  self.tunnelssh.localip, self.tunnelssh.localport, self.tunnelssh.remoteuser, self.tunnelssh.remoteip], function (error, stdout, stderr) {
     console.log(error, stdout, stderr);
    if (error !== null) {
     console.log('exec error: ' + error);
@@ -126,7 +125,6 @@ ServerHTTP.prototype.createReverseTunnel = function(){
     return;
   }
   console.log("tunnel ssh created!!!".green.bold);
-  self.start();
 });
 };
 
@@ -137,7 +135,7 @@ ServerHTTP.prototype.createReverseTunnel = function(){
  */
  process.on("message", function (data) {
   var srv = new ServerHTTP(data.serverdata);
-  // srv.start();
+  srv.start();
 });
 
  module.exports = ServerHTTP;
