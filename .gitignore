@@ -4,6 +4,7 @@ InternetOfThings-box/runNode.sh
 InternetOfThings-box/serverStatus.sh
 InternetOfThings-box/node_modules/
 InternetOfThings-box/npm-debug.log
+InternetOfThings-box/*.ini
 README.sublime-project
 README.sublime-workspace
 Vagrantfile
