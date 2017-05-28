@@ -117,7 +117,7 @@ console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.b
 
 ServerHTTP.prototype.createReverseTunnel = function(){  
   var self = this;
-  
+
   get_line('./createTunnel.log', 1, function(err, line){
     console.log('The line: ' + line);
   })
@@ -166,33 +166,11 @@ ServerHTTP.prototype.createReverseTunnel = function(){
 };
 
 function get_line(filename, line_no, callback) {
-  var stream = fs.createReadStream(filename, {
-    flags: 'r',
-    encoding: 'utf-8',
-    fd: null,
-    mode: 0666,
-    bufferSize: 64 * 1024
-  });
+    var data = fs.readFileSync(filename, 'utf8');
+    var lines = data.split("\n");
 
-  var fileData = '';
-  stream.on('data', function(data){
-    fileData += data;
-
-      // The next lines should be improved
-      var lines = fileData.split("\n");
-
-      if(lines.length >= +line_no){
-        stream.destroy();
-        callback(null, lines[+line_no]);
-      }
-    });
-
-  stream.on('error', function(){
-    callback('Error', null);
-  });
-
-  stream.on('end', function(){
-    callback('File end reached without finding line', null);
-  });
-
+    if(+line_no > lines.length){
+      throw new Error('File end reached without finding line');
+    }
+    callback(null, lines[+line_no]);
 }
