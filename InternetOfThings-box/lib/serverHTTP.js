@@ -13,7 +13,6 @@ var serverIo = require('./serverio');
 var osquerys = require("./linuxquery");
 var dbUsers;
 var coapSensor;
-var self = this;
 
 /**
  * Construtor do servidor HTTP
@@ -21,27 +20,28 @@ var self = this;
  * @returns {ServerHTTP}
  */
  var ServerHTTP = function (config) {
+  var self = this;
   this.app = express();
   this.server = http.Server(this.app);
   this.io = socketio(this.server);
   this.configSrv = config;
   this.port = this.configSrv.portlocalserver;
   this.configDB = {
-    dataBaseType: this.configSrv.dataBaseType,
-    host: this.configSrv.host,
-    user: this.configSrv.user,
-    pass: this.configSrv.pass,
-    dbname : this.configSrv.dbname
-  }; 
-  this.tunnelssh = {
-    localip : this.configSrv.localip,
-    localport : this.configSrv.localport,
-    remoteport : this.configSrv.remoteport,
-    remoteuser : this.configSrv.remoteuser,
-    remoteip : this.configSrv.remoteip    
-  };
-  
-  dbUsers = require('./db.js');
+   dataBaseType: this.configSrv.dataBaseType,
+   host: this.configSrv.host,
+   user: this.configSrv.user,
+   pass: this.configSrv.pass,
+   dbname : this.configSrv.dbname
+ }; 
+ this.tunnelssh = {
+   localip : this.configSrv.localip,
+   localport : this.configSrv.localport,
+   remoteport : this.configSrv.remoteport,
+   remoteuser : this.configSrv.remoteuser,
+   remoteip : this.configSrv.remoteip    
+ };
+ 
+ dbUsers = require('./db.js');
   // Carrega para o script as configuraacoes da base de dados
   dbUsers.configDB(this.configDB);
 
@@ -61,11 +61,11 @@ var self = this;
   this.skt = new serverIo({server: self}).init();
 
   var allowCrossDomain = function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Authorization, X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date');
-    next();
-  };
+   res.header('Access-Control-Allow-Origin', '*');
+   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+   res.header('Access-Control-Allow-Headers', 'Authorization, X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date');
+   next();
+ };
 
 // Configura o servidor
 this.app.use(bodyParser.json({limit: '10mb'}));
@@ -116,14 +116,14 @@ console.log('Server listening Tunnel SSH on %s:%s'.blue.bold, this.tunnelssh.loc
 ServerHTTP.prototype.createReverseTunnel = function(){
   // inicia o tunel ssh com a cloud
   cp.exec("./runTunneling.sh " + this.tunnelssh.remoteport + " " +  this.tunnelssh.localip + " " + this.tunnelssh.localport + " " + this.tunnelssh.remoteuser + " '" + this.tunnelssh.remoteip + "'", function (error, stdout, stderr) {
-    if (error !== null) {
-      console.log('exec error: ' + error);
-      this.tunnelssh.remoteport = this.tunnelssh.remoteport + 1;
-      console.log("Increment prt number: %s".red.bold, this.tunnelssh.remoteport);
-      self.createReverseTunnel();      
-    }
-    console.log("tunnel ssh created!!!".green.bold)
-  });
+   if (error !== null) {
+    console.log('exec error: ' + error);
+    this.tunnelssh.remoteport = this.tunnelssh.remoteport + 1;
+    console.log("Increment prt number: %s".red.bold, this.tunnelssh.remoteport);
+    self.createReverseTunnel();      
+  }
+  console.log("tunnel ssh created!!!".green.bold)
+});
 };
 
 /**
