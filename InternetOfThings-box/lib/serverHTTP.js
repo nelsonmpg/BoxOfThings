@@ -109,8 +109,6 @@ console.log("                              \\./             ._|  ".green.bold);
 console.log("                              /'\\                  ".green.bold);
 
 console.log('\nServer HTTP Wait %d'.green.bold, self.port);
-net.createServer(coapSensor.serverListening).listen(this.tunnelssh.localport, this.tunnelssh.localip);
-console.log('Server listening Tunnel SSH on %s:%s'.blue.bold, this.tunnelssh.localip, this.tunnelssh.localport);
 };
 
 ServerHTTP.prototype.createReverseTunnel = function(){  
@@ -123,7 +121,10 @@ ServerHTTP.prototype.createReverseTunnel = function(){
     console.log("Erro na criação do tunel SHH port : %s".red.bold, self.tunnelssh.remoteport);
     // self.createReverseTunnel();      
   }
-  console.log("tunnel ssh created!!!".green.bold)
+  console.log("tunnel ssh created!!!".green.bold);
+  
+net.createServer(coapSensor.serverListening).listen(self.tunnelssh.localport, self.tunnelssh.localip);
+console.log('Server listening Tunnel SSH on %s:%s'.blue.bold, self.tunnelssh.localip, self.tunnelssh.localport);
 });
 };
 
