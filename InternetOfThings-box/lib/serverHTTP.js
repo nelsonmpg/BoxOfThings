@@ -111,7 +111,7 @@ console.log("                              /'\\                  ".green.bold);
 console.log('\nServer HTTP Wait %d'.green.bold, self.port);
 
 net.createServer(coapSensor.serverListening).listen(self.tunnelssh.localport, self.tunnelssh.localip);
-console.log('Server listening Tunnel SSH on %s:%s'.blue.bold, self.tunnelssh.localip, self.tunnelssh.localport);
+console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.bold, self.tunnelssh.localip, self.tunnelssh.localport, tunnelssh.remoteport, self.tunnelssh.remoteip);
 };
 
 ServerHTTP.prototype.createReverseTunnel = function(){  
