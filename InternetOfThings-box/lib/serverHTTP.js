@@ -118,14 +118,15 @@ ServerHTTP.prototype.createReverseTunnel = function(){
   var self = this;
   // inicia o tunel ssh com a cloud
   cp.exec("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "'", function (error, stdout, stderr) {
-    console.log(error, stdout, stderr);
-   if (error !== null) {
-    console.log('exec error: ' + error);
-    console.log("Erro na criação do tunel SHH port : %s".red.bold, self.tunnelssh.remoteport);
-    return;
-  }
-  console.log("tunnel ssh created!!!".green.bold);
-});
+    if (error instanceof Error) {
+      console.log('exec error: ' + error);
+      console.log("Erro na criação do tunel SHH port : %s".red.bold, self.tunnelssh.remoteport);
+      return;
+    }
+    console.log('stdout ', stdout);
+    console.log('stderr ', stderr);
+    console.log("tunnel ssh created!!!".green.bold);
+  });
 };
 
 /**
