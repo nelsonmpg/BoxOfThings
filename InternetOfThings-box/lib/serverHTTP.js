@@ -119,7 +119,7 @@ ServerHTTP.prototype.createReverseTunnel = function(){
   cp.exec("./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "'", function (error, stdout, stderr) {
    if (error !== null) {
     console.log('exec error: ' + error);
-    self.tunnelssh.remoteport = self.tunnelssh.remoteport + 1;
+    self.tunnelssh.remoteport = 1 * self.tunnelssh.remoteport + 1;
     console.log("Increment prt number: %s".red.bold, self.tunnelssh.remoteport);
     self.createReverseTunnel();      
   }
