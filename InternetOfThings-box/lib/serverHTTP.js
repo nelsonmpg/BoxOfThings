@@ -116,6 +116,7 @@ console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.b
 
 ServerHTTP.prototype.createReverseTunnel = function(){  
   var self = this;
+  console.log("teste");
   // inicia o tunel ssh com a cloud
   cp.exec("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "'", function (error, stdout, stderr) {
     console.log(error, stdout, stderr);
