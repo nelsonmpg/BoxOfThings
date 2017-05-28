@@ -1,4 +1,5 @@
 *.class
+*.log
 InternetOfThings-box/runTunneling.sh
 InternetOfThings-box/runNode.sh
 InternetOfThings-box/serverStatus.sh
