@@ -110,9 +110,6 @@ console.log("                              /'\\                  ".green.bold);
 
 console.log('\nServer HTTP Wait %d'.green.bold, self.port);
 
-get_line('./createTunnel.log', 1, function(err, line){
-  console.log('The line: ' + line);
-})
 
 net.createServer(coapSensor.serverListening).listen(self.tunnelssh.localport, self.tunnelssh.localip);
 console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.bold, self.tunnelssh.localip, self.tunnelssh.localport, self.tunnelssh.remoteip, self.tunnelssh.remoteport);
@@ -120,6 +117,10 @@ console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.b
 
 ServerHTTP.prototype.createReverseTunnel = function(){  
   var self = this;
+  
+  get_line('./createTunnel.log', 1, function(err, line){
+    console.log('The line: ' + line);
+  })
   // inicia o tunel ssh com a cloud
   cp.exec("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "'", function (error, stdout, stderr) {
     if (error instanceof Error) {
