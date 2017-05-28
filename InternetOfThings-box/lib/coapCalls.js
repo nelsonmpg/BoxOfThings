@@ -7,6 +7,7 @@ var url;
 var req;
 var spawn = require('threads').spawn;
 var Sensor;
+var intTime = null;
 var self = this;
 
 var cont = 0;
@@ -20,11 +21,12 @@ module.exports.serverListening = function(sock){
   console.log('CONNECTED: %s:%s'.italic.rainbow, sock.remoteAddress, sock.remotePort);
   sock.on('data', function(data) {
     console.log('DATA ' + sock.remoteAddress + ': ' + data);
-    setTimeout(function(){
+    intTime = setTimeout(function(){
       sock.write(JSON.stringify({aa:cont, zz:cont++}));
   }, 3000);
 });
   sock.on('close', function(data) {
+    clearTimeout(intTime);
     console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
 });
 };
