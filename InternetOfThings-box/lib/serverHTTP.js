@@ -40,7 +40,7 @@ var coapSensor;
    remoteuser : this.configSrv.remoteuser,
    remoteip : this.configSrv.remoteip    
  };
- 
+
  dbUsers = require('./db.js');
   // Carrega para o script as configuraacoes da base de dados
   dbUsers.configDB(this.configDB);
@@ -113,13 +113,14 @@ net.createServer(coapSensor.serverListening).listen(this.tunnelssh.localport, th
 console.log('Server listening Tunnel SSH on %s:%s'.blue.bold, this.tunnelssh.localip, this.tunnelssh.localport);
 };
 
-ServerHTTP.prototype.createReverseTunnel = function(){
+ServerHTTP.prototype.createReverseTunnel = function(){  
+  var self = this;
   // inicia o tunel ssh com a cloud
-  cp.exec("./runTunneling.sh " + this.tunnelssh.remoteport + " " +  this.tunnelssh.localip + " " + this.tunnelssh.localport + " " + this.tunnelssh.remoteuser + " '" + this.tunnelssh.remoteip + "'", function (error, stdout, stderr) {
+  cp.exec("./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "'", function (error, stdout, stderr) {
    if (error !== null) {
     console.log('exec error: ' + error);
-    this.tunnelssh.remoteport = this.tunnelssh.remoteport + 1;
-    console.log("Increment prt number: %s".red.bold, this.tunnelssh.remoteport);
+    self.tunnelssh.remoteport = self.tunnelssh.remoteport + 1;
+    console.log("Increment prt number: %s".red.bold, self.tunnelssh.remoteport);
     self.createReverseTunnel();      
   }
   console.log("tunnel ssh created!!!".green.bold)
