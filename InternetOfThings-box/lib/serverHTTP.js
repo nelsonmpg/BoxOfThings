@@ -121,9 +121,9 @@ ServerHTTP.prototype.createReverseTunnel = function(){
     console.log(error, stdout, stderr);
    if (error !== null) {
     console.log('exec error: ' + error);
-    // self.tunnelssh.remoteport = 1 * self.tunnelssh.remoteport + 1;
+    self.tunnelssh.remoteport = 1 * self.tunnelssh.remoteport + 1;
     console.log("Erro na criação do tunel SHH port : %s".red.bold, self.tunnelssh.remoteport);
-    // self.createReverseTunnel();      
+    self.createReverseTunnel();      
   }
   console.log("tunnel ssh created!!!".green.bold);
 });
