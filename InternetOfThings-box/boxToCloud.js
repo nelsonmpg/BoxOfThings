@@ -1,7 +1,6 @@
 var net = require('net');
-
 var HOST = 'localhost';
-var PORT = 3000;
+var PORT = 3000; 
 var cont = 100;
 // Create a server instance, and chain the listen function to it
 // The function passed to net.createServer() becomes the event handler for the 'connection' event

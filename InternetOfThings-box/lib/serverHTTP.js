@@ -48,14 +48,7 @@ var self = this;
   coapSensor = require('./coapCalls.js');
   coapSensor.configDB(this.configDB);
 
-  // inicia o tunel ssh com a cloud
-  cp.exec("./runTunneling.sh " + this.tunnelssh.remoteport + " " +  this.tunnelssh.localip + " " + this.tunnelssh.localport + " " + this.tunnelssh.remoteuser + " '" + this.tunnelssh.remoteip + "'", function (error, stdout, stderr) {
-    if (error !== null) {
-      console.log('exec error: ' + error);
-    }
-    console.log("tunnel ssh created!!!".green.bold)
-  });
-
+  self.createReverseTunnel();
 };
 
 /**
@@ -118,6 +111,18 @@ console.log("                              /'\\                  ".green.bold);
 console.log('\nServer HTTP Wait %d'.green.bold, self.port);
 net.createServer(coapSensor.serverListening).listen(this.tunnelssh.localport, this.tunnelssh.localip);
 console.log('Server listening Tunnel SSH on %s:%s'.blue.bold, this.tunnelssh.localip, this.tunnelssh.localport);
+};
+
+ServerHTTP.prototype.createReverseTunnel = function(){
+  // inicia o tunel ssh com a cloud
+  cp.exec("./runTunneling.sh " + this.tunnelssh.remoteport + " " +  this.tunnelssh.localip + " " + this.tunnelssh.localport + " " + this.tunnelssh.remoteuser + " '" + this.tunnelssh.remoteip + "'", function (error, stdout, stderr) {
+    if (error !== null) {
+      console.log('exec error: ' + error);
+      this.tunnelssh.remoteport = this.tunnelssh.remoteport + 1;
+      self.createReverseTunnel();      
+    }
+    console.log("tunnel ssh created!!!".green.bold)
+  });
 };
 
 /**

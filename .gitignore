@@ -1,3 +1,4 @@
 *.class
 InternetOfThings-box/node_modules/
 InternetOfThings-box/npm-debug.log
+README.sublime-project

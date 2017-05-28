@@ -1,9 +1,9 @@
 var net = require('net');
-
 var HOST = 'localhost';
-var PORT = 8000;
+var PORT = 8000; 
 
 var client = new net.Socket();
+
 client.connect(PORT, HOST, function() {
 	console.log('CONNECTED TO: ' + HOST + ':' + PORT);
     // Write a message to the socket as soon as the client is connected, the server will receive $
