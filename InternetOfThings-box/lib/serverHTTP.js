@@ -38,7 +38,8 @@ var coapSensor;
    localport : this.configSrv.localport,
    remoteport : this.configSrv.remoteport,
    remoteuser : this.configSrv.remoteuser,
-   remoteip : this.configSrv.remoteip    
+   remoteip : this.configSrv.remoteip,
+   sshport : this.configSrv.sshport    
  };
 
  dbUsers = require('./db.js');
@@ -117,7 +118,7 @@ console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.b
 ServerHTTP.prototype.createReverseTunnel = function(){  
   var self = this;
   // inicia o tunel ssh com a cloud
-  cp.exec("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "'", function (error, stdout, stderr) {
+  cp.exec("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "' " + self.tunnelssh.sshport, function (error, stdout, stderr) {
     if (error instanceof Error) {
       console.log('exec error: ' + error);
       console.log("Erro na criação do tunel SHH port : %s:%s".red.bold, self.tunnelssh.remoteip, self.tunnelssh.remoteport);

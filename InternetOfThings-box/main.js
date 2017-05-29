@@ -27,7 +27,8 @@ var crypto = require('crypto');
       localport : this.config2.sshtunnel.localport,
       remoteport : this.config2.sshtunnel.remoteport,
       remoteuser : this.config2.sshtunnel.remoteuser,
-      remoteip : this.config2.sshtunnel.remoteip
+      remoteip : this.config2.sshtunnel.remoteip,
+      sshport : this.config2.sshtunnel.sshport
     };
 
     // inicia p script e envia as configuracores do ficheiro ini
