@@ -135,11 +135,11 @@ module.exports.createconnetionSSH = function(coap){
     coapSensor = coap;
 
     cp.execSync("sh ./removeAllSSHTunnels.sh");
-console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
     if (fs.existsSync(sshfileconfig)) {
 
         var contents = fs.readFileSync(sshfileconfig).toString();
-console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbb");
+
         configSSH = JSON.parse(contents);
 
         var ssh = new SSH({
@@ -151,12 +151,11 @@ console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbb");
 
         ssh.exec('node ~/node/freePort.js ' + configSSH.remoteport + ' BoxIot-12345', {
           out: function(code) {
-            console.log("ccccccccccccccccccccccccccccccccccccccccccc");
             if (IsJsonString(code)) {
                 var resultSsh = JSON.parse(code);
                 if (configSSH.remoteport != resultSsh.port) {
                     configSSH.remoteport = resultSsh.port;
-                    fs.writeFile('configssh.json', configSSH, 'utf8',function(err){
+                    fs.writeFile('configssh.json', JSON.stringify(configSSH), 'utf8',function(err){
                         if (err){ 
                             console.log("Erro ao tentar gravar o ficheiro.".red.bold);
                         } else {
