@@ -9,6 +9,7 @@ var socketio = require('socket.io');
 var bodyParser = require('body-parser');
 var cp = require('child_process');
 var ini = require('ini');
+var SSH = require('simple-ssh');
 var serverIo = require('./serverio');
 var osquerys = require("./linuxquery");
 var dbUsers;
@@ -115,8 +116,20 @@ net.createServer(coapSensor.serverListening).listen(self.tunnelssh.localport, se
 console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.bold, self.tunnelssh.localip, self.tunnelssh.localport, self.tunnelssh.remoteip, self.tunnelssh.remoteport);
 };
 
-ServerHTTP.prototype.createReverseTunnel = function(){  
-  var self = this;
+ServerHTTP.prototype.createReverseTunnel = function(){ 
+  var self = this; 
+  var ssh = new SSH({
+    host: self.tunnelssh.remoteip,
+    user: self.tunnelssh.remoteuser,
+    key: fs.readFileSync('/home/meiiot/.ssh/id_rsa')
+  });
+  ssh.exec('node ~/node/freePort.js 25 BoxIot-12345', {
+    out: function(code) {
+      console.log(code);
+    }
+
+
+
   // inicia o tunel ssh com a cloud
   cp.exec("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "' " + self.tunnelssh.sshport, function (error, stdout, stderr) {
     if (error instanceof Error) {
@@ -128,6 +141,8 @@ ServerHTTP.prototype.createReverseTunnel = function(){
     console.log('stderr ', stderr);
     console.log("tunnel ssh created!!!".green.bold);
   });
+}).start();
+
 };
 
 /**
