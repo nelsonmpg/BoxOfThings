@@ -9,7 +9,6 @@ var socketio = require('socket.io');
 var bodyParser = require('body-parser');
 var cp = require('child_process');
 var ini = require('ini');
-var SSH = require('simple-ssh');
 var serverIo = require('./serverio');
 var osquerys = require("./linuxquery");
 var dbUsers;
@@ -27,6 +26,7 @@ var coapSensor;
   this.io = socketio(this.server);
   this.configSrv = config;
   this.port = this.configSrv.portlocalserver;
+  this.configok = this.configSrv.configok;
   this.configDB = {
    dataBaseType: this.configSrv.dataBaseType,
    host: this.configSrv.host,
@@ -51,26 +51,13 @@ var coapSensor;
 
   coapSensor = require('./coapCalls.js');
   coapSensor.configDB(this.configDB);
+  
+  if (self.configok) {
+    osquerys.createconnetionSSH();
+  } else {
+    console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
+  }
 
-  // cp.execSync("sh ./removeAllSSHTunnels.sh");
-
-  var ssh = new SSH({
-    host: self.tunnelssh.remoteip,
-    user: self.tunnelssh.remoteuser,
-    key: fs.readFileSync(self.tunnelssh.publicrsa)
-  });
-  ssh.exec('node ~/node/freePort.js ' + self.tunnelssh.remoteport + ' BoxIot-12345', {
-    out: function(code) {
-      var resultSsh = JSON.parse(code);
-      self.tunnelssh.remoteport = resultSsh.port;
-
-      self.createReverseTunnel();
-
-      net.createServer(coapSensor.serverListening).listen(self.tunnelssh.localport, self.tunnelssh.localip);
-      console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.bold, self.tunnelssh.localip, self.tunnelssh.localport, self.tunnelssh.remoteip, self.tunnelssh.remoteport);
-      console.log("Remote access Box 'user %s port %s'.".blue.bold, self.tunnelssh.localip, self.tunnelssh.remoteport);
-    }
-  }).start();
 };
 
 /**
@@ -131,21 +118,6 @@ console.log("                              \\./             ._|  ".green.bold);
 console.log("                              /'\\                  ".green.bold);
 
 console.log('\nServer HTTP Wait %d'.green.bold, self.port);
-};
-
-ServerHTTP.prototype.createReverseTunnel = function(){ 
-  var self = this;
-  // inicia o tunel ssh com a cloud
-  cp.exec("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "' " + self.tunnelssh.sshport, function (error, stdout, stderr) {
-    if (error instanceof Error) {
-      console.log('exec error: ' + error);
-      console.log("Erro na criação do tunel SHH port : %s:%s".red.bold, self.tunnelssh.remoteip, self.tunnelssh.remoteport);
-      return;
-    }
-    console.log('stdout ', stdout);
-    console.log('stderr ', stderr);
-    console.log("tunnel ssh created!!!".green.bold);
-  });
 };
 
 /**

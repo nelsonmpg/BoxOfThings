@@ -18,6 +18,7 @@ var crypto = require('crypto');
     // carrega as configuracoes do ficheiro ini para as variaveis
     args = {
       portlocalserver: this.config2.global.portlocalserver,
+      configok: this.config2.global.configok,
       dataBaseType: this.config2.database.dataBaseType,
       host: this.config2.database.host,
       dbname : this.config2.database.dbname,

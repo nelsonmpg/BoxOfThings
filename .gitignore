@@ -5,7 +5,6 @@ InternetOfThings-box/node_modules/
 InternetOfThings-box/npm-debug.log
 InternetOfThings-box/*.ini
 InternetOfThings-box/MainConfig.ini
-InternetOfThings-box/*.json
 InternetOfThings-box/configssh.json
 README.sublime-project
 README.sublime-workspace

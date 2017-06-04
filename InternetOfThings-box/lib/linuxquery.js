@@ -5,6 +5,8 @@ var cp = require('child_process');
 var fs = require('fs');
 var ini = require('ini');
 var request = require("request");
+var SSH = require('simple-ssh');
+var configSSH = null;
 
 
 module.exports.getHtmlText = function (req, res) {
@@ -23,7 +25,7 @@ module.exports.getHtmlText = function (req, res) {
  * @param {type} res
  * @returns {undefined}
  */
-module.exports.getinifileparams = function (req, res) {
+ module.exports.getinifileparams = function (req, res) {
     var fileconfig = './ConfigSKT.ini';
     var configexist = checkconfigexist(fileconfig);
     var datavals = [];
@@ -58,32 +60,19 @@ module.exports.getinifileparams = function (req, res) {
  * @param {type} res
  * @returns {undefined}
  */
-module.exports.savesettings = function (req, res) {
-    var fini = "; isto e um comentario\n[global]" +
-            "\nconfig = true" +
-            "\nfilemonitor = " + req.body.data.filemonitor +
-            "\nautostart = " + req.body.data.autostart +
-            "\nsshaccess = " + req.body.data.sshport +
-            "\n\n; definicao da base de dados\n[database]" +
-            "\nsitename= " + req.body.data.sitename +
-            "\nhost = " + req.body.data.host +
-            "\nport = " + req.body.data.port +
-            "\nprojectname = " + req.body.data.password +
-            "\n\n; local do sensor\n[localsensor]" +
-            "\ncheckposition = false" +
-            "\nmorada = " + req.body.data.morada +
-            "\nnomeSensor = " + req.body.data.nomeSensor +
-            "\nlatitude = " + req.body.data.latitude +
-            "\nlongitude = " + req.body.data.longitude +
-            "\nposx = " + req.body.data.posx +
-            "\nposy = " + req.body.data.posy +
-            "\nplant = " + req.body.data.plant;
-
-    fs.writeFile("./ConfigSKT.ini", fini, function (err) {
-        if (err) {
-            res.json(err);
+ module.exports.savesettings = function (req, res) {    
+    var json = JSON.stringify(req.body.data);
+    
+    fs.writeFile('configssh.json', json, 'utf8',function(err){
+        if (err){           
+            res.send({
+                status: err
+            });
+        } else {
+            res.send({
+                status:"ok"
+            });
         }
-        res.json("save");
     });
 };
 
@@ -93,12 +82,78 @@ module.exports.getLastGitUpdate = function (req, res) {
     });
 };
 
+module.exports.createconnetionSSH = function(){
+    var self = this;
+
+    cp.execSync("sh ./removeAllSSHTunnels.sh");
+
+    if (fs.existsSync('configssh.json')) {
+
+        var contents = fs.readFileSync('configssh.json').toString();
+
+        configSSH = JSON.parse(contents);
+
+        var ssh = new SSH({
+          host: configSSH.remoteip,
+          user: configSSH.remoteuser,
+          port: configSSH.sshport,
+          key: fs.readFileSync(configSSH.privatersa.toString("utf8"))
+      });
+
+        console.log(configSSH, ssh);
+        ssh.exec('node ~/node/freePort.js ' + configSSH.remoteport + ' BoxIot-12345', {
+          out: function(code) {
+            try {
+                var resultSsh = JSON.parse(code);
+                if (configSSH.remoteport != resultSsh.port) {
+                    configSSH.remoteport = resultSsh.port;
+                    fs.writeFile('configssh.json', json, 'utf8',function(err){
+                        if (err){ 
+                            console.log("Erro ao tentar gravar o ficheiro.".red.bold);
+                        } else {
+                            console.log("O ficheiro de configuração do SSH foi atualizado.".green.bold);
+                        }
+                    });
+                }
+                console.log("asrdfsgggggggggggggggggggggggggg");
+
+                self.createReverseTunnel();
+
+                net.createServer(coapSensor.serverListening).listen(configSSH.localport, configSSH.localip);
+                console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.bold, configSSH.localip, configSSH.localport, configSSH.remoteip, configSSH.remoteport);
+                console.log("Remote access Box 'user %s port %s'.".blue.bold, configSSH.localip, configSSH.remoteport);
+            } catch (e) {
+                console.log("Erro ao tentar converter o ficheiro para JSON.".red.bold);
+            }
+        }
+    }).start();
+    } else {
+     console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
+ }
+};
+
+module.exports.createReverseTunnel = function(){ 
+  var self = this;
+  console.log("2345675543245676654");
+  // // inicia o tunel ssh com a cloud
+  // cp.exec("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "' " + self.tunnelssh.sshport, function (error, stdout, stderr) {
+  //   if (error instanceof Error) {
+  //     console.log('exec error: ' + error);
+  //     console.log("Erro na criação do tunel SHH port : %s:%s".red.bold, self.tunnelssh.remoteip, self.tunnelssh.remoteport);
+  //     return;
+  //   }
+  //   console.log('stdout ', stdout);
+  //   console.log('stderr ', stderr);
+  //   console.log("tunnel ssh created!!!".green.bold);
+  // });
+};
+
 /**
  * Verifica se o ficheiro existe
  * @param {type} file
  * @returns {Boolean}
  */
-var checkconfigexist = function (file) {
+ var checkconfigexist = function (file) {
     var config;
     try {
         // try to get the override configuration file if it exists

@@ -1,0 +1,139 @@
+<!-- Info boxes -->
+<div class="row">
+   <!-- Info boxes -->
+   <div class="col-md-12">
+      <div class="box">
+         <div  class="box-header with-border">
+            <h2 class="box-title">
+               <i class="fa fa-server"></i> 
+               Config SSH Connection
+            </h2>
+         </div>
+         <div class="box-body">
+            <div class="row with-border">
+               <div  class="box-header with-border">
+                  <div class="box">
+                     <div  class="box-header with-border">
+                        <h4 class="box-title">
+                           <i class="fa fa-server"></i> 
+                           Config SSH Local Connection
+                        </h4>
+                     </div>
+                     <div class="box-body">
+                        <div class="row with-border">
+                           <div class="col-md-2">
+                              <label class="vcenter">Local IP:</label>
+                           </div>
+                           <div class="col-md-3">
+                              <input id="local-ip" class="width100 valid-input form-control" data-typevalue="local-ip" type="text" placeholder="127.0.0.1" value="127.0.0.1" data-inputmask="'alias': 'Local IP'" data-mask="">
+                           </div>
+                           <div class="col-md-1">
+                              <span class="whith10p color-red" data-toggle="tooltip" title="Inseert a valid IP.">
+                              <i class="icon fa fa-close"></i>
+                              </span>
+                           </div>
+                           <!-- /.box-body --> 
+                           <div class="col-md-2">
+                              <label class="vcenter">Local Port:</label>
+                           </div>
+                           <div class="col-md-3">
+                              <input id="local-port" class="width100 valid-input form-control" data-typevalue="local-port" type="text" placeholder="3000" value="3000">
+                           </div>
+                           <!-- /.box-body --> 
+                           <div class="col-md-1">
+                              <span class="whith10p color-red" data-toggle="tooltip" title="Insert a valid port namber.">
+                              <i class="icon fa fa-close"></i>
+                              </span>
+                           </div>
+                           <div class="col-md-2">
+                              <label class="vcenter">Local Path Private Key;</label>
+                           </div>
+                           <div class="col-md-9">
+                              <input id="local-privatekey" class="width100 valid-input form-control" data-typevalue="local-privatekey" type="text" placeholder="/home/BoxIot/.ssh/id_rsa" value="/home/BoxIot/.ssh/id_rsa">
+                           </div>
+                           <div class="col-md-1">
+                              <span class="whith10p color-red" data-toggle="tooltip" title="Insert a valid path to private RSA Key.">
+                              <i class="icon fa fa-close"></i>
+                              </span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="box">
+                     <div  class="box-header with-border">
+                        <h4 class="box-title">
+                           <i class="fa fa-server"></i> 
+                           Config SSH Remote Connection
+                        </h4>
+                     </div>
+                     <div class="box-body">
+                        <div class="row with-border">
+                           <div class="col-md-2">
+                              <label class="vcenter">Remote IP:</label>
+                           </div>
+                           <div class="col-md-3">
+                              <input id="remote-ip" class="width100 valid-input form-control" data-typevalue="remote-ip" type="text" placeholder="127.0.0.1" value="127.0.0.1" data-inputmask="'alias': 'Remote IP'" data-mask="">
+                           </div>
+                           <div class="col-md-1">
+                              <span class="whith10p color-red" data-toggle="tooltip" title="Inseert a valid IP.">
+                              <i class="icon fa fa-close"></i>
+                              </span>
+                           </div>
+                           <div class="col-md-2">
+                              <label class="vcenter">Remote Port:</label>
+                           </div>
+                           <div class="col-md-3">
+                              <input id="remote-port" class="width100 valid-input form-control" data-typevalue="remote-port" type="text" placeholder="1000" value="1000">
+                           </div>
+                           <div class="col-md-1">
+                              <span class="whith10p color-red" data-toggle="tooltip" title="Insert a valid port namber.">
+                              <i class="icon fa fa-close"></i>
+                              </span>
+                           </div>
+                           <div class="col-md-2">
+                              <label class="vcenter">Remote User:</label>
+                           </div>
+                           <div class="col-md-3">
+                              <input id="remote-user" class="width100 valid-input form-control" data-typevalue="remote-user" type="text" placeholder="root" value="root" data-inputmask="'alias': 'Remote User'" data-mask="">
+                           </div>
+                           <div class="col-md-1">
+                              <span class="whith10p color-red" data-toggle="tooltip" title="Inseert a valid IP.">
+                              <i class="icon fa fa-close"></i>
+                              </span>
+                           </div>
+                           <div class="col-md-2">
+                              <label class="vcenter">Remote SSH Default Port:</label>
+                           </div>
+                           <div class="col-md-3">
+                              <input id="remote-defport" class="width100 valid-input form-control" data-typevalue="remote-defport" type="text" placeholder="22" value="22">
+                           </div>
+                           <div class="col-md-1">
+                              <span class="whith10p color-red" data-toggle="tooltip" title="Insert a valid port namber.">
+                              <i class="icon fa fa-close"></i>
+                              </span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="box">
+         <div  class="box-header with-border">
+            <h4 class="box-title"></i></h4>
+         </div>
+         <div class="box-body">
+            <div class="row with-border">
+               <div class="col-md-2">
+                <button id="save-settings" type="button" class="btn btn-default width100" >
+                  <label> Save Settings 
+                    <i class="fa fa-save"></i>
+                  </label>
+                </button>
+              </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

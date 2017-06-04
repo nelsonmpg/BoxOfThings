@@ -16,6 +16,7 @@ var Router = Backbone.Router.extend({
     content: undefined,
     footer: undefined,
     configform: undefined,
+    configbox: undefined,
     loginform: undefined,
     about: undefined,
 //    socketclt: null,
@@ -67,6 +68,7 @@ var Router = Backbone.Router.extend({
         "": "login",
         //Pagina Inicial
         "Inicio": "inicio",
+        "ConfigBox": "boxconfig",
         "ConfigSite": "configsite",
         "Terminal": "cmdterminal",
         "About": "aCercaDe",
@@ -80,6 +82,8 @@ var Router = Backbone.Router.extend({
         this.contentnav = undefined;
         this.content = undefined;
         this.footer = undefined;
+        this.configform= undefined;
+        this.configbox= undefined;
         this.loginform = undefined;
         this.terminalcmd = undefined;
 //        if (this.socketclt) {
@@ -139,6 +143,15 @@ var Router = Backbone.Router.extend({
             self.footer.init();
         });
     },
+    boxconfig : function (){
+        var self = this;
+        self.verificaLogin(function () {
+            self.configbox = new ConfigBoxView({});
+            $('#content').html(self.configbox.render().el);
+            self.configbox.init();
+            self.contentnav.setView("Config Box");
+        });
+    },
     // carrega as configuracoes do site
     configsite: function () {
         var self = this;
@@ -153,8 +166,8 @@ var Router = Backbone.Router.extend({
         var self = this;
         self.verificaLogin(function () {
             self.contentnav.setView("Terminal");
-  //          self.terminalcmd = new TerminalView({socket: self.socketclt});
-            $('#content').html(self.terminalcmd.render().el);
+           self.terminalcmd = new TerminalView({socket: self.socketclt});
+            // $('#content').html(self.terminalcmd.render().el);
             self.terminalcmd.init();
         });
     },
@@ -189,6 +202,7 @@ templateLoader.load([
     "InicioView",
     "SideBarView",
     "FooterView",
+    "ConfigBoxView",
     "ConfigSiteView",
     "ContentNavView",
     "TerminalView",
