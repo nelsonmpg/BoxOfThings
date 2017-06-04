@@ -40,17 +40,17 @@ User.prototype.loginUser = function(params, res) {
 	var self = this;
     this.UserDB.findOne(params, function(err, user) {
         if (err) {
-            res.send({
+            res.json({
                 status: "error",
                 stdout : err
             });
         } else if (!user) {
-            res.send({
+            res.json({
                 status: "login error",
                 stdout : "O utilizador não foi encontrrado"
             });
         } else {
-            res.send({
+            res.json({
                 status: "login OK",
                 stdout : ""
             });

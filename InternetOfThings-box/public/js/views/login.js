@@ -25,7 +25,7 @@ window.LoginView = Backbone.View.extend({
     modem('POST', "/login",
       function (data) {
         if (data.status == "login OK") {
-          self.loginuser(data);
+          self.loginuser(data.status);
         } else {
           showmsg('.my-modal', "error", "Login Fail. Bad credentials. " + data.stdout, true);
 

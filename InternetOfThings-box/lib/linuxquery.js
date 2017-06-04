@@ -135,7 +135,7 @@ module.exports.createconnetionSSH = function(coap){
     if (coap) {
         coapSensor = coap;
     }
-    cp.execSync("sh ./removeAllSSHTunnels.sh");
+    // cp.execSync("sh ./removeAllSSHTunnels.sh");
 
     if (fs.existsSync(sshfileconfig)) {
 
