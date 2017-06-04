@@ -52,6 +52,8 @@ var coapSensor;
   coapSensor = require('./coapCalls.js');
   coapSensor.configDB(this.configDB);
 
+  cp.execSync("sh ./removeAllSSHTunnels.sh");
+
   var ssh = new SSH({
     host: self.tunnelssh.remoteip,
     user: self.tunnelssh.remoteuser,
