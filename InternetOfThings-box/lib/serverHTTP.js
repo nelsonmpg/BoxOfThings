@@ -129,6 +129,8 @@ ServerHTTP.prototype.createReverseTunnel = function(){
     }
   }).start();
 
+  // cp.execSync("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "' " + self.tunnelssh.sshport);
+
 
   // inicia o tunel ssh com a cloud
   var portssh = cp.spawnSync("sh",["./runTunneling.sh", self.tunnelssh.remoteport, self.tunnelssh.localip, self.tunnelssh.localport, self.tunnelssh.remoteuser, self.tunnelssh.remoteip, self.tunnelssh.sshport], { encoding : 'utf8' });
