@@ -36,23 +36,29 @@ var User = function(cfg) {
     });
 };
 
-User.prototype.loginUser = function(params, res, next) {
+User.prototype.loginUser = function(params, res) {
 	var self = this;
     this.UserDB.findOne(params, function(err, user) {
         if (err) {
-            return next(new Error('failed to find user'));
+            res.send({
+                status: "error",
+                stdout : err
+            });
+        } else if (!user) {
+            res.send({
+                status: "login error",
+                stdout : "O utilizador não foi encontrrado"
+            });
+        } else {
+            res.send({
+                status: "login OK",
+                stdout : ""
+            });
         }
-        if (!user) {
-            return next(new Error('failed to find user'));
-        }
-        // object of the user
-        //console.log(user);
-        res.json("userOk");
-        next();
     });
 };
 
-User.prototype.InsertUser = function(params, res, next) {
+User.prototype.InsertUser = function(params, res) {
 	var self = this;
     // Recebendo os parâmetros da requisição
     // create a new user
@@ -63,10 +69,8 @@ User.prototype.InsertUser = function(params, res, next) {
         if (err) {
             return;
         }
-        console.log('User created!');
-        if (next) {
-        	res.json('ok');
-        }        
+        console.log('User created!');       
+        //res.json('ok');
     });
 };
 

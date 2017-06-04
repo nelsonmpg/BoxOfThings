@@ -121,7 +121,6 @@ module.exports.getHtmlText = function (req, res) {
                 Console.log("Erro ao ler o ficherio de configuracao global.".red.bold);
             }
         }
-        self.createconnetionSSH(null);
     });
 };
 
