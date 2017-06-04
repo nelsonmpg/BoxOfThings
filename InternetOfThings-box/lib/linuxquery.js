@@ -142,11 +142,10 @@ module.exports.createconnetionSSH = function(coap){
               port: configSSH.sshport,
               key: fs.readFileSync(configSSH.privatersa.toString("utf8"))
           });
-console.log(configSSH);
+
             ssh.exec('node ~/node/freePort.js ' + configSSH.remoteport + ' ' + configSSH.boxname, {
               out: function(code) {
                 if (IsJsonString(code)) {
-                    console.log(code);
                     var resultSsh = JSON.parse(code);
                     if (configSSH.remoteport != resultSsh.port) {
                         configSSH.remoteport = resultSsh.port;

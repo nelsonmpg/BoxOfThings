@@ -23,7 +23,6 @@ window.ConfigBoxView = Backbone.View.extend({
     modem("GET",
      "/paramsinifile",
      function (data) {
-      console.log(data);
       if (data.status === "File Ok") {
         $("#local-ip").val(data.stdout.localip);
         $("#local-port").val(data.stdout.localport);
@@ -121,9 +120,6 @@ window.ConfigBoxView = Backbone.View.extend({
        var json = JSON.parse(xhr.responseText);
        error_launch(json.message);
      }, {data: configsshData});
-
-      console.log(configsshData);
-
     } else {
       showmsg('.my-modal', "error", "Bad Values to Save, check the <i class='icon fa fa-close'>.", true);
     }
