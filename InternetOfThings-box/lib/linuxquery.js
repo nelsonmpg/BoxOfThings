@@ -1,6 +1,7 @@
 /* global module */
 
 require('colors');
+var net = require('net');
 var cp = require('child_process');
 var fs = require('fs');
 var ini = require('ini');
@@ -115,7 +116,6 @@ module.exports.createconnetionSSH = function(){
                         }
                     });
                 }
-                console.log("asrdfsgggggggggggggggggggggggggg");
 
                 self.createReverseTunnel();
 
@@ -128,8 +128,8 @@ module.exports.createconnetionSSH = function(){
         }
     }).start();
     } else {
-     console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
- }
+       console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
+   }
 };
 
 module.exports.createReverseTunnel = function(){ 
