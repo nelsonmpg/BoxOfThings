@@ -139,42 +139,45 @@ module.exports.createconnetionSSH = function(coap){
     if (fs.existsSync(sshfileconfig)) {
 
         var contents = fs.readFileSync(sshfileconfig).toString();
+        if (IsJsonString(contents)) {
+            configSSH = JSON.parse(contents);
 
-        configSSH = JSON.parse(contents);
+            var ssh = new SSH({
+              host: configSSH.remoteip,
+              user: configSSH.remoteuser,
+              port: configSSH.sshport,
+              key: fs.readFileSync(configSSH.privatersa.toString("utf8"))
+          });
 
-        var ssh = new SSH({
-          host: configSSH.remoteip,
-          user: configSSH.remoteuser,
-          port: configSSH.sshport,
-          key: fs.readFileSync(configSSH.privatersa.toString("utf8"))
-      });
+            ssh.exec('node ~/node/freePort.js ' + configSSH.remoteport + ' BoxIot-12345', {
+              out: function(code) {
+                if (IsJsonString(code)) {
+                    var resultSsh = JSON.parse(code);
+                    if (configSSH.remoteport != resultSsh.port) {
+                        configSSH.remoteport = resultSsh.port;
+                        fs.writeFile('configssh.json', JSON.stringify(configSSH), 'utf8',function(err){
+                            if (err){ 
+                                console.log("Erro ao tentar gravar o ficheiro.".red.bold);
+                            } else {
+                                console.log("O ficheiro de configuração do SSH foi atualizado.".green.bold);
+                            }
+                        });
+                    }
 
-        ssh.exec('node ~/node/freePort.js ' + configSSH.remoteport + ' BoxIot-12345', {
-          out: function(code) {
-            if (IsJsonString(code)) {
-                var resultSsh = JSON.parse(code);
-                if (configSSH.remoteport != resultSsh.port) {
-                    configSSH.remoteport = resultSsh.port;
-                    fs.writeFile('configssh.json', JSON.stringify(configSSH), 'utf8',function(err){
-                        if (err){ 
-                            console.log("Erro ao tentar gravar o ficheiro.".red.bold);
-                        } else {
-                            console.log("O ficheiro de configuração do SSH foi atualizado.".green.bold);
-                        }
-                    });
+                    self.createReverseTunnel();
+
+                    net.createServer(coapSensor.serverListening).listen(configSSH.localport, configSSH.localip);
+                    console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.bold, configSSH.localip, configSSH.localport, configSSH.remoteip, configSSH.remoteport);
+                    console.log("Remote access Box 'user %s port %s'.".blue.bold, configSSH.localip, configSSH.remoteport);
+                } else {
+                    console.log("Erro ao tentar converter o ficheiro para JSON.".red.bold);
                 }
-
-                self.createReverseTunnel();
-
-                net.createServer(coapSensor.serverListening).listen(configSSH.localport, configSSH.localip);
-                console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.bold, configSSH.localip, configSSH.localport, configSSH.remoteip, configSSH.remoteport);
-                console.log("Remote access Box 'user %s port %s'.".blue.bold, configSSH.localip, configSSH.remoteport);
-            } else {
-                console.log("Erro ao tentar converter o ficheiro para JSON.".red.bold);
             }
-        }
-    }).start();
-    } else {
+        }).start();
+        } else {
+           console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
+       }
+   } else {
        console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
    }
 };
