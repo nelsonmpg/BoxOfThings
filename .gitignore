@@ -1,8 +1,8 @@
 *.class
 *.log
+*.ini
 InternetOfThings-box/node_modules/
 InternetOfThings-box/npm-debug.log
-InternetOfThings-box/*.ini
 README.sublime-project
 README.sublime-workspace
 Vagrantfile
