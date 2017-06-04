@@ -50,7 +50,19 @@ var coapSensor;
   coapSensor = require('./coapCalls.js');
   coapSensor.configDB(this.configDB);
 
-  self.createReverseTunnel();
+  var ssh = new SSH({
+    host: self.tunnelssh.remoteip,
+    user: self.tunnelssh.remoteuser,
+    key: fs.readFileSync('/home/meiiot/.ssh/id_rsa')
+  });
+  ssh.exec('node ~/node/freePort.js ' + self.tunnelssh.remoteport + ' BoxIot-12345', {
+    out: function(code) {
+      var resultSsh = JSON.parse(code);
+      self.tunnelssh.remoteport = resultSsh.port;
+
+      self.createReverseTunnel();
+    }
+  }).start();
 };
 
 /**
@@ -117,51 +129,18 @@ console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.b
 };
 
 ServerHTTP.prototype.createReverseTunnel = function(){ 
-  var self = this; 
-  var ssh = new SSH({
-    host: self.tunnelssh.remoteip,
-    user: self.tunnelssh.remoteuser,
-    key: fs.readFileSync('/home/meiiot/.ssh/id_rsa')
-  });
-  ssh.exec('node ~/node/freePort.js 25 BoxIot-12345', {
-    out: function(code) {
-      console.log(code);
-
-      cp.exec("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "' " + self.tunnelssh.sshport, function (error, stdout, stderr) {
-        if (error instanceof Error) {
-          console.log('exec error: ' + error);
-          console.log("Erro na criação do tunel SHH port : %s:%s".red.bold, self.tunnelssh.remoteip, self.tunnelssh.remoteport);
-          return;
-        }
-        console.log('stdout ', stdout);
-        console.log('stderr ', stderr);
-        console.log("tunnel ssh created!!!".green.bold);
-      });
-
-
-      var portssh = cp.spawnSync("sh",["./runTunneling.sh", self.tunnelssh.remoteport, self.tunnelssh.localip, self.tunnelssh.localport, self.tunnelssh.remoteuser, self.tunnelssh.remoteip, self.tunnelssh.sshport], { encoding : 'utf8' });
-
-      console.log(portssh.stdout);
-      console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-      console.log(portssh);
+  var self = this;
+  // inicia o tunel ssh com a cloud
+  cp.exec("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "' " + self.tunnelssh.sshport, function (error, stdout, stderr) {
+    if (error instanceof Error) {
+      console.log('exec error: ' + error);
+      console.log("Erro na criação do tunel SHH port : %s:%s".red.bold, self.tunnelssh.remoteip, self.tunnelssh.remoteport);
+      return;
     }
-  }).start();
-
-  // cp.execSync("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "' " + self.tunnelssh.sshport);
-
-
-  // // inicia o tunel ssh com a cloud
-  // cp.exec("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "' " + self.tunnelssh.sshport, function (error, stdout, stderr) {
-  //   if (error instanceof Error) {
-  //     console.log('exec error: ' + error);
-  //     console.log("Erro na criação do tunel SHH port : %s:%s".red.bold, self.tunnelssh.remoteip, self.tunnelssh.remoteport);
-  //     return;
-  //   }
-  //   console.log('stdout ', stdout);
-  //   console.log('stderr ', stderr);
-  //   console.log("tunnel ssh created!!!".green.bold);
-  // });
-
+    console.log('stdout ', stdout);
+    console.log('stderr ', stderr);
+    console.log("tunnel ssh created!!!".green.bold);
+  });
 };
 
 /**
