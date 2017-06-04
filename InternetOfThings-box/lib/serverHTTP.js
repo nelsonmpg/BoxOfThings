@@ -66,7 +66,7 @@ var coapSensor;
 
       net.createServer(coapSensor.serverListening).listen(self.tunnelssh.localport, self.tunnelssh.localip);
       console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.bold, self.tunnelssh.localip, self.tunnelssh.localport, self.tunnelssh.remoteip, self.tunnelssh.remoteport);
-      console.log("Remote to access Box exec ssh %s -p %s".blue.bold, this.configSrv.localip, self.tunnelssh.remoteport);
+      console.log("Remote to access Box exec ssh %s -p %s".blue.bold, self.tunnelssh.localip, self.tunnelssh.remoteport);
     }
   }).start();
 };
