@@ -135,17 +135,33 @@ console.log('\nServer HTTP Wait %d'.green.bold, self.port);
 
 ServerHTTP.prototype.createReverseTunnel = function(){ 
   var self = this;
+
+  var child = cp.execSync("sh", ["./runTunneling.sh", self.tunnelssh.remoteport,  self.tunnelssh.localip, self.tunnelssh.localport, self.tunnelssh.remoteuser,self.tunnelssh.remoteip,self.tunnelssh.sshport], { encoding : 'utf8' });
+
+//spit stdout to screen
+child.stdout.on('data', function (data) {   console.log(data.toString());  });
+
+//spit stderr to screen
+child.stderr.on('data', function (data) {   console.log(data.toString());  });
+
+child.on('close', function (code) { 
+  console.log("Finished with code " + code);
+});
+// uncomment the following if you want to see everything returned by the spawnSync command
+// console.log('ls: ' , ls);
+console.log('stdout here: \n' + child.stdout);
+
   // inicia o tunel ssh com a cloud
-  cp.exec("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "' " + self.tunnelssh.sshport, function (error, stdout, stderr) {
-    if (error instanceof Error) {
-      console.log('exec error: ' + error);
-      console.log("Erro na criação do tunel SHH port : %s:%s".red.bold, self.tunnelssh.remoteip, self.tunnelssh.remoteport);
-      return;
-    }
-    console.log('stdout ', stdout);
-    console.log('stderr ', stderr);
-    console.log("tunnel ssh created!!!".green.bold);
-  });
+  // cp.exec("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "' " + self.tunnelssh.sshport, function (error, stdout, stderr) {
+  //   if (error instanceof Error) {
+  //     console.log('exec error: ' + error);
+  //     console.log("Erro na criação do tunel SHH port : %s:%s".red.bold, self.tunnelssh.remoteip, self.tunnelssh.remoteport);
+  //     return;
+  //   }
+  //   console.log('stdout ', stdout);
+  //   console.log('stderr ', stderr);
+  //   console.log("tunnel ssh created!!!".green.bold);
+});
 };
 
 /**
