@@ -40,7 +40,9 @@ var coapSensor;
    remoteport : this.configSrv.remoteport,
    remoteuser : this.configSrv.remoteuser,
    remoteip : this.configSrv.remoteip,
-   sshport : this.configSrv.sshport    
+   sshport : this.configSrv.sshport,
+   publicrsa : this.configSrv.publicrsa
+
  };
 
  dbUsers = require('./db.js');
@@ -53,7 +55,7 @@ var coapSensor;
   var ssh = new SSH({
     host: self.tunnelssh.remoteip,
     user: self.tunnelssh.remoteuser,
-    key: fs.readFileSync('/home/meiiot/.ssh/id_rsa')
+    key: fs.readFileSync(self.tunnelssh.publicrsa)
   });
   ssh.exec('node ~/node/freePort.js ' + self.tunnelssh.remoteport + ' BoxIot-12345', {
     out: function(code) {
@@ -63,7 +65,7 @@ var coapSensor;
       console.log(self.tunnelssh);
 
       self.createReverseTunnel();
-      
+
       net.createServer(coapSensor.serverListening).listen(self.tunnelssh.localport, self.tunnelssh.localip);
       console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.bold, self.tunnelssh.localip, self.tunnelssh.localport, self.tunnelssh.remoteip, self.tunnelssh.remoteport);
     }
