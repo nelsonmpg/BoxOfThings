@@ -109,7 +109,7 @@ module.exports.createconnetionSSH = function(coap){
                 var resultSsh = JSON.parse(code);
                 if (configSSH.remoteport != resultSsh.port) {
                     configSSH.remoteport = resultSsh.port;
-                    fs.writeFile('configssh.json', json, 'utf8',function(err){
+                    fs.writeFile('configssh.json', configSSH, 'utf8',function(err){
                         if (err){ 
                             console.log("Erro ao tentar gravar o ficheiro.".red.bold);
                         } else {
