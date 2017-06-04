@@ -1,11 +1,13 @@
 #!/bin/bash
-# verifica se  o tunnel existe se não executa o script para o criar
+# verifica se  o tunnel existe se nÃ£o executa o script para o criar
 for x in "$(ps aux | grep  "ssh -fN -R" | grep -v pts/0 |  tr -s " " " " | cut -d' ' -f2)"; do
    sudo kill -9 $x
 done
 
 echo "ssh -fN -R $1:$2:$3 $4@$5"
 `ssh -fN -R $1:$2:$3 $4@$5 -p $6 2> createTunnel.log`
+
+echo "tunnel run."
 
 # Ciar tunel
 # Porta Remota para acesso 							= 8000
