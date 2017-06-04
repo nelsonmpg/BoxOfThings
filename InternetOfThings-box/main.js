@@ -23,14 +23,7 @@ var crypto = require('crypto');
       host: this.config2.database.host,
       dbname : this.config2.database.dbname,
       user: this.config2.userportal.user,
-      pass: this.config2.userportal.pass,
-      localip : this.config2.sshtunnel.localip,
-      localport : this.config2.sshtunnel.localport,
-      remoteport : this.config2.sshtunnel.remoteport,
-      remoteuser : this.config2.sshtunnel.remoteuser,
-      remoteip : this.config2.sshtunnel.remoteip,
-      sshport : this.config2.sshtunnel.sshport,
-      publicrsa : this.config2.sshtunnel.publicrsa
+      pass: this.config2.userportal.pass
     };
 
     // inicia p script e envia as configuracores do ficheiro ini

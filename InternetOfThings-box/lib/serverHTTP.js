@@ -33,16 +33,6 @@ var coapSensor;
    pass: this.configSrv.pass,
    dbname : this.configSrv.dbname
  }; 
- this.tunnelssh = {
-   localip : this.configSrv.localip,
-   localport : this.configSrv.localport,
-   remoteport : this.configSrv.remoteport,
-   remoteuser : this.configSrv.remoteuser,
-   remoteip : this.configSrv.remoteip,
-   sshport : this.configSrv.sshport,
-   publicrsa : this.configSrv.publicrsa
-
- };
 
  dbUsers = require('./db.js');
   // Carrega para o script as configuraacoes da base de dados

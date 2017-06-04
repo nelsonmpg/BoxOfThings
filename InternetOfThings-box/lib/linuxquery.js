@@ -63,14 +63,55 @@ module.exports.getHtmlText = function (req, res) {
  * @returns {undefined}
  */
  module.exports.savesettings = function (req, res) {    
-    var json = JSON.stringify(req.body.data);
-    
+    var json = JSON.stringify(req.body.data);    
     fs.writeFile('configssh.json', json, 'utf8',function(err){
         if (err){           
             res.send({
                 status: err
             });
         } else {
+            var fileconfig = './MainConfig.ini';
+            var configexist = checkconfigexist(fileconfig);
+            var datavals = [];
+            if (configexist) {
+                var config = ini.parse(fs.readFileSync(fileconfig, 'utf-8'));
+                datavals = {
+                    portlocalserver: config.global.portlocalserver,
+                    configok: config.global.configok,
+                    dataBaseType: config.database.dataBaseType,
+                    dataBasehost: config.database.host,
+                    databasedbname: config.database.dbname,
+                    databaseuser: config.userportal.user,
+                    databasepass: config.userportal.pass
+                };
+                var saveini = "" +
+                "; Config Global\n" +
+                "[global]\n" + 
+                "portlocalserver = " + datavals.portlocalserver + "\n" +
+                "configok = true\n\n" +
+                "; definicao da base de dados\n"
+                "[database]\n"
+                "dataBaseType = " + datavals.dataBaseType + "\n" +
+                "host = " + datavals.dataBasehost + "\n" +
+                "dbname = " + datavals.databasedbname + "\n\n" +
+                "; Utilizador por defeito de acesso ao portal\n"
+                "[userportal]\n"
+                "user = " + datavals.databaseuser + "\n\n" +
+                "pass = " + datavals.databasepass
+
+                fs.writeFile('configssh.json', saveini, 'utf8',function(err){
+                    if (err){ 
+                        console.log("Erro ao tentar gravar o ficheiro global de configuracao.".red.bold);
+                    } else {
+                        console.log("O ficheiro de configuração global foi atualizado.".green.bold);
+                    }
+                });
+
+
+            } else {
+                Console.log("Erro ao ler o ficherio de configuracao global.".red.bold);
+            }
+
             res.send({
                 status:"ok"
             });
@@ -129,8 +170,8 @@ module.exports.createconnetionSSH = function(coap){
         }
     }).start();
     } else {
-     console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
- }
+       console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
+   }
 };
 
 module.exports.createReverseTunnel = function(){ 
