@@ -103,7 +103,7 @@ module.exports.createconnetionSSH = function(){
         console.log(configSSH, ssh);
         ssh.exec('node ~/node/freePort.js ' + configSSH.remoteport + ' BoxIot-12345', {
           out: function(code) {
-            try {
+            if (IsJsonString(code)) {
                 var resultSsh = JSON.parse(code);
                 if (configSSH.remoteport != resultSsh.port) {
                     configSSH.remoteport = resultSsh.port;
@@ -122,7 +122,7 @@ module.exports.createconnetionSSH = function(){
                 net.createServer(coapSensor.serverListening).listen(configSSH.localport, configSSH.localip);
                 console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.bold, configSSH.localip, configSSH.localport, configSSH.remoteip, configSSH.remoteport);
                 console.log("Remote access Box 'user %s port %s'.".blue.bold, configSSH.localip, configSSH.remoteport);
-            } catch (e) {
+            } else {
                 console.log("Erro ao tentar converter o ficheiro para JSON.".red.bold);
             }
         }
@@ -166,3 +166,12 @@ module.exports.createReverseTunnel = function(){
     }
     return config;
 };
+
+function IsJsonString(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
+}
