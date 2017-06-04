@@ -99,15 +99,13 @@ module.exports.getHtmlText = function (req, res) {
                 "user = " + datavals.databaseuser + "\n\n" +
                 "pass = " + datavals.databasepass
 
-                fs.writeFile('configssh.json', saveini, 'utf8',function(err){
+                fs.writeFile(fileconfig, saveini, 'utf8',function(err){
                     if (err){ 
                         console.log("Erro ao tentar gravar o ficheiro global de configuracao.".red.bold);
                     } else {
                         console.log("O ficheiro de configuração global foi atualizado.".green.bold);
                     }
                 });
-
-
             } else {
                 Console.log("Erro ao ler o ficherio de configuracao global.".red.bold);
             }
