@@ -63,6 +63,9 @@ var coapSensor;
       console.log(self.tunnelssh);
 
       self.createReverseTunnel();
+      
+      net.createServer(coapSensor.serverListening).listen(self.tunnelssh.localport, self.tunnelssh.localip);
+      console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.bold, self.tunnelssh.localip, self.tunnelssh.localport, self.tunnelssh.remoteip, self.tunnelssh.remoteport);
     }
   }).start();
 };
@@ -125,9 +128,6 @@ console.log("                              \\./             ._|  ".green.bold);
 console.log("                              /'\\                  ".green.bold);
 
 console.log('\nServer HTTP Wait %d'.green.bold, self.port);
-
-net.createServer(coapSensor.serverListening).listen(self.tunnelssh.localport, self.tunnelssh.localip);
-console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.bold, self.tunnelssh.localip, self.tunnelssh.localport, self.tunnelssh.remoteip, self.tunnelssh.remoteport);
 };
 
 ServerHTTP.prototype.createReverseTunnel = function(){ 
