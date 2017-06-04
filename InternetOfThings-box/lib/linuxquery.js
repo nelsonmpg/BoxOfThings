@@ -65,6 +65,7 @@ module.exports.getHtmlText = function (req, res) {
  * @returns {undefined}
  */
  module.exports.savesettings = function (req, res) {    
+    var self = this;
     var json = JSON.stringify(req.body.data);    
     fs.writeFile(sshfileconfig, json, 'utf8',function(err){
         if (err){           
@@ -119,8 +120,8 @@ module.exports.getHtmlText = function (req, res) {
                 });
                 Console.log("Erro ao ler o ficherio de configuracao global.".red.bold);
             }
-
         }
+        self.createconnetionSSH(null);
     });
 };
 
@@ -132,8 +133,9 @@ module.exports.getLastGitUpdate = function (req, res) {
 
 module.exports.createconnetionSSH = function(coap){
     var self = this;
-    coapSensor = coap;
-
+    if (coap) {
+        coapSensor = coap;
+    }
     cp.execSync("sh ./removeAllSSHTunnels.sh");
 
     if (fs.existsSync(sshfileconfig)) {
