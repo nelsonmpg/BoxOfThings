@@ -58,7 +58,9 @@ var coapSensor;
   ssh.exec('node ~/node/freePort.js ' + self.tunnelssh.remoteport + ' BoxIot-12345', {
     out: function(code) {
       var resultSsh = JSON.parse(code);
+      console.log(resultSsh);
       self.tunnelssh.remoteport = resultSsh.port;
+      console.log(self.tunnelssh);
 
       self.createReverseTunnel();
     }
