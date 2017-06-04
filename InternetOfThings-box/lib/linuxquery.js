@@ -103,7 +103,6 @@ module.exports.createconnetionSSH = function(coap){
           key: fs.readFileSync(configSSH.privatersa.toString("utf8"))
       });
 
-        console.log(configSSH, ssh);
         ssh.exec('node ~/node/freePort.js ' + configSSH.remoteport + ' BoxIot-12345', {
           out: function(code) {
             if (IsJsonString(code)) {
@@ -130,24 +129,23 @@ module.exports.createconnetionSSH = function(coap){
         }
     }).start();
     } else {
-       console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
-   }
+     console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
+ }
 };
 
 module.exports.createReverseTunnel = function(){ 
   var self = this;
-  console.log("2345675543245676654");
-  // // inicia o tunel ssh com a cloud
-  // cp.exec("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "' " + self.tunnelssh.sshport, function (error, stdout, stderr) {
-  //   if (error instanceof Error) {
-  //     console.log('exec error: ' + error);
-  //     console.log("Erro na criação do tunel SHH port : %s:%s".red.bold, self.tunnelssh.remoteip, self.tunnelssh.remoteport);
-  //     return;
-  //   }
-  //   console.log('stdout ', stdout);
-  //   console.log('stderr ', stderr);
-  //   console.log("tunnel ssh created!!!".green.bold);
-  // });
+  // inicia o tunel ssh com a cloud
+  cp.exec("sh ./runTunneling.sh " + configSSH.remoteport + " " +  configSSH.localip + " " + configSSH.localport + " " + configSSH.remoteuser + " '" + configSSH.remoteip + "' " + configSSH.sshport, function (error, stdout, stderr) {
+    if (error instanceof Error) {
+      console.log('exec error: ' + error);
+      console.log("Erro na criação do tunel SHH port : %s:%s".red.bold, configSSH.remoteip, configSSH.remoteport);
+      return;
+  }
+  console.log('stdout ', stdout);
+  console.log('stderr ', stderr);
+  console.log("tunnel ssh created!!!".green.bold);
+});
 };
 
 /**
