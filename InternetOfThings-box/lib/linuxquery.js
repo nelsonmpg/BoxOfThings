@@ -9,6 +9,8 @@ var request = require("request");
 var SSH = require('simple-ssh');
 var coapSensor;
 var configSSH = null;
+var fileconfig = './MainConfig.ini';
+var sshfileconfig = 'configssh.json';
 
 
 module.exports.getHtmlText = function (req, res) {
@@ -28,32 +30,32 @@ module.exports.getHtmlText = function (req, res) {
  * @returns {undefined}
  */
  module.exports.getinifileparams = function (req, res) {
-    var fileconfig = './ConfigSKT.ini';
-    var configexist = checkconfigexist(fileconfig);
-    var datavals = [];
-    if (configexist) {
-        var config = ini.parse(fs.readFileSync(fileconfig, 'utf-8'));
-        datavals = {
-            globalconfig: config.global.config,
-            filemonitor: config.global.filemonitor,
-            sshport: config.global.sshaccess,
-            databasesitename: config.database.sitename,
-            databasehost: config.database.host,
-            databaseport: config.database.port,
-            databasepass: config.database.projectname,
-            autostart: config.global.autostart,
-            localsensormorada: config.localsensor.morada,
-            localsensornomeSensor: config.localsensor.nomeSensor,
-            localsensorlatitude: config.localsensor.latitude,
-            localsensorlongitude: config.localsensor.longitude,
-            localsensorposx: config.localsensor.posx,
-            localsensorposy: config.localsensor.posy,
-            localsensorplant: config.localsensor.plant
-        };
-    } else {
-        datavals = {"globalconfig": 0};
-    }
-    res.json(datavals);
+    // var fileconfig = './ConfigSKT.ini';
+    // var configexist = checkconfigexist(fileconfig);
+    // var datavals = [];
+    // if (configexist) {
+    //     var config = ini.parse(fs.readFileSync(fileconfig, 'utf-8'));
+    //     datavals = {
+    //         globalconfig: config.global.config,
+    //         filemonitor: config.global.filemonitor,
+    //         sshport: config.global.sshaccess,
+    //         databasesitename: config.database.sitename,
+    //         databasehost: config.database.host,
+    //         databaseport: config.database.port,
+    //         databasepass: config.database.projectname,
+    //         autostart: config.global.autostart,
+    //         localsensormorada: config.localsensor.morada,
+    //         localsensornomeSensor: config.localsensor.nomeSensor,
+    //         localsensorlatitude: config.localsensor.latitude,
+    //         localsensorlongitude: config.localsensor.longitude,
+    //         localsensorposx: config.localsensor.posx,
+    //         localsensorposy: config.localsensor.posy,
+    //         localsensorplant: config.localsensor.plant
+    //     };
+    // } else {
+    //     datavals = {"globalconfig": 0};
+    // }
+    // res.json(datavals);
 };
 
 /**
@@ -64,13 +66,13 @@ module.exports.getHtmlText = function (req, res) {
  */
  module.exports.savesettings = function (req, res) {    
     var json = JSON.stringify(req.body.data);    
-    fs.writeFile('configssh.json', json, 'utf8',function(err){
+    fs.writeFile(sshfileconfig, json, 'utf8',function(err){
         if (err){           
             res.send({
-                status: err
+                status: "erro ao gravar as configurações SSH.",
+                stdout: err
             });
         } else {
-            var fileconfig = './MainConfig.ini';
             var configexist = checkconfigexist(fileconfig);
             var datavals = [];
             if (configexist) {
@@ -96,7 +98,7 @@ module.exports.getHtmlText = function (req, res) {
                 "dbname = " + datavals.databasedbname + "\n\n" +
                 "; Utilizador por defeito de acesso ao portal\n" + 
                 "[userportal]\n" + 
-                "user = " + datavals.databaseuser + "\n\n" +
+                "user = " + datavals.databaseuser + "\n" +
                 "pass = " + datavals.databasepass + "\n";
 
                 fs.writeFile(fileconfig, saveini, 'utf8',function(err){
@@ -106,13 +108,18 @@ module.exports.getHtmlText = function (req, res) {
                         console.log("O ficheiro de configuração global foi atualizado.".green.bold);
                     }
                 });
+                res.send({
+                    status:"ok",
+                    stdout: "successs"
+                });
             } else {
+                res.send({
+                    status:"ok",
+                    stdout: "Erro ao atualizar o ficheiro MainConfig."
+                });
                 Console.log("Erro ao ler o ficherio de configuracao global.".red.bold);
             }
 
-            res.send({
-                status:"ok"
-            });
         }
     });
 };
@@ -128,11 +135,11 @@ module.exports.createconnetionSSH = function(coap){
     coapSensor = coap;
 
     cp.execSync("sh ./removeAllSSHTunnels.sh");
+console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    if (fs.existsSync(sshfileconfig)) {
 
-    if (fs.existsSync('configssh.json')) {
-
-        var contents = fs.readFileSync('configssh.json').toString();
-
+        var contents = fs.readFileSync(sshfileconfig).toString();
+console.log("bbbbbbbbbbbbbbbbbbbbbbbbbbb");
         configSSH = JSON.parse(contents);
 
         var ssh = new SSH({
@@ -144,6 +151,7 @@ module.exports.createconnetionSSH = function(coap){
 
         ssh.exec('node ~/node/freePort.js ' + configSSH.remoteport + ' BoxIot-12345', {
           out: function(code) {
+            console.log("ccccccccccccccccccccccccccccccccccccccccccc");
             if (IsJsonString(code)) {
                 var resultSsh = JSON.parse(code);
                 if (configSSH.remoteport != resultSsh.port) {
