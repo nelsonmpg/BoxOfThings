@@ -64,22 +64,13 @@ var coapSensor;
       var resultSsh = JSON.parse(code);
       self.tunnelssh.remoteport = resultSsh.port;
 
-      //self.createReverseTunnel();
-      var child = cp.execSync("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "' " + self.tunnelssh.sshport);
+      self.createReverseTunnel();
 
-  //     var child = cp.execSync("sh", ["./runTunneling.sh", self.tunnelssh.remoteport,  self.tunnelssh.localip, self.tunnelssh.localport, self.tunnelssh.remoteuser,self.tunnelssh.remoteip,self.tunnelssh.sshport], { encoding : 'utf8' });
-
-  // uncomment the following if you want to see everything returned by the spawnSync command
-  // console.log('ls: ' , ls);
-  console.log('stdout here: \n' + child);
-
-  
-
-  net.createServer(coapSensor.serverListening).listen(self.tunnelssh.localport, self.tunnelssh.localip);
-  console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.bold, self.tunnelssh.localip, self.tunnelssh.localport, self.tunnelssh.remoteip, self.tunnelssh.remoteport);
-  console.log("Remote access Box 'user %s port %s'.".blue.bold, self.tunnelssh.localip, self.tunnelssh.remoteport);
-}
-}).start();
+      net.createServer(coapSensor.serverListening).listen(self.tunnelssh.localport, self.tunnelssh.localip);
+      console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.bold, self.tunnelssh.localip, self.tunnelssh.localport, self.tunnelssh.remoteip, self.tunnelssh.remoteport);
+      console.log("Remote access Box 'user %s port %s'.".blue.bold, self.tunnelssh.localip, self.tunnelssh.remoteport);
+    }
+  }).start();
 };
 
 /**
@@ -143,25 +134,18 @@ console.log('\nServer HTTP Wait %d'.green.bold, self.port);
 };
 
 ServerHTTP.prototype.createReverseTunnel = function(){ 
-  // var self = this;
-
-  // var child = cp.execSync("sh", ["./runTunneling.sh", self.tunnelssh.remoteport,  self.tunnelssh.localip, self.tunnelssh.localport, self.tunnelssh.remoteuser,self.tunnelssh.remoteip,self.tunnelssh.sshport], { encoding : 'utf8' });
-
-  // // uncomment the following if you want to see everything returned by the spawnSync command
-  // // console.log('ls: ' , ls);
-  // console.log('stdout here: \n' + child);
-
+  var self = this;
   // inicia o tunel ssh com a cloud
-  // cp.exec("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "' " + self.tunnelssh.sshport, function (error, stdout, stderr) {
-  //   if (error instanceof Error) {
-  //     console.log('exec error: ' + error);
-  //     console.log("Erro na criação do tunel SHH port : %s:%s".red.bold, self.tunnelssh.remoteip, self.tunnelssh.remoteport);
-  //     return;
-  //   }
-  //   console.log('stdout ', stdout);
-  //   console.log('stderr ', stderr);
-  //   console.log("tunnel ssh created!!!".green.bold);
-// });
+  cp.exec("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "' " + self.tunnelssh.sshport, function (error, stdout, stderr) {
+    if (error instanceof Error) {
+      console.log('exec error: ' + error);
+      console.log("Erro na criação do tunel SHH port : %s:%s".red.bold, self.tunnelssh.remoteip, self.tunnelssh.remoteport);
+      return;
+    }
+    console.log('stdout ', stdout);
+    console.log('stderr ', stderr);
+    console.log("tunnel ssh created!!!".green.bold);
+  });
 };
 
 /**
