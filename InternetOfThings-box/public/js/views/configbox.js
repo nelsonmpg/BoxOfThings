@@ -49,6 +49,7 @@ window.ConfigBoxView = Backbone.View.extend({
           }
           break;
           case "remote-user":
+          case "local-pboxname":
           var userRegex = /^\w+$/;
           if ($(obj).val().trim().match(userRegex)) {
             $(obj).parent().next().children().children().removeClass("fa-close color-red").addClass("fa-check color-green");
@@ -78,7 +79,8 @@ window.ConfigBoxView = Backbone.View.extend({
         remoteuser : $("#remote-user").val(),
         remoteip : $("#remote-ip").val(),
         sshport : $("#remote-defport").val(),
-        privatersa : $("#local-privatekey").val()
+        privatersa : $("#local-privatekey").val(),
+        boxname : $("#local-pboxname").val()
       }
 
       modem("POST",
