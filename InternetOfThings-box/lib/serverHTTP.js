@@ -132,12 +132,12 @@ ServerHTTP.prototype.createReverseTunnel = function(){
   // cp.execSync("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "' " + self.tunnelssh.sshport);
 
 
-  // inicia o tunel ssh com a cloud
-  var portssh = cp.spawnSync("sh",["./runTunneling.sh", self.tunnelssh.remoteport, self.tunnelssh.localip, self.tunnelssh.localport, self.tunnelssh.remoteuser, self.tunnelssh.remoteip, self.tunnelssh.sshport], { encoding : 'utf8' });
+  // // inicia o tunel ssh com a cloud
+  // var portssh = cp.spawnSync("sh",["./runTunneling.sh", self.tunnelssh.remoteport, self.tunnelssh.localip, self.tunnelssh.localport, self.tunnelssh.remoteuser, self.tunnelssh.remoteip, self.tunnelssh.sshport], { encoding : 'utf8' });
 
-  console.log('stdout here: \n' + portssh.stdout);
-  console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-  console.log('stdout: \n' + portssh);
+  // console.log('stdout here: \n' + portssh.stdout);
+  // console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+  // console.log('stdout: \n' + portssh);
 
   // // inicia o tunel ssh com a cloud
   // cp.exec("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "' " + self.tunnelssh.sshport, function (error, stdout, stderr) {
