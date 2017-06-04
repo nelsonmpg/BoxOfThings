@@ -65,9 +65,9 @@ var coapSensor;
       self.tunnelssh.remoteport = resultSsh.port;
 
       //self.createReverseTunnel();
-      
+      var child = cp.execSync("sh ./runTunneling.sh " + self.tunnelssh.remoteport + " " +  self.tunnelssh.localip + " " + self.tunnelssh.localport + " " + self.tunnelssh.remoteuser + " '" + self.tunnelssh.remoteip + "' " + self.tunnelssh.sshport);
 
-      var child = cp.execSync("sh", ["./runTunneling.sh", self.tunnelssh.remoteport,  self.tunnelssh.localip, self.tunnelssh.localport, self.tunnelssh.remoteuser,self.tunnelssh.remoteip,self.tunnelssh.sshport], { encoding : 'utf8' });
+  //     var child = cp.execSync("sh", ["./runTunneling.sh", self.tunnelssh.remoteport,  self.tunnelssh.localip, self.tunnelssh.localport, self.tunnelssh.remoteuser,self.tunnelssh.remoteip,self.tunnelssh.sshport], { encoding : 'utf8' });
 
   // uncomment the following if you want to see everything returned by the spawnSync command
   // console.log('ls: ' , ls);
