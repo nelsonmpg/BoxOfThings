@@ -89,15 +89,15 @@ module.exports.getHtmlText = function (req, res) {
                 "[global]\n" + 
                 "portlocalserver = " + datavals.portlocalserver + "\n" +
                 "configok = true\n\n" +
-                "; definicao da base de dados\n"
-                "[database]\n"
+                "; definicao da base de dados\n" +
+                "[database]\n" + 
                 "dataBaseType = " + datavals.dataBaseType + "\n" +
                 "host = " + datavals.dataBasehost + "\n" +
                 "dbname = " + datavals.databasedbname + "\n\n" +
-                "; Utilizador por defeito de acesso ao portal\n"
-                "[userportal]\n"
+                "; Utilizador por defeito de acesso ao portal\n" + 
+                "[userportal]\n" + 
                 "user = " + datavals.databaseuser + "\n\n" +
-                "pass = " + datavals.databasepass
+                "pass = " + datavals.databasepass + "\n";
 
                 fs.writeFile(fileconfig, saveini, 'utf8',function(err){
                     if (err){ 
