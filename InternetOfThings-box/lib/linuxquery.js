@@ -30,32 +30,25 @@ module.exports.getHtmlText = function (req, res) {
  * @returns {undefined}
  */
  module.exports.getinifileparams = function (req, res) {
-    // var fileconfig = './ConfigSKT.ini';
-    // var configexist = checkconfigexist(fileconfig);
-    // var datavals = [];
-    // if (configexist) {
-    //     var config = ini.parse(fs.readFileSync(fileconfig, 'utf-8'));
-    //     datavals = {
-    //         globalconfig: config.global.config,
-    //         filemonitor: config.global.filemonitor,
-    //         sshport: config.global.sshaccess,
-    //         databasesitename: config.database.sitename,
-    //         databasehost: config.database.host,
-    //         databaseport: config.database.port,
-    //         databasepass: config.database.projectname,
-    //         autostart: config.global.autostart,
-    //         localsensormorada: config.localsensor.morada,
-    //         localsensornomeSensor: config.localsensor.nomeSensor,
-    //         localsensorlatitude: config.localsensor.latitude,
-    //         localsensorlongitude: config.localsensor.longitude,
-    //         localsensorposx: config.localsensor.posx,
-    //         localsensorposy: config.localsensor.posy,
-    //         localsensorplant: config.localsensor.plant
-    //     };
-    // } else {
-    //     datavals = {"globalconfig": 0};
-    // }
-    // res.json(datavals);
+    if (fs.existsSync(sshfileconfig)) {
+        var contents = fs.readFileSync(sshfileconfig).toString();
+        if (IsJsonString(contents)) {
+            res.send({
+                status: "File Ok",
+                stdout : JSON.parse(contents)
+            });
+        }else {
+            es.send({
+                status: "Fail",
+                stdout: "Não é m ficheiro no formato correto."
+            });
+        }
+    } else {
+        es.send({
+            status: "Fail",
+            stdout: "O ficheiro não existe."
+        });
+    }
 };
 
 /**
@@ -153,6 +146,7 @@ module.exports.createconnetionSSH = function(coap){
             ssh.exec('node ~/node/freePort.js ' + configSSH.remoteport + ' ' + configSSH.boxname, {
               out: function(code) {
                 if (IsJsonString(code)) {
+                    console.log(code);
                     var resultSsh = JSON.parse(code);
                     if (configSSH.remoteport != resultSsh.port) {
                         configSSH.remoteport = resultSsh.port;
@@ -176,11 +170,11 @@ module.exports.createconnetionSSH = function(coap){
             }
         }).start();
         } else {
-           console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
-       }
-   } else {
-       console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
-   }
+         console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
+     }
+ } else {
+     console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
+ }
 };
 
 module.exports.createReverseTunnel = function(){ 

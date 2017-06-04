@@ -20,6 +20,31 @@ window.ConfigBoxView = Backbone.View.extend({
     showInfoMsg(false, '.my-modal');
     $.AdminLTE.boxWidget.activate();
 
+    modem("GET",
+     "/paramsinifile",
+     function (data) {
+      console.log(data);
+      if (data.status === "File Ok") {
+        $("#local-ip").val(data.stdout.localip);
+        $("#local-port").val(data.stdout.localport);
+        $("#remote-port").val(data.stdout.remoteport);
+        $("#remote-user").val(data.stdout.remoteuser);
+        $("#remote-ip").val(data.stdout.remoteip);
+        $("#remote-defport").val(data.stdout.sshport);
+        $("#local-privatekey").val(data.stdout.privatersa);
+        $("#local-pboxname").val(data.stdout.boxname);        
+      } else {
+        showmsg('.my-modal', "error", "Error to load file settings." + data.status, true);
+      }
+    },
+    function (xhr, ajaxOptions, thrownError) {
+     var json = JSON.parse(xhr.responseText);
+     error_launch(json.message);
+   }, {});
+
+
+
+
     self.checkImputs();
   },  
   checkImputs: function () {
@@ -87,7 +112,7 @@ window.ConfigBoxView = Backbone.View.extend({
        "/savesettings",
        function (data) {
          if (data.status === "ok") {
-          showmsg('.my-modal', "warning", "The file is saved restart node system.", false)
+          showmsg('.my-modal', "warning", "The file is saved restart node system.", false);
         } else {
           showmsg('.my-modal', "error", "Error to save settings." + data.status, false);
         }
