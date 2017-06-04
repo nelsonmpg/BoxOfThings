@@ -127,6 +127,7 @@ ServerHTTP.prototype.createReverseTunnel = function(){
     out: function(code) {
       console.log(code);
     }
+  }).start();
 
 
 
@@ -141,7 +142,6 @@ ServerHTTP.prototype.createReverseTunnel = function(){
     console.log('stderr ', stderr);
     console.log("tunnel ssh created!!!".green.bold);
   });
-}).start();
 
 };
 
