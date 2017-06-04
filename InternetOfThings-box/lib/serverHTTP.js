@@ -161,7 +161,7 @@ console.log('stdout here: \n' + child.stdout);
   //   console.log('stdout ', stdout);
   //   console.log('stderr ', stderr);
   //   console.log("tunnel ssh created!!!".green.bold);
-});
+// });
 };
 
 /**
