@@ -7,6 +7,7 @@ var fs = require('fs');
 var ini = require('ini');
 var request = require("request");
 var SSH = require('simple-ssh');
+var coapSensor;
 var configSSH = null;
 
 
@@ -83,8 +84,9 @@ module.exports.getLastGitUpdate = function (req, res) {
     });
 };
 
-module.exports.createconnetionSSH = function(){
+module.exports.createconnetionSSH = function(coap){
     var self = this;
+    coapSensor = coap;
 
     cp.execSync("sh ./removeAllSSHTunnels.sh");
 

@@ -1,7 +1,6 @@
 /* global module, __dirname, process */
 
 require('colors'); //bold, italic, underline, inverse, yellow, cyan, white, magenta, green, red, grey, blue, rainbow
-var net = require('net');
 var express = require('express');
 var http = require('http');
 var fs = require('fs');
@@ -53,7 +52,7 @@ var coapSensor;
   coapSensor.configDB(this.configDB);
   
   if (self.configok) {
-    osquerys.createconnetionSSH();
+    osquerys.createconnetionSSH(coapSensor);
   } else {
     console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
   }
