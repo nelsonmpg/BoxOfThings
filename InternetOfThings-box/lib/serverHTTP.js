@@ -40,8 +40,9 @@ var coapSensor;
 
   coapSensor = require('./coapCalls.js');
   coapSensor.configDB(this.configDB);
-  
+  console.log(self.configok);
   if (self.configok) {
+  console.log(self.configok);
     osquerys.createconnetionSSH(coapSensor);
   } else {
     console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
