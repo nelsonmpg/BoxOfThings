@@ -134,7 +134,6 @@ module.exports.createconnetionSSH = function(coap){
         var contents = fs.readFileSync(sshfileconfig).toString();
         if (IsJsonString(contents)) {
             configSSH = JSON.parse(contents);
-    console.log("teste");
 
             if (fs.existsSync(configSSH.privatersa.toString("utf8"))) {
                 var ssh = new SSH({
@@ -182,6 +181,8 @@ module.exports.createconnetionSSH = function(coap){
 
 module.exports.createReverseTunnel = function(){ 
   var self = this;
+    console.log("configSSH");
+    console.log(configSSH);
   // inicia o tunel ssh com a cloud
   cp.exec("sh ./runTunneling.sh " + configSSH.remoteport + " " +  configSSH.localip + " " + configSSH.localport + " " + configSSH.remoteuser + " '" + configSSH.remoteip + "' " + configSSH.sshport, function (error, stdout, stderr) {
     if (error instanceof Error) {
