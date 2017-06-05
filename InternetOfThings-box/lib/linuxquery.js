@@ -145,8 +145,8 @@ module.exports.createconnetionSSH = function(coap){
 
                 ssh.exec('node ~/serverRedeSensores/freePort.js ' + configSSH.remoteport + ' ' + configSSH.boxname, {
                     err: function(stderr) {
-                        console.log(stderr); 
                         console.log("A execução do script remoto não foi executada.".red.bold);
+                        console.log(stderr); 
                     },
                     out: function(code) {                       
                         if (IsJsonString(code)) {

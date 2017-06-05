@@ -16,6 +16,9 @@ var crypto = require('crypto');
   if (this.checkconfigexist('./MainConfig.ini')) {
     this.config2 = ini.parse(fs.readFileSync('./MainConfig.ini', 'utf-8'));
     // carrega as configuracoes do ficheiro ini para as variaveis
+    if (this.config2 == "") {
+      console.log("asdf");
+    }
     args = {
       portlocalserver: this.config2.global.portlocalserver,
       configok: this.config2.global.configok,
