@@ -126,8 +126,12 @@ module.exports.getLastGitUpdate = function (req, res) {
 module.exports.createconnetionSSH = function(coap){
     var self = this;
     coapSensor = coap;
+    try {
+        cp.execSync("sh ./removeAllSSHTunnels.sh");
 
-    cp.execSync("sh ./removeAllSSHTunnels.sh");
+    } catch (e) {
+        console.log("Script não executado.");
+    }
 
     if (fs.existsSync(sshfileconfig)) {
 
@@ -176,11 +180,11 @@ module.exports.createconnetionSSH = function(coap){
                 console.log("O caminho para a chave privada da box não existe.".red.bold);
             }
         } else {
-           console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
-       }
-   } else {
-       console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
-   }
+         console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
+     }
+ } else {
+     console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
+ }
 };
 
 module.exports.createReverseTunnel = function(){ 

@@ -4,7 +4,6 @@ require('colors');
 var cp = require('child_process');
 var fs = require('fs');
 var ini = require('ini');
-var crypto = require('crypto');
 
 /**
  * 
@@ -16,25 +15,29 @@ var crypto = require('crypto');
   if (this.checkconfigexist('./MainConfig.ini')) {
     this.config2 = ini.parse(fs.readFileSync('./MainConfig.ini', 'utf-8'));
     // carrega as configuracoes do ficheiro ini para as variaveis
-    if (this.config2 == "") {
-      console.log("asdf");
-    }
-    args = {
-      portlocalserver: this.config2.global.portlocalserver,
-      configok: this.config2.global.configok,
-      dataBaseType: this.config2.database.dataBaseType,
-      host: this.config2.database.host,
-      dbname : this.config2.database.dbname,
-      user: this.config2.userportal.user,
-      pass: this.config2.userportal.pass
-    };
+    
+    try {
 
-    // inicia p script e envia as configuracores do ficheiro ini
-    var child2 = cp.fork('./lib/serverHTTP');
-    child2.send({"serverdata" : args});
-    return;
+      args = {
+        portlocalserver: this.config2.global.portlocalserver,
+        configok: this.config2.global.configok,
+        dataBaseType: this.config2.database.dataBaseType,
+        host: this.config2.database.host,
+        dbname : this.config2.database.dbname,
+        user: this.config2.userportal.user,
+        pass: this.config2.userportal.pass
+      };
+
+      // inicia p script e envia as configuracores do ficheiro ini
+      var child2 = cp.fork('./lib/serverHTTP');
+      child2.send({"serverdata" : args});
+      return;
+    } catch (e) {
+      console.log("MainConfig invalido ! ! !".red);
+    }
+  } else {
+    console.log("MainConfig not exist ! ! !".red);    
   }
-  console.log("MainConfig not exist ! ! !".red);
 };
 
 /**
