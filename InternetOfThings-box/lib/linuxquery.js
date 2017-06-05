@@ -143,10 +143,10 @@ module.exports.createconnetionSSH = function(coap){
                   key: fs.readFileSync(configSSH.privatersa.toString("utf8"))
               });
 
-                ssh.exec('node ~/serverRedeSensores123/freePort.js ' + configSSH.remoteport + ' ' + configSSH.boxname, {
+                ssh.exec('node ~/serverRedeSensores/freePort.js ' + configSSH.remoteport + ' ' + configSSH.boxname, {
                     err: function(stderr) {
-                         console.log("tesrte");
                         console.log(stderr); 
+                        console.log("A execução do script remoto não foi executada.".red.bold);
                     },
                     out: function(code) {                       
                         if (IsJsonString(code)) {
