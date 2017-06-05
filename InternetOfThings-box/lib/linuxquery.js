@@ -134,7 +134,6 @@ module.exports.createconnetionSSH = function(coap, pathnode){
     } catch (e) {
         console.log("Script não executado.");
     }
-    console.log(pathnode);
 
     if (fs.existsSync(sshfileconfig)) {
 
@@ -150,7 +149,7 @@ module.exports.createconnetionSSH = function(coap, pathnode){
                   key: fs.readFileSync(configSSH.privatersa.toString("utf8"))
               });
 
-                ssh.exec('node ' + pathnode /*~/serverRedeSensores/freePort.js*/ + ' ' + configSSH.remoteport + ' ' + configSSH.boxname, {
+                ssh.exec('node ' + pathnode + ' ' + configSSH.remoteport + ' ' + configSSH.boxname, {
                     err: function(stderr) {
                         console.log("A execução do script remoto não foi executada.".red.bold);
                         console.log(stderr); 
@@ -183,11 +182,11 @@ module.exports.createconnetionSSH = function(coap, pathnode){
                 console.log("O caminho para a chave privada da box não existe.".red.bold);
             }
         } else {
-         console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
-     }
- } else {
-     console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
- }
+           console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
+       }
+   } else {
+       console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
+   }
 };
 
 module.exports.createReverseTunnel = function(){ 
