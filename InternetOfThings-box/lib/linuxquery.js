@@ -38,13 +38,13 @@ module.exports.getHtmlText = function (req, res) {
                 stdout : JSON.parse(contents)
             });
         }else {
-            es.send({
+            res.status(500).send({
                 status: "Fail",
                 stdout: "Não é m ficheiro no formato correto."
             });
         }
     } else {
-        es.send({
+        es.status(500).send({
             status: "Fail",
             stdout: "O ficheiro não existe."
         });
@@ -62,7 +62,7 @@ module.exports.getHtmlText = function (req, res) {
     var json = JSON.stringify(req.body.data);    
     fs.writeFile(sshfileconfig, json, 'utf8',function(err){
         if (err){           
-            res.send({
+            res.status(500).send({
                 status: "erro ao gravar as configurações SSH.",
                 stdout: err
             });
