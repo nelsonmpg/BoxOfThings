@@ -20,6 +20,7 @@ var ini = require('ini');
 
       args = {
         portlocalserver: this.config2.global.portlocalserver,
+        pathserverfreeport: this.config2.global.pathserverfreeport,
         configok: this.config2.global.configok,
         dataBaseType: this.config2.database.dataBaseType,
         host: this.config2.database.host,
