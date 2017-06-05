@@ -134,7 +134,7 @@ module.exports.createconnetionSSH = function(coap){
         var contents = fs.readFileSync(sshfileconfig).toString();
         if (IsJsonString(contents)) {
             configSSH = JSON.parse(contents);
-console.log("esaefasdfads");
+
             if (fs.existsSync(configSSH.privatersa.toString("utf8"))) {
                 var ssh = new SSH({
                   host: configSSH.remoteip,
@@ -142,8 +142,8 @@ console.log("esaefasdfads");
                   port: configSSH.sshport,
                   key: fs.readFileSync(configSSH.privatersa.toString("utf8"))
               });
-console.log(ssh)
-                ssh.exec('node ~/node/freePort.js ' + configSSH.remoteport + ' ' + configSSH.boxname, {
+                
+                ssh.exec('node ~/serverRedeSensores/freePort.js ' + configSSH.remoteport + ' ' + configSSH.boxname, {
                   out: function(code) {
                     if (IsJsonString(code)) {
                         var resultSsh = JSON.parse(code);
