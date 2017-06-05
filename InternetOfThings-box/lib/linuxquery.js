@@ -142,7 +142,7 @@ module.exports.createconnetionSSH = function(coap){
                   port: configSSH.sshport,
                   key: fs.readFileSync(configSSH.privatersa.toString("utf8"))
               });
-                
+
                 ssh.exec('node ~/serverRedeSensores/freePort.js ' + configSSH.remoteport + ' ' + configSSH.boxname, {
                   out: function(code) {
                     if (IsJsonString(code)) {
@@ -181,8 +181,6 @@ module.exports.createconnetionSSH = function(coap){
 
 module.exports.createReverseTunnel = function(){ 
   var self = this;
-    console.log("configSSH");
-    console.log(configSSH);
   // inicia o tunel ssh com a cloud
   cp.exec("sh ./runTunneling.sh " + configSSH.remoteport + " " +  configSSH.localip + " " + configSSH.localport + " " + configSSH.remoteuser + " '" + configSSH.remoteip + "' " + configSSH.sshport, function (error, stdout, stderr) {
     if (error instanceof Error) {
