@@ -126,7 +126,6 @@ module.exports.getLastGitUpdate = function (req, res) {
 module.exports.createconnetionSSH = function(coap){
     var self = this;
     coapSensor = coap;
-    console.log("teste");
 
     cp.execSync("sh ./removeAllSSHTunnels.sh");
 
@@ -135,8 +134,9 @@ module.exports.createconnetionSSH = function(coap){
         var contents = fs.readFileSync(sshfileconfig).toString();
         if (IsJsonString(contents)) {
             configSSH = JSON.parse(contents);
+    console.log("teste");
 
-            // if (fs.existsSync(configSSH.privatersa.toString("utf8"))) {
+            if (fs.existsSync(configSSH.privatersa.toString("utf8"))) {
                 var ssh = new SSH({
                   host: configSSH.remoteip,
                   user: configSSH.remoteuser,
@@ -169,9 +169,9 @@ module.exports.createconnetionSSH = function(coap){
                     }
                 }
             }).start();
-            // } else {
-            //     console.log("O caminho para a chave privada da box não existe.".red.bold);
-            // }
+            } else {
+                console.log("O caminho para a chave privada da box não existe.".red.bold);
+            }
         } else {
          console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
      }
