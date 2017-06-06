@@ -19,7 +19,7 @@ var Router = Backbone.Router.extend({
     configbox: undefined,
     loginform: undefined,
     about: undefined,
-//    socketclt: null,
+    socketclt: null,
     terminalcmd: undefined,
     initialize: function () {
         var self = this;
@@ -86,72 +86,72 @@ var Router = Backbone.Router.extend({
         this.configbox= undefined;
         this.loginform = undefined;
         this.terminalcmd = undefined;
-//        if (this.socketclt) {
- //           this.socketclt.disconnect();
- //       }
+        if (this.socketclt) {
+         this.socketclt.disconnect();
+     }
 
 // limpa todo o conteudo das varias View da pagina web
-        $('header').html("");
-        $('#content').html("");
-        $('aside.main-sidebar').html("");
-        $('footer').html("");
-        $('contentnav').html("");
+$('header').html("");
+$('#content').html("");
+$('aside.main-sidebar').html("");
+$('footer').html("");
+$('contentnav').html("");
 
 //elimina o conteudo do profile
-        window.profile = null;
-        window.sessionStorage.clear();
-        window.logged = false;
+window.profile = null;
+window.sessionStorage.clear();
+window.logged = false;
 
-        var self = this;
-        self.loginform = new LoginView({});
-        $('#content').html(self.loginform.render().el);
-        self.loginform.checkloginstored();
-    },
-    aCercaDe: function () {
-        var self = this;
-        self.verificaLogin(function () {
-            self.about = new AboutView();
-            self.contentnav.setView("About");
-            $('#content').html(self.about.render().el);
-            windowScrollTop();
-        });
-    },
-    inicio: function () {
-        var self = this;
-        self.verificaLogin(function () {
-//            self.socketclt.connect();
-            self.header = new HeaderView({
-                logo: (window.profile.logo == "") ? "./img/user.png" : window.profile.logo
-            });
+var self = this;
+self.loginform = new LoginView({});
+$('#content').html(self.loginform.render().el);
+self.loginform.checkloginstored();
+},
+aCercaDe: function () {
+    var self = this;
+    self.verificaLogin(function () {
+        self.about = new AboutView();
+        self.contentnav.setView("About");
+        $('#content').html(self.about.render().el);
+        windowScrollTop();
+    });
+},
+inicio: function () {
+    var self = this;
+    self.verificaLogin(function () {
+     self.socketclt.connect();
+     self.header = new HeaderView({
+        logo: (window.profile.logo == "") ? "./img/user.png" : window.profile.logo
+    });
 
-            self.content = new InicioView();
-            self.sidebar = new SideBarView({});
-            self.footer = new FooterView();
-            self.contentnav = new ContentNavView();
+     self.content = new InicioView();
+     self.sidebar = new SideBarView({});
+     self.footer = new FooterView();
+     self.contentnav = new ContentNavView();
 
-            $('header').html(self.header.render().el);
-            self.header.init();
+     $('header').html(self.header.render().el);
+     self.header.init();
 
-            $('#contentnav').html(self.contentnav.render().el);
-            self.contentnav.setView("Inicio");
+     $('#contentnav').html(self.contentnav.render().el);
+     self.contentnav.setView("Inicio");
 
-            $('#content').html(self.content.render().el);
+     $('#content').html(self.content.render().el);
 
-            $('aside.main-sidebar').html(self.sidebar.render().el);
+     $('aside.main-sidebar').html(self.sidebar.render().el);
 
-            $('footer').html(self.footer.render().el);
-            self.footer.init();
-        });
-    },
-    boxconfig : function (){
-        var self = this;
-        self.verificaLogin(function () {
-            self.configbox = new ConfigBoxView({});
-            $('#content').html(self.configbox.render().el);
-            self.configbox.init();
-            self.contentnav.setView("Config Box");
-        });
-    },
+     $('footer').html(self.footer.render().el);
+     self.footer.init();
+ });
+},
+boxconfig : function (){
+    var self = this;
+    self.verificaLogin(function () {
+        self.configbox = new ConfigBoxView({});
+        $('#content').html(self.configbox.render().el);
+        self.configbox.init();
+        self.contentnav.setView("Config Box");
+    });
+},
     // carrega as configuracoes do site
     configsite: function () {
         var self = this;
@@ -166,8 +166,8 @@ var Router = Backbone.Router.extend({
         var self = this;
         self.verificaLogin(function () {
             self.contentnav.setView("Terminal");
-           self.terminalcmd = new TerminalView({socket: self.socketclt});
-            // $('#content').html(self.terminalcmd.render().el);
+            self.terminalcmd = new TerminalView({socket: self.socketclt});
+            $('#content').html(self.terminalcmd.render().el);
             self.terminalcmd.init();
         });
     },
@@ -196,7 +196,7 @@ var Router = Backbone.Router.extend({
  * @param {type} param1
  * @param {type} param2
  */
-templateLoader.load([
+ templateLoader.load([
     "LoginView",
     "HeaderView",
     "InicioView",
@@ -207,8 +207,8 @@ templateLoader.load([
     "ContentNavView",
     "TerminalView",
     "AboutView"],
-        function () {
-            app = new Router();
-            Backbone.history.start();
-        }
-);
+    function () {
+        app = new Router();
+        Backbone.history.start();
+    }
+    );
