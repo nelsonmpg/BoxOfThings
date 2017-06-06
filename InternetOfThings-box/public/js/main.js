@@ -23,31 +23,31 @@ var Router = Backbone.Router.extend({
     terminalcmd: undefined,
     initialize: function () {
         var self = this;
-        // self.appEventBus = _.extend({}, Backbone.Events);
-        // self.socketclt = new socketClient({vent: self.appEventBus});
+        self.appEventBus = _.extend({}, Backbone.Events);
+        self.socketclt = new socketClient({vent: self.appEventBus});
 
-        // // update dos graficos em realtime
-        // self.appEventBus.on("updateRealTimeChart", function (data, local, site) {
-        //     console.log("Event");
-        // });
-        // self.appEventBus.on('stdout', function (data) {
-        //     self.terminalcmd.terminalstdout(data);
-        // });
-        // self.appEventBus.on('stderr', function (data) {
-        //     self.terminalcmd.terminalstderr(data);
-        // });
-        // self.appEventBus.on('disconnect', function () {
-        //     self.terminalcmd.terminaldisconnect();
-        // });
-        // self.appEventBus.on('enable', function () {
-        //     self.terminalcmd.terminalenable();
-        // });
-        // self.appEventBus.on('disable', function () {
-        //     self.terminalcmd.terminaldisable();
-        // });
-        // self.appEventBus.on('prompt', function (data) {
-        //     self.terminalcmd.terminalsetprompt(data);
-        // });
+        // update dos graficos em realtime
+        self.appEventBus.on("updateRealTimeChart", function (data, local, site) {
+            console.log("Event");
+        });
+        self.appEventBus.on('stdout', function (data) {
+            self.terminalcmd.terminalstdout(data);
+        });
+        self.appEventBus.on('stderr', function (data) {
+            self.terminalcmd.terminalstderr(data);
+        });
+        self.appEventBus.on('disconnect', function () {
+            self.terminalcmd.terminaldisconnect();
+        });
+        self.appEventBus.on('enable', function () {
+            self.terminalcmd.terminalenable();
+        });
+        self.appEventBus.on('disable', function () {
+            self.terminalcmd.terminaldisable();
+        });
+        self.appEventBus.on('prompt', function (data) {
+            self.terminalcmd.terminalsetprompt(data);
+        });
 
     },
     showView: function (view, elem, sub) {
