@@ -24,11 +24,11 @@ window.TerminalView = Backbone.View.extend({
         $('#cmdterminalID').focus();
     },
     terminalstdout: function (data) {
-        if (data.toLowerCase().indexOf("linaro@") >= 0 || data.toLowerCase().indexOf("root@") >= 0) {
+        // if (data.toLowerCase().indexOf("linaro@") >= 0 || data.toLowerCase().indexOf("root@") >= 0) {
             this.terminal.set_prompt(data);
-        } else {
+        // } else {
             this.terminal.echo(String(data));
-        }
+        // }
 
     },
     terminalstderr: function (data) {
