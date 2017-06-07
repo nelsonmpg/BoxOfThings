@@ -125,7 +125,6 @@ var parseHtml = function(response) {
 }
 
 var bd = function (){
-	mongoose.Promisse = require('bluebird');
 
 	mongoose.connect('mongodb://localhost/BoxIOT', function(err) {
 	    if (err) throw err;
