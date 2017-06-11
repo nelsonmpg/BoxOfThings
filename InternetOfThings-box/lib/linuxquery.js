@@ -1,20 +1,22 @@
 /* global module */
 
 require('colors');
-var net = require('net');
-var cp = require('child_process');
-var fs = require('fs');
-var ini = require('ini');
-var request = require("request");
-var SSH = require('simple-ssh');
-var coapSensor;
-var configSSH = null;
-var fileconfig = './MainConfig.ini';
-var sshfileconfig = './configssh.json';
+var net = require('net'),
+    cp = require('child_process'),
+    fs = require('fs'),
+    ini = require('ini'),
+    request = require("request"),
+    SSH = require('simple-ssh'),
+    macaddress = require('macaddress'),
+    os = require("os"),
+    fileconfig = './MainConfig.ini',
+    sshfileconfig = './configssh.json',
+    configSSH = null,
+    coapSensor;
 
 
-module.exports.getHtmlText = function (req, res) {
-    request("http://[bbbb::100]/" + req.params.page, function (error, response, body) {
+module.exports.getHtmlText = function(req, res) {
+    request("http://[bbbb::100]/" + req.params.page, function(error, response, body) {
         if (!error) {
             res.json(response);
         } else {
@@ -29,26 +31,66 @@ module.exports.getHtmlText = function (req, res) {
  * @param {type} res
  * @returns {undefined}
  */
- module.exports.getinifileparams = function (req, res) {
+module.exports.getinifileparams = function(req, res) {
     if (fs.existsSync(sshfileconfig)) {
         var contents = fs.readFileSync(sshfileconfig).toString();
         if (IsJsonString(contents)) {
             res.send({
                 status: "File Ok",
-                stdout : JSON.parse(contents)
+                stdout: JSON.parse(contents)
             });
-        }else {
+        } else {
             res.status(500).send({
                 status: "Fail",
                 stdout: "Não é m ficheiro no formato correto."
             });
         }
     } else {
-        es.status(500).send({
+        res.status(500).send({
             status: "Fail",
             stdout: "O ficheiro não existe."
         });
     }
+};
+
+module.exports.defaultparamsinifile = function(req, res) {
+    var t1 = cp.execSync('cat /proc/cpuinfo | grep Serial | cut -d" " -f2');
+    var t2 = cp.execSync('cat /proc/meminfo | grep Total | tr -s " " " " | cut -d":" -f2 | cut -d" " -f2 | awk \'{ x += $1 } ; END { print x}\'');
+
+    macaddress.one(function(err, mac) {
+        var macaddress = mac;
+
+        var objJson = {
+            boxname: "BoxIoT",
+            boxSerial: (t1.toString("utf8") * 1 + t2.toString("utf8") * 1),
+            macaddess: macaddress,
+            boxmodel: "",
+            boxversion: "",
+            boxtype: "",
+            boxlocal: "",
+            boxlatitude: "",
+            boxlongitude: "",
+            boxclientname: "",
+            boxclientaddress: "",
+            boxclientpostalcode: "",
+            boxclientcity: "",
+            boxclientphone: "",
+            boxyearinstall: "",
+            localip: "127.0.0.1",
+            localport: "3000",
+            remoteport: "1000",
+            remoteuser: "root",
+            remoteip: "127.0.0.1",
+            sshport: "22",
+            privatersa: os.userInfo().homedir + "/.ssh/id_rsa"
+        };
+
+        res.send({
+            status: "File Ok",
+            stdout: objJson
+        });
+
+    });
 };
 
 /**
@@ -57,11 +99,11 @@ module.exports.getHtmlText = function (req, res) {
  * @param {type} res
  * @returns {undefined}
  */
- module.exports.savesettings = function (req, res) {    
+module.exports.savesettings = function(req, res) {
     var self = this;
-    var json = JSON.stringify(req.body.data);    
-    fs.writeFile(sshfileconfig, json, 'utf8',function(err){
-        if (err){           
+    var json = JSON.stringify(req.body.data);
+    fs.writeFile(sshfileconfig, json, 'utf8', function(err) {
+        if (err) {
             res.status(500).send({
                 status: "erro ao gravar as configurações SSH.",
                 stdout: err
@@ -82,35 +124,35 @@ module.exports.getHtmlText = function (req, res) {
                     databasepass: config.userportal.pass
                 };
                 var saveini = "" +
-                "; Config Global\n" +
-                "[global]\n" + 
-                "portlocalserver = " + datavals.portlocalserver + "\n" +
-                "pathserverfreeport = " + datavals.pathserverfreeport + "\n" +
-                "configok = true\n\n" +
-                "; definicao da base de dados\n" +
-                "[database]\n" + 
-                "dataBaseType = " + datavals.dataBaseType + "\n" +
-                "host = " + datavals.dataBasehost + "\n" +
-                "dbname = " + datavals.databasedbname + "\n\n" +
-                "; Utilizador por defeito de acesso ao portal\n" + 
-                "[userportal]\n" + 
-                "user = " + datavals.databaseuser + "\n" +
-                "pass = " + datavals.databasepass + "\n";
+                    "; Config Global\n" +
+                    "[global]\n" +
+                    "portlocalserver = " + datavals.portlocalserver + "\n" +
+                    "pathserverfreeport = " + datavals.pathserverfreeport + "\n" +
+                    "configok = true\n\n" +
+                    "; definicao da base de dados\n" +
+                    "[database]\n" +
+                    "dataBaseType = " + datavals.dataBaseType + "\n" +
+                    "host = " + datavals.dataBasehost + "\n" +
+                    "dbname = " + datavals.databasedbname + "\n\n" +
+                    "; Utilizador por defeito de acesso ao portal\n" +
+                    "[userportal]\n" +
+                    "user = " + datavals.databaseuser + "\n" +
+                    "pass = " + datavals.databasepass + "\n";
 
-                fs.writeFile(fileconfig, saveini, 'utf8',function(err){
-                    if (err){ 
+                fs.writeFile(fileconfig, saveini, 'utf8', function(err) {
+                    if (err) {
                         console.log("Erro ao tentar gravar o ficheiro global de configuracao.".red.bold);
                     } else {
                         console.log("O ficheiro de configuração global foi atualizado.".green.bold);
                     }
                 });
                 res.send({
-                    status:"ok",
+                    status: "ok",
                     stdout: "successs"
                 });
             } else {
                 res.send({
-                    status:"ok",
+                    status: "ok",
                     stdout: "Erro ao atualizar o ficheiro MainConfig."
                 });
                 Console.log("Erro ao ler o ficherio de configuracao global.".red.bold);
@@ -119,13 +161,13 @@ module.exports.getHtmlText = function (req, res) {
     });
 };
 
-module.exports.getLastGitUpdate = function (req, res) {
-    cp.exec("git log -1 --format=%cd", function (error, stdout, stderr) {
+module.exports.getLastGitUpdate = function(req, res) {
+    cp.exec("git log -1 --format=%cd", function(error, stdout, stderr) {
         res.json(stdout);
     });
 };
 
-module.exports.createconnetionSSH = function(coap, pathnode){
+module.exports.createconnetionSSH = function(coap, pathnode) {
     var self = this;
     coapSensor = coap;
     try {
@@ -143,24 +185,24 @@ module.exports.createconnetionSSH = function(coap, pathnode){
 
             if (fs.existsSync(configSSH.privatersa.toString("utf8"))) {
                 var ssh = new SSH({
-                  host: configSSH.remoteip,
-                  user: configSSH.remoteuser,
-                  port: configSSH.sshport,
-                  key: fs.readFileSync(configSSH.privatersa.toString("utf8"))
-              });
+                    host: configSSH.remoteip,
+                    user: configSSH.remoteuser,
+                    port: configSSH.sshport,
+                    key: fs.readFileSync(configSSH.privatersa.toString("utf8"))
+                });
 
                 ssh.exec('node ' + pathnode + ' ' + configSSH.remoteport + ' ' + configSSH.boxname, {
                     err: function(stderr) {
                         console.log("A execução do script remoto não foi executada.".red.bold);
-                        console.log(stderr); 
+                        console.log(stderr);
                     },
-                    out: function(code) {                       
+                    out: function(code) {
                         if (IsJsonString(code)) {
                             var resultSsh = JSON.parse(code);
                             if (configSSH.remoteport != resultSsh.port) {
                                 configSSH.remoteport = resultSsh.port;
-                                fs.writeFile('configssh.json', JSON.stringify(configSSH), 'utf8',function(err){
-                                    if (err){ 
+                                fs.writeFile('configssh.json', JSON.stringify(configSSH), 'utf8', function(err) {
+                                    if (err) {
                                         console.log("Erro ao tentar gravar o ficheiro.".red.bold);
                                     } else {
                                         console.log("O ficheiro de configuração do SSH foi atualizado.".green.bold);
@@ -182,26 +224,26 @@ module.exports.createconnetionSSH = function(coap, pathnode){
                 console.log("O caminho para a chave privada da box não existe.".red.bold);
             }
         } else {
-           console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
-       }
-   } else {
-       console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
-   }
+            console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
+        }
+    } else {
+        console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
+    }
 };
 
-module.exports.createReverseTunnel = function(){ 
-  var self = this;
-  // inicia o tunel ssh com a cloud
-  cp.exec("sh ./runTunneling.sh " + configSSH.remoteport + " " +  configSSH.localip + " " + configSSH.localport + " " + configSSH.remoteuser + " '" + configSSH.remoteip + "' " + configSSH.sshport, function (error, stdout, stderr) {
-    if (error instanceof Error) {
-      console.log('exec error: ' + error);
-      console.log("Erro na criação do tunel SHH port : %s:%s".red.bold, configSSH.remoteip, configSSH.remoteport);
-      return;
-  }
-  console.log('stdout ', stdout);
-  console.log('stderr ', stderr);
-  console.log("tunnel ssh created!!!".green.bold);
-});
+module.exports.createReverseTunnel = function() {
+    var self = this;
+    // inicia o tunel ssh com a cloud
+    cp.exec("sh ./runTunneling.sh " + configSSH.remoteport + " " + configSSH.localip + " " + configSSH.localport + " " + configSSH.remoteuser + " '" + configSSH.remoteip + "' " + configSSH.sshport, function(error, stdout, stderr) {
+        if (error instanceof Error) {
+            console.log('exec error: ' + error);
+            console.log("Erro na criação do tunel SHH port : %s:%s".red.bold, configSSH.remoteip, configSSH.remoteport);
+            return;
+        }
+        console.log('stdout ', stdout);
+        console.log('stderr ', stderr);
+        console.log("tunnel ssh created!!!".green.bold);
+    });
 };
 
 /**
@@ -209,7 +251,7 @@ module.exports.createReverseTunnel = function(){
  * @param {type} file
  * @returns {Boolean}
  */
- var checkconfigexist = function (file) {
+var checkconfigexist = function(file) {
     var config;
     try {
         // try to get the override configuration file if it exists

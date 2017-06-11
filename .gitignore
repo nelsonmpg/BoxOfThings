@@ -8,5 +8,4 @@ InternetOfThings-box/MainConfig.ini
 InternetOfThings-box/configssh.json
 README.sublime-project
 README.sublime-workspace
-Vagrantfile
 .vagrant/

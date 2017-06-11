@@ -1,150 +1,328 @@
-<!-- Info boxes -->
 <div class="row">
-   <!-- Info boxes -->
-   <div class="col-md-12">
-      <div class="box">
-         <div  class="box-header with-border">
-            <h2 class="box-title">
-               <i class="fa fa-server"></i> 
-               Config SSH Connection
-            </h2>
-         </div>
-         <div class="box-body">
-            <div class="row with-border">
-               <div  class="box-header with-border">
-                  <div class="box">
-                     <div  class="box-header with-border">
-                        <h4 class="box-title">
-                           <i class="fa fa-server"></i> 
-                           Config SSH Local Connection
-                        </h4>
-                     </div>
-                     <div class="box-body">
-                        <div class="row with-border">
-                           <div class="col-md-2">
-                              <label class="vcenter">Local IP:</label>
-                           </div>
-                           <div class="col-md-3">
-                              <input id="local-ip" class="width100 valid-input form-control" data-typevalue="local-ip" type="text" placeholder="127.0.0.1" value="127.0.0.1" data-inputmask="'alias': 'Local IP'" data-mask="">
-                           </div>
-                           <div class="col-md-1">
-                              <span class="whith10p color-red" data-toggle="tooltip" title="Inseert a valid IP.">
-                              <i class="icon fa fa-close"></i>
-                              </span>
-                           </div>
-                           <!-- /.box-body --> 
-                           <div class="col-md-2">
-                              <label class="vcenter">Local Port:</label>
-                           </div>
-                           <div class="col-md-3">
-                              <input id="local-port" class="width100 valid-input form-control" data-typevalue="local-port" type="text" placeholder="3000" value="3000">
-                           </div>
-                           <!-- /.box-body --> 
-                           <div class="col-md-1">
-                              <span class="whith10p color-red" data-toggle="tooltip" title="Insert a valid port namber.">
-                              <i class="icon fa fa-close"></i>
-                              </span>
-                           </div>
-                           <div class="col-md-2">
-                              <label class="vcenter">Local Path Private Key:</label>
-                           </div>
-                           <div class="col-md-3">
-                              <input id="local-privatekey" class="width100 valid-input form-control" data-typevalue="local-privatekey" type="text" placeholder="/home/BoxIot/.ssh/id_rsa" value="/home/BoxIot/.ssh/id_rsa">
-                           </div>
-                           <div class="col-md-1">
-                              <span class="whith10p color-red" data-toggle="tooltip" title="Insert a valid path to private RSA Key.">
-                              <i class="icon fa fa-close"></i>
-                              </span>
-                           </div>
-                           <div class="col-md-2">
-                              <label class="vcenter">Name of Box:</label>
-                           </div>
-                           <div class="col-md-3">
-                              <input id="local-pboxname" class="width100 valid-input form-control" data-typevalue="local-pboxname" type="text" placeholder="BoxIpt_1213456789" value="BoxIpt_1213456789">
-                           </div>
-                           <div class="col-md-1">
-                              <span class="whith10p color-red" data-toggle="tooltip" title="Insert a valid name of Box.">
-                              <i class="icon fa fa-close"></i>
-                              </span>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="box">
-                     <div  class="box-header with-border">
-                        <h4 class="box-title">
-                           <i class="fa fa-server"></i> 
-                           Config SSH Remote Connection
-                        </h4>
-                     </div>
-                     <div class="box-body">
-                        <div class="row with-border">
-                           <div class="col-md-2">
-                              <label class="vcenter">Remote IP:</label>
-                           </div>
-                           <div class="col-md-3">
-                              <input id="remote-ip" class="width100 valid-input form-control" data-typevalue="remote-ip" type="text" placeholder="127.0.0.1" value="127.0.0.1" data-inputmask="'alias': 'Remote IP'" data-mask="">
-                           </div>
-                           <div class="col-md-1">
-                              <span class="whith10p color-red" data-toggle="tooltip" title="Inseert a valid IP.">
-                              <i class="icon fa fa-close"></i>
-                              </span>
-                           </div>
-                           <div class="col-md-2">
-                              <label class="vcenter">Remote Port:</label>
-                           </div>
-                           <div class="col-md-3">
-                              <input id="remote-port" class="width100 valid-input form-control" data-typevalue="remote-port" type="text" placeholder="1000" value="1000">
-                           </div>
-                           <div class="col-md-1">
-                              <span class="whith10p color-red" data-toggle="tooltip" title="Insert a valid port namber.">
-                              <i class="icon fa fa-close"></i>
-                              </span>
-                           </div>
-                           <div class="col-md-2">
-                              <label class="vcenter">Remote User:</label>
-                           </div>
-                           <div class="col-md-3">
-                              <input id="remote-user" class="width100 valid-input form-control" data-typevalue="remote-user" type="text" placeholder="root" value="root" data-inputmask="'alias': 'Remote User'" data-mask="">
-                           </div>
-                           <div class="col-md-1">
-                              <span class="whith10p color-red" data-toggle="tooltip" title="Inseert a valid IP.">
-                              <i class="icon fa fa-close"></i>
-                              </span>
-                           </div>
-                           <div class="col-md-2">
-                              <label class="vcenter">Remote SSH Default Port:</label>
-                           </div>
-                           <div class="col-md-3">
-                              <input id="remote-defport" class="width100 valid-input form-control" data-typevalue="remote-defport" type="text" placeholder="22" value="22">
-                           </div>
-                           <div class="col-md-1">
-                              <span class="whith10p color-red" data-toggle="tooltip" title="Insert a valid port namber.">
-                              <i class="icon fa fa-close"></i>
-                              </span>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title"> Config Box</h3>
             </div>
-         </div>
-      </div>
-      <div class="box">
-         <div  class="box-header with-border">
-            <h4 class="box-title"></i></h4>
-         </div>
-         <div class="box-body">
-            <div class="row with-border">
-               <div class="col-md-2">
-                <button id="save-settings" type="button" class="btn btn-default width100" >
-                  <label> Save Settings 
-                    <i class="fa fa-save"></i>
-                  </label>
-                </button>
-              </div>
+            <div class="box-body">
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"> Box</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label class="vcenter">Box Name:</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input id="box-name" class="width100 valid-input form-control" data-typevalue="box-name" type="text" placeholder="BoxIot" value="BoxIot">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="whith10p color-red" data-toggle="tooltip" title="Insert a valid name of Box."><i class="icon fa fa-close"></i></span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input id="box-name-code" class="width100 form-control" data-typevalue="box-name-code" type="text" placeholder="" value="" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label>Mac Address</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input id="box-mac" class=" width100 valid-input form-control" data-typevalue="box-mac" type="text" value="ff.ff.ff.ff.ff.ff" placeholder="ff.ff.ff.ff.ff.ff">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="whith10p color-red" data-toggle="tooltip" title="Insert a valid mac address of Box ethernet."><i class="icon fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label>Box Model</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input id="box-model" class=" width100 valid-input form-control" type="text" data-typevalue="box-model" value="1.0" placeholder="1.0">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="whith10p color-red" data-toggle="tooltip" title="Insert a valif Model"><i class="icon fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label>Box Version</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input id="box-version" class=" width100 valid-input form-control" type="text" data-typevalue="box-version" value="1.0" placeholder="1.0">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="whith10p color-red" data-toggle="tooltip" title="Insert a Box Version"><i class="icon fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label>Box Type</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input id="box-type" class=" width100 valid-input form-control" type="text" data-typevalue="box-type" value="1.0" placeholder="1.0">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="whith10p color-red" data-toggle="tooltip" title="Insert a Type Box."><i class="icon fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label>Box Manufactured</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input id="box-local" class=" width100 valid-input form-control" type="text" data-typevalue="box-local" value="" placeholder="U.S.A.">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="whith10p color-red" data-toggle="tooltip" title="Insert a manufactured local."><i class="icon fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label>Latitude</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input id="box-latitude" class="width100 valid-input form-control" type="text" data-typevalue="box-latitude" placeholder="0.0" value="0.0">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="whith10p color-red" data-toggle="tooltip" title="Insert a coodinate Lat."><i class="icon fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label>Longitude</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input id="box-longitude" class="width100 valid-input form-control" type="text" data-typevalue="box-longitude" placeholder="0.0" value="0.0">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="whith10p color-red" data-toggle="tooltip" title="Insert a coodinate Long."><i class="icon fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label>Client Name</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input id="box-client-name" class="width100 valid-input form-control" type="text" data-typevalue="box-client-name" placeholder="Client Name" value="">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="whith10p color-red" data-toggle="tooltip" title="Insert a valid client name."><i class="icon fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label>Client Address</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input id="box-client-address" class="width100 valid-input form-control" type="text" data-typevalue="box-client-address" placeholder="Client AddessRua Cima e Baixo" value="">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="whith10p color-red" data-toggle="tooltip" title="Insert a valid client address."><i class="icon fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label>Postal Code</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input id="box-client-postalcode" class="width100 valid-input form-control" data-typevalue="box-client-postalcode" type="text" placeholder="1000-000" value="">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="whith10p color-red" data-toggle="tooltip" title="Insert a valid postal code."><i class="icon fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label>City</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input id="box-client-city" class="width100 valid-input form-control" type="text" data-typevalue="box-client-city" placeholder="City" value="">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="whith10p color-red" data-toggle="tooltip" title="Insert a city."><i class="icon fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label>Telephone</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input id="box-client-phone" class="width100 valid-input form-control" type="text" data-typevalue="box-client-phone" placeholder="111 111 111" value="">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="whith10p color-red" data-toggle="tooltip" title="Insert a telephone clint."><i class="icon fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label>Year Install</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input id="box-year-install" class="width100 valid-input form-control" type="text" data-typevalue="box-year-install" placeholder="Year Install" value="">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="whith10p color-red" data-toggle="tooltip" title="Insert a year install."><i class="icon fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-   </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h2 class="box-title"><i class="fa fa-server"></i>Config SSH Connection</h2>
+            </div>
+            <div class="box-body">
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h4 class="box-title"><i class="fa fa-server"></i>Config SSH Local Connection</h4>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label class="vcenter">Local IP:</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input id="local-ip" class="width100 valid-input form-control" data-typevalue="local-ip" type="text" placeholder="127.0.0.1" value="127.0.0.1" data-inputmask="'alias': 'Local IP'" data-mask="">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="whith10p color-red" data-toggle="tooltip" title="Inseert a valid IP."><i class="icon fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label class="vcenter">Local Port:</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input id="local-port" class="width100 valid-input form-control" data-typevalue="local-port" type="text" placeholder="3000" value="3000">
+                                    </div>
+                                    <!-- /.box-body -->
+                                    <div class="col-md-1">
+                                        <span class="whith10p color-red" data-toggle="tooltip" title="Insert a valid port namber."><i class="icon fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label class="vcenter">Local Path Private Key:</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input id="local-privatekey" class="width100 valid-input form-control" data-typevalue="local-privatekey" type="text" placeholder="/home/BoxIot/.ssh/id_rsa" value="/home/BoxIot/.ssh/id_rsa">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="whith10p color-red" data-toggle="tooltip" title="Insert a valid path to private RSA Key."><i class="icon fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h4 class="box-title"><i class="fa fa-server"></i>Config SSH Remote Connection</h4>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label class="vcenter">Remote IP:</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input id="remote-ip" class="width100 valid-input form-control" data-typevalue="remote-ip" type="text" placeholder="127.0.0.1" value="127.0.0.1" data-inputmask="'alias': 'Remote IP'" data-mask="">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="whith10p color-red" data-toggle="tooltip" title="Inseert a valid IP."><i class="icon fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label class="vcenter">Remote Port:</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input id="remote-port" class="width100 valid-input form-control" data-typevalue="remote-port" type="text" placeholder="1000" value="1000">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="whith10p color-red" data-toggle="tooltip" title="Insert a valid port namber."><i class="icon fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label class="vcenter">Remote User:</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input id="remote-user" class="width100 valid-input form-control" data-typevalue="remote-user" type="text" placeholder="root" value="root" data-inputmask="'alias': 'Remote User'" data-mask="">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="whith10p color-red" data-toggle="tooltip" title="Inseert a valid IP."><i class="icon fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="col-md-4">
+                                        <label class="vcenter">Remote SSH Default Port:</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input id="remote-defport" class="width100 valid-input form-control" data-typevalue="remote-defport" type="text" placeholder="22" value="22">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span class="whith10p color-red" data-toggle="tooltip" title="Insert a valid port namber."><i class="icon fa fa-close"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-header with-border">
+                <h4 class="box-title"></i></h4>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <button id="save-settings" type="button" class="btn btn-default width100">
+                            <label> Save Settings
+                                <i class="fa fa-save"></i>
+                            </label>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

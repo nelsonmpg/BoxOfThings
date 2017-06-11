@@ -1,9 +1,8 @@
 // grab the things we need
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var self = this;
 
-// create a schema
+// create a schema Sensor
 var sensorSchema = new Schema({
     name: {type: String} ,
     ip: {type: String} ,
@@ -11,26 +10,16 @@ var sensorSchema = new Schema({
     created_at: {type: Date}
 });
 
-var Sensor = function(cfg){
-	var self = this;
-    this.SensorDB = mongoose.model('Sensor', sensorSchema);
-
-    self.config = cfg;
-    // connect to mongo db
-    this.connStr = self.config.dataBaseType + '://' + self.config.host + '/Sensors';
-    mongoose.connect(this.connStr, function(err) {
-        if (err) {
-            throw err;
-        }
-        console.log("Successfully connected to MongoDB");
-    });
-}
+var Sensor = function(){
+  this.SensorDB = mongoose.model('Sensor', sensorSchema);
+};
 
 Sensor.prototype.insertData = function(data){
-	var self = this;
+
+  var self = this;
     // Recebendo os parâmetros da requisição
     // create a new user
-    var newSensorData = this.SensorDB(data);
+    var newSensorData = self.SensorDB(data);
 
     // save the user
     newSensorData.save(function(err) {

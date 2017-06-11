@@ -1,56 +1,42 @@
 // grab the things we need
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var self = this;
 
-// create a schema
+// create a schema User
 var userSchema = new Schema({
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    pass: {
-        type: String,
-        required: true
-    }
+    email: { type: String, required: true, unique: true },
+    pass: { type: String, required: true }
 });
 
-// the schema is useless so far
-// we need to create a model using it
-var User = function(cfg) {
-	var self = this;
+var User = function() {
+    var self = this;
     this.UserDB = mongoose.model('User', userSchema);
-
-    self.config = cfg;
-    // connect to mongo db
-    this.connStr = self.config.dataBaseType + '://' + self.config.host + '/' + self.config.dbname;
-    mongoose.connect(this.connStr, function(err) {
-        if (err) {
-            throw err;
-        }
-        console.log("Successfully connected to MongoDB");
-    });
 };
 
-User.prototype.loginUser = function(params, res, next) {
-	var self = this;
+User.prototype.loginUser = function(params, res) {
+    var self = this;
     this.UserDB.findOne(params, function(err, user) {
         if (err) {
-            return next(new Error('failed to find user'));
+            res.json({
+                status: "error",
+                stdout: err
+            });
+        } else if (!user) {
+            res.json({
+                status: "login error",
+                stdout: "O utilizador não foi encontrrado"
+            });
+        } else {
+            res.json({
+                status: "login OK",
+                stdout: ""
+            });
         }
-        if (!user) {
-            return next(new Error('failed to find user'));
-        }
-        // object of the user
-        console.log(user);
-        res.json("userOk");
-        next();
     });
 };
 
-User.prototype.InsertUser = function(params, res, next) {
-	var self = this;
+User.prototype.InsertUser = function(params, res) {
+    var self = this;
     // Recebendo os parâmetros da requisição
     // create a new user
     var newUser = this.UserDB(params);
@@ -61,9 +47,9 @@ User.prototype.InsertUser = function(params, res, next) {
             return;
         }
         console.log('User created!');
-        if (next) {
-        	res.json('ok');
-        }        
+        if (res) {
+            res.json('ok ');
+        }
     });
 };
 

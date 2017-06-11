@@ -1,61 +1,56 @@
 require('colors');
 var coap = require('coap');
 var request = coap.request;
-var URL = require('url');
-var method = 'GET'; // default
-var url;
-var req;
-var spawn = require('threads').spawn;
-var Sensor;
-var intTime = null;
-var self = this;
+var URL = require('url'),
+    method = 'GET',
+    url,
+    req,
+    spawn = require('threads').spawn,
+    Sensor = require('./models/sensor.js'),
+    intTime = null,
+    cont = 0;
 
-var cont = 0;
+Sensor = new Sensor();
 
-module.exports.configDB = function(cfg){
-  Sensor = require('./models/modelObj').Sensor;
-  Sensor = new Sensor(cfg);
-};
-
-module.exports.serverListening = function(sock){
-  console.log('CONNECTED: %s:%s'.italic.rainbow, sock.remoteAddress, sock.remotePort);
-  sock.on('data', function(data) {
-    console.log('DATA ' + sock.remoteAddress + ': ' + data);
-    intTime = setTimeout(function(){
-      sock.write(JSON.stringify({aa:cont, zz:cont++}));
-  }, 3000);
-});
-  sock.on('close', function(data) {
-    clearTimeout(intTime);
-    console.log('CLOSED: ' + sock.remoteAddress +' '+ sock.remotePort);
-});
+module.exports.serverListening = function(sock) {
+    console.log('CONNECTED: %s:%s'.italic.rainbow, sock.remoteAddress, sock.remotePort);
+    sock.on('data', function(data) {
+        console.log('DATA ' + sock.remoteAddress + ': ' + data);
+        intTime = setTimeout(function() {
+            sock.write(JSON.stringify({ aa: cont, zz: cont++ }));
+        }, 3000);
+    });
+    sock.on('close', function(data) {
+        clearTimeout(intTime);
+        console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
+    });
 };
 
 
 module.exports.getdataFromSensor = function(req, res) {
-    var endereco = req.params.endereco === "undefined" ? "" : req.params.endereco, 
-    folder = req.params.folder === "undefined" ? "" : req.params.folder, 
-    resource = req.params.resource === "undefined" ? "" : req.params.resource, 
-    params = req.params.params === "undefined" ? "" : req.params.params, 
-    payload = req.params.payload === "undefined" ? "" : req.params.payload, 
-    mMethod = req.params.mMethod === "undefined" ? "GET" : req.params.mMethod, 
-    mObserve = req.params.mObserve === "undefined" ? "" : req.params.mObserve;
+    var endereco = req.params.endereco === "undefined" ? "" : req.params.endereco,
+        folder = req.params.folder === "undefined" ? "" : req.params.folder,
+        resource = req.params.resource === "undefined" ? "" : req.params.resource,
+        params = req.params.params === "undefined" ? "" : req.params.params,
+        payload = req.params.payload === "undefined" ? "" : req.params.payload,
+        mMethod = req.params.mMethod === "undefined" ? "GET" : req.params.mMethod,
+        mObserve = req.params.mObserve === "undefined" ? "" : req.params.mObserve;
 
-    resource = resource.replace("§","?");
+    resource = resource.replace("§", "?");
 
     gatSensorDaata(endereco, folder, resource, params, payload, mMethod, mObserve, res);
 };
 
-module.exports.threadgetdataFromSensor = function(req, res ) {
-    var endereco = req.params.endereco === "undefined" ? "" : req.params.endereco, 
-    folder = req.params.folder === "undefined" ? "" : req.params.folder, 
-    resource = req.params.resource === "undefined" ? "" : req.params.resource, 
-    params = req.params.params === "undefined" ? "" : req.params.params, 
-    payload = req.params.payload === "undefined" ? "" : req.params.payload, 
-    mMethod = req.params.mMethod === "undefined" ? "GET" : req.params.mMethod, 
-    mObserve = req.params.mObserve === "undefined" ? "" : req.params.mObserve;
+module.exports.threadgetdataFromSensor = function(req, res) {
+    var endereco = req.params.endereco === "undefined" ? "" : req.params.endereco,
+        folder = req.params.folder === "undefined" ? "" : req.params.folder,
+        resource = req.params.resource === "undefined" ? "" : req.params.resource,
+        params = req.params.params === "undefined" ? "" : req.params.params,
+        payload = req.params.payload === "undefined" ? "" : req.params.payload,
+        mMethod = req.params.mMethod === "undefined" ? "GET" : req.params.mMethod,
+        mObserve = req.params.mObserve === "undefined" ? "" : req.params.mObserve;
 
-    resource = resource.replace(/§/g,"?");
+    resource = resource.replace(/§/g, "?");
 
     thread = spawn(function(input, done) {
         done({
@@ -92,7 +87,7 @@ module.exports.threadgetdataFromSensor = function(req, res ) {
 
 };
 
-var gatSensorDaata = function(endereco, folder, resource, params, payload, mMethod, mObserve, response){
+var gatSensorDaata = function(endereco, folder, resource, params, payload, mMethod, mObserve, response) {
     var requestString = 'coap://' + endereco + ':5683/' + folder + '/' + resource + params;
     console.log(requestString);
 
@@ -117,10 +112,10 @@ var gatSensorDaata = function(endereco, folder, resource, params, payload, mMeth
         console.log('chegou uma resposta');
 
         res.on('data', function(msg) {
-            console.log(msg);
-            response.json(msg);
-        })
-        // print only status code on empty response
+                console.log(msg);
+                response.json(msg);
+            })
+            // print only status code on empty response
         if (!res.payload.length) {
             process.stderr.write('\x1b[1m(' + res.code + ')\x1b[0m\n');
             console.log(res.payload);
