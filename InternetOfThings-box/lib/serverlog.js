@@ -3,8 +3,11 @@ var fs = require("fs"),
 
 
 module.exports = {
-    appendToLog : function(text) {
-        fs.appendFileSync(logfile, new Date().toString() + "\t" + text + "\n");
+    clearLogFile: function() {
+        fs.unlinkSync(logfile);
     },
 
+    appendToLog: function(text) {
+        fs.appendFileSync(logfile, new Date().toString() + "\t" + text + "\n");
+    }
 }

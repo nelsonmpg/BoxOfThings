@@ -5,8 +5,7 @@ var cp = require('child_process'),
     fs = require('fs'),
     ini = require('ini'),
     mainCfg = "./MainConfig.ini",
-    log = require('./lib/serverlog.js'),
-    logfile = 'serverlog.log';
+    log = require('./lib/serverlog.js');
 
 /**
  * 
@@ -15,7 +14,7 @@ var cp = require('child_process'),
 var Main = function() {
     var self = this;
 
-    fs.unlinkSync(logfile);
+    log.clearLogFile();
 
     log.appendToLog("Server start...");
     console.log("The file clear!");
