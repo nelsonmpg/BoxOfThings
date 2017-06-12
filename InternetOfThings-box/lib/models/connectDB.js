@@ -1,6 +1,6 @@
 require('colors');
 var mongoose = require('mongoose'),
-    log = require('./serverlog.js'),
+    log = require('./../serverlog.js'),
     connStr;
 
 module.exports.connectDB = function(config) {

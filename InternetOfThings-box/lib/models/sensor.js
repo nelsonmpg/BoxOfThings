@@ -1,7 +1,7 @@
 // grab the things we need
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema
-log = require('./serverlog.js'), ;
+log = require('./../serverlog.js');
 
 // create a schema Sensor
 var sensorSchema = new Schema({
