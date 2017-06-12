@@ -8,7 +8,7 @@ var coap = require('coap'),
 
 Sensor = new Sensor();
 
-var self = module.exports = {
+module.exports = {
     serverListening: function(sock) {
         var self = this;
         console.log('CONNECTED: %s:%s'.italic.rainbow, sock.remoteAddress, sock.remotePort);
@@ -20,7 +20,7 @@ var self = module.exports = {
             var req = JSON.parse(data);
             console.log(req);
 
-            self[req.request](req, sock);
+            module.exports[req.request](req, sock);
         });
         sock.on('close', function(data) {
             log.appendToLog('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
