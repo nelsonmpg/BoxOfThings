@@ -83,7 +83,7 @@ new Main();
 module.exports = Main;
 
 
-var createMainConfig = function(file) {
+function createMainConfig(file) {
     var saveini = "" +
         "; Config Global\n" +
         "[global]\n" +
