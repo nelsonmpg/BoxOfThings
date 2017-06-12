@@ -45,7 +45,7 @@ module.exports = {
 
     singleMoteAllInfo: function( req, res) {
         console.log(req);
-        getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, res);
+        getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, "key", res);
     },
 
     single_mote_single_info: function(req, res) {
