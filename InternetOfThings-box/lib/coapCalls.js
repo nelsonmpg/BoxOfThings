@@ -3,7 +3,8 @@ var coap = require('coap'),
     URL = require('url'),
     CryptoJS = require("crypto-js"),
     Sensor = require('./models/sensor.js'),
-    log = require('./serverlog.js');
+    log = require('./serverlog.js'),
+    key = CryptoJS.enc.Hex.parse('000102030405060708090A0B0C0D0EFF');
 
 Sensor = new Sensor();
 
@@ -37,26 +38,26 @@ module.exports = {
             mObserve = req.params.mObserve === "undefined" ? "" : req.params.mObserve;
 
         resource = resource.replace("§", "?");
-        getdataFromSensorReq(endereco, folder, resource, params, payload, mMethod, mObserve, mKey, res);
+        getdataFromSensorReq(endereco, folder, resource, params, payload, mMethod, mObserve, key, res);
     },
 
-    single_mote_all_info: function( req, res) {
-        getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, mKey, res);
+    single_mote_all_info: function(req, res) {
+        getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, res);
     },
 
     single_mote_single_info: function(req, res) {
-        getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, mKey, res);
+        getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, res);
     },
 
     mote_action: function(req, res) {
-        getdataFromSensorReq(req.params.moteIp, 'actuators', req.params.resource, '', undefined, 'POST', true, mKey, res);
+        getdataFromSensorReq(req.params.moteIp, 'actuators', req.params.resource, '', undefined, 'POST', true, key, res);
     }
 };
 
 
-var getdataFromSensorReq = function(endereco, folder, resource, params, payload, mMethod, mObserve, mKey, response) {
+var getdataFromSensorReq = function(endereco, folder, resource, params, payload, mMethod, mObserve, key, response) {
 
-    console.log(endereco, folder, resource, params, payload, mMethod, mObserve, mKey, "response");
+    console.log(endereco, folder, resource, params, payload, mMethod, mObserve, key, "response");
     response.write(JSON.stringify({ response: "testeOK" }));
     return;
 
@@ -66,7 +67,7 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
         delayMillis = 3000,
         method = 'GET',
         requestString = 'coap://' + endereco + ':5683/' + folder + '/' + resource + params;
-    mKey = CryptoJS.enc.Hex.parse('000102030405060708090A0B0C0D0EFF');
+    mKey = key;
 
     console.log(requestString);
     log.appendToLog(requestString);
