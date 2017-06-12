@@ -4,7 +4,7 @@ var coap = require('coap'),
     CryptoJS = require("crypto-js"),
     Sensor = require('./models/sensor.js'),
     log = require('./serverlog.js');
-var thisScript = this;
+    
 Sensor = new Sensor();
 
 module.exports = {
@@ -19,7 +19,7 @@ module.exports = {
             var req = JSON.parse(data);
             console.log(req);
             getdataFromSensorReq();
-            thisScript.single_mote_all_info();
+            self.singleMoteAllInfo();
 
         });
         sock.on('close', function(data) {
@@ -41,7 +41,7 @@ module.exports = {
         getdataFromSensorReq(endereco, folder, resource, params, payload, mMethod, mObserve, mKey, res);
     },
 
-    single_mote_all_info: function(/*req, res*/) {
+    singleMoteAllInfo: function(/*req, res*/) {
         console.log("req");
         getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, res);
     },
