@@ -1,12 +1,13 @@
 require('colors');
-var coap = require('coap');
-var request = coap.request;
-var URL = require('url'),
+var coap = require('coap'),
+    request = coap.request,
+    URL = require('url'),
     method = 'GET',
     url,
     req,
     spawn = require('threads').spawn,
     Sensor = require('./models/sensor.js'),
+    log = require('./serverlog.js'),
     intTime = null,
     cont = 0;
 
@@ -14,14 +15,17 @@ Sensor = new Sensor();
 
 module.exports.serverListening = function(sock) {
     console.log('CONNECTED: %s:%s'.italic.rainbow, sock.remoteAddress, sock.remotePort);
+    log.appendToLog('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
     sock.on('data', function(data) {
         console.log('DATA ' + sock.remoteAddress + ': ' + data);
+        log.appendToLog('DATA ' + sock.remoteAddress + ': ' + data);
         intTime = setTimeout(function() {
             sock.write(JSON.stringify({ aa: cont, zz: cont++ }));
         }, 3000);
     });
     sock.on('close', function(data) {
         clearTimeout(intTime);
+        log.appendToLog('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
         console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
     });
 };
@@ -82,6 +86,7 @@ module.exports.threadgetdataFromSensor = function(req, res) {
         console.error('Worker errored:', error);
 
     }).on('exit', function() {
+        log.appendToLog('Worker has been terminated.');
         console.log('Worker has been terminated.');
     });
 
@@ -90,6 +95,7 @@ module.exports.threadgetdataFromSensor = function(req, res) {
 var gatSensorDaata = function(endereco, folder, resource, params, payload, mMethod, mObserve, response) {
     var requestString = 'coap://' + endereco + ':5683/' + folder + '/' + resource + params;
     console.log(requestString);
+    log.appendToLog(requestString);
 
     /*Sensor.insertData({
         name:"a", 
@@ -110,15 +116,18 @@ var gatSensorDaata = function(endereco, folder, resource, params, payload, mMeth
     req.on('response', function(res) {
         res.setEncoding('utf8');
         console.log('chegou uma resposta');
+        log.appendToLog('chegou uma resposta');
 
         res.on('data', function(msg) {
                 console.log(msg);
+                log.appendToLog(msg);
                 response.json(msg);
             })
             // print only status code on empty response
         if (!res.payload.length) {
             process.stderr.write('\x1b[1m(' + res.code + ')\x1b[0m\n');
             console.log(res.payload);
+            log.appendToLog(res.payload);
             response.json(res.payload);
         }
     })

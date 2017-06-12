@@ -1,5 +1,6 @@
 require('colors');
 var mongoose = require('mongoose'),
+    log = require('./serverlog.js'),
     connStr;
 
 module.exports.connectDB = function(config) {
@@ -9,6 +10,7 @@ module.exports.connectDB = function(config) {
         if (err) {
             throw err;
         }
+        log.appendToLog("Successfully connected to MongoDB");
         console.log("Successfully connected to MongoDB".italic.magenta);
     });
 };

@@ -1,15 +1,15 @@
 /* global module, process */
 
 _ = require('underscore');
-var spawn = require('child_process').spawn;
-var exec = require('child_process').exec;
+var cp = require('child_process'),
+    log = require('./serverlog.js');
 
 /**
  * Class do Socket
  * @param {type} options
  * @returns {ServerSktIo}
  */
-var ServerSktIo = function (options) {
+var ServerSktIo = function(options) {
     this.server = options.server;
     this.users = [];
     this.liveActives;
@@ -19,11 +19,11 @@ var ServerSktIo = function (options) {
  * Inicia a criacao do socket para cada cliente
  * @returns {ServerSktIo.prototype}
  */
-ServerSktIo.prototype.init = function () {
+ServerSktIo.prototype.init = function() {
     var self = this;
 
     // Fired upon a connection
-    this.server.io.on("connection", function (socket) {
+    this.server.io.on("connection", function(socket) {
 
         var c = socket.request.connection._peername;
         console.log("+++++++++++++++++++++ ADD ++++++++++++++++++++++++++");
@@ -31,37 +31,43 @@ ServerSktIo.prototype.init = function () {
         console.log("User - " + socket.id);
         console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
+        log.appendToLog("+++++++++++++++++++++ ADD ++++++++++++++++++++++++++");
+        log.appendToLog("Connected - " + c.address + " : " + c.port);
+        log.appendToLog("User - " + socket.id);
+        log.appendToLog("++++++++++++++++++++++++++++++++++++++++++++++++++++");
+
         // deteta quando o cliente se desconecta do servidor e e removido da lista do servidor
-        socket.on('disconnect', function () {
+        socket.on('disconnect', function() {
             console.log("Client Disconnect...");
+            log.appendToLog("Client Disconnect...");
         });
 
-        var shell = spawn('/bin/bash');
+        var shell = cp.spawn('/bin/bash');
         var stdin = shell.stdin;
 
-        shell.on('exit', function () {
+        shell.on('exit', function() {
             socket.disconnect();
         });
 
         shell['stdout'].setEncoding('ascii');
-        shell['stdout'].on('data', function (data) {
+        shell['stdout'].on('data', function(data) {
             socket.emit('stdout', data);
         });
 
         shell['stderr'].setEncoding('ascii');
-        shell['stderr'].on('data', function (data) {
+        shell['stderr'].on('data', function(data) {
             socket.emit('stderr', data);
         });
 
-        socket.on('stdin', function (command) {
+        socket.on('stdin', function(command) {
             stdin.write(command + "\n") || socket.emit('disable');
         });
 
-        stdin.on('drain', function () {
+        stdin.on('drain', function() {
             socket.emit('enable');
         });
 
-        stdin.on('error', function (exception) {
+        stdin.on('error', function(exception) {
             socket.emit('error', String(exception));
         });
     });
@@ -71,6 +77,7 @@ ServerSktIo.prototype.init = function () {
 //excepcoes para os erros encontrados
 //process.on('uncaughtException', function (err) {
 //   console.log('Excepcao capturada: ' + err);
+//   log.appendToLog('Excepcao capturada: ' + err);
 //});
 
 module.exports = ServerSktIo;

@@ -3,45 +3,57 @@
 require('colors');
 var cp = require('child_process'),
     fs = require('fs'),
-    ini = require('ini')
-mainCfg = "./MainConfig.ini";
+    ini = require('ini'),
+    mainCfg = "./MainConfig.ini",
+    log = require('./lib/serverlog.js'),
+    logfile = 'serverlog.log';
 
 /**
  * 
  * @returns {undefined}
  */
 var Main = function() {
-    var args;
-    // Verifica se o ficheiro de ligacao com a base de dados para iniciar a comunicacao
-    if (this.checkconfigexist(mainCfg)) {
-        this.config2 = ini.parse(fs.readFileSync(mainCfg, 'utf-8'));
-        // carrega as configuracoes do ficheiro ini para as variaveis
+    var self = this;
+    fs.writeFile(logfile, "Server start...", function(err) {
+        if (err) {
+            return console.log(err);
+        }
 
-        try {
+        console.log("The file clear!\n");
 
-            args = {
-                portlocalserver: this.config2.global.portlocalserver,
-                pathserverfreeport: this.config2.global.pathserverfreeport,
-                configok: this.config2.global.configok,
-                dataBaseType: this.config2.database.dataBaseType,
-                host: this.config2.database.host,
-                dbname: this.config2.database.dbname,
-                user: this.config2.userportal.user,
-                pass: this.config2.userportal.pass
-            };
+        var args;
+        // Verifica se o ficheiro de ligacao com a base de dados para iniciar a comunicacao
+        if (self.checkconfigexist(mainCfg)) {
+            self.config2 = ini.parse(fs.readFileSync(mainCfg, 'utf-8'));
+            // carrega as configuracoes do ficheiro ini para as variaveis
 
-            // inicia p script e envia as configuracores do ficheiro ini
-            var child2 = cp.fork('./lib/serverHTTP');
-            child2.send({ "serverdata": args });
-            return;
-        } catch (e) {
-            console.log("MainConfig invalido ! ! !".red);
+            try {
+                args = {
+                    portlocalserver: self.config2.global.portlocalserver,
+                    pathserverfreeport: self.config2.global.pathserverfreeport,
+                    configok: self.config2.global.configok,
+                    dataBaseType: self.config2.database.dataBaseType,
+                    host: self.config2.database.host,
+                    dbname: self.config2.database.dbname,
+                    user: self.config2.userportal.user,
+                    pass: self.config2.userportal.pass
+                };
+
+                // inicia p script e envia as configuracores do ficheiro ini
+                var child2 = cp.fork('./lib/serverHTTP');
+                child2.send({ "serverdata": args });
+                return;
+            } catch (e) {
+                log.appendToLog("MainConfig invalido ! ! !");
+                console.log("MainConfig invalido ! ! !".red);
+                creteMainConfig(mainCfg);
+            }
+        } else {
+            log.appendToLog("MainConfig not exist ! ! !");
+            console.log("MainConfig not exist ! ! !".red);
             creteMainConfig(mainCfg);
         }
-    } else {
-        console.log("MainConfig not exist ! ! !".red);
-        creteMainConfig(mainCfg);
-    }
+    });
 };
 
 /**
@@ -88,10 +100,13 @@ var creteMainConfig = function(file) {
         "pass = admin\n";
 
     fs.writeFile(file, saveini, 'utf8', function(err) {
+        log.appendToLog("Tentar recriar o ficheiro global de configuração volte a tentar novamente!");
         console.log("Tentar recriar o ficheiro global de configuração volte a tentar novamente!");
         if (err) {
+            log.appendToLog("Erro ao tentar gravar o ficheiro default global de configuracao.");
             console.log("Erro ao tentar gravar o ficheiro default global de configuracao.".red.bold);
         } else {
+            log.appendToLog("O ficheiro de configuração default global foi criado con sucesso.");
             console.log("O ficheiro de configuração default global foi criado con sucesso.".green.bold);
         }
     });

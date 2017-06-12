@@ -1,22 +1,23 @@
 // grab the things we need
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema
+log = require('./serverlog.js'), ;
 
 // create a schema Sensor
 var sensorSchema = new Schema({
-    name: {type: String} ,
-    ip: {type: String} ,
-    value : {type: String} ,
-    created_at: {type: Date}
+    name: { type: String },
+    ip: { type: String },
+    value: { type: String },
+    created_at: { type: Date }
 });
 
-var Sensor = function(){
-  this.SensorDB = mongoose.model('Sensor', sensorSchema);
+var Sensor = function() {
+    this.SensorDB = mongoose.model('Sensor', sensorSchema);
 };
 
-Sensor.prototype.insertData = function(data){
+Sensor.prototype.insertData = function(data) {
 
-  var self = this;
+    var self = this;
     // Recebendo os parâmetros da requisição
     // create a new user
     var newSensorData = self.SensorDB(data);
@@ -26,7 +27,8 @@ Sensor.prototype.insertData = function(data){
         if (err) {
             return;
         }
-        console.log('Sensor value add / created!');    
+        log.appendToLog('Sensor value add / created!');
+        console.log('Sensor value add / created!');
     });
 };
 

@@ -11,6 +11,7 @@ var express = require('express'),
     serverIo = require('./serverio'),
     osquerys = require("./linuxquery"),
     coapSensor = require('./coapCalls.js'),
+    log = require('./serverlog.js'),
     dbToModels;
 
 /**
@@ -42,6 +43,7 @@ var ServerHTTP = function(config) {
         osquerys.createconnetionSSH(coapSensor);
     } else {
         console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
+        log.appendToLog("É necessário efetuar as configurações SSH para a comunicação remota.");
     }
 };
 
@@ -104,7 +106,17 @@ ServerHTTP.prototype.start = function() {
     console.log("                              \\./             ._|  ".green.bold);
     console.log("                              /'\\                  ".green.bold);
 
+    log.appendToLog("                       .__                          ");
+    log.appendToLog("                       [__)                         ");
+    log.appendToLog("                       [__)                         ");
+    log.appendToLog("._.    ,              ,   .__.._  .___..            ");
+    log.appendToLog(" | ._ -+- _ ._.._  _ -+-  |  ||,    |  |_ *._  _  __");
+    log.appendToLog("_|_[ ) | (/,[  [ )(/, |   |__||     |  [ )|[ )(_]_) ");
+    log.appendToLog("                              \\./             ._|  ");
+    log.appendToLog("                              /'\\                  ");
+
     console.log('\nServer HTTP Wait %d'.green.bold, self.port);
+    log.appendToLog('\nServer HTTP Wait ' + self.port);
 };
 
 /**
