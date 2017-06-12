@@ -14,20 +14,12 @@ var cp = require('child_process'),
  */
 var Main = function() {
     var self = this;
-    fs.writeFile(logfile, "The file clear!", function(err) {
-        if (err) {
-            return console.log(err);
-        }
 
-        console.log("The file clear!");
-        log.appendToLog("Server start...");
+    fs.unlinkSync(logfile);
 
-        self.startServer();
-    });
-};
+    log.appendToLog("Server start...");
+    console.log("The file clear!");
 
-Main.prototype.startServer = function() {
-    var self = this;
     var args;
     // Verifica se o ficheiro de ligacao com a base de dados para iniciar a comunicacao
     if (self.checkconfigexist(mainCfg)) {
@@ -60,6 +52,10 @@ Main.prototype.startServer = function() {
         console.log("MainConfig not exist ! ! !".red);
         creteMainConfig(mainCfg);
     }
+};
+
+Main.prototype.startServer = function() {
+
 };
 
 /**
