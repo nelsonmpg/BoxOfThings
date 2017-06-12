@@ -18,7 +18,10 @@ module.exports = {
             log.appendToLog('DATA ' + sock.remoteAddress + ': ' + data);
             var req = JSON.parse(data);
             console.log(req);
-            getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, undefined, sock);
+
+            module.exports.singleMoteAllInfo(req, sock);
+
+            // getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, undefined, sock);
 
         });
         sock.on('close', function(data) {
@@ -40,8 +43,8 @@ module.exports = {
         getdataFromSensorReq(endereco, folder, resource, params, payload, mMethod, mObserve, mKey, res);
     },
 
-    singleMoteAllInfo: function( /*req, res*/ ) {
-        console.log("req");
+    singleMoteAllInfo: function( req, res) {
+        console.log(req);
         getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, res);
     },
 
@@ -58,9 +61,9 @@ module.exports = {
 
 var getdataFromSensorReq = function(endereco, folder, resource, params, payload, mMethod, mObserve, mKey, response) {
 
-    console.log(endereco, folder, resource, params, payload, mMethod, mObserve, mKey, response);
+    console.log(endereco, folder, resource, params, payload, mMethod, mObserve, mKey, "response");
     response.write(JSON.stringify({ response: "testeOK" }));
-return;
+    return;
     var req,
         request = coap.request,
         url,
