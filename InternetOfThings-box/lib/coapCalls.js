@@ -19,10 +19,7 @@ module.exports = {
             var req = JSON.parse(data);
             console.log(req);
 
-            module.exports.singleMoteAllInfo(req, sock);
-
-            // getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, undefined, sock);
-
+            module.exports.single_mote_all_info(req, sock);
         });
         sock.on('close', function(data) {
             log.appendToLog('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
@@ -43,7 +40,7 @@ module.exports = {
         getdataFromSensorReq(endereco, folder, resource, params, payload, mMethod, mObserve, mKey, res);
     },
 
-    singleMoteAllInfo: function( req, res) {
+    single_mote_all_info: function( req, res) {
         console.log(req);
         getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, "key", res);
     },
