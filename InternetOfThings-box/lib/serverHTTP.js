@@ -10,7 +10,7 @@ var express = require('express'),
     ini = require('ini'),
     serverIo = require('./serverio'),
     osquerys = require("./linuxquery"),
-    coapSensor = require('./coapCalls.js'),
+    coapCalls = require('./coapCalls.js'),
     log = require('./serverlog.js'),
     dbToModels;
 
@@ -40,7 +40,7 @@ var ServerHTTP = function(config) {
     dbToModels.configDB(this.configDB);
 
     if (self.configok) {
-        osquerys.createconnetionSSH(coapSensor);
+        osquerys.createconnetionSSH(coapCalls);
     } else {
         console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
         log.appendToLog("É necessário efetuar as configurações SSH para a comunicação remota.");
@@ -77,7 +77,7 @@ ServerHTTP.prototype.start = function() {
     this.app.post("/insertUsr", dbToModels.insertUser);
 
 
-    this.app.get("/api/sensor/getDataSensor/:endereco/:folder/:resource/:params/:payload/:mMethod/:mObserve", coapSensor.getdataFromSensor);
+    this.app.get("/api/sensor/getDataSensor/:endereco/:folder/:resource/:params/:payload/:mMethod/:mObserve", coapCalls.getdataFromSensor);
 
 
     // Devolve as configuracoes do ficheiro Ini
