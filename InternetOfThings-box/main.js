@@ -88,7 +88,6 @@ function createMainConfig(file) {
         "; Config Global\n" +
         "[global]\n" +
         "portlocalserver = 8080\n" +
-        "pathserverfreeport = ~/serverRedeSensores/freePort.js\n" +
         "configok = false\n\n" +
         "; definicao da base de dados\n" +
         "[database]\n" +
