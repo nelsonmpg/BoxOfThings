@@ -44,11 +44,11 @@ module.exports.single_mote_all_info = function(req, res) {
     getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, res);
 };
 
-module.exports.single_mote_single_info: function(req, res) {
+module.exports.single_mote_single_info = function(req, res) {
     getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, res);
 };
 
-module.exports.mote_action: function(req, res) {
+module.exports.mote_action = function(req, res) {
     getdataFromSensorReq(req.params.moteIp, 'actuators', req.params.resource, '', undefined, 'POST', true, key, res);
 };
 
