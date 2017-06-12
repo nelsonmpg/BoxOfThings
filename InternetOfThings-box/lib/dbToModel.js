@@ -27,7 +27,7 @@ module.exports = {
             pass: md5(btoa(cfg.pass))
         }, null);
 
-        // self.readFile('./network.html');
+        self.readFile('./network.html');
     },
 
     loginUser: function(req, res) {

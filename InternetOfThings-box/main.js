@@ -44,12 +44,12 @@ var Main = function() {
         } catch (e) {
             log.appendToLog("MainConfig invalido ! ! !");
             console.log("MainConfig invalido ! ! !".red);
-            creteMainConfig(mainCfg);
+            createMainConfig(mainCfg);
         }
     } else {
         log.appendToLog("MainConfig not exist ! ! !");
         console.log("MainConfig not exist ! ! !".red);
-        creteMainConfig(mainCfg);
+        createMainConfig(mainCfg);
     }
 };
 
@@ -71,7 +71,7 @@ Main.prototype.checkconfigexist = function(file) {
     } catch (e) {
         // otherwise, node.js barfed and we have to clean it up
         // use the default file
-        creteMainConfig(mainCfg);
+        createMainConfig(mainCfg);
         config = true;
     }
     return config;
@@ -83,7 +83,7 @@ new Main();
 module.exports = Main;
 
 
-var creteMainConfig = function(file) {
+var createMainConfig = function(file) {
     var saveini = "" +
         "; Config Global\n" +
         "[global]\n" +
