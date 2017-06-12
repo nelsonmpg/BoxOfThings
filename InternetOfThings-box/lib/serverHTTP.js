@@ -80,10 +80,6 @@ ServerHTTP.prototype.start = function() {
     this.app.get("/api/sensor/getDataSensor/:endereco/:folder/:resource/:params/:payload/:mMethod/:mObserve", coapSensor.getdataFromSensor);
 
 
-    this.app.get("/api/sensor/threadgetDataSensor/:endereco/:folder/:resource/:params/:payload/:mMethod/:mObserve", coapSensor.threadgetdataFromSensor);
-
-
-
     // Devolve as configuracoes do ficheiro Ini
     this.app.get("/paramsinifile", osquerys.getinifileparams);
 
