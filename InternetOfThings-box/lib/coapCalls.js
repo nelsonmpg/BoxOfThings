@@ -18,7 +18,7 @@ module.exports = {
             log.appendToLog('DATA ' + sock.remoteAddress + ': ' + data);
             var req = JSON.parse(data);
             console.log(req);
-            self[req.request](req, sock);
+            self[req.request];
 
         });
         sock.on('close', function(data) {
@@ -59,7 +59,7 @@ module.exports = {
 var getdataFromSensorReq = function(endereco, folder, resource, params, payload, mMethod, mObserve, mKey, response) {
 
     console.log(endereco, folder, resource, params, payload, mMethod, mObserve, mKey, response);
-    
+
     var req,
         request = coap.request,
         url,
