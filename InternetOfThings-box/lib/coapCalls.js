@@ -57,10 +57,6 @@ module.exports = {
 
 var getdataFromSensorReq = function(endereco, folder, resource, params, payload, mMethod, mObserve, key, response) {
 
-    console.log(endereco, folder, resource, params, payload, mMethod, mObserve, key, "response");
-    response.write(JSON.stringify({ response: "testeOK" }));
-    return;
-
     var req,
         request = coap.request,
         url,
