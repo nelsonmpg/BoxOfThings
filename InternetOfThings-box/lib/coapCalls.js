@@ -3,8 +3,7 @@ var coap = require('coap'),
     URL = require('url'),
     CryptoJS = require("crypto-js"),
     Sensor = require('./models/sensor.js'),
-    log = require('./serverlog.js'),
-    key = undefined;
+    log = require('./serverlog.js');
 
 Sensor = new Sensor();
 
@@ -42,17 +41,16 @@ module.exports = {
     },
 
     single_mote_all_info: function( req, res) {
-        getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, res);
+        getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, mkey, res);
     },
 
     single_mote_single_info: function(req, res) {
-        getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, res);
+        getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, mkey, res);
     },
 
     mote_action: function(req, res) {
-        getdataFromSensorReq(req.params.moteIp, 'actuators', req.params.resource, '', undefined, 'POST', true, key, res);
+        getdataFromSensorReq(req.params.moteIp, 'actuators', req.params.resource, '', undefined, 'POST', true, mkey, res);
     }
-
 };
 
 
@@ -61,7 +59,7 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
     console.log(endereco, folder, resource, params, payload, mMethod, mObserve, mKey, "response");
     response.write(JSON.stringify({ response: "testeOK" }));
     return;
-    
+
     var req,
         request = coap.request,
         url,
