@@ -39,7 +39,7 @@ var ServerHTTP = function(config) {
     dbToModels.configDB(this.configDB);
 
     if (self.configok) {
-        osquerys.createconnetionSSH(coapSensor, self.configSrv.pathserverfreeport);
+        osquerys.createconnetionSSH(coapSensor);
     } else {
         console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
     }

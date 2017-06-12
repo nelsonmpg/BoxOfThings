@@ -82,7 +82,8 @@ module.exports.defaultparamsinifile = function(req, res) {
             remoteuser: "root",
             remoteip: "127.0.0.1",
             sshport: "22",
-            privatersa: os.userInfo().homedir + "/.ssh/id_rsa"
+            privatersa: os.userInfo().homedir + "/.ssh/id_rsa",
+            remotepathscript: "/root/freeport.js"
         };
 
         res.send({
@@ -115,7 +116,6 @@ module.exports.savesettings = function(req, res) {
                 var config = ini.parse(fs.readFileSync(fileconfig, 'utf-8'));
                 datavals = {
                     portlocalserver: config.global.portlocalserver,
-                    pathserverfreeport: config.global.pathserverfreeport,
                     configok: config.global.configok,
                     dataBaseType: config.database.dataBaseType,
                     dataBasehost: config.database.host,
@@ -127,7 +127,6 @@ module.exports.savesettings = function(req, res) {
                     "; Config Global\n" +
                     "[global]\n" +
                     "portlocalserver = " + datavals.portlocalserver + "\n" +
-                    "pathserverfreeport = " + datavals.pathserverfreeport + "\n" +
                     "configok = true\n\n" +
                     "; definicao da base de dados\n" +
                     "[database]\n" +
@@ -167,7 +166,7 @@ module.exports.getLastGitUpdate = function(req, res) {
     });
 };
 
-module.exports.createconnetionSSH = function(coap, pathnode) {
+module.exports.createconnetionSSH = function(coap) {
     var self = this;
     coapSensor = coap;
     try {
@@ -191,7 +190,7 @@ module.exports.createconnetionSSH = function(coap, pathnode) {
                     key: fs.readFileSync(configSSH.privatersa.toString("utf8"))
                 });
 
-                ssh.exec('node ' + pathnode + ' ' + configSSH.remoteport + ' ' + configSSH.boxname, {
+                ssh.exec('node ' + configSSH.remotepathscript + ' ' + configSSH.remoteport + ' ' + configSSH.boxname, {
                     err: function(stderr) {
                         console.log("A execução do script remoto não foi executada.".red.bold);
                         console.log(stderr);

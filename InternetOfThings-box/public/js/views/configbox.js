@@ -5,7 +5,7 @@ window.ConfigBoxView = Backbone.View.extend({
     yearRegex: /^(20[1-9]\d|20[0-9]\d|2100)$/,
     cpostalRegex: /^\d{4}(-\d{3})?$/,
     phoneRegex: /^(1\s|1|)?((\(\d{3}\))|\d{3})(\-|\s)?(\d{3})(\-|\s)?(\d{3})$/,
-    numberRegex: /^\d+(\.\d)?$/,
+    numberRegex: /^\d+(\.\d+)?$/,
     pathRegex: /^(\/[^\/ ]*)+\/?$/,
     macRegex: /^[0-9a-f]{1,2}([\.:-])(?:[0-9a-f]{1,2}\1){4}[0-9a-f]{1,2}$/,
     ipRegex: /^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$/,
@@ -48,11 +48,12 @@ window.ConfigBoxView = Backbone.View.extend({
                     $("#remote-defport").val(data.stdout.sshport);
                     $("#local-privatekey").val(data.stdout.privatersa);
                     $("#local-pboxname").val(data.stdout.boxname);
+                    $("#remote-script").val(data.stdout.remotepathscript);
                 } else {
                     showmsg('.my-modal', "error", "Error to load file settings. The system insert a default params." + data.status, true);
                     self.getdefaultvalues();
-
                 }
+                self.checkImputs();
             },
             function(xhr, ajaxOptions, thrownError) {
                 var json = JSON.parse(xhr.responseText);
@@ -61,7 +62,6 @@ window.ConfigBoxView = Backbone.View.extend({
                 // error_launch(json.message);
             }, {});
 
-        self.checkImputs();
     },
     getdefaultvalues: function() {
         modem("GET",
@@ -91,9 +91,11 @@ window.ConfigBoxView = Backbone.View.extend({
                     $("#remote-defport").val(data.stdout.sshport);
                     $("#local-privatekey").val(data.stdout.privatersa);
                     $("#local-pboxname").val(data.stdout.boxname);
+                    $("#remote-script").val(data.stdout.remotepathscript);
                 } else {
                     showmsg('.my-modal', "error", "Error to load default settings." + data.status, true);
                 }
+                self.checkImputs();
             },
             function(xhr, ajaxOptions, thrownError) {
                 var json = JSON.parse(xhr.responseText);
@@ -105,43 +107,45 @@ window.ConfigBoxView = Backbone.View.extend({
         $('.valid-input').each(function(i, obj) {
             if ($(obj).val() && !$.isArray($(obj).val())) {
                 $(obj).parent().next().children().children().removeClass("fa-check color-green").addClass("fa-close color-red");
+                var testOk = false;
                 switch ($(obj).data("typevalue")) {
                     case "local-ip":
                     case "remote-ip":
                         if ($(obj).val().trim().match(self.ipRegex)) {
-                            $(obj).parent().next().children().children().removeClass("fa-close color-red").addClass("fa-check color-green");
+                            testOk = true;
                         } else {
-                            $(obj).parent().next().children().children().removeClass("fa-check color-green").addClass("fa-close color-red");
+                            testOk = false;
                         }
                         break;
                     case "local-port":
                     case "remote-port":
                     case "remote-defport":
                         if ($(obj).val().trim().match(self.portRegex)) {
-                            $(obj).parent().next().children().children().removeClass("fa-close color-red").addClass("fa-check color-green");
+                            testOk = true;
                         } else {
-                            $(obj).parent().next().children().children().removeClass("fa-check color-green").addClass("fa-close color-red");
+                            testOk = false;
                         }
                         break;
                     case "remote-user":
                         if ($(obj).val().trim().match(self.userRegex)) {
-                            $(obj).parent().next().children().children().removeClass("fa-close color-red").addClass("fa-check color-green");
+                            testOk = true;
                         } else {
-                            $(obj).parent().next().children().children().removeClass("fa-check color-green").addClass("fa-close color-red");
+                            testOk = false;
                         }
                         break;
                     case "local-privatekey":
+                    case "remote-script":
                         if ($(obj).val().trim().match(self.pathRegex)) {
-                            $(obj).parent().next().children().children().removeClass("fa-close color-red").addClass("fa-check color-green");
+                            testOk = true;
                         } else {
-                            $(obj).parent().next().children().children().removeClass("fa-check color-green").addClass("fa-close color-red");
+                            testOk = false;
                         }
                         break;
                     case "box-mac":
                         if ($(obj).val().trim().match(self.macRegex)) {
-                            $(obj).parent().next().children().children().removeClass("fa-close color-red").addClass("fa-check color-green");
+                            testOk = true;
                         } else {
-                            $(obj).parent().next().children().children().removeClass("fa-check color-green").addClass("fa-close color-red");
+                            testOk = false;
                         }
                         break;
                     case "box-name":
@@ -150,9 +154,9 @@ window.ConfigBoxView = Backbone.View.extend({
                     case "box-client-address":
                     case "box-client-city":
                         if ($(obj).val().trim().length > 3) {
-                            $(obj).parent().next().children().children().removeClass("fa-close color-red").addClass("fa-check color-green");
+                            testOk = true;
                         } else {
-                            $(obj).parent().next().children().children().removeClass("fa-check color-green").addClass("fa-close color-red");
+                            testOk = false;
                         }
                         break;
                     case "box-model":
@@ -160,33 +164,39 @@ window.ConfigBoxView = Backbone.View.extend({
                     case "box-type":
                     case "box-latitude":
                     case "box-longitude":
-                        if ($(obj).val().trim().match(self.numberRegex)) {
-                            $(obj).parent().next().children().children().removeClass("fa-close color-red").addClass("fa-check color-green");
+                        if ($(obj).val().trim().match(self.numberRegex) && $(obj).val().trim().length > 0) {
+                            testOk = true;
                         } else {
-                            $(obj).parent().next().children().children().removeClass("fa-check color-green").addClass("fa-close color-red");
+                            testOk = false;
                         }
                         break;
                     case "box-client-postalcode":
                         if ($(obj).val().trim().match(self.cpostalRegex)) {
-                            $(obj).parent().next().children().children().removeClass("fa-close color-red").addClass("fa-check color-green");
+                            testOk = true;
                         } else {
-                            $(obj).parent().next().children().children().removeClass("fa-check color-green").addClass("fa-close color-red");
+                            testOk = false;
                         }
                         break;
                     case "box-client-phone":
                         if ($(obj).val().trim().match(self.phoneRegex)) {
-                            $(obj).parent().next().children().children().removeClass("fa-close color-red").addClass("fa-check color-green");
+                            testOk = true;
                         } else {
-                            $(obj).parent().next().children().children().removeClass("fa-check color-green").addClass("fa-close color-red");
+                            testOk = false;
                         }
                         break;
                     case "box-year-install":
                         if ($(obj).val().trim().match(self.yearRegex)) {
-                            $(obj).parent().next().children().children().removeClass("fa-close color-red").addClass("fa-check color-green");
+                            testOk = true;
                         } else {
-                            $(obj).parent().next().children().children().removeClass("fa-check color-green").addClass("fa-close color-red");
+                            testOk = false;
                         }
                         break;
+                }
+
+                if (testOk) {
+                    $(obj).parent().next().children().children().removeClass("fa-close color-red").addClass("fa-check color-green");
+                } else {
+                    $(obj).parent().next().children().children().removeClass("fa-check color-green").addClass("fa-close color-red");
                 }
             }
         });
@@ -217,7 +227,8 @@ window.ConfigBoxView = Backbone.View.extend({
                 remoteuser: $("#remote-user").val(),
                 remoteip: $("#remote-ip").val(),
                 sshport: $("#remote-defport").val(),
-                privatersa: $("#local-privatekey").val()
+                privatersa: $("#local-privatekey").val(),
+                remotepathscript: $("#remote-script").val()
             }
 
             modem("POST",
