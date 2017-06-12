@@ -75,9 +75,9 @@ ServerSktIo.prototype.init = function() {
 };
 
 //excepcoes para os erros encontrados
-process.on('uncaughtException', function (err) {
-  console.log('Excepcao capturada: ' + err);
-  log.appendToLog('Excepcao capturada: ' + err);
-});
+//process.on('uncaughtException', function (err) {
+//   console.log('Excepcao capturada: ' + err);
+//   log.appendToLog('Excepcao capturada: ' + err);
+//});
 
 module.exports = ServerSktIo;
