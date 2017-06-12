@@ -9,16 +9,13 @@ module.exports = function(app) {
     //.post(todoList.create_a_task);
 
 
-  app.route('/singleMoteAllInfo/:moteIp')
-    .get(box.single_mote_all_info);
+  app.route('/singleMoteAllInfo/:moteIp').get(box.single_mote_all_info);
     //.put(todoList.update_a_task)
     //.delete(todoList.delete_a_task);
 
-  app.route('/moteAction/:moteIp/:resource')
-    .get(box.mote_action);
+  app.route('/moteAction/:moteIp/:resource').get(box.mote_action);
 
-  app.route('/singleMoteSingleInfo/:moteIp/:resource')
-    .get(box.single_mote_single_info);
+  app.route('/singleMoteSingleInfo/:moteIp/:resource').get(box.single_mote_single_info);
     //.put(todoList.update_a_task)
     //.delete(todoList.delete_a_task);
 };

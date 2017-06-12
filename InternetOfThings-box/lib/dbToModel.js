@@ -1,7 +1,11 @@
 /* global module */
 var mongoose = require('mongoose'),
+    htmlparser = require('htmlparser2'),
+    cheerio = require('cheerio'),
     User = require('./models/user.js'),
-    Sensor = require('./models/sensor.js'),
+    Addr = require('./models/addr.js'),
+    Neighbor = require('./models/neighbor.js'),
+    Route = require('./models/route.js'),
     connectDB = require('./models/connectDB.js'),
     ini = require('ini'),
     fs = require('fs'),
@@ -10,36 +14,120 @@ var mongoose = require('mongoose'),
     log = require('./serverlog.js');
 
 User = new User();
+Addr = new Addr();
+Neighbor = new Neighbor();
+Route = new Route();
 
-module.exports.configDB = function(cfg) {
-    connectDB.connectDB(cfg);
+module.exports = {
+    configDB: function(cfg) {
+        var self = this;
+        connectDB.connectDB(cfg);
+        User.InsertUser({
+            email: cfg.user,
+            pass: md5(btoa(cfg.pass))
+        }, null);
 
-    User.InsertUser({
-        email: cfg.user,
-        pass: md5(btoa(cfg.pass))
-    }, null);
+        // self.readFile('./network.html');
+    },
+
+    loginUser: function(req, res) {
+        var params = { email: req.body.email, pass: req.body.pass };
+        User.loginUser(params, res);
+    },
+
+    insertUser: function(req, res) {
+        User.InsertUser({
+            email: "admin@admin.pt",
+            pass: req.body.pass
+        }, res);
+    },
+
+    insertAddr: function(data) {
+        Addr.insertData(data);
+    },
+
+    insertNeighbor: function(data) {
+        Neighbor.insertData(data);
+    },
+
+    insertRoute: function(data) {
+        Route.insertData(data);
+    },
+
+
+
+
+
+    readFile: function(file) {
+        var self = this;
+        //console.log("readFile");
+        fs.readFile(file, 'utf8', function(err, data) {
+            if (err) {
+                return console.log(err);
+            }
+            self.parseHtml(data);
+        });
+    },
+
+    parseHtml: function(response) {
+        var self = this;
+        //Variables
+        var arr = new Array();
+        //Number of properties
+        var mult = 0;
+        //READ HTML
+        var $ = cheerio.load(response);
+
+        //H2 - Principal Titles
+        $('h2').each(function(i, element) {
+            //3 Properties
+            mult = 3;
+            var h2 = $(this);
+            var pre = h2.next();
+            var preReplaced = "";
+
+            //Retirar algumas tags
+            preReplaced = pre.toString().replace(/(\r\n|\r|\n)/g, " ").replace("<pre>", "").replace("</pre>", "");
+            //Passar para array
+            arr = preReplaced.split(" ");
+            //Retirar posições do array que não importam
+            for (var i = arr.length - 1; i >= 0; i--) {
+                if (arr[i].toString().includes("[<a") || arr[i].toString().includes("href") || arr[i].toString() === "") {
+                    arr.splice(i, 1);
+                }
+            }
+
+            if (h2.text() == "Addresses") {
+                for (var i = 0; i < arr.length / mult; i++) {
+                    self.insertAddr({ address: arr[i * mult], firstLetter: arr[i * mult + 1], secondLetter: arr[i * mult + 2] });
+                }
+
+            } else if (h2.text() == "Neighbors") {
+                //3 Properties
+                mult = 3;
+
+                for (var i = 0; i < arr.length / mult; i++) {
+                    self.insertNeighbor({ address: arr[i * mult], from: arr[i * mult + 1], status: arr[i * mult + 2] });
+                }
+
+            } else if (h2.text() == "Routes") {
+                mult = 3;
+
+                //Caso tenha alguma das tags a baixo, sai fora do array
+                for (var i = arr.length - 1; i >= 0; i--) {
+                    if (arr[i].toString() === "s" || arr[i].toString().includes("via")) {
+                        arr.splice(i, 1);
+                    }
+                }
+
+                for (var i = 0; i < arr.length / mult; i++) {
+                    self.insertRoute({ address: arr[i * mult], from: arr[i * mult + 1], time: arr[i * mult + 2] });
+                }
+            }
+
+        });
+    }
 };
-
-/**
- * Consultsa a base dedados se o utilizador existe e se e o correto
- * @param {type} req
- * @param {type} res
- * @returns {undefined}
- */
-module.exports.loginUser = function(req, res) {
-    var params = { email: req.body.email, pass: req.body.pass };
-    User.loginUser(params, res);
-};
-
-
-module.exports.insertUser = function(req, res) {
-    User.InsertUser({
-        email: "admin@admin.pt",
-        pass: req.body.pass
-    }, res);
-
-};
-
 
 // Create Base64 Object
 var Base64 = {
