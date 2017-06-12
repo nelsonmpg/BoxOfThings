@@ -18,8 +18,7 @@ module.exports = {
             log.appendToLog('DATA ' + sock.remoteAddress + ': ' + data);
             var req = JSON.parse(data);
             console.log(req);
-            getdataFromSensorReq();
-            self.singleMoteAllInfo(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, sock);
+            getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, sock);
 
         });
         sock.on('close', function(data) {
