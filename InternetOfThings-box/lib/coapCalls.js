@@ -18,6 +18,7 @@ module.exports = {
             log.appendToLog('DATA ' + sock.remoteAddress + ': ' + data);
             var req = JSON.parse(data);
             console.log(req);
+            getdataFromSensorReq();
             self.single_mote_all_info();
 
         });
