@@ -22,39 +22,44 @@ var Main = function() {
         console.log("The file clear!");
         log.appendToLog("Server start...");
 
-        var args;
-        // Verifica se o ficheiro de ligacao com a base de dados para iniciar a comunicacao
-        if (self.checkconfigexist(mainCfg)) {
-            self.config2 = ini.parse(fs.readFileSync(mainCfg, 'utf-8'));
-            // carrega as configuracoes do ficheiro ini para as variaveis
+        self.startServer();
+    });
+};
 
-            try {
-                args = {
-                    portlocalserver: self.config2.global.portlocalserver,
-                    pathserverfreeport: self.config2.global.pathserverfreeport,
-                    configok: self.config2.global.configok,
-                    dataBaseType: self.config2.database.dataBaseType,
-                    host: self.config2.database.host,
-                    dbname: self.config2.database.dbname,
-                    user: self.config2.userportal.user,
-                    pass: self.config2.userportal.pass
-                };
+Main.prototype.startServer = function() {
+    var self = this;
+    var args;
+    // Verifica se o ficheiro de ligacao com a base de dados para iniciar a comunicacao
+    if (self.checkconfigexist(mainCfg)) {
+        self.config2 = ini.parse(fs.readFileSync(mainCfg, 'utf-8'));
+        // carrega as configuracoes do ficheiro ini para as variaveis
 
-                // inicia p script e envia as configuracores do ficheiro ini
-                var child2 = cp.fork('./lib/serverHTTP');
-                child2.send({ "serverdata": args });
-                return;
-            } catch (e) {
-                log.appendToLog("MainConfig invalido ! ! !");
-                console.log("MainConfig invalido ! ! !".red);
-                creteMainConfig(mainCfg);
-            }
-        } else {
-            log.appendToLog("MainConfig not exist ! ! !");
-            console.log("MainConfig not exist ! ! !".red);
+        try {
+            args = {
+                portlocalserver: self.config2.global.portlocalserver,
+                pathserverfreeport: self.config2.global.pathserverfreeport,
+                configok: self.config2.global.configok,
+                dataBaseType: self.config2.database.dataBaseType,
+                host: self.config2.database.host,
+                dbname: self.config2.database.dbname,
+                user: self.config2.userportal.user,
+                pass: self.config2.userportal.pass
+            };
+
+            // inicia p script e envia as configuracores do ficheiro ini
+            var child2 = cp.fork('./lib/serverHTTP');
+            child2.send({ "serverdata": args });
+            return;
+        } catch (e) {
+            log.appendToLog("MainConfig invalido ! ! !");
+            console.log("MainConfig invalido ! ! !".red);
             creteMainConfig(mainCfg);
         }
-    });
+    } else {
+        log.appendToLog("MainConfig not exist ! ! !");
+        console.log("MainConfig not exist ! ! !".red);
+        creteMainConfig(mainCfg);
+    }
 };
 
 /**
