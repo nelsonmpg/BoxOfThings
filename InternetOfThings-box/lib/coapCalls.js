@@ -7,52 +7,49 @@ var coap = require('coap'),
 
 Sensor = new Sensor();
 
-module.exports = {
-    serverListening: function(sock) {
-        var self = this;
-        console.log('CONNECTED: %s:%s'.italic.rainbow, sock.remoteAddress, sock.remotePort);
-        log.appendToLog('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
+module.exports.serverListening = function(sock) {
+    var self = this;
+    console.log('CONNECTED: %s:%s'.italic.rainbow, sock.remoteAddress, sock.remotePort);
+    log.appendToLog('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
 
-        sock.on('data', function(data) {
-            console.log('DATA ' + sock.remoteAddress + ': ' + data);
-            log.appendToLog('DATA ' + sock.remoteAddress + ': ' + data);
-            var req = JSON.parse(data);
-            console.log(req);
-            self.single_mote_all_info(null, null);
-
-        });
-        sock.on('close', function(data) {
-            log.appendToLog('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
-            console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
-        });
-    },
-
-    getdataFromSensor: function(req, res) {
-        var endereco = req.params.endereco === "undefined" ? "" : req.params.endereco,
-            folder = req.params.folder === "undefined" ? "" : req.params.folder,
-            resource = req.params.resource === "undefined" ? "" : req.params.resource,
-            params = req.params.params === "undefined" ? "" : req.params.params,
-            payload = req.params.payload === "undefined" ? "" : req.params.payload,
-            mMethod = req.params.mMethod === "undefined" ? "GET" : req.params.mMethod,
-            mObserve = req.params.mObserve === "undefined" ? "" : req.params.mObserve;
-
-        resource = resource.replace("§", "?");
-        getdataFromSensorReq(endereco, folder, resource, params, payload, mMethod, mObserve, mKey, res);
-    },
-
-    single_mote_all_info: function(req, res) {
+    sock.on('data', function(data) {
+        console.log('DATA ' + sock.remoteAddress + ': ' + data);
+        log.appendToLog('DATA ' + sock.remoteAddress + ': ' + data);
+        var req = JSON.parse(data);
         console.log(req);
-        getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, res);
-    },
+        self.single_mote_all_info(null, null);
 
-    single_mote_single_info: function(req, res) {
-        getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, res);
-    },
+    });
+    sock.on('close', function(data) {
+        log.appendToLog('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
+        console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
+    });
+};
 
-    mote_action: function(req, res) {
-        getdataFromSensorReq(req.params.moteIp, 'actuators', req.params.resource, '', undefined, 'POST', true, key, res);
-    }
+module.exports.getdataFromSensor = function(req, res) {
+    var endereco = req.params.endereco === "undefined" ? "" : req.params.endereco,
+        folder = req.params.folder === "undefined" ? "" : req.params.folder,
+        resource = req.params.resource === "undefined" ? "" : req.params.resource,
+        params = req.params.params === "undefined" ? "" : req.params.params,
+        payload = req.params.payload === "undefined" ? "" : req.params.payload,
+        mMethod = req.params.mMethod === "undefined" ? "GET" : req.params.mMethod,
+        mObserve = req.params.mObserve === "undefined" ? "" : req.params.mObserve;
 
+    resource = resource.replace("§", "?");
+    getdataFromSensorReq(endereco, folder, resource, params, payload, mMethod, mObserve, mKey, res);
+};
+
+module.exports.single_mote_all_info = function(req, res) {
+    console.log(req);
+    getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, res);
+};
+
+module.exports.single_mote_single_info: function(req, res) {
+    getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, res);
+};
+
+module.exports.mote_action: function(req, res) {
+    getdataFromSensorReq(req.params.moteIp, 'actuators', req.params.resource, '', undefined, 'POST', true, key, res);
 };
 
 
