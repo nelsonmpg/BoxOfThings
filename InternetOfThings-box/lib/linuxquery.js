@@ -225,7 +225,7 @@ module.exports.createconnetionSSH = function(coap) {
                             net.createServer(coapSensor.serverListening).listen(configSSH.localport, configSSH.localip);
                             log.appendToLog('Server listening Tunnel SSH on local ' + configSSH.localip + ':' + configSSH.localport + ' and remote ' + configSSH.remoteip + ':' + configSSH.remoteport);
                             console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.bold, configSSH.localip, configSSH.localport, configSSH.remoteip, configSSH.remoteport);
-                            log.appendToLog("Remote access Box user '" + configSSH.localip port + " '" + configSSH.remoteport + "'.");
+                            log.appendToLog("Remote access Box user '" + configSSH.localip + "' port '" + configSSH.remoteport + "'.");
                             console.log("Remote access Box 'user %s port %s'.".blue.bold, configSSH.localip, configSSH.remoteport);
                         } else {
                             log.appendToLog("Erro ao tentar converter o ficheiro para JSON.");
