@@ -115,8 +115,8 @@ ServerHTTP.prototype.start = function() {
     log.appendToLog("                              \\./             ._|  ");
     log.appendToLog("                              /'\\                  ");
 
-    console.log('\nServer HTTP Wait %d'.green.bold, self.port);
-    log.appendToLog('\nServer HTTP Wait ' + self.port);
+    console.log('Server HTTP Wait %d'.green.bold, self.port);
+    log.appendToLog('Server HTTP Wait ' + self.port);
 };
 
 /**

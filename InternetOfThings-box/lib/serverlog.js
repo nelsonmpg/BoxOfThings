@@ -4,7 +4,7 @@ var fs = require("fs"),
 
 module.exports = {
     appendToLog : function(text) {
-        fs.appendFileSync(logfile, text + "\n");
+        fs.appendFileSync(logfile, new Date().toString() + "\t" + text + "\n");
     },
 
 }
