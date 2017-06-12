@@ -8,7 +8,6 @@ var net = require('net'),
     request = require("request"),
     SSH = require('simple-ssh'),
     macaddress = require('macaddress'),
-    os = require("os"),
     fileconfig = './MainConfig.ini',
     sshfileconfig = './configssh.json',
     log = require('./serverlog.js'),
@@ -57,6 +56,7 @@ module.exports.getinifileparams = function(req, res) {
 module.exports.defaultparamsinifile = function(req, res) {
     var t1 = cp.execSync('cat /proc/cpuinfo | grep Serial | cut -d" " -f2');
     var t2 = cp.execSync('cat /proc/meminfo | grep Total | tr -s " " " " | cut -d":" -f2 | cut -d" " -f2 | awk \'{ x += $1 } ; END { print x}\'');
+    var homedir = cp.execSync('echo $HOME');
 
     macaddress.one(function(err, mac) {
         var macaddress = mac;
@@ -83,7 +83,7 @@ module.exports.defaultparamsinifile = function(req, res) {
             remoteuser: "root",
             remoteip: "127.0.0.1",
             sshport: "22",
-            privatersa: os.userInfo().homedir + "/.ssh/id_rsa",
+            privatersa: homedir + "/.ssh/id_rsa",
             remotepathscript: "/root/freeport.js"
         };
 
@@ -225,7 +225,7 @@ module.exports.createconnetionSSH = function(coap) {
                             net.createServer(coapSensor.serverListening).listen(configSSH.localport, configSSH.localip);
                             log.appendToLog('Server listening Tunnel SSH on local ' + configSSH.localip + ':' + configSSH.localport + ' and remote ' + configSSH.remoteip + ':' + configSSH.remoteport);
                             console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.bold, configSSH.localip, configSSH.localport, configSSH.remoteip, configSSH.remoteport);
-                            log.appendToLog("Remote access Box 'user configSSH.localip port '" + configSSH.remoteport + "'.");
+                            log.appendToLog("Remote access Box user '" + configSSH.localip port + " '" + configSSH.remoteport + "'.");
                             console.log("Remote access Box 'user %s port %s'.".blue.bold, configSSH.localip, configSSH.remoteport);
                         } else {
                             log.appendToLog("Erro ao tentar converter o ficheiro para JSON.");
