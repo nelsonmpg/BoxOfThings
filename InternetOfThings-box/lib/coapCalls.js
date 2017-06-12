@@ -19,7 +19,7 @@ module.exports = {
             var req = JSON.parse(data);
             console.log(req);
 
-            module.exports.single_mote_all_info(req, sock);
+            module.exports.[req.request](req, sock);
         });
         sock.on('close', function(data) {
             log.appendToLog('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
