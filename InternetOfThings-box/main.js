@@ -14,12 +14,13 @@ var cp = require('child_process'),
  */
 var Main = function() {
     var self = this;
-    fs.writeFile(logfile, "Server start...", function(err) {
+    fs.writeFile(logfile, "The file clear!", function(err) {
         if (err) {
             return console.log(err);
         }
 
-        console.log("The file clear!\n");
+        console.log("The file clear!");
+        log.appendToLog("Server start...");
 
         var args;
         // Verifica se o ficheiro de ligacao com a base de dados para iniciar a comunicacao
