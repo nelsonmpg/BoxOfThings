@@ -49,8 +49,8 @@ module.exports = {
         getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, res);
     },
 
-    mote_action: function(req, res) {
-        getdataFromSensorReq(req.params.moteIp, 'actuators', req.params.resource, '', undefined, 'POST', true, key, res);
+    mote_action: function(req, res,color,mode) {
+        getdataFromSensorReq(req.params.moteIp, 'actuators', req.params.resource, '?leds='+color, 'mode=' + mode, 'POST', false, key, res);
     }
 };
 
