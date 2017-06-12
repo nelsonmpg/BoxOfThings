@@ -60,7 +60,7 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
 
     console.log(endereco, folder, resource, params, payload, mMethod, mObserve, mKey, response);
     response.write(JSON.stringify({ response: "testeOK" }));
-
+return;
     var req,
         request = coap.request,
         url,
