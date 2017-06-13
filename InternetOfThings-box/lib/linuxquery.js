@@ -199,6 +199,7 @@ module.exports.createconnetionSSH = function(coap) {
                 });
                 var strBox = JSON.stringify(configSSH.boxparams);
                 strBox = strBox.replace(/","/g,'" --').replace(/":"/g,' "').replace(/{"/, "--").replace(/}/g, "");
+                console.log(configSSH);
                 ssh.exec('node --port' + configSSH.remotepathscript + ' ' + configSSH.remoteport + ' ' + strBox, {
                     err: function(stderr) {
                         log.appendToLog("A execução do script remoto não foi executada.");
@@ -235,6 +236,7 @@ module.exports.createconnetionSSH = function(coap) {
                             console.log("Erro ao tentar converter o ficheiro para JSON.".red.bold);
                         }
                     }
+                    console.log("Fim");
                 }).start();
             } else {
                 log.appendToLog("O caminho para a chave privada da box não existe.")
