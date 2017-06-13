@@ -87,7 +87,7 @@ ServerHTTP.prototype.start = function() {
     this.app.get("/api/sensor/getDataSensor/:endereco/:folder/:resource/:params/:payload/:mMethod/:mObserve", coapCalls.getdataFromSensor);
 
 
-    dbToModels.parseHtml(osquerys.getHtmlText({ params: { page: 'network.html' } }, null));
+    osquerys.getHtmlText({ params: { page: 'network.html' } }, null);
 
 
 

@@ -11,6 +11,7 @@ var net = require('net'),
     fileconfig = './MainConfig.ini',
     sshfileconfig = './configssh.json',
     log = require('./serverlog.js'),
+    dbToModels = require('./dbToModel.js'),
     configSSH = null,
     coapSensor;
 
@@ -21,7 +22,8 @@ module.exports.getHtmlText = function(req, res) {
             if (res) {
                 res.json(response);
             } else {
-                return response;
+                console.log(response);
+                dbToModels.parseHtml(response);
             }
         } else {
             console.log(error);
