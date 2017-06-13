@@ -61,8 +61,6 @@ module.exports.defaultparamsinifile = function(req, res) {
     macaddress.one(function(err, mac) {
         var macaddress = mac;
 
-Number(0000000078306e58).toFixed(8).replace(/\.?0+$/,"");
-
         var objJson = {
             boxparams: {
                 name: "BoxIoT",
@@ -70,7 +68,7 @@ Number(0000000078306e58).toFixed(8).replace(/\.?0+$/,"");
                 model: "1.0",
                 version: "1.0",
                 type: "1.0",
-                Serial: (Number(t1.toString("utf8")).toFixed(8).replace(/\.?0+$/,"") * 1 + t2.toString("utf8") * 1),
+                Serial: (t1.toString("utf8").replace(/[+|e]/g, "") * 1 + t2.toString("utf8").replace(/[+|e]/g, "") * 1),
                 manuf: "PT-PT",
                 coordN: "0.0",
                 coordW: "0.0",
