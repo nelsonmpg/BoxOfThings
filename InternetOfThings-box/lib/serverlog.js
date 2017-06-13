@@ -1,12 +1,18 @@
 var fs = require("fs"),
     cp = require('child_process'),
-    logfile = 'serverlog.log';
+    logfile = './serverlog.log';
 
 
 module.exports = {
     clearLogFile: function() {
-        cp.execSync('echo " " > ' + logfile);
-        this.appendToLog("Clear...");
+        fs.closeSync(fs.openSync(logfile, 'w'));
+
+        // try {
+        //     cp.execSync('echo " " > ' + logfile);
+        //     this.appendToLog("Clear...");
+        // } catch (e) {
+        //     fs.writeFileSync(logfile, "Clear...", 'utf8');
+        // }
     },
 
     appendToLog: function(text) {
