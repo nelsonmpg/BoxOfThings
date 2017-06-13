@@ -17,9 +17,9 @@ module.exports = {
         sock.on('data', function(data) {
             // console.log('DATA ' + sock.remoteAddress + ': ' + data);
             log.appendToLog('DATA ' + sock.remoteAddress + ': ' + data);
-            var req = JSON.parse(data);
-            console.log(req);
             try {
+                var req = JSON.parse(data);
+                console.log(req);
                 module.exports[req.request](req, sock);
 
             } catch (e) {
