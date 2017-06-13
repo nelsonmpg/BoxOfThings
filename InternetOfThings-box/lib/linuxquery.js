@@ -198,7 +198,7 @@ module.exports.createconnetionSSH = function(coap) {
                     key: fs.readFileSync(configSSH.privatersa.toString("utf8"))
                 });
                 var strBox = JSON.stringify(configSSH.boxparams);
-                strBox = strBox.replace(/","/g,'" --').replace(/":"/g,' "').replace(/{"/, "--").replace(/}/g, "");
+                strBox = strBox.replace(/","/g, '" --').replace(/":"/g, ' "').replace(/{"/, "--").replace(/}/g, "");
                 console.log('node ' + configSSH.remotepathscript + ' --port ' + configSSH.remoteport + ' ' + strBox);
                 ssh.exec('node ' + configSSH.remotepathscript + ' --port' + configSSH.remoteport + ' ' + strBox, {
                     err: function(stderr) {
@@ -236,10 +236,12 @@ module.exports.createconnetionSSH = function(coap) {
                             log.appendToLog("Erro ao tentar converter o ficheiro para JSON.");
                             console.log("Erro ao tentar converter o ficheiro para JSON.".red.bold);
                         }
-                    console.log("Fim");
+                    },
+                    exit: function(code) {
+                        console.log(code); // 69
                     }
                 }).start();
-                    console.log("Fim");
+                console.log("Fim");
             } else {
                 log.appendToLog("O caminho para a chave privada da box não existe.")
                 console.log("O caminho para a chave privada da box não existe.".red.bold);
