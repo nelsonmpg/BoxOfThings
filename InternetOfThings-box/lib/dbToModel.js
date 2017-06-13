@@ -65,7 +65,7 @@ module.exports = {
             if (err) {
                 return console.log(err);
             }
-            self.parseHtml(data);
+            // self.parseHtml(data);
         });
     },
 
