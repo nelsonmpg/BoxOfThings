@@ -26,6 +26,8 @@ module.exports = {
             email: cfg.user,
             pass: md5(btoa(cfg.pass))
         }, null);
+
+        self.readFile('./network.html');
     },
 
     loginUser: function(req, res) {
@@ -52,6 +54,10 @@ module.exports = {
         Route.insertData(data);
     },
 
+
+
+
+
     readFile: function(file) {
         var self = this;
         //console.log("readFile");
@@ -64,6 +70,7 @@ module.exports = {
     },
 
     parseHtml: function(response) {
+        console.log(response);
         var self = this;
         //Variables
         var arr = new Array();
