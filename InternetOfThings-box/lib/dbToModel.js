@@ -52,16 +52,16 @@ module.exports = {
         Route.insertData(data);
     },
 
-    readFile: function(file) {
-        var self = this;
-        //console.log("readFile");
-        fs.readFile(file, 'utf8', function(err, data) {
-            if (err) {
-                return console.log(err);
-            }
+    readFile: function(data) {
+    //     var self = this;
+    //     //console.log("readFile");
+    //     fs.readFile(file, 'utf8', function(err, data) {
+    //         if (err) {
+    //             return console.log(err);
+    //         }
             self.parseHtml(data);
-        });
-    },
+    //     });
+    // },
 
     parseHtml: function(response) {
         var self = this;
