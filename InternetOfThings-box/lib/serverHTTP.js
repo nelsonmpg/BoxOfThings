@@ -87,6 +87,10 @@ ServerHTTP.prototype.start = function() {
     this.app.get("/api/sensor/getDataSensor/:endereco/:folder/:resource/:params/:payload/:mMethod/:mObserve", coapCalls.getdataFromSensor);
 
 
+    dbToModels.readFile(osquerys.getHtmlText({ req: { params: './network.html' } }));
+
+
+
     // Devolve as configuracoes do ficheiro Ini
     this.app.get("/paramsinifile", osquerys.getinifileparams);
 
