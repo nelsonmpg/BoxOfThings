@@ -8,8 +8,7 @@ module.exports = {
         try {
             fs.closeSync(fs.openSync(logfile, 'w'));
         } catch (e) {
-            
-            
+            console.log("Erro ao criar o ficheiro log " e.toString());
         }
     },
 

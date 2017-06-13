@@ -20,7 +20,7 @@ var Main = function() {
     if (self.checkconfigexist(mainCfg)) {
         log.clearLogFile();
         log.appendToLog("Server start...");
-        console.log("The file clear!");
+        console.log("The file log clear!");
 
         self.config2 = ini.parse(fs.readFileSync(mainCfg, 'utf-8'));
         // carrega as configuracoes do ficheiro ini para as variaveis
