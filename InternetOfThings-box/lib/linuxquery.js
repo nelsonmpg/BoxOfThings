@@ -200,7 +200,7 @@ module.exports.createconnetionSSH = function(coap) {
                 var strBox = JSON.stringify(configSSH.boxparams);
                 strBox = strBox.replace(/","/g, '" --').replace(/":"/g, ' "').replace(/{"/, "--").replace(/}/g, "");
                 console.log('node ' + configSSH.remotepathscript + ' --port ' + configSSH.remoteport + ' ' + strBox);
-                ssh.exec('node ' + configSSH.remotepathscript + ' --port' + configSSH.remoteport, {
+                ssh.exec('node ' + configSSH.remotepathscript + ' ' + configSSH.remoteport, {
                     err: function(stderr) {
                         log.appendToLog("A execução do script remoto não foi executada.");
                         log.appendToLog(stderr);
@@ -241,7 +241,7 @@ module.exports.createconnetionSSH = function(coap) {
                         console.log(code); // 69
                     }
                 }).start();
-                console.log("Fim");
+                console.log("Fim123");
             } else {
                 log.appendToLog("O caminho para a chave privada da box não existe.")
                 console.log("O caminho para a chave privada da box não existe.".red.bold);
