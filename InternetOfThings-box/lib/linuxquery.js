@@ -197,8 +197,8 @@ module.exports.createconnetionSSH = function(coap) {
                     port: configSSH.sshport,
                     key: fs.readFileSync(configSSH.privatersa.toString("utf8"))
                 });
-
-                ssh.exec('node ' + configSSH.remotepathscript + ' ' + configSSH.remoteport + ' ' + configSSH.boxname, {
+console.log(configSSH);
+                ssh.exec('node ' + configSSH.remotepathscript + ' ' + configSSH.remoteport + ' ' + configSSH.boxparms, {
                     err: function(stderr) {
                         log.appendToLog("A execução do script remoto não foi executada.");
                         log.appendToLog(stderr);
