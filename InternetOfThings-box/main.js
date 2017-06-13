@@ -84,8 +84,8 @@ Main.prototype.checkconfigexist = function(file) {
         newfile.on('exit', function(code) {
             console.log('child process exited with code ' + code.toString());
             createMainConfig(file);
+            config = true;
         });
-        config = true;
     }
     return config;
 };
