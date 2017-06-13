@@ -223,6 +223,7 @@ module.exports.createconnetionSSH = function(coap) {
                                     }
                                 });
                             }
+                            console.log(code);
 
                             self.createReverseTunnel();
 
@@ -235,9 +236,10 @@ module.exports.createconnetionSSH = function(coap) {
                             log.appendToLog("Erro ao tentar converter o ficheiro para JSON.");
                             console.log("Erro ao tentar converter o ficheiro para JSON.".red.bold);
                         }
-                    }
                     console.log("Fim");
+                    }
                 }).start();
+                    console.log("Fim");
             } else {
                 log.appendToLog("O caminho para a chave privada da box não existe.")
                 console.log("O caminho para a chave privada da box não existe.".red.bold);
