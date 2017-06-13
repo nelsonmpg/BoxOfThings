@@ -19,10 +19,10 @@ module.exports = {
             log.appendToLog('DATA ' + sock.remoteAddress + ': ' + data);
             try {
                 var req = JSON.parse(data);
-                console.log(req);
                 module.exports[req.request](req, sock);
 
             } catch (e) {
+            log.appendToLog("Invalid args - " + e, data.toString('utf8'));
                 console.log("Invalid args - " + e, data.toString('utf8'));
             }
         });
@@ -46,6 +46,7 @@ module.exports = {
     },
 
     single_mote_all_info: function(req, res) {
+        console.log(req.params.moteIp);
         getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, res);
     },
 
