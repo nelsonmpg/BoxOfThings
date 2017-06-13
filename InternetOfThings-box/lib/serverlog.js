@@ -6,6 +6,7 @@ var fs = require("fs"),
 module.exports = {
     clearLogFile: function() {
         cp.execSync('echo " " > ' + logfile);
+        this.appendToLog("Clear...");
     },
 
     appendToLog: function(text) {

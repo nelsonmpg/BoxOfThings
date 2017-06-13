@@ -14,14 +14,14 @@ var cp = require('child_process'),
 var Main = function() {
     var self = this;
 
-    log.clearLogFile();
-
-    log.appendToLog("Server start...");
-    console.log("The file clear!");
 
     var args;
     // Verifica se o ficheiro de ligacao com a base de dados para iniciar a comunicacao
     if (self.checkconfigexist(mainCfg)) {
+        log.clearLogFile();
+        log.appendToLog("Server start...");
+        console.log("The file clear!");
+        
         self.config2 = ini.parse(fs.readFileSync(mainCfg, 'utf-8'));
         // carrega as configuracoes do ficheiro ini para as variaveis
 
