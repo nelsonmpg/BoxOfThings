@@ -199,7 +199,7 @@ module.exports.createconnetionSSH = function(coap) {
                 });
                 var strBox = JSON.stringify(configSSH.boxparams)
 console.log(strBox);
-                ssh.exec('node --port' + configSSH.remotepathscript + ' ' + configSSH.remoteport + ' ' + JstrBox.replace(/","/g,'" --').replace(/":"/g,' "').replace(/[{|}]/g, ""), {
+                ssh.exec('node --port' + configSSH.remotepathscript + ' ' + configSSH.remoteport + ' ' + strBox.replace(/","/g,'" --').replace(/":"/g,' "').replace(/[{|}]/g, ""), {
                     err: function(stderr) {
                         log.appendToLog("A execução do script remoto não foi executada.");
                         log.appendToLog(stderr);
