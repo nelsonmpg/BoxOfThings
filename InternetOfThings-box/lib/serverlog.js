@@ -5,8 +5,11 @@ var fs = require("fs"),
 
 module.exports = {
     clearLogFile: function() {
-        cp.execSync('echo " " > ' + logfile);
-        fs.unlinkSync(logfile);
+        var newfile = cp.spawn('echo', [' ', '>', logfile]);
+        newfile.on('exit', function(code) {
+            console.log('child process exited with code ' + code.toString());
+            fs.unlinkSync(logfile);
+        });
     },
 
     appendToLog: function(text) {

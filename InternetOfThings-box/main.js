@@ -44,14 +44,21 @@ var Main = function() {
         } catch (e) {
             log.appendToLog("MainConfig invalido ! ! !");
             console.log("MainConfig invalido ! ! !".red);
-            cp.execSync('echo " " > ' + mainCfg);
-            createMainConfig(mainCfg);
+            // cp.execSync('echo " " > ' + mainCfg);
+            var newfile = cp.spawn('echo', [' ', '>', mainCfg]);
+            newfile.on('exit', function(code) {
+                console.log('child process exited with code ' + code.toString());
+                createMainConfig(mainCfg);
+            });
         }
     } else {
         log.appendToLog("MainConfig not exist ! ! !");
         console.log("MainConfig not exist ! ! !".red);
-        cp.execSync('echo " " > ' + mainCfg);
-        createMainConfig(mainCfg);
+        var newfile = cp.spawn('echo', [' ', '>', mainCfg]);
+        newfile.on('exit', function(code) {
+            console.log('child process exited with code ' + code.toString());
+            createMainConfig(mainCfg);
+        });
     }
 };
 
@@ -73,8 +80,11 @@ Main.prototype.checkconfigexist = function(file) {
     } catch (e) {
         // otherwise, node.js barfed and we have to clean it up
         // use the default file        
-        cp.execSync('echo " " > ' + file);
-        createMainConfig(file);
+        var newfile = cp.spawn('echo', [' ', '>', file]);
+        newfile.on('exit', function(code) {
+            console.log('child process exited with code ' + code.toString());
+            createMainConfig(file);
+        });
         config = true;
     }
     return config;
