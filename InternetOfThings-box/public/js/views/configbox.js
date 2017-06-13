@@ -25,21 +25,21 @@ window.ConfigBoxView = Backbone.View.extend({
             "/paramsinifile",
             function(data) {
                 if (data.status === "File Ok") {
-                    $("#box-name").val(data.stdout.boxname);
-                    $("#box-name-code").val(data.stdout.boxSerial);
-                    $("#box-mac").val(data.stdout.macaddess);
-                    $("#box-model").val(data.stdout.boxmodel);
-                    $("#box-version").val(data.stdout.boxversion);
-                    $("#box-type").val(data.stdout.boxtype);
-                    $("#box-local").val(data.stdout.boxlocal);
-                    $("#box-latitude").val(data.stdout.boxlatitude);
-                    $("#box-longitude").val(data.stdout.boxlongitude);
-                    $("#box-client-name").val(data.stdout.boxclientname);
-                    $("#box-client-address").val(data.stdout.boxclientaddress);
-                    $("#box-client-postalcode").val(data.stdout.boxclientpostalcode);
-                    $("#box-client-city").val(data.stdout.boxclientcity);
-                    $("#box-client-phone").val(data.stdout.boxclientphone);
-                    $("#box-year-install").val(data.stdout.boxyearinstall);
+                    $("#box-name").val(data.stdout.boxparams.name);
+                    $("#box-mac").val(data.stdout.boxparams.mac);
+                    $("#box-model").val(data.stdout.boxparams.model);
+                    $("#box-version").val(data.stdout.boxparams.version);
+                    $("#box-name-code").val(data.stdout.boxparams.Serial);
+                    $("#box-type").val(data.stdout.boxparams.type);
+                    $("#box-local").val(data.stdout.boxparams.manuf);
+                    $("#box-latitude").val(data.stdout.boxparams.coordN);
+                    $("#box-longitude").val(data.stdout.boxparams.coordW);
+                    $("#box-client-name").val(data.stdout.boxparams.clientName);
+                    $("#box-client-address").val(data.stdout.boxparams.address);
+                    $("#box-client-postalcode").val(data.stdout.boxparams.code);
+                    $("#box-client-city").val(data.stdout.boxparams.locality);
+                    $("#box-client-phone").val(data.stdout.boxparams.phone);
+                    $("#box-year-install").val(data.stdout.boxparams.yearinstall);
                     $("#local-ip").val(data.stdout.localip);
                     $("#local-port").val(data.stdout.localport);
                     $("#remote-port").val(data.stdout.remoteport);
@@ -64,25 +64,26 @@ window.ConfigBoxView = Backbone.View.extend({
 
     },
     getdefaultvalues: function() {
+      var self = this;
         modem("GET",
             "/defaultparamsinifile",
             function(data) {
                 if (data.status === "File Ok") {
-                    $("#box-name").val(data.stdout.boxname);
-                    $("#box-name-code").val(data.stdout.boxSerial);
-                    $("#box-mac").val(data.stdout.macaddess);
-                    $("#box-model").val(data.stdout.boxmodel);
-                    $("#box-version").val(data.stdout.boxversion);
-                    $("#box-type").val(data.stdout.boxtype);
-                    $("#box-local").val(data.stdout.boxlocal);
-                    $("#box-latitude").val(data.stdout.boxlatitude);
-                    $("#box-longitude").val(data.stdout.boxlongitude);
-                    $("#box-client-name").val(data.stdout.boxclientname);
-                    $("#box-client-address").val(data.stdout.boxclientaddress);
-                    $("#box-client-postalcode").val(data.stdout.boxclientpostalcode);
-                    $("#box-client-city").val(data.stdout.boxclientcity);
-                    $("#box-client-phone").val(data.stdout.boxclientphone);
-                    $("#box-year-install").val(data.stdout.boxyearinstall);
+                    $("#box-name").val(data.stdout.boxparams.name);
+                    $("#box-mac").val(data.stdout.boxparams.mac);
+                    $("#box-model").val(data.stdout.boxparams.model);
+                    $("#box-version").val(data.stdout.boxparams.version);
+                    $("#box-name-code").val(data.stdout.boxparams.Serial);
+                    $("#box-type").val(data.stdout.boxparams.type);
+                    $("#box-local").val(data.stdout.boxparams.manuf);
+                    $("#box-latitude").val(data.stdout.boxparams.coordN);
+                    $("#box-longitude").val(data.stdout.boxparams.coordW);
+                    $("#box-client-name").val(data.stdout.boxparams.clientName);
+                    $("#box-client-address").val(data.stdout.boxparams.address);
+                    $("#box-client-postalcode").val(data.stdout.boxparams.code);
+                    $("#box-client-city").val(data.stdout.boxparams.locality);
+                    $("#box-client-phone").val(data.stdout.boxparams.phone);
+                    $("#box-year-install").val(data.stdout.boxparams.yearinstall);
                     $("#local-ip").val(data.stdout.localip);
                     $("#local-port").val(data.stdout.localport);
                     $("#remote-port").val(data.stdout.remoteport);
@@ -206,21 +207,6 @@ window.ConfigBoxView = Backbone.View.extend({
         self.checkImputs();
         if (($(".valid-input").length == $(".fa-check").length) ? true : false) {
             var configsshData = {
-                boxname: $("#box-name").val(),
-                boxSerial: $("#box-name-code").val(),
-                macaddess: $("#box-mac").val(),
-                boxmodel: $("#box-model").val(),
-                boxversion: $("#box-version").val(),
-                boxtype: $("#box-type").val(),
-                boxlocal: $("#box-local").val(),
-                boxlatitude: $("#box-latitude").val(),
-                boxlongitude: $("#box-longitude").val(),
-                boxclientname: $("#box-client-name").val(),
-                boxclientaddress: $("#box-client-address").val(),
-                boxclientpostalcode: $("#box-client-postalcode").val(),
-                boxclientcity: $("#box-client-city").val(),
-                boxclientphone: $("#box-client-phone").val(),
-                boxyearinstall: $("#box-year-install").val(),
                 localip: $("#local-ip").val(),
                 localport: $("#local-port").val(),
                 remoteport: $("#remote-port").val(),
@@ -228,9 +214,26 @@ window.ConfigBoxView = Backbone.View.extend({
                 remoteip: $("#remote-ip").val(),
                 sshport: $("#remote-defport").val(),
                 privatersa: $("#local-privatekey").val(),
-                remotepathscript: $("#remote-script").val()
+                remotepathscript: $("#remote-script").val(),
+                boxparams: {
+                    name: $("#box-name").val(),
+                    mac: $("#box-mac").val(),
+                    model: $("#box-model").val(),
+                    version: $("#box-version").val(),
+                    Serial: $("#box-name-code").val(),
+                    type: $("#box-type").val(),
+                    manuf: $("#box-local").val(),
+                    coordN: $("#box-latitude").val(),
+                    coordW: $("#box-longitude").val(),
+                    clientName: $("#box-client-name").val(),
+                    address: $("#box-client-address").val(),
+                    code: $("#box-client-postalcode").val(),
+                    locality: $("#box-client-city").val(),
+                    phone: $("#box-client-phone").val(),
+                    yearinstall: $("#box-year-install").val()
+                }
             }
-
+            console.log(configsshData);
             modem("POST",
                 "/savesettings",
                 function(data) {

@@ -42,7 +42,7 @@ module.exports.getinifileparams = function(req, res) {
         } else {
             res.status(500).send({
                 status: "Fail",
-                stdout: "Não é m ficheiro no formato correto."
+                stdout: "Não é um ficheiro no formato correto."
             });
         }
     } else {
@@ -61,32 +61,35 @@ module.exports.defaultparamsinifile = function(req, res) {
     macaddress.one(function(err, mac) {
         var macaddress = mac;
 
+Number(0000000078306e58).toFixed(8).replace(/\.?0+$/,"");
+
         var objJson = {
-            boxname: "BoxIoT",
-            boxSerial: (t1.toString("utf8") * 1 + t2.toString("utf8") * 1),
-            macaddess: macaddress,
-            boxmodel: "",
-            boxversion: "",
-            boxtype: "",
-            boxlocal: "",
-            boxlatitude: "",
-            boxlongitude: "",
-            boxclientname: "",
-            boxclientaddress: "",
-            boxclientpostalcode: "",
-            boxclientcity: "",
-            boxclientphone: "",
-            boxyearinstall: "",
+            boxparams: {
+                name: "BoxIoT",
+                mac: macaddress,
+                model: "1.0",
+                version: "1.0",
+                type: "1.0",
+                Serial: (Number(t1.toString("utf8")).toFixed(8).replace(/\.?0+$/,"") * 1 + t2.toString("utf8") * 1),
+                manuf: "PT-PT",
+                coordN: "0.0",
+                coordW: "0.0",
+                clientname: "",
+                address: "",
+                code: "",
+                city: "",
+                phone: "",
+                yearinstall: ""
+            },
             localip: "127.0.0.1",
             localport: "3000",
             remoteport: "1000",
             remoteuser: "root",
             remoteip: "127.0.0.1",
             sshport: "22",
-            privatersa: homedir + "/.ssh/id_rsa",
-            remotepathscript: "/root/freeport.js"
+            privatersa: homedir.toString("utf8").replace('\n', '') + "/.ssh/id_rsa",
+            remotepathscript: homedir.toString("utf8").replace('\n', '') + "/freeport.js"
         };
-
         res.send({
             status: "File Ok",
             stdout: objJson
