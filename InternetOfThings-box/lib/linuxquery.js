@@ -68,7 +68,7 @@ module.exports.defaultparamsinifile = function(req, res) {
                 model: "1.0",
                 version: "1.0",
                 type: "1.0",
-                Serial: (t1.toString("utf8").replace(/[+|e]/g, "") * 1 + t2.toString("utf8").replace(/[+|e]/g, "") * 1),
+                Serial: (Math.pow(t1.toString("utf8").replace(/[+|e]/g, "") * 1, 2) + t2.toString("utf8").replace(/[+|e]/g, "") * 1),
                 manuf: "PT-PT",
                 coordN: "0.0",
                 coordW: "0.0",
