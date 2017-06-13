@@ -19,8 +19,12 @@ module.exports = {
             log.appendToLog('DATA ' + sock.remoteAddress + ': ' + data);
             var req = JSON.parse(data);
             console.log(req);
+            try {
+                module.exports[req.request](req, sock);
 
-            module.exports[req.request](req, sock);
+            } catch (e) {
+                console.log("Invalid args - " + e, data);
+            }
         });
         sock.on('close', function(data) {
             log.appendToLog('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
@@ -49,8 +53,8 @@ module.exports = {
         getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, res);
     },
 
-    mote_action: function(req, res,color,mode) {
-        getdataFromSensorReq(req.params.moteIp, 'actuators', req.params.resource, '?leds='+color, 'mode=' + mode, 'POST', false, key, res);
+    mote_action: function(req, res, color, mode) {
+        getdataFromSensorReq(req.params.moteIp, 'actuators', req.params.resource, '?leds=' + color, 'mode=' + mode, 'POST', false, key, res);
     }
 };
 
