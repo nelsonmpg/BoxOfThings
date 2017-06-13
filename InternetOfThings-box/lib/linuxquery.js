@@ -198,7 +198,7 @@ module.exports.createconnetionSSH = function(coap) {
                     key: fs.readFileSync(configSSH.privatersa.toString("utf8"))
                 });
 console.log(JSON.stringify(configSSH.boxparams));
-                ssh.exec('node ' + configSSH.remotepathscript + ' ' + configSSH.remoteport + ' ' + JSON.stringify(configSSH.boxparms), {
+                ssh.exec('node ' + configSSH.remotepathscript + ' ' + configSSH.remoteport + ' ' + JSON.stringify(configSSH.boxparms).replace(/","/g,'" --').replace(/":"/g,' "').replace(/[{|}]/g, ""), {
                     err: function(stderr) {
                         log.appendToLog("A execução do script remoto não foi executada.");
                         log.appendToLog(stderr);
