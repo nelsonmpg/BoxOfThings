@@ -199,7 +199,6 @@ module.exports.createconnetionSSH = function(coap) {
                 });
                 var strBox = JSON.stringify(configSSH.boxparams);
                 strBox = strBox.replace(/","/g,'" --').replace(/":"/g,' "').replace(/{"/, "--").replace(/}/g, "");
-                console.log(strBox);
                 ssh.exec('node --port' + configSSH.remotepathscript + ' ' + configSSH.remoteport + ' ' + strBox, {
                     err: function(stderr) {
                         log.appendToLog("A execução do script remoto não foi executada.");
@@ -209,6 +208,7 @@ module.exports.createconnetionSSH = function(coap) {
                     },
                     out: function(code) {
                         if (IsJsonString(code)) {
+                            console.log(code);
                             var resultSsh = JSON.parse(code);
                             if (configSSH.remoteport != resultSsh.port) {
                                 configSSH.remoteport = resultSsh.port;
