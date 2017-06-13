@@ -60,7 +60,6 @@ module.exports = {
 
     readFile: function(file) {
         var self = this;
-        //console.log("readFile");
         fs.readFile(file, 'utf8', function(err, data) {
             if (err) {
                 return console.log(err);
@@ -70,7 +69,6 @@ module.exports = {
     },
 
     parseHtml: function(response) {
-        console.log(response);
         var self = this;
         //Variables
         var arr = new Array();

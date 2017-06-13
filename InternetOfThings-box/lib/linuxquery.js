@@ -16,13 +16,11 @@ var net = require('net'),
     coapSensor;
 
 module.exports.getHtmlText = function(req, res) {
-    console.log("http://[bbbb::100]/" + req.params.page);
     request("http://[bbbb::100]/" + req.params.page, function(error, response, body) {
         if (!error) {
             if (res) {
                 res.json(response);
             } else {
-                console.log(body);
                 dbToModels.parseHtml(body);
             }
         } else {
