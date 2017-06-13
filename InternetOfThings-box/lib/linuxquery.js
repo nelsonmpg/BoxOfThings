@@ -22,8 +22,8 @@ module.exports.getHtmlText = function(req, res) {
             if (res) {
                 res.json(response);
             } else {
-                console.log(response);
-                dbToModels.parseHtml(response);
+                console.log(body);
+                dbToModels.parseHtml(body);
             }
         } else {
             console.log(error);
