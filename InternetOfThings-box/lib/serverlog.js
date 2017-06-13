@@ -5,14 +5,12 @@ var fs = require("fs"),
 
 module.exports = {
     clearLogFile: function() {
-        fs.closeSync(fs.openSync(logfile, 'w'));
-
-        // try {
-        //     cp.execSync('echo " " > ' + logfile);
-        //     this.appendToLog("Clear...");
-        // } catch (e) {
-        //     fs.writeFileSync(logfile, "Clear...", 'utf8');
-        // }
+        try {
+            fs.closeSync(fs.openSync(logfile, 'w'));
+        } catch (e) {
+            
+            
+        }
     },
 
     appendToLog: function(text) {

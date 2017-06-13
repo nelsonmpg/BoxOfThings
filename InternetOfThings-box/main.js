@@ -44,19 +44,15 @@ var Main = function() {
         } catch (e) {
             log.appendToLog("MainConfig invalido ! ! !");
             console.log("MainConfig invalido ! ! !".red);
-            cp.execSync('echo " " > ' + mainCfg);
+            fs.closeSync(fs.openSync(mainCfg, 'w'));
             createMainConfig(mainCfg);
         }
     } else {
         log.appendToLog("MainConfig not exist ! ! !");
         console.log("MainConfig not exist ! ! !".red);
-        cp.execSync('echo " " > ' + mainCfg);
+        fs.closeSync(fs.openSync(mainCfg, 'w'));
         createMainConfig(mainCfg);
     }
-};
-
-Main.prototype.startServer = function() {
-
 };
 
 /**
