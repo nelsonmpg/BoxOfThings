@@ -23,7 +23,7 @@ module.exports = {
                 module.exports[req.request](req, sock);
 
             } catch (e) {
-                console.log("Invalid args - " + e, data);
+                console.log("Invalid args - " + e, data.toString('utf8'));
             }
         });
         sock.on('close', function(data) {
