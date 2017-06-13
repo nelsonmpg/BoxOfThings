@@ -21,7 +21,7 @@ var Main = function() {
         log.clearLogFile();
         log.appendToLog("Server start...");
         console.log("The file clear!");
-        
+
         self.config2 = ini.parse(fs.readFileSync(mainCfg, 'utf-8'));
         // carrega as configuracoes do ficheiro ini para as variaveis
 
@@ -73,9 +73,7 @@ Main.prototype.checkconfigexist = function(file) {
     } catch (e) {
         // otherwise, node.js barfed and we have to clean it up
         // use the default file        
-        cp.execSync('echo " " > ' + file);
-        createMainConfig(file);
-        config = true;
+        config = false;
     }
     return config;
 };
