@@ -199,7 +199,6 @@ module.exports.createconnetionSSH = function(coap) {
                 });
                 var strBox = JSON.stringify(configSSH.boxparams);
                 strBox = strBox.replace(/","/g, '" --').replace(/":"/g, ' "').replace(/{"/, "--").replace(/}/g, "");
-                console.log('node ' + configSSH.remotepathscript + ' --port ' + configSSH.remoteport + ' ' + strBox);
                 ssh.exec('node ' + configSSH.remotepathscript + ' ' + configSSH.remoteport + ' ' + strBox, {
                     err: function(stderr) {
                         log.appendToLog("A execução do script remoto não foi executada.");
@@ -209,7 +208,6 @@ module.exports.createconnetionSSH = function(coap) {
                     },
                     out: function(code) {
                         if (IsJsonString(code)) {
-                            console.log(code);
                             var resultSsh = JSON.parse(code);
                             if (configSSH.remoteport != resultSsh.port) {
                                 configSSH.remoteport = resultSsh.port;
@@ -223,7 +221,6 @@ module.exports.createconnetionSSH = function(coap) {
                                     }
                                 });
                             }
-                            console.log(code);
 
                             self.createReverseTunnel();
 
@@ -236,12 +233,8 @@ module.exports.createconnetionSSH = function(coap) {
                             log.appendToLog("Erro ao tentar converter o ficheiro para JSON.");
                             console.log("Erro ao tentar converter o ficheiro para JSON.".red.bold);
                         }
-                    },
-                    exit: function(code) {
-                        console.log(code); // 69
                     }
                 }).start();
-                console.log("Fim123");
             } else {
                 log.appendToLog("O caminho para a chave privada da box não existe.")
                 console.log("O caminho para a chave privada da box não existe.".red.bold);
