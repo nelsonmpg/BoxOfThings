@@ -113,9 +113,9 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
                     log.appendToLog(CryptoJS.enc.Utf8.stringify(decrypted3));
 
                     if (response instanceof http.ServerResponse) {
-                        response.json(CryptoJS.enc.Utf8.stringify(decrypted3));
+                        response.json(CryptoJS.enc.Utf8.stringify(decrypted3).toString("utf8"));
                     } else {
-                        response.write(JSON.stringify(CryptoJS.enc.Utf8.stringify(decrypted3)));
+                        response.write(JSON.stringify(CryptoJS.enc.Utf8.stringify(decrypted3).toString("utf8")));
                     }
                 } catch (err) {
                     if (response instanceof http.ServerResponse) {
