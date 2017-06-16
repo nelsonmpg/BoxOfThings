@@ -128,12 +128,12 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
             // print only status code on empty response
         if (!res.payload.length) {
             process.stderr.write('\x1b[1m(' + res.code + ')\x1b[0m\n');
-            log.appendToLog(res.payload);
-            console.log(res.payload);
+            log.appendToLog(res.payload.toString("utf8"));
+            console.log(res.payload.toString("utf8"));
             if (response instanceof http.ServerResponse) {
-                response.json(res.payload);
+                response.json(res.payload.toString("utf8"));
             } else {
-                response.write(JSON.stringify(res.payload));
+                response.write(JSON.stringify(res.payload.toString("utf8")));
             }
         }
     })
