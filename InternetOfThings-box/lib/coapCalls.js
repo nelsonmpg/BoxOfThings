@@ -20,7 +20,7 @@ module.exports = {
             log.appendToLog('DATA ' + sock.remoteAddress + ': ' + data);
             try {
                 var req = JSON.parse(data);
-                console-log(req);
+                console.log(req);
                 module.exports[req.request](req, sock);
 
             } catch (e) {
