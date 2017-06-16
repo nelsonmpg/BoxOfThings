@@ -1,78 +1,240 @@
-<!-- Info boxes -->
-<div class="row"><!-- Info boxes -->
-  <div class="col-md-12">
-    <div class="box">
-      <div class="box-header with-border">
-        <!-- <h3 class="box-title"></h3> -->
-        <div class="box-tools pull-right">
-          <button class="btn btn-box-tool" data-toggle="tooltip" title="Collapse" data-widget="collapse">
-            <i class="fa fa-minus"></i>
-          </button>
-        </div>
-      </div><!-- /.box-header -->
-      <div class="box-body">
-        <div class="row"><!-- Info boxes -->
-          <div class="col-md-4">                  
-            <div class="input-group">
-              <span class="input-group-addon" id="sizing-addon1">endereco</span>
-              <input id="endereco" type="text" class="form-control" value="[fd00::212:4b00:60d:60fe]" aria-describedby="sizing-addon1">
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-toggle="tooltip" title="Collapse" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
             </div>
-          </div>
-          <div class="col-md-4">               
-            <div class="input-group">
-              <span class="input-group-addon" id="sizing-addon2">folder</span>
-              <input id="folder" type="text" class="form-control" value="actuators" aria-describedby="sizing-addon2">
-            </div>            
-          </div>
-          <div class="col-md-4">               
-            <div class="input-group">
-              <span class="input-group-addon" id="sizing-addon3">resource</span>
-              <input id="resource" type="text" class="form-control" value="leds?color=r" aria-describedby="sizing-addon3">
-            </div>            
-          </div>
-        </div>
-        <div class="row"><!-- Info boxes -->
-          <div class="col-md-4">                  
-            <div class="input-group">
-              <span class="input-group-addon" id="sizing-addon4">params</span>
-              <input id="params" type="text" class="form-control" value="" aria-describedby="sizing-addon4">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <!-- <span class="input-group-addon" id="sizing-addon1">endereco</span> -->
+                            <div class="input-group-btn">
+                                <button type="button" id="btn-endereco" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Endereco <span class="caret"></span></button>
+                                <ul id="btn-endereco-opts" class="dropdown-menu">
+                                </ul>
+                            </div>
+                            <input id="endereco" type="text" class="form-control" value="" aria-describedby="sizing-addon1">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <button type="button" id="btn-folder" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Folder <span class="caret"></span></button>
+                                <ul id="btn-folder-opts" class="dropdown-menu">
+                                    <li><a href="#">data</a></li>
+                                    <li><a href="#">test</a></li>
+                                </ul>
+                            </div>
+                            <input id="folder" type="text" class="form-control" value="test" aria-describedby="sizing-addon2">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="sizing-addon3">resource</span>
+                            <input id="resource" type="text" class="form-control" value="" aria-describedby="sizing-addon3">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="sizing-addon4">params</span>
+                            <input id="params" type="text" class="form-control" value="" aria-describedby="sizing-addon4">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="sizing-addon5">payload</span>
+                            <input id="payload" type="text" class="form-control" value="" aria-describedby="sizing-addon5">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <!-- <span class="input-group-addon" id="sizing-addon6">mMethod</span> -->
+                            <div class="input-group-btn">
+                                <button type="button" id="btn-mMethod" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">mMethod <span class="caret"></span></button>
+                                <ul id="btn-mMethod-opts" class="dropdown-menu">
+                                    <li><a href="#">GET</a></li>
+                                    <li><a href="#">POST</a></li>
+                                </ul>
+                            </div>
+                            <input id="mMethod" type="text" class="form-control" value="GET" aria-describedby="sizing-addon6">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="sizing-addon7">mObserve</span>
+                            <input id="mObserve" type="text" class="form-control" value="false" aria-describedby="sizing-addon7">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <button id="getdata" type="button" class="btn btn-info">Get Data From Sensor</button>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>Result</label>
+                    </div>
+                    <div class="col-md-10">
+                        <textarea id="textarea-text" name="text" style="width: 100%; height: 100%;"></textarea>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
             </div>
-          </div>
-          <div class="col-md-4">               
-            <div class="input-group">
-              <span class="input-group-addon" id="sizing-addon5">payload</span>
-              <input id="payload" type="text" class="form-control" value="mode=on" aria-describedby="sizing-addon5">
-            </div>            
-          </div>
-          <div class="col-md-4">               
-            <div class="input-group">
-              <span class="input-group-addon" id="sizing-addon6">mMethod</span>
-              <input id="mMethod" type="text" class="form-control" value="GET" aria-describedby="sizing-addon6">
-            </div>            
-          </div>
         </div>
-        <div class="row"><!-- Info boxes -->
-          <div class="col-md-4">                  
-            <div class="input-group">
-              <span class="input-group-addon" id="sizing-addon7">mObserve</span>
-              <input id="mObserve" type="text" class="form-control" value="false" aria-describedby="sizing-addon7">
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h4>Test API</h4>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-toggle="tooltip" title="Collapse" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
             </div>
-          </div>
-          <div class="col-md-4">               
-            <button id="getdata" type="button" class="btn btn-info">Get Data From Sensor</button>
-          </div>
-          <div class="col-md-4">    
-            <button id="getdatath" type="button" class="btn btn-info">Thread Get Data From Sensor</button>
-          </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <button type="button" id="btn-endereco1" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Endereco <span class="caret"></span></button>
+                                <ul id="btn-endereco1-opts1" class="dropdown-menu">
+                                </ul>
+                            </div>
+                            <input id="api-endereco1" type="text" class="form-control" value="" aria-describedby="sizing-addon1">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <button id="api-getdata1" type="button" class="btn btn-success">Get All Data Sensor</button>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>Result</label>
+                    </div>
+                    <div class="col-md-10">
+                        <textarea id="textarea-text1" name="text1" style="width: 100%; height: 100%;"></textarea>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <button type="button" id="btn-endereco2" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Endereco <span class="caret"></span></button>
+                                <ul id="btn-endereco2-opts2" class="dropdown-menu">
+                                </ul>
+                            </div>
+                            <input id="api-endereco2" type="text" class="form-control" value="" aria-describedby="sizing-addon1">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="sizing-addon3">resource</span>
+                            <input id="api-resource2" type="text" class="form-control" value="" aria-describedby="sizing-addon3">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <button id="api-getdata2" type="button" class="btn btn-success">Get Data Sensor</button>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>Result</label>
+                    </div>
+                    <div class="col-md-10">
+                        <textarea id="textarea-text2" name="text2" style="width: 100%; height: 100%;"></textarea>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <button type="button" id="btn-endereco3" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Endereco <span class="caret"></span></button>
+                                <ul id="btn-endereco3-opts3" class="dropdown-menu">
+                                </ul>
+                            </div>
+                            <input id="api-endereco3" type="text" class="form-control" value="" aria-describedby="sizing-addon1">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="lb-resource">resource</span>
+                            <input id="api-resource3" type="text" class="form-control" value="" aria-describedby="lb-resource">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <button type="button" id="btn-color" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Color <span class="caret"></span></button>
+                                <ul id="btn-color-opts" class="dropdown-menu">
+                                    <li><a href="#">Blue</a></li>
+                                    <li><a href="#">Green</a></li>
+                                    <li><a href="#">Red</a></li>
+                                </ul>
+                            </div>
+                            <input id="api-color" type="text" readonly="true" class="form-control" value="" aria-describedby="sizing-addon1">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <button type="button" id="btn-mode" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Modo <span class="caret"></span></button>
+                                <ul id="btn-mode-opts" class="dropdown-menu">
+                                    <li><a href="#">On</a></li>
+                                    <li><a href="#">Off</a></li>
+                                </ul>
+                            </div>
+                            <input id="api-mode" type="text" readonly="true" class="form-control" value="" aria-describedby="sizing-addon1">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button id="api-sensoraction" type="button" class="btn btn-success">Sensor Action</button>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label>Result</label>
+                    </div>
+                    <div class="col-md-10">
+                        <textarea id="textarea-text3" name="text3" style="width: 100%; height: 100%;"></textarea>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+            </div>
         </div>
-
-
-        <!-- 
-getdataFromSensor('[aaaa::c30c:0:0:2]','actuators','leds?color=r','','mode=on','post',false);
--->
-<div id="htmlcode">          
-</div>                   
-</div><!-- ./box-body -->
-</div><!-- /.box -->
-</div><!-- /.col --> 
-</div>  
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h4>Remote HTML Page</h4>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-toggle="tooltip" title="Collapse" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="htmlcode">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -11,18 +11,38 @@ var net = require('net'),
     fileconfig = './MainConfig.ini',
     sshfileconfig = './configssh.json',
     log = require('./serverlog.js'),
+    dbToModels = require('./dbToModel.js'),
     configSSH = null,
     coapSensor;
 
 module.exports.getHtmlText = function(req, res) {
-    request("http://[bbbb::100]/" + req.params.page, function(error, response, body) {
-        if (!error) {
-            res.json(response);
-        } else {
-            console.log(error);
-            log.appendToLog(error);
+    var self = this;
+    cp.exec("cat /var/log/6lbr.ip", function(error, stdout, stderr) {
+        if (error) {
+            log.appendToLog("Erro ao tentar ler o ficheiro /var/log/6lbr.ip.");
+            console.log("Erro ao tentar ler o ficheiro /var/log/6lbr.ip.".red);
+            return;
         }
+        request("http://[" + stdout.replace(/\n|\t/g, "") + "]/" + req.params.page, function(error, response, body) {
+            if (!error) {
+                if (res) {
+                    res.json(response);
+                } else {
+                    dbToModels.parseHtml(body);
+                }
+            } else {
+                console.log(error);
+                log.appendToLog(error);
+                if (!res) {
+                    setTimeout(function() {
+                        self.getHtmlText({ params: { page: 'network.html' } }, null);
+                    }, 3000);
+                }
+            }
+        });
+
     });
+
 };
 
 /**
@@ -42,7 +62,7 @@ module.exports.getinifileparams = function(req, res) {
         } else {
             res.status(500).send({
                 status: "Fail",
-                stdout: "Não é m ficheiro no formato correto."
+                stdout: "Não é um ficheiro no formato correto."
             });
         }
     } else {
@@ -62,31 +82,32 @@ module.exports.defaultparamsinifile = function(req, res) {
         var macaddress = mac;
 
         var objJson = {
-            boxname: "BoxIoT",
-            boxSerial: (t1.toString("utf8") * 1 + t2.toString("utf8") * 1),
-            macaddess: macaddress,
-            boxmodel: "",
-            boxversion: "",
-            boxtype: "",
-            boxlocal: "",
-            boxlatitude: "",
-            boxlongitude: "",
-            boxclientname: "",
-            boxclientaddress: "",
-            boxclientpostalcode: "",
-            boxclientcity: "",
-            boxclientphone: "",
-            boxyearinstall: "",
+            boxparams: {
+                name: "BoxIoT",
+                mac: macaddress,
+                model: "1.0",
+                version: "1.0",
+                type: "1.0",
+                Serial: (Math.pow(t1.toString("utf8").replace(/[+|e]/g, "") * 1, 2) + t2.toString("utf8").replace(/[+|e]/g, "") * 1),
+                manuf: "PT-PT",
+                coordN: "0.0",
+                coordW: "0.0",
+                clientname: "",
+                address: "",
+                code: "",
+                city: "",
+                phone: "",
+                yearinstall: ""
+            },
             localip: "127.0.0.1",
             localport: "3000",
             remoteport: "1000",
             remoteuser: "root",
             remoteip: "127.0.0.1",
             sshport: "22",
-            privatersa: homedir + "/.ssh/id_rsa",
-            remotepathscript: "/root/freeport.js"
+            privatersa: homedir.toString("utf8").replace('\n', '') + "/.ssh/id_rsa",
+            remotepathscript: homedir.toString("utf8").replace('\n', '') + "/freeport.js"
         };
-
         res.send({
             status: "File Ok",
             stdout: objJson
@@ -196,8 +217,9 @@ module.exports.createconnetionSSH = function(coap) {
                     port: configSSH.sshport,
                     key: fs.readFileSync(configSSH.privatersa.toString("utf8"))
                 });
-
-                ssh.exec('node ' + configSSH.remotepathscript + ' ' + configSSH.remoteport + ' ' + configSSH.boxname, {
+                var strBox = JSON.stringify(configSSH.boxparams);
+                strBox = strBox.replace(/","/g, '" --').replace(/":"/g, ' "').replace(/{"/, "--").replace(/}/g, "");
+                ssh.exec('node ' + configSSH.remotepathscript + ' ' + configSSH.remoteport + ' ' + strBox, {
                     err: function(stderr) {
                         log.appendToLog("A execução do script remoto não foi executada.");
                         log.appendToLog(stderr);
@@ -207,17 +229,22 @@ module.exports.createconnetionSSH = function(coap) {
                     out: function(code) {
                         if (IsJsonString(code)) {
                             var resultSsh = JSON.parse(code);
-                            if (configSSH.remoteport != resultSsh.port) {
-                                configSSH.remoteport = resultSsh.port;
-                                fs.writeFile('configssh.json', JSON.stringify(configSSH), 'utf8', function(err) {
-                                    if (err) {
-                                        log.appendToLog("Erro ao tentar gravar o ficheiro.");
-                                        console.log("Erro ao tentar gravar o ficheiro.".red.bold);
-                                    } else {
-                                        log.appendToLog("O ficheiro de configuração do SSH foi atualizado.");
-                                        console.log("O ficheiro de configuração do SSH foi atualizado.".green.bold);
-                                    }
-                                });
+                            if (resultSsh.port != "" && resultSsh.port != undefined && resultSsh.port != "undefined" && resultSsh.port != null) {
+                                if (configSSH.remoteport != resultSsh.port) {
+                                    configSSH.remoteport = resultSsh.port;
+                                    fs.writeFile('configssh.json', JSON.stringify(configSSH), 'utf8', function(err) {
+                                        if (err) {
+                                            log.appendToLog("Erro ao tentar gravar o ficheiro.");
+                                            console.log("Erro ao tentar gravar o ficheiro.".red.bold);
+                                        } else {
+                                            log.appendToLog("O ficheiro de configuração do SSH foi atualizado.");
+                                            console.log("O ficheiro de configuração do SSH foi atualizado.".green.bold);
+                                        }
+                                    });
+                                }
+                            } else {
+                                log.appendToLog("Erro ao tentar ler os dados rcebidos do cliente remoto.");
+                                console.log("Erro ao tentar ler os dados rcebidos do cliente remoto.".red.bold);
                             }
 
                             self.createReverseTunnel();

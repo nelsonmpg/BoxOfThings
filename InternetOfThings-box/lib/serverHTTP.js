@@ -45,6 +45,13 @@ var ServerHTTP = function(config) {
         console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
         log.appendToLog("É necessário efetuar as configurações SSH para a comunicação remota.");
     }
+    cp.exec("sudo route -A inet6 add aaaa::/64 gw bbbb::100", function(error, stdout, stderr) {
+        if (error) {
+            console.log("Erro ao tentar adicionar a rota.");
+        } else {
+            console.log("A rota foi adicionada com sucesso.")
+        }
+    });
 };
 
 /**
@@ -76,12 +83,21 @@ ServerHTTP.prototype.start = function() {
 
     this.app.post("/insertUsr", dbToModels.insertUser);
 
-    //Testar getvalues
-    console.log("Primeira vez");
-    coapCalls.getValuesFromSensors();
+    this.app.get('/api/singleMoteAllInfo/:moteIp', coapCalls.single_mote_all_info);
 
-    this.app.get("/api/sensor/getDataSensor/:endereco/:folder/:resource/:params/:payload/:mMethod/:mObserve", coapCalls.getdataFromSensor);
+    this.app.get('/api/singleMoteSingleInfo/:moteIp/:resource', coapCalls.single_mote_single_info);
 
+    this.app.get('/api/moteAction/:moteIp/:resource/:color/:mode', coapCalls.mote_action);
+
+    this.app.get("/api/sensor/getDataSensor/:moteIp/:folder/:resource/:params/:payload/:mMethod/:mObserve", coapCalls.getdataFromSensor);
+
+    try {
+        osquerys.getHtmlText({ params: { page: 'network.html' } }, null);
+    } catch (e) {
+        console.log("Html não carregado.");
+    }
+
+    this.app.get('/routes/alladdress', dbToModels.getAllAdressDistinct);
 
     // Devolve as configuracoes do ficheiro Ini
     this.app.get("/paramsinifile", osquerys.getinifileparams);

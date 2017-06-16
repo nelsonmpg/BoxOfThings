@@ -27,7 +27,19 @@ module.exports = {
             pass: md5(btoa(cfg.pass))
         }, null);
 
+<<<<<<< HEAD
         //self.readFile('./network.html');
+=======
+        self.removeOldRecords();
+
+        // self.readFile('./network.html');
+    },
+
+    removeOldRecords: function() {
+        Addr.removeAllRecprds();
+        Neighbor.removeAllRecprds();
+        Route.removeAllRecprds();
+>>>>>>> 1e27e21ce87f1e23cb8f5a84519e5411cb549b22
     },
 
     loginUser: function(req, res) {
@@ -53,14 +65,13 @@ module.exports = {
     insertRoute: function(data) {
         Route.insertData(data);
     },
-
-
-
-
+    
+    getAllAdressDistinct: function(req, res) {
+        Route.getAllAdressDistinct(res);
+    },
 
     readFile: function(file) {
         var self = this;
-        //console.log("readFile");
         fs.readFile(file, 'utf8', function(err, data) {
             if (err) {
                 return console.log(err);

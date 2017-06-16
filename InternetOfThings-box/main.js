@@ -14,14 +14,14 @@ var cp = require('child_process'),
 var Main = function() {
     var self = this;
 
-    log.clearLogFile();
-
-    log.appendToLog("Server start...");
-    console.log("The file clear!");
 
     var args;
     // Verifica se o ficheiro de ligacao com a base de dados para iniciar a comunicacao
     if (self.checkconfigexist(mainCfg)) {
+        log.clearLogFile();
+        log.appendToLog("Server start...");
+        console.log("The file log clear!");
+
         self.config2 = ini.parse(fs.readFileSync(mainCfg, 'utf-8'));
         // carrega as configuracoes do ficheiro ini para as variaveis
 
@@ -44,17 +44,15 @@ var Main = function() {
         } catch (e) {
             log.appendToLog("MainConfig invalido ! ! !");
             console.log("MainConfig invalido ! ! !".red);
+            fs.closeSync(fs.openSync(mainCfg, 'w'));
             createMainConfig(mainCfg);
         }
     } else {
         log.appendToLog("MainConfig not exist ! ! !");
         console.log("MainConfig not exist ! ! !".red);
+        fs.closeSync(fs.openSync(mainCfg, 'w'));
         createMainConfig(mainCfg);
     }
-};
-
-Main.prototype.startServer = function() {
-
 };
 
 /**
@@ -70,9 +68,8 @@ Main.prototype.checkconfigexist = function(file) {
         config = true;
     } catch (e) {
         // otherwise, node.js barfed and we have to clean it up
-        // use the default file
-        createMainConfig(mainCfg);
-        config = true;
+        // use the default file        
+        config = false;
     }
     return config;
 };
@@ -83,12 +80,11 @@ new Main();
 module.exports = Main;
 
 
-var createMainConfig = function(file) {
+function createMainConfig(file) {
     var saveini = "" +
         "; Config Global\n" +
         "[global]\n" +
         "portlocalserver = 8080\n" +
-        "pathserverfreeport = ~/serverRedeSensores/freePort.js\n" +
         "configok = false\n\n" +
         "; definicao da base de dados\n" +
         "[database]\n" +

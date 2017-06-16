@@ -1,5 +1,6 @@
 require('colors');
 var coap = require('coap'),
+    http = require('http'),
     URL = require('url'),
     http = require('http'),
     CryptoJS = require("crypto-js"),
@@ -20,10 +21,14 @@ module.exports = {
         sock.on('data', function(data) {
             // console.log('DATA ' + sock.remoteAddress + ': ' + data);
             log.appendToLog('DATA ' + sock.remoteAddress + ': ' + data);
-            var req = JSON.parse(data);
-            console.log(req);
+            try {
+                var req = JSON.parse(data);
+                module.exports[req.request](req, sock);
 
-            module.exports[req.request](req, sock);
+            } catch (e) {
+                log.appendToLog("Invalid args - " + e, data.toString('utf8'));
+                console.log("Invalid args - " + e, data.toString('utf8'));
+            }
         });
         sock.on('close', function(data) {
             log.appendToLog('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
@@ -34,28 +39,31 @@ module.exports = {
 	Addr.getAllData(callMoteFunctions);
     },
     getdataFromSensor: function(req, res) {
-        var endereco = req.params.endereco === "undefined" ? "" : req.params.endereco,
+        var endereco = req.params.moteIp === "undefined" ? "" : req.params.moteIp,
             folder = req.params.folder === "undefined" ? "" : req.params.folder,
             resource = req.params.resource === "undefined" ? "" : req.params.resource,
             params = req.params.params === "undefined" ? "" : req.params.params,
             payload = req.params.payload === "undefined" ? "" : req.params.payload,
             mMethod = req.params.mMethod === "undefined" ? "GET" : req.params.mMethod,
             mObserve = req.params.mObserve === "undefined" ? "" : req.params.mObserve;
-
+            
         resource = resource.replace("§", "?");
         getdataFromSensorReq(endereco, folder, resource, params, payload, mMethod, mObserve, key, res);
     },
 
     single_mote_all_info: function(req, res) {
-        getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, res);
+        console.log(req.params.moteIp);
+        getdataFromSensorReq(req.params.moteIp, 'data', "AllValues", '', undefined, 'GET', true, key, res);
     },
 
     single_mote_single_info: function(req, res) {
+        console.log(req.params.moteIp, req.params.resource);
         getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, res);
     },
 
     mote_action: function(req, res) {
-        getdataFromSensorReq(req.params.moteIp, 'actuators', req.params.resource, '', undefined, 'POST', true, key, res);
+        console.log(req.params.moteIpreq.params.resource, req.params.color, req.params.mode);
+        getdataFromSensorReq(req.params.moteIp, 'actuators', req.params.resource, '?leds=' + req.params.color, 'mode=' + req.params.mode, 'POST', false, key, res);
     }
 };
 
@@ -67,6 +75,7 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
         url,
         delayMillis = 3000,
         method = 'GET',
+        // requestString = 'coap://[aaaa::212:4b00:60d:b305]:5683/test/hello';
         requestString = 'coap://' + endereco + ':5683/' + folder + '/' + resource + params;
     mKey = key;
 
@@ -88,59 +97,60 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
     req.on('response', function(res) {
         res.setEncoding('utf8');
 
-//        res.on('data', function(msg) {
+        var data = CryptoJS.enc.Hex.parse(res.payload.toString("hex"));
 
-                //console.log('Data:', msg);
-                //log.appendToLog('Data:', msg);
+        var encrypted = {};
+        encrypted.key = mKey;
+        encrypted.ciphertext = data;
 
-                var data = CryptoJS.enc.Hex.parse(res.payload.toString("hex"));
+        var decrypted3 = CryptoJS.AES.decrypt(encrypted, mKey, {
+            mode: CryptoJS.mode.ECB,
+            padding: CryptoJS.pad.NoPadding
+        });
+        try {
+            //console.log(CryptoJS.enc.Utf8.stringify(decrypted3));
+            // console.log(CryptoJS.enc.Hex.stringify(decrypted3));
+            console.log(CryptoJS.enc.Utf8.stringify(decrypted3));
 
-                var encrypted = {};
-                encrypted.key = mKey;
-                encrypted.ciphertext = data;
+            // log.appendToLog(CryptoJS.enc.Hex.stringify(decrypted3));
+            log.appendToLog(CryptoJS.enc.Utf8.stringify(decrypted3));
 
-                var decrypted3 = CryptoJS.AES.decrypt(encrypted, mKey, {
-                    mode: CryptoJS.mode.ECB,
-                    padding: CryptoJS.pad.NoPadding
-                });
-
-
-                try {
-
-		    //console.log("\nDecrypted:\n ",CryptoJS.enc.Utf8.stringify(decrypted3));
-		    //log.appendToLog(CryptoJS.enc.Utf8.stringify(decrypted3));
-
-		    response(CryptoJS.enc.Utf8.stringify(decrypted3));
-
-		    /*
-                    if (response instanceof http.ServerResponse) {
-                        response.json(CryptoJS.enc.Utf8.stringify(decrypted3));
-                    }  
-		    else {
-                        response.write(JSON.stringify(CryptoJS.enc.Utf8.stringify(decrypted3)));
-                    } 
-		    */
-                } catch (err) {
-		    /*
-                    if (response instanceof http.ServerResponse) {
-                        response.send(err);
-                    } else {
-                        response.write(JSON.stringify(err));
-                    }*/	
-                }
-           // })
-            // print only status code on empty response
-        if (!res.payload.length) {
-            process.stderr.write('\x1b[1m(' + res.code + ')\x1b[0m\n');
-            log.appendToLog(res.payload);
-            console.log(res.payload);
             if (response instanceof http.ServerResponse) {
-                response.json(res.payload);
-            } else {
-                response.write(JSON.stringify(res.payload));
+                response.json(CryptoJS.enc.Utf8.stringify(decrypted3));
+            } else if (typeof response === "object") {
+                response.write(JSON.stringify(CryptoJS.enc.Utf8.stringify(decrypted3)));
+            }
+        } catch (err) {
+            if (response instanceof http.ServerResponse) {
+                response.send(err);
+            } else if (typeof response === "object") {
+                response.write(JSON.stringify(err));
             }
         }
-    })
+        res.on('data', function(msg) {
+            console.log('Data:', msg);
+            log.appendToLog('Data:', msg);
+        })
+
+
+        // print only status code on empty response
+        try {
+            if (!res.payload.length) {
+                process.stderr.write('\x1b[1m(' + res.code + ')\x1b[0m\n');
+                log.appendToLog(res.payload);
+                console.log(res.payload);
+                console.log("Teste - " + res.payload);
+                if (response instanceof http.ServerResponse) {
+                    response.json(res.payload);
+                } else if (typeof response === "object") {
+                    response.write(JSON.stringify(res.payload));
+                }
+
+            }
+        } catch (e) {
+            console.log("payload error - " + e);
+        }
+    });
 
     if (method === 'GET' || method === 'DELETE' || payload) {
         req.end(payload);

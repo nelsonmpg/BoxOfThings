@@ -1,10 +1,15 @@
 var fs = require("fs"),
-    logfile = 'serverlog.log';
+    cp = require('child_process'),
+    logfile = './serverlog.log';
 
 
 module.exports = {
     clearLogFile: function() {
-        fs.unlinkSync(logfile);
+        try {
+            fs.closeSync(fs.openSync(logfile, 'w'));
+        } catch (e) {
+            console.log("Erro ao criar o ficheiro log " + e.toString());
+        }
     },
 
     appendToLog: function(text) {
