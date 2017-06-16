@@ -48,11 +48,11 @@ module.exports = {
 
     single_mote_all_info: function(req, res) {
         console.log(req.params.moteIp);
-        getdataFromSensorReq(req.params.moteIp, 'data', "AllValues", '', undefined, 'GET', true, key, res);
+        getdataFromSensorReq(req.params.moteIp, 'resources', "AllValues", '', undefined, 'GET', true, key, res);
     },
 
     single_mote_single_info: function(req, res) {
-        getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, res);
+        getdataFromSensorReq(req.params.moteIp, 'resources', req.params.resource, '', undefined, 'GET', true, key, res);
     },
 
     mote_action: function(req, res) {
@@ -68,8 +68,8 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
         url,
         delayMillis = 3000,
         method = 'GET',
-        requestString = 'coap://[aaaa::212:4b00:60d:b305]:5683/test/hello';
-        // requestString = 'coap://' + endereco + ':5683/' + folder + '/' + resource + params;
+        // requestString = 'coap://[aaaa::212:4b00:60d:b305]:5683/test/hello';
+        requestString = 'coap://' + endereco + ':5683/' + folder + '/' + resource + params;
     mKey = key;
 
     console.log(requestString);
