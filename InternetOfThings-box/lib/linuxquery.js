@@ -214,17 +214,22 @@ module.exports.createconnetionSSH = function(coap) {
                     out: function(code) {
                         if (IsJsonString(code)) {
                             var resultSsh = JSON.parse(code);
-                            if (configSSH.remoteport != resultSsh.port) {
-                                configSSH.remoteport = resultSsh.port;
-                                fs.writeFile('configssh.json', JSON.stringify(configSSH), 'utf8', function(err) {
-                                    if (err) {
-                                        log.appendToLog("Erro ao tentar gravar o ficheiro.");
-                                        console.log("Erro ao tentar gravar o ficheiro.".red.bold);
-                                    } else {
-                                        log.appendToLog("O ficheiro de configuração do SSH foi atualizado.");
-                                        console.log("O ficheiro de configuração do SSH foi atualizado.".green.bold);
-                                    }
-                                });
+                            if (resultSsh.port) {
+                                if (configSSH.remoteport != resultSsh.port) {
+                                    configSSH.remoteport = resultSsh.port;
+                                    fs.writeFile('configssh.json', JSON.stringify(configSSH), 'utf8', function(err) {
+                                        if (err) {
+                                            log.appendToLog("Erro ao tentar gravar o ficheiro.");
+                                            console.log("Erro ao tentar gravar o ficheiro.".red.bold);
+                                        } else {
+                                            log.appendToLog("O ficheiro de configuração do SSH foi atualizado.");
+                                            console.log("O ficheiro de configuração do SSH foi atualizado.".green.bold);
+                                        }
+                                    });
+                                }
+                            } else {
+                                log.appendToLog("Erro ao tentar ler os dados rcebidos do cliente remoto.");
+                                console.log("Erro ao tentar ler os dados rcebidos do cliente remoto.".red.bold);
                             }
 
                             self.createReverseTunnel();
@@ -257,7 +262,6 @@ module.exports.createconnetionSSH = function(coap) {
 module.exports.createReverseTunnel = function() {
     var self = this;
     // inicia o tunel ssh com a cloud
-    console.log(configSSH);
     cp.exec("sh ./runTunneling.sh " + configSSH.remoteport + " " + configSSH.localip + " " + configSSH.localport + " " + configSSH.remoteuser + " '" + configSSH.remoteip + "' " + configSSH.sshport, function(error, stdout, stderr) {
         if (error instanceof Error) {
 
