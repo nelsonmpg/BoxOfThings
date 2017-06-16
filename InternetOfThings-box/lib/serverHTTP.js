@@ -82,7 +82,7 @@ ServerHTTP.prototype.start = function() {
 
     this.app.get('/api/singleMoteSingleInfo/:moteIp/:resource', coapCalls.single_mote_single_info);
 
-    this.app.get('/singleMoteSingleInfo/:moteIp/:resource/:color/:mode', coapCalls.single_mote_single_info);
+    // this.app.get('/singleMoteSingleInfo/:moteIp/:resource/:color/:mode', coapCalls.single_mote_single_info);
 
     this.app.get("/api/sensor/getDataSensor/:endereco/:folder/:resource/:params/:payload/:mMethod/:mObserve", coapCalls.getdataFromSensor);
 

@@ -18,7 +18,7 @@ window.ConfigSiteView = Backbone.View.extend({
         },
         "click #api-getdata2": function() {
             modem("GET",
-                "/api/moteAction/" + $("#api-endereco2").val() + "/" + $("#api-resource2").val() ,
+                "/api/singleMoteSingleInfo/" + $("#api-endereco2").val() + "/" + $("#api-resource2").val() ,
                 function(data) {
                     console.log(data);
                 },
@@ -68,11 +68,10 @@ window.ConfigSiteView = Backbone.View.extend({
             params = $.trim($("#params").val()) === "" ? "undefined" : $("#params").val(),
             payload = $.trim($("#payload").val()) === "" ? "undefined" : $("#payload").val(),
             mMethod = $.trim($("#mMethod").val()) === "" ? "undefined" : $("#mMethod").val(),
-            mObserve = $.trim($("#mObserve").val()) === "" ? "undefined" : $("#mObserve").val(),
-            func = e.target.id === "getdata" ? "getDataSensor" : "threadgetDataSensor";
+            mObserve = $.trim($("#mObserve").val()) === "" ? "undefined" : $("#mObserve").val();
 
         modem("GET",
-            "/api/sensor/" + func + "/" + endereco + "/" + folder + "/" + resource.replace("?", "§") + "/" + params + "/" + payload + "/" + mMethod + "/" + mObserve,
+            "/api/sensor/getDataSensor/" + endereco + "/" + folder + "/" + resource.replace("?", "§") + "/" + params + "/" + payload + "/" + mMethod + "/" + mObserve,
             function(data) {
                 console.log(data);
             },
