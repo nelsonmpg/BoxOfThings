@@ -96,7 +96,7 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
                 log.appendToLog('Data:', msg);
 
                 var data = CryptoJS.enc.Hex.parse(res.payload.toString("hex"));
-
+console.log(res.payload.toString("hex"));
                 var encrypted = {};
                 encrypted.key = mKey;
                 encrypted.ciphertext = data;
