@@ -115,13 +115,13 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
 
                     if (response instanceof http.ServerResponse) {
                         response.json(CryptoJS.enc.Utf8.stringify(decrypted3));
-                    } else if (response typeof "object") {
+                    } else if ( typeof response === "object") {
                         response.write(JSON.stringify(CryptoJS.enc.Utf8.stringify(decrypted3)));
                     }
                 } catch (err) {
                     if (response instanceof http.ServerResponse) {
                         response.send(err);
-                    } else if (response typeof "object")  {
+                    } else if ( typeof response === "object") {
                         response.write(JSON.stringify(err));
                     }
                 }
@@ -133,7 +133,7 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
             console.log(res.payload);
             if (response instanceof http.ServerResponse) {
                 response.json(res.payload);
-            } else if (response typeof "object")  {
+            } else if ( typeof response === "object") {
                 response.write(JSON.stringify(res.payload));
             }
         }
