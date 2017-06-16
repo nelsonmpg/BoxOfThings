@@ -16,7 +16,7 @@ module.exports = {
         log.appendToLog('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
 
         sock.on('data', function(data) {
-            // console.log('DATA ' + sock.remoteAddress + ': ' + data);
+            console.log('DATA ' + sock.remoteAddress + ': ' + data);
             log.appendToLog('DATA ' + sock.remoteAddress + ': ' + data);
             try {
                 var req = JSON.parse(data);
