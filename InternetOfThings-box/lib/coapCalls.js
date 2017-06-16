@@ -106,16 +106,16 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
                 });
                 try {
                     //console.log(CryptoJS.enc.Utf8.stringify(decrypted3));
-                    console.log(CryptoJS.enc.Hex.stringify(decrypted3).toString("utf8"));
-                    console.log(CryptoJS.enc.Utf8.stringify(decrypted3).toString("utf8"));
+                    console.log(CryptoJS.enc.Hex.stringify(decrypted3));
+                    console.log(CryptoJS.enc.Utf8.stringify(decrypted3));
 
-                    log.appendToLog(CryptoJS.enc.Hex.stringify(decrypted3).toString("utf8"));
-                    log.appendToLog(CryptoJS.enc.Utf8.stringify(decrypted3).toString("utf8"));
+                    log.appendToLog(CryptoJS.enc.Hex.stringify(decrypted3));
+                    log.appendToLog(CryptoJS.enc.Utf8.stringify(decrypted3));
 
                     if (response instanceof http.ServerResponse) {
-                        response.json(CryptoJS.enc.Utf8.stringify(decrypted3).toString("utf8"));
+                        response.json(CryptoJS.enc.Utf8.stringify(decrypted3));
                     } else {
-                        response.write(JSON.stringify(CryptoJS.enc.Utf8.stringify(decrypted3).toString("utf8")));
+                        response.write(JSON.stringify(CryptoJS.enc.Utf8.stringify(decrypted3)));
                     }
                 } catch (err) {
                     if (response instanceof http.ServerResponse) {
@@ -128,12 +128,12 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
             // print only status code on empty response
         if (!res.payload.length) {
             process.stderr.write('\x1b[1m(' + res.code + ')\x1b[0m\n');
-            log.appendToLog(res.payload.toString("utf8"));
-            console.log(res.payload.toString("utf8"));
+            log.appendToLog(res.payload);
+            console.log(res.payload);
             if (response instanceof http.ServerResponse) {
-                response.json(res.payload.toString("utf8"));
+                response.json(res.payload);
             } else {
-                response.write(JSON.stringify(res.payload.toString("utf8")));
+                response.write(JSON.stringify(res.payload));
             }
         }
     })
