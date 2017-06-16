@@ -1,5 +1,6 @@
 require('colors');
 var coap = require('coap'),
+    http = require('http'),
     URL = require('url'),
     CryptoJS = require("crypto-js"),
     Sensor = require('./models/sensor.js'),
