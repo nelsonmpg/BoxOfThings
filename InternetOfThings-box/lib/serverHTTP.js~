@@ -77,7 +77,6 @@ ServerHTTP.prototype.start = function() {
     this.app.post("/insertUsr", dbToModels.insertUser);
 
     //Testar getvalues
-    console.log("Primeira vez");
     coapCalls.getValuesFromSensors();
 
     this.app.get("/api/sensor/getDataSensor/:endereco/:folder/:resource/:params/:payload/:mMethod/:mObserve", coapCalls.getdataFromSensor);
