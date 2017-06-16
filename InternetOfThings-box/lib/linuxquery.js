@@ -257,6 +257,7 @@ module.exports.createconnetionSSH = function(coap) {
 module.exports.createReverseTunnel = function() {
     var self = this;
     // inicia o tunel ssh com a cloud
+    console.log("sh ./runTunneling.sh " + configSSH.remoteport + " " + configSSH.localip + " " + configSSH.localport + " " + configSSH.remoteuser + " '" + configSSH.remoteip + "' " + configSSH.sshport);
     cp.exec("sh ./runTunneling.sh " + configSSH.remoteport + " " + configSSH.localip + " " + configSSH.localport + " " + configSSH.remoteuser + " '" + configSSH.remoteip + "' " + configSSH.sshport, function(error, stdout, stderr) {
         if (error instanceof Error) {
 
