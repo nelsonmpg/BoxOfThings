@@ -78,11 +78,9 @@ ServerHTTP.prototype.start = function() {
 
     this.app.get('/api/singleMoteAllInfo/:moteIp', coapCalls.single_mote_all_info);
 
-    this.app.get('/api/moteAction/:moteIp/:resource', coapCalls.mote_action);
-
     this.app.get('/api/singleMoteSingleInfo/:moteIp/:resource', coapCalls.single_mote_single_info);
 
-    // this.app.get('/singleMoteSingleInfo/:moteIp/:resource/:color/:mode', coapCalls.single_mote_single_info);
+    this.app.get('/api/moteAction/:moteIp/:resource/:color/:mode', coapCalls.mote_action);
 
     this.app.get("/api/sensor/getDataSensor/:endereco/:folder/:resource/:params/:payload/:mMethod/:mObserve", coapCalls.getdataFromSensor);
 
