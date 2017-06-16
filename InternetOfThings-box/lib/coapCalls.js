@@ -20,7 +20,6 @@ module.exports = {
             log.appendToLog('DATA ' + sock.remoteAddress + ': ' + data);
             try {
                 var req = JSON.parse(data);
-                console.log(instanceof sock);
                 module.exports[req.request](req, sock);
 
             } catch (e) {
@@ -116,13 +115,13 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
 
                     if (response instanceof http.ServerResponse) {
                         response.json(CryptoJS.enc.Utf8.stringify(decrypted3));
-                    } else {
+                    } else if (response typeof "object") {
                         response.write(JSON.stringify(CryptoJS.enc.Utf8.stringify(decrypted3)));
                     }
                 } catch (err) {
                     if (response instanceof http.ServerResponse) {
                         response.send(err);
-                    } else {
+                    } else if (response typeof "object")  {
                         response.write(JSON.stringify(err));
                     }
                 }
@@ -134,7 +133,7 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
             console.log(res.payload);
             if (response instanceof http.ServerResponse) {
                 response.json(res.payload);
-            } else {
+            } else if (response typeof "object")  {
                 response.write(JSON.stringify(res.payload));
             }
         }
