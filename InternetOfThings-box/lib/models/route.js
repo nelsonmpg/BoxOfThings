@@ -20,8 +20,8 @@ Route.prototype.removeAllRecprds = function() {
             log.appendToLog("Erro ao tentar apagar todos os registos.\n" + err);
             console.log("Erro ao tentar apagar todos os registos.\n" + err);
         } else {
-            log.appendToLog("Foram pagados todos os registos 'Route'. - " + result);
-            console.log("Foram pagados todos os registos 'Route'. - " + result);
+            log.appendToLog("Foram apagados todos os registos 'Route'. - " + result);
+            console.log("Foram apagados todos os registos 'Route'. - " + result);
         }
     });
 };
