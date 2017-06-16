@@ -27,7 +27,15 @@ module.exports = {
             pass: md5(btoa(cfg.pass))
         }, null);
 
+        self.removeOldRecords();
+
         self.readFile('./network.html');
+    },
+
+    removeOldRecords: function() {
+        Addr.removeAllRecprds();
+        Neighbor.removeAllRecprds();
+        Route.removeAllRecprds();
     },
 
     loginUser: function(req, res) {

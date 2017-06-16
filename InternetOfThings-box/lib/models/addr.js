@@ -13,6 +13,18 @@ var Addr = function() {
     this.addrDB = mongoose.model('Addr', addrSchema);
 };
 
+Addr.prototype.removeAllRecprds = function() {
+    this.addrDB.remove({}, function(err, result) {
+        if (err) {
+            log.appendToLog("Erro ao tentar apagar todos os registos.\n" + err);
+            console.log("Erro ao tentar apagar todos os registos.\n" + err);
+        } else {
+            log.appendToLog("Foram pagados todos os registos 'Addr'. - " + result);
+            console.log("Foram pagados todos os registos 'Addr'. - " + result);
+        }
+    });
+};
+
 Addr.prototype.insertData = function(data) {
     var self = this;
     // Recebendo os parâmetros da requisição
