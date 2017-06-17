@@ -85,15 +85,15 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
 
     req = request(url);
     if (!mObserve) {
-        req.setOption('Block2', new Buffer([0x06]));
+        req.setOption('Block2', new Buffer([0x02]));
     }
 
     req.on('response', function(res) {
         res.setEncoding('utf8');
 
-        res.on('data', function(msg) {
-                console.log('Data:', msg);
-                log.appendToLog('Data:', msg);
+        // res.on('data', function(msg) {
+        //         console.log('Data:', msg);
+        //         log.appendToLog('Data:', msg);
 
                 var data = CryptoJS.enc.Hex.parse(res.payload.toString("hex"));
 
@@ -125,7 +125,7 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
                         response.write(JSON.stringify(err));
                     }
                 }
-            })
+            // })
             // print only status code on empty response
         if (!res.payload.length) {
             process.stderr.write('\x1b[1m(' + res.code + ')\x1b[0m\n');
@@ -138,7 +138,7 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
                 response.write(JSON.stringify(res.payload));
             }
         }
-    })
+    });
 
     if (method === 'GET' || method === 'DELETE' || payload) {
         req.end(payload);
