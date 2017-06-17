@@ -160,13 +160,14 @@ window.ConfigSiteView = Backbone.View.extend({
                 "/api/sensor/getDataSensor/" + endereco + "/" + folder + "/" + resource.replace("?", "§") + "/" + params + "/" + payload + "/" + mMethod + "/" + mObserve,
                 function(data) {
                     console.log(data);
+                    $("#textarea-text").text(data);
                 },
                 function(xhr, ajaxOptions, thrownError) {
                     var json = JSON.parse(xhr.responseText);
                     error_launch(json.message);
                 }, {});
         } else {
-          showmsg('.my-modal', "error", "Tem que introduzir um endereço, folder, a resource.", true);
+            showmsg('.my-modal', "error", "Tem que introduzir um endereço, folder, a resource.", true);
         }
     },
     render: function() {
