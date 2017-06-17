@@ -29,7 +29,7 @@ module.exports = {
 
         self.removeOldRecords();
 
-        self.readFile('./network.html');
+        // self.readFile('./network.html');
     },
 
     removeOldRecords: function() {
