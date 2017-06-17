@@ -6,6 +6,7 @@ window.ConfigSiteView = Backbone.View.extend({
         "click .getdata": "getDataSensores",
         "click #btn-endereco-opts1": function(e) {
             var self = this;
+            e.preventDefault();
             $("#api-endereco1").val($(e.target).val());
         },
         "click #api-getdata1": function() {
@@ -57,7 +58,6 @@ window.ConfigSiteView = Backbone.View.extend({
                 for (var i in data.stdout) {
                     opts += '<li><a href="#">' + data.stdout[i].split("/")[0] + '</a></li>';
                 }
-                console.log(opts);
                 self.enrecoOpts = opts;
 
                 $("#btn-endereco-opts1").html(self.enrecoOpts);
