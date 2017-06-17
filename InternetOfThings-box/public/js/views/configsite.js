@@ -7,7 +7,7 @@ window.ConfigSiteView = Backbone.View.extend({
         "click #btn-endereco-opts1 li a": function(e) {
             var self = this;
             console.log($(e.target));
-            $("#api-endereco1").val($(e.target).val());
+            $("#api-endereco1").val($(e.target).text());
             e.preventDefault();
         },
         "click #api-getdata1": function() {
