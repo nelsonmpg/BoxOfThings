@@ -123,10 +123,12 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
                 response.write(JSON.stringify(err));
             }
         }
-        // res.on('data', function(msg) {
-        //         console.log('Data:', msg);
-        //         log.appendToLog('Data:', msg);
-        // })
+        res.on('data', function(msg) {
+            console.log('Data:', msg);
+            log.appendToLog('Data:', msg);
+        })
+
+
         // print only status code on empty response
         try {
             if (!res.payload.length) {
