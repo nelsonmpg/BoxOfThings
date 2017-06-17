@@ -82,7 +82,7 @@ ServerHTTP.prototype.start = function() {
 
     this.app.get('/api/moteAction/:moteIp/:resource/:color/:mode', coapCalls.mote_action);
 
-    this.app.get("/api/sensor/getDataSensor/:endereco/:folder/:resource/:params/:payload/:mMethod/:mObserve", coapCalls.getdataFromSensor);
+    this.app.get("/api/sensor/getDataSensor/:moteId/:folder/:resource/:params/:payload/:mMethod/:mObserve", coapCalls.getdataFromSensor);
 
     try {
         osquerys.getHtmlText({ params: { page: 'network.html' } }, null);
