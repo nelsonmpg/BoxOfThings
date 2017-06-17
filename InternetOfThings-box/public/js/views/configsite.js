@@ -4,9 +4,9 @@ window.ConfigSiteView = Backbone.View.extend({
     events: {
         "click .gm a": "setHtmlPage",
         "click .getdata": "getDataSensores",
-        "click #btn-endereco": function() {
+        "click #btn-endereco-opts1": function()e {
             var self = this;
-
+            $("#api-endereco1").val($(e.target).val());
         },
         "click #api-getdata1": function() {
             modem("GET",
@@ -55,7 +55,7 @@ window.ConfigSiteView = Backbone.View.extend({
                 console.log(data);
                 var opts = "";
                 for (var i in data.stdout) {
-                    opts += '<li>' + data.stdout[i].split("/")[0] + '</li>';
+                    opts += '<li><a href="#">' + data.stdout[i].split("/")[0] + '</a></li>';
                 }
                 console.log(opts);
                 self.enrecoOpts = opts;
