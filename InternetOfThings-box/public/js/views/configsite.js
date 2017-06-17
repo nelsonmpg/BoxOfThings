@@ -19,34 +19,70 @@ window.ConfigSiteView = Backbone.View.extend({
             $("#api-endereco2").val($(e.target).text());
             e.preventDefault();
         },
+        "click #btn-endereco3-opts3 li a": function(e) {
+            var self = this;
+            $("#api-endereco3").val($(e.target).text());
+            e.preventDefault();
+        },
         "click #btn-mMethod-opts li a": function(e) {
             var self = this;
             $("#mMethod").val($(e.target).text());
             e.preventDefault();
         },
+        "click #btn-color-opts li a": function(e) {
+            var self = this;
+            $("#api-color").val($(e.target).text());
+            e.preventDefault();
+        },
+        "click #btn-mode-opts li a": function(e) {
+            var self = this;
+            $("#api-mode").val($(e.target).text());
+            e.preventDefault();
+        },
         "click #api-getdata1": function() {
-            modem("GET",
-                "/api/singleMoteAllInfo/" + $("#api-endereco1").val(),
-                function(data) {
-                    console.log(data);
-                },
-                function(xhr, ajaxOptions, thrownError) {
-                    var json = JSON.parse(xhr.responseText);
-                    error_launch(json.message);
-                }, {}
-            );
+            if ($("#api-endereco1").val().trim().length > 0) {
+                modem("GET",
+                    "/api/singleMoteAllInfo/" + $("#api-endereco1").val(),
+                    function(data) {
+                        console.log(data);
+                    },
+                    function(xhr, ajaxOptions, thrownError) {
+                        var json = JSON.parse(xhr.responseText);
+                        error_launch(json.message);
+                    }, {});
+            } else {
+                showmsg('.my-modal', "error", "Tem que introduzir um endereço.", true);
+            }
         },
         "click #api-getdata2": function() {
-            modem("GET",
-                "/api/singleMoteSingleInfo/" + $("#api-endereco2").val() + "/" + $("#api-resource2").val(),
-                function(data) {
-                    console.log(data);
-                },
-                function(xhr, ajaxOptions, thrownError) {
-                    var json = JSON.parse(xhr.responseText);
-                    error_launch(json.message);
-                }, {}
-            );
+            if ($("#api-endereco2").val().trim().length > 0 && $("#api-resource2").val().trim().length > 0) {
+                modem("GET",
+                    "/api/singleMoteSingleInfo/" + $("#api-endereco2").val() + "/" + $("#api-resource2").val(),
+                    function(data) {
+                        console.log(data);
+                    },
+                    function(xhr, ajaxOptions, thrownError) {
+                        var json = JSON.parse(xhr.responseText);
+                        error_launch(json.message);
+                    }, {});
+            } else {
+                showmsg('.my-modal', "error", "Tem que introduzir um endereço e o resource.", true);
+            }
+        },
+        "click #api-sensoraction": function() {
+            if ($("#api-endereco3").val().trim().length > 0 && $("#api-resource3").val().trim().length > 0 && $("#api-color").val().trim().length > 0 && $("#api-mode").val().trim().length > 0) {
+                modem("GET",
+                    "/api/singleMoteSingleInfo/" + $("#api-endereco3").val().trim() + "/" + $("#api-resource3").val().trim() + "/" + $("#api-color").val().trim().toLowerCase().charAt(0) + "/" + $("#api-mode").val().trim().toLowerCase(),
+                    function(data) {
+                        console.log(data);
+                    },
+                    function(xhr, ajaxOptions, thrownError) {
+                        var json = JSON.parse(xhr.responseText);
+                        error_launch(json.message);
+                    }, {});
+            } else {
+                showmsg('.my-modal', "error", "Tem que introduzir um endereço, resource, a cor e o modo.", true);
+            }
         },
     },
     initialize: function() {},
@@ -77,6 +113,7 @@ window.ConfigSiteView = Backbone.View.extend({
                 $("#btn-endereco-opts").html(self.enrecoOpts);
                 $("#btn-endereco1-opts1").html(self.enrecoOpts);
                 $("#btn-endereco2-opts2").html(self.enrecoOpts);
+                $("#btn-endereco3-opts3").html(self.enrecoOpts);
             },
             function(xhr, ajaxOptions, thrownError) {
                 var json = JSON.parse(xhr.responseText);
