@@ -148,6 +148,8 @@ window.ConfigSiteView = Backbone.View.extend({
             mMethod = $.trim($("#mMethod").val()) === "" ? "undefined" : $("#mMethod").val(),
             mObserve = $.trim($("#mObserve").val()) === "" ? "undefined" : $("#mObserve").val();
 
+console.log("/api/sensor/getDataSensor/" + endereco + "/" + folder + "/" + resource.replace("?", "§") + "/" + params + "/" + payload + "/" + mMethod + "/" + mObserve);
+
         modem("GET",
             "/api/sensor/getDataSensor/" + endereco + "/" + folder + "/" + resource.replace("?", "§") + "/" + params + "/" + payload + "/" + mMethod + "/" + mObserve,
             function(data) {
