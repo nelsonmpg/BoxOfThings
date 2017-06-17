@@ -41,9 +41,7 @@ module.exports = {
             payload = req.params.payload === "undefined" ? "" : req.params.payload,
             mMethod = req.params.mMethod === "undefined" ? "GET" : req.params.mMethod,
             mObserve = req.params.mObserve === "undefined" ? "" : req.params.mObserve;
-
-console.log(endereco, folder, resource, params, payload, mMethod, mObserve, key);
-
+            
         resource = resource.replace("§", "?");
         getdataFromSensorReq(endereco, folder, resource, params, payload, mMethod, mObserve, key, res);
     },
