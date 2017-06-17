@@ -48,14 +48,16 @@ module.exports = {
 
     single_mote_all_info: function(req, res) {
         console.log(req.params.moteIp);
-        getdataFromSensorReq(req.params.moteIp, 'test', "hello", '', undefined, 'GET', true, key, res);
+        getdataFromSensorReq(req.params.moteIp, 'data', "AllValues", '', undefined, 'GET', true, key, res);
     },
 
     single_mote_single_info: function(req, res) {
+        console.log(req.params.moteIp,req.params.resource);
         getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, res);
     },
 
     mote_action: function(req, res) {
+        console.log(req.params.moteIpreq.params.resource, req.params.color, req.params.mode);
         getdataFromSensorReq(req.params.moteIp, 'actuators', req.params.resource, '?leds=' + req.params.color, 'mode=' + req.params.mode, 'POST', false, key, res);
     }
 };
