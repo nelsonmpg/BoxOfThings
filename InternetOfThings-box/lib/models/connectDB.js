@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
 
 module.exports.connectDB = function(config) {
     // connect to mongo db
+    mongoose.Promise = global.Promise;
     connStr = config.dataBaseType + '://' + config.host + '/' + config.dbname;
     mongoose.connect(connStr, function(err) {
         if (err) {
@@ -12,5 +13,6 @@ module.exports.connectDB = function(config) {
         }
         log.appendToLog("Successfully connected to MongoDB");
         console.log("Successfully connected to MongoDB".italic.magenta);
+        // return mongoose.connection;
     });
 };
