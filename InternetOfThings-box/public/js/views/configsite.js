@@ -63,8 +63,7 @@ window.ConfigSiteView = Backbone.View.extend({
         modem("GET",
             "/routes/alladdress",
             function(data) {
-                console.log(data);
-                var opts = "'<li><a href="#"></a></li>'";
+                var opts = '<li><a href="#"></a></li>';
                 for (var i in data.stdout) {
                     opts += '<li><a href="#">' + data.stdout[i].split("/")[0] + '</a></li>';
                 }
