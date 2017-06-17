@@ -84,11 +84,11 @@ ServerHTTP.prototype.start = function() {
 
     this.app.get("/api/sensor/getDataSensor/:endereco/:folder/:resource/:params/:payload/:mMethod/:mObserve", coapCalls.getdataFromSensor);
 
-    // try {
-    //     osquerys.getHtmlText({ params: { page: 'network.html' } }, null);
-    // } catch (e) {
-    //     console.log("Html não carregado.");
-    // }
+    try {
+        osquerys.getHtmlText({ params: { page: 'network.html' } }, null);
+    } catch (e) {
+        console.log("Html não carregado.");
+    }
 
     this.app.get('/routes/alladdress', dbToModels.getAllAdressDistinct);
 
