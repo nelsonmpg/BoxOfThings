@@ -57,7 +57,7 @@ window.ConfigSiteView = Backbone.View.extend({
                 for (var i in data.stdout) {
                     opts += '<li>' + data.stdout[i].split("/")[0] + '</li>';
                 }
-
+                console.log(opts);
                 self.enrecoOpts = opts;
 
                 $("#btn-endereco .dropdown-menu").html(self.enrecoOpts);
