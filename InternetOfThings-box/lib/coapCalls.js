@@ -34,7 +34,7 @@ module.exports = {
     },
 
     getdataFromSensor: function(req, res) {
-        var endereco = req.params.moteId === "undefined" ? "" : req.params.endereco,
+        var endereco = req.params.moteIp === "undefined" ? "" : req.params.endereco,
             folder = req.params.folder === "undefined" ? "" : req.params.folder,
             resource = req.params.resource === "undefined" ? "" : req.params.resource,
             params = req.params.params === "undefined" ? "" : req.params.params,
