@@ -60,7 +60,7 @@ window.ConfigSiteView = Backbone.View.extend({
                 console.log(opts);
                 self.enrecoOpts = opts;
 
-                $("#btn-endereco .dropdown-menu").html(self.enrecoOpts);
+                $("#btn-endereco-opts1").html(self.enrecoOpts);
             },
             function(xhr, ajaxOptions, thrownError) {
                 var json = JSON.parse(xhr.responseText);
