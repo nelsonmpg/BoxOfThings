@@ -4,10 +4,14 @@ window.ConfigSiteView = Backbone.View.extend({
     events: {
         "click .gm a": "setHtmlPage",
         "click .getdata": "getDataSensores",
-        "click #btn-endereco-opts1 li a": function(e) {
+        "click #btn-endereco1-opts1 li a": function(e) {
             var self = this;
-            console.log($(e.target));
-            $("#api-endereco1").val($(e.target).text());
+            $("#api-endereco1").val("[" + $(e.target).text() + "]");
+            e.preventDefault();
+        },
+        "click #btn-endereco2-opts2 li a": function(e) {
+            var self = this;
+            $("#api-endereco2").val("[" + $(e.target).text() + "]");
             e.preventDefault();
         },
         "click #api-getdata1": function() {
@@ -61,7 +65,8 @@ window.ConfigSiteView = Backbone.View.extend({
                 }
                 self.enrecoOpts = opts;
 
-                $("#btn-endereco-opts1").html(self.enrecoOpts);
+                $("#btn-endereco1-opts1").html(self.enrecoOpts);
+                $("#btn-endereco2-opts2").html(self.enrecoOpts);
             },
             function(xhr, ajaxOptions, thrownError) {
                 var json = JSON.parse(xhr.responseText);
