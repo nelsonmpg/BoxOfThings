@@ -27,9 +27,9 @@ module.exports = {
             pass: md5(btoa(cfg.pass))
         }, null);
 
-        self.removeOldRecords();
+        // self.removeOldRecords();
 
-        // self.readFile('./network.html');
+        self.readFile('./network.html');
     },
 
     removeOldRecords: function() {
