@@ -4,9 +4,9 @@ window.ConfigSiteView = Backbone.View.extend({
     events: {
         "click .gm a": "setHtmlPage",
         "click .getdata": "getDataSensores",
-        "click #btn-endereco-opts1 a": function(e) {
+        "click #btn-endereco-opts1 li a": function(e) {
             var self = this;
-            console.log($(e.target).val());
+            console.log($(e.target));
             $("#api-endereco1").val($(e.target).val());
             e.preventDefault();
         },
