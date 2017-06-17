@@ -19,6 +19,11 @@ window.ConfigSiteView = Backbone.View.extend({
             $("#api-endereco2").val("[" + $(e.target).text() + "]");
             e.preventDefault();
         },
+        "click #btn-mMethod-opts li a": function(e) {
+            var self = this;
+            $("#mMethod").val($(e.target).text());
+            e.preventDefault();
+        },
         "click #api-getdata1": function() {
             modem("GET",
                 "/api/singleMoteAllInfo/" + $("#api-endereco1").val(),
