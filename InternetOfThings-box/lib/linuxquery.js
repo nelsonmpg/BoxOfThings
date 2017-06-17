@@ -18,11 +18,11 @@ var net = require('net'),
 module.exports.getHtmlText = function(req, res) {
     cp.exec("cat /var/log/6lbr.ip", function(error, stdout, stderr) {
         if (error) {
+            log.appendToLog("Erro ao tentar ler o ficheiro /var/log/6lbr.ip.");
             console.log("Erro ao tentar ler o ficheiro /var/log/6lbr.ip.".red);
             return;
         }
-        console.log("http://[" + stdout.replace(/\n/g, "") + "]/" + req.params.page);
-        request("http://[" + stdout.replace(/\n/g, "")  + "]/" + req.params.page, function(error, response, body) {
+        request("http://[" + stdout.replace(/\n|\t/g, "") + "]/" + req.params.page, function(error, response, body) {
             if (!error) {
                 if (res) {
                     res.json(response);
