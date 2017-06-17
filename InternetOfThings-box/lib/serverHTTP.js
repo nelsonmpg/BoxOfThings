@@ -90,6 +90,8 @@ ServerHTTP.prototype.start = function() {
     //     console.log("Html não carregado.");
     // }
 
+    this.app.get('/routes/alladdress', dbToModels.getAllAdressDistinct);
+
     // Devolve as configuracoes do ficheiro Ini
     this.app.get("/paramsinifile", osquerys.getinifileparams);
 

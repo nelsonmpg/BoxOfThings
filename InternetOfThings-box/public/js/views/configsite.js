@@ -18,7 +18,7 @@ window.ConfigSiteView = Backbone.View.extend({
         },
         "click #api-getdata2": function() {
             modem("GET",
-                "/api/singleMoteSingleInfo/" + $("#api-endereco2").val() + "/" + $("#api-resource2").val() ,
+                "/api/singleMoteSingleInfo/" + $("#api-endereco2").val() + "/" + $("#api-resource2").val(),
                 function(data) {
                     console.log(data);
                 },
@@ -42,8 +42,18 @@ window.ConfigSiteView = Backbone.View.extend({
             function(xhr, ajaxOptions, thrownError) {
                 var json = JSON.parse(xhr.responseText);
                 error_launch(json.message);
-            }, {}
-        );
+            }, {});
+
+
+        modem("GET",
+            "/routes/alladdress",
+            function(data) {
+                console.log(data);
+            },
+            function(xhr, ajaxOptions, thrownError) {
+                var json = JSON.parse(xhr.responseText);
+                error_launch(json.message);
+            }, {});
     },
     setHtmlPage: function(e) {
         e.preventDefault();
