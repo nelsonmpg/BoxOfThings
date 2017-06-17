@@ -16,18 +16,27 @@ var net = require('net'),
     coapSensor;
 
 module.exports.getHtmlText = function(req, res) {
-    request("http://[bbbb::100]/" + req.params.page, function(error, response, body) {
-        if (!error) {
-            if (res) {
-                res.json(response);
-            } else {
-                dbToModels.parseHtml(body);
-            }
-        } else {
-            console.log(error);
-            log.appendToLog(error);
+    cp.exec("cat /var/log/6lbr.ip", function(error, stdout, stderr) {
+        if (error) {
+            console.log("Erro ao tentar ler o ficheiro /var/log/6lbr.ip.".red);
+            return;
         }
+        console.log(stdout);
+        request("http://[" + stdout + "]/" + req.params.page, function(error, response, body) {
+            if (!error) {
+                if (res) {
+                    res.json(response);
+                } else {
+                    dbToModels.parseHtml(body);
+                }
+            } else {
+                console.log(error);
+                log.appendToLog(error);
+            }
+        });
+
     });
+
 };
 
 /**
