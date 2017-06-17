@@ -6,17 +6,17 @@ window.ConfigSiteView = Backbone.View.extend({
         "click .getdata": "getDataSensores",
         "click #btn-endereco-opts li a": function(e) {
             var self = this;
-            $("#endereco").val("[" + $(e.target).text() + "]");
+            $("#endereco").val($(e.target).text());
             e.preventDefault();
         },
         "click #btn-endereco1-opts1 li a": function(e) {
             var self = this;
-            $("#api-endereco1").val("[" + $(e.target).text() + "]");
+            $("#api-endereco1").val($(e.target).text());
             e.preventDefault();
         },
         "click #btn-endereco2-opts2 li a": function(e) {
             var self = this;
-            $("#api-endereco2").val("[" + $(e.target).text() + "]");
+            $("#api-endereco2").val($(e.target).text());
             e.preventDefault();
         },
         "click #btn-mMethod-opts li a": function(e) {
@@ -68,9 +68,9 @@ window.ConfigSiteView = Backbone.View.extend({
         modem("GET",
             "/routes/alladdress",
             function(data) {
-                var opts = '<li><a href="#"></a></li>';
+                var opts = '<li><a href="#">&nbsp;</a></li>';
                 for (var i in data.stdout) {
-                    opts += '<li><a href="#">' + data.stdout[i].split("/")[0] + '</a></li>';
+                    opts += '<li><a href="#">[' + data.stdout[i].split("/")[0] + ']</a></li>';
                 }
                 self.enrecoOpts = opts;
 
