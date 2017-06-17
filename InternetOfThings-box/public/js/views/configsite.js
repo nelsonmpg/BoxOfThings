@@ -4,6 +4,11 @@ window.ConfigSiteView = Backbone.View.extend({
     events: {
         "click .gm a": "setHtmlPage",
         "click #getdata": "getDataSensores",
+        "click #btn-folder-opts li a": function(e) {
+            var self = this;
+            $("#folder").val($(e.target).text());
+            e.preventDefault();
+        },
         "click #btn-endereco-opts li a": function(e) {
             var self = this;
             $("#endereco").val($(e.target).text());

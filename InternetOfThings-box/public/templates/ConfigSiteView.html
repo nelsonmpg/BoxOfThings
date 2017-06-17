@@ -21,14 +21,19 @@
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
-                            <span class="input-group-addon" id="sizing-addon2">folder</span>
-                            <input id="folder" type="text" class="form-control" value="actuators" aria-describedby="sizing-addon2">
+                            <!-- <span class="input-group-addon" id="sizing-addon2">folder</span> -->
+                            <button type="button" id="btn-folder" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Folder <span class="caret"></span></button>
+                                <ul id="btn-folder-opts" class="dropdown-menu">
+                                    <li><a href="#">data</a></li>
+                                    <li><a href="#">test</a></li>
+                                </ul>
+                            <input id="folder" type="text" class="form-control" value="test" aria-describedby="sizing-addon2">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
                             <span class="input-group-addon" id="sizing-addon3">resource</span>
-                            <input id="resource" type="text" class="form-control" value="leds?color=r" aria-describedby="sizing-addon3">
+                            <input id="resource" type="text" class="form-control" value="" aria-describedby="sizing-addon3">
                         </div>
                     </div>
                 </div>
@@ -44,7 +49,7 @@
                     <div class="col-md-4">
                         <div class="input-group">
                             <span class="input-group-addon" id="sizing-addon5">payload</span>
-                            <input id="payload" type="text" class="form-control" value="mode=on" aria-describedby="sizing-addon5">
+                            <input id="payload" type="text" class="form-control" value="" aria-describedby="sizing-addon5">
                         </div>
                     </div>
                     <div class="col-md-4">
