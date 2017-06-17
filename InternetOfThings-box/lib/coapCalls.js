@@ -23,7 +23,7 @@ module.exports = {
                 module.exports[req.request](req, sock);
 
             } catch (e) {
-            log.appendToLog("Invalid args - " + e, data.toString('utf8'));
+                log.appendToLog("Invalid args - " + e, data.toString('utf8'));
                 console.log("Invalid args - " + e, data.toString('utf8'));
             }
         });
@@ -68,8 +68,8 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
         url,
         delayMillis = 3000,
         method = 'GET',
-        requestString = 'coap://[aaaa::212:4b00:60d:b305]:5683/test/hello';
-        // requestString = 'coap://' + endereco + ':5683/' + folder + '/' + resource + params;
+        // requestString = 'coap://[aaaa::212:4b00:60d:b305]:5683/test/hello';
+        requestString = 'coap://' + endereco + ':5683/' + folder + '/' + resource + params;
     mKey = key;
 
     console.log(requestString);
@@ -91,42 +91,41 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
     req.on('response', function(res) {
         res.setEncoding('utf8');
 
+        var data = CryptoJS.enc.Hex.parse(res.payload.toString("hex"));
+
+        var encrypted = {};
+        encrypted.key = mKey;
+        encrypted.ciphertext = data;
+
+        var decrypted3 = CryptoJS.AES.decrypt(encrypted, mKey, {
+            mode: CryptoJS.mode.ECB,
+            padding: CryptoJS.pad.NoPadding
+        });
+        try {
+            //console.log(CryptoJS.enc.Utf8.stringify(decrypted3));
+            // console.log(CryptoJS.enc.Hex.stringify(decrypted3));
+            console.log(CryptoJS.enc.Utf8.stringify(decrypted3));
+
+            // log.appendToLog(CryptoJS.enc.Hex.stringify(decrypted3));
+            log.appendToLog(CryptoJS.enc.Utf8.stringify(decrypted3));
+
+            if (response instanceof http.ServerResponse) {
+                response.json(CryptoJS.enc.Utf8.stringify(decrypted3));
+            } else if (typeof response === "object") {
+                response.write(JSON.stringify(CryptoJS.enc.Utf8.stringify(decrypted3)));
+            }
+        } catch (err) {
+            if (response instanceof http.ServerResponse) {
+                response.send(err);
+            } else if (typeof response === "object") {
+                response.write(JSON.stringify(err));
+            }
+        }
         // res.on('data', function(msg) {
         //         console.log('Data:', msg);
         //         log.appendToLog('Data:', msg);
-
-                var data = CryptoJS.enc.Hex.parse(res.payload.toString("hex"));
-
-                var encrypted = {};
-                encrypted.key = mKey;
-                encrypted.ciphertext = data;
-
-                var decrypted3 = CryptoJS.AES.decrypt(encrypted, mKey, {
-                    mode: CryptoJS.mode.ECB,
-                    padding: CryptoJS.pad.NoPadding
-                });
-                try {
-                    //console.log(CryptoJS.enc.Utf8.stringify(decrypted3));
-                    console.log(CryptoJS.enc.Hex.stringify(decrypted3));
-                    console.log(CryptoJS.enc.Utf8.stringify(decrypted3));
-
-                    log.appendToLog(CryptoJS.enc.Hex.stringify(decrypted3));
-                    log.appendToLog(CryptoJS.enc.Utf8.stringify(decrypted3));
-
-                    if (response instanceof http.ServerResponse) {
-                        response.json(CryptoJS.enc.Utf8.stringify(decrypted3));
-                    } else if ( typeof response === "object") {
-                        response.write(JSON.stringify(CryptoJS.enc.Utf8.stringify(decrypted3)));
-                    }
-                } catch (err) {
-                    if (response instanceof http.ServerResponse) {
-                        response.send(err);
-                    } else if ( typeof response === "object") {
-                        response.write(JSON.stringify(err));
-                    }
-                }
-            // })
-            // print only status code on empty response
+        // })
+        // print only status code on empty response
         if (!res.payload.length) {
             process.stderr.write('\x1b[1m(' + res.code + ')\x1b[0m\n');
             log.appendToLog(res.payload);
@@ -134,7 +133,7 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
             console.log("Teste - " + res.payload);
             if (response instanceof http.ServerResponse) {
                 response.json(res.payload);
-            } else if ( typeof response === "object") {
+            } else if (typeof response === "object") {
                 response.write(JSON.stringify(res.payload));
             }
         }
