@@ -21,7 +21,7 @@ module.exports.getHtmlText = function(req, res) {
             console.log("Erro ao tentar ler o ficheiro /var/log/6lbr.ip.".red);
             return;
         }
-        console.log(stdout);
+        console.log("http://[" + stdout + "]/" + req.params.page);
         request("http://[" + stdout + "]/" + req.params.page, function(error, response, body) {
             if (!error) {
                 if (res) {
