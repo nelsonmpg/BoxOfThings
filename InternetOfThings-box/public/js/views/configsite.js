@@ -4,6 +4,11 @@ window.ConfigSiteView = Backbone.View.extend({
     events: {
         "click .gm a": "setHtmlPage",
         "click .getdata": "getDataSensores",
+        "click #btn-endereco-opts li a": function(e) {
+            var self = this;
+            $("#endereco").val("[" + $(e.target).text() + "]");
+            e.preventDefault();
+        },
         "click #btn-endereco1-opts1 li a": function(e) {
             var self = this;
             $("#api-endereco1").val("[" + $(e.target).text() + "]");
@@ -65,6 +70,7 @@ window.ConfigSiteView = Backbone.View.extend({
                 }
                 self.enrecoOpts = opts;
 
+                $("#btn-endereco-opts").html(self.enrecoOpts);
                 $("#btn-endereco1-opts1").html(self.enrecoOpts);
                 $("#btn-endereco2-opts2").html(self.enrecoOpts);
             },
