@@ -145,7 +145,7 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
         } catch (e) {
             console.log("payload error - " + e);
             if (response instanceof http.ServerResponse) {
-                response.json("payload error - " + e);
+                response.json("payload error - ");
             } else if (typeof response === "object") {
                 response.write("payload error - " + e);
             }
