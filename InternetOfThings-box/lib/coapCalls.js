@@ -68,8 +68,8 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
         url,
         delayMillis = 3000,
         method = 'GET',
-        // requestString = 'coap://[aaaa::212:4b00:60d:b305]:5683/test/hello';
-        requestString = 'coap://' + endereco + ':5683/' + folder + '/' + resource + params;
+        requestString = 'coap://[aaaa::212:4b00:60d:b305]:5683/test/hello';
+        // requestString = 'coap://' + endereco + ':5683/' + folder + '/' + resource + params;
     mKey = key;
 
     console.log(requestString);
