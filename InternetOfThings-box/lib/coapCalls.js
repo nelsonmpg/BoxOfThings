@@ -52,7 +52,7 @@ module.exports = {
     },
 
     single_mote_single_info: function(req, res) {
-        console.log(req.params.moteIp,req.params.resource);
+        console.log(req.params.moteIp, req.params.resource);
         getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, res);
     },
 
@@ -128,16 +128,20 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
         //         log.appendToLog('Data:', msg);
         // })
         // print only status code on empty response
-        if (!res.payload.length) {
-            process.stderr.write('\x1b[1m(' + res.code + ')\x1b[0m\n');
-            log.appendToLog(res.payload);
-            console.log(res.payload);
-            console.log("Teste - " + res.payload);
-            if (response instanceof http.ServerResponse) {
-                response.json(res.payload);
-            } else if (typeof response === "object") {
-                response.write(JSON.stringify(res.payload));
+        try {
+            if (!res.payload.length) {
+                process.stderr.write('\x1b[1m(' + res.code + ')\x1b[0m\n');
+                log.appendToLog(res.payload);
+                console.log(res.payload);
+                console.log("Teste - " + res.payload);
+                if (response instanceof http.ServerResponse) {
+                    response.json(res.payload);
+                } else if (typeof response === "object") {
+                    response.write(JSON.stringify(res.payload));
+                }
             }
+        } catch (e) {
+            console.log("payload error - " + e);
         }
     });
 
