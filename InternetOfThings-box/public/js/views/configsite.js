@@ -145,27 +145,29 @@ window.ConfigSiteView = Backbone.View.extend({
     },
     getDataSensores: function(e) {
         var self = this;
-        var endereco = $.trim($("#endereco").val()) === "" ? "undefined" : $("#endereco").val(),
-            folder = $.trim($("#folder").val()) === "" ? "undefined" : $("#folder").val(),
-            resource = $.trim($("#resource").val()) === "" ? "undefined" : $("#resource").val(),
-            params = $.trim($("#params").val()) === "" ? "undefined" : $("#params").val(),
-            payload = $.trim($("#payload").val()) === "" ? "undefined" : $("#payload").val(),
-            mMethod = $.trim($("#mMethod").val()) === "" ? "undefined" : $("#mMethod").val(),
-            mObserve = $.trim($("#mObserve").val()) === "" ? "undefined" : $("#mObserve").val();
+        if ($("#endereco").val().trim().length > 0 && $("#folder").val().trim().length > 0 && $("#resource").val().trim().length > 0) {
+            var endereco = $("#endereco").val().trim().length === 0 ? "undefined" : $("#endereco").val(),
+                folder = $("#folder").val().trim().length === 0 ? "undefined" : $("#folder").val(),
+                resource = $("#resource").val().trim().length === 0 ? "undefined" : $("#resource").val(),
+                params = $("#params").val().trim().length === 0 ? "undefined" : $("#params").val(),
+                payload = $("#payload").val().trim().length === 0 ? "undefined" : $("#payload").val(),
+                mMethod = $("#mMethod").val().trim().length === 0 ? "undefined" : $("#mMethod").val(),
+                mObserve = $("#mObserve").val().trim().length === 0 ? "undefined" : $("#mObserve").val();
 
-console.log("/api/sensor/getDataSensor/" + endereco + "/" + folder + "/" + resource.replace("?", "§") + "/" + params + "/" + payload + "/" + mMethod + "/" + mObserve);
+            console.log("/api/sensor/getDataSensor/" + endereco + "/" + folder + "/" + resource.replace("?", "§") + "/" + params + "/" + payload + "/" + mMethod + "/" + mObserve);
 
-        modem("GET",
-            "/api/sensor/getDataSensor/" + endereco + "/" + folder + "/" + resource.replace("?", "§") + "/" + params + "/" + payload + "/" + mMethod + "/" + mObserve,
-            function(data) {
-                console.log(data);
-            },
-            function(xhr, ajaxOptions, thrownError) {
-                var json = JSON.parse(xhr.responseText);
-                error_launch(json.message);
-            }, {}
-        );
-
+            modem("GET",
+                "/api/sensor/getDataSensor/" + endereco + "/" + folder + "/" + resource.replace("?", "§") + "/" + params + "/" + payload + "/" + mMethod + "/" + mObserve,
+                function(data) {
+                    console.log(data);
+                },
+                function(xhr, ajaxOptions, thrownError) {
+                    var json = JSON.parse(xhr.responseText);
+                    error_launch(json.message);
+                }, {});
+        } else {
+          showmsg('.my-modal', "error", "Tem que introduzir um endereço, folder, a resource.", true);
+        }
     },
     render: function() {
         var self = this;
