@@ -5,7 +5,7 @@ var coap = require('coap'),
     CryptoJS = require("crypto-js"),
     Sensor = require('./models/sensor.js'),
     log = require('./serverlog.js'),
-    key = CryptoJS.enc.Hex.parse('000102030405060708090A0B0C0D0EFF');
+    key = CryptoJS.enc.Hex.parse('B007AFD752937AFF5A4192268A803BB7');
 
 Sensor = new Sensor();
 
