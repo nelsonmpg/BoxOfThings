@@ -61,9 +61,10 @@ module.exports = {
     insertRoute: function(data) {
         Route.insertData(data);
     },
+    
     getAllAdressDistinct: function(req, res) {
         Route.getAllAdressDistinct(res);
-    };
+    },
 
     readFile: function(file) {
         var self = this;
