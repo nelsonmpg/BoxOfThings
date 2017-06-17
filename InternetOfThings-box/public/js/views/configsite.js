@@ -1,9 +1,13 @@
 /* global Backbone, normalizeString, app */
-
 window.ConfigSiteView = Backbone.View.extend({
+    enrecoOpts: "",
     events: {
         "click .gm a": "setHtmlPage",
         "click .getdata": "getDataSensores",
+        "click #btn-endereco": function() {
+            var self = this;
+
+        },
         "click #api-getdata1": function() {
             modem("GET",
                 "/api/singleMoteAllInfo/" + $("#api-endereco1").val(),
@@ -49,6 +53,14 @@ window.ConfigSiteView = Backbone.View.extend({
             "/routes/alladdress",
             function(data) {
                 console.log(data);
+                var opts = "";
+                for (var i in data.stdout) {
+                    opts += '<li>' + data.stdout[i].split("/")[0] + '</li>';
+                }
+
+                self.enrecoOpts = opts;
+
+                $("#btn-endereco .dropdown-menu").html(self.enrecoOpts);
             },
             function(xhr, ajaxOptions, thrownError) {
                 var json = JSON.parse(xhr.responseText);
