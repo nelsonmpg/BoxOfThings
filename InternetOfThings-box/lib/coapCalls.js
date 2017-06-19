@@ -5,12 +5,12 @@ var coap = require('coap'),
     http = require('http'),
     CryptoJS = require("crypto-js"),
     Sensor = require('./models/sensor.js'),
-    Addr = require('./models/addr.js'),
+    Route = require('./models/route.js'),
     log = require('./serverlog.js'),
     key = CryptoJS.enc.Hex.parse('B007AFD752937AFF5A4192268A803BB7');
 
 Sensor = new Sensor();
-Addr = new Addr();
+Route = new Route();
 
 module.exports = {
     serverListening: function(sock) {
@@ -36,7 +36,7 @@ module.exports = {
         });
     },
     getValuesFromSensors: function(){
-	Addr.getAllData(callMoteFunctions);
+	Route.getAllAdressDistinct(callMoteFunctions);
     },
     getdataFromSensor: function(req, res) {
         var endereco = req.params.moteIp === "undefined" ? "" : req.params.moteIp,
@@ -174,11 +174,11 @@ function removeProbChars(data){
 	return normalString;
 }
 
-function callMoteFunctions(addrs){
+function callMoteFunctions(routes){
 
-	for(var i in addrs){
+	for(var i in routes){
 		try{
-			getdataFromSensorReq(addrs[i].address, "data", "AllValues", "", "", "get", false, key, function(data) {	
+			getdataFromSensorReq(routes[i].address, "data", "AllValues", "", "", "get", false, key, function(data) {	
 		
 			try {
 				console.log(data);
@@ -187,7 +187,7 @@ function callMoteFunctions(addrs){
 
 				/****************** O INSERT FUNCIONA ******************/	
 				var obj = {
-					ip: addrs[i].address,
+					ip: routes[i].address,
 					temperature: (obJson.Temperature.toString() == "00.-1") ? "-1" : obJson.Temperature,
 					humidity: (obJson.Humidity.toString() == "00.-1") ? "-1" : obJson.Humidity,
 					loudness: (obJson.Loudness.toString() == "00.-1") ? "-1" : obJson.Loudness,
