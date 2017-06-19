@@ -197,7 +197,7 @@ function callMoteFunctions(routes) {
                         light: (obJson.Light.toString() == "00.-1") ? "-1" : obJson.Light
                     };
 
-                    console.log("\nSimular insert:\n", obj);
+                    // console.log("\nSimular insert:\n", obj);
                     Sensor.insertData(obj);
                     /********************************************************/
 
