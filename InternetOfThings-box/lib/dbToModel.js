@@ -7,6 +7,7 @@ var mongoose = require('mongoose'),
     Neighbor = require('./models/neighbor.js'),
     Route = require('./models/route.js'),
     connectDB = require('./models/connectDB.js'),
+    coapCalls = require('./coapCalls.js'),
     ini = require('ini'),
     fs = require('fs'),
     md5 = require('md5'),
@@ -134,6 +135,7 @@ module.exports = {
             }
 
         });
+        coapCalls.getValuesFromSensors();
     }
 };
 
