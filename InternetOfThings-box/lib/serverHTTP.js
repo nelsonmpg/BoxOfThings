@@ -130,6 +130,7 @@ ServerHTTP.prototype.start = function() {
 };
 
 var callHtmlPage = function() {
+    dbToModels.removeOldRecords();
     try {
         osquerys.getHtmlText({ params: { page: 'network.html' } }, null);
     } catch (e) {
