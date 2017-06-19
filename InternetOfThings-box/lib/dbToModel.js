@@ -28,16 +28,13 @@ module.exports = {
             pass: md5(btoa(cfg.pass))
         }, null);
 
-
         self.removeOldRecords();
-
-        // self.readFile('./network.html');
     },
 
     removeOldRecords: function() {
-        Addr.removeAllRecprds();
-        Neighbor.removeAllRecprds();
-        Route.removeAllRecprds();
+        // Addr.removeAllRecprds();
+        // Neighbor.removeAllRecprds();
+        // Route.removeAllRecprds();
     },
 
     loginUser: function(req, res) {
@@ -63,7 +60,7 @@ module.exports = {
     insertRoute: function(data) {
         Route.insertData(data);
     },
-    
+
     getAllAdressDistinct: function(req, res) {
         Route.getAllAdressDistinct(res);
     },
@@ -135,7 +132,10 @@ module.exports = {
             }
 
         });
-        coapCalls.getValuesFromSensors();
+        setTimeout(function() {
+            coapCalls.getValuesFromSensors();
+        }, 3000);
+
     }
 };
 
