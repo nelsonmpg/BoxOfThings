@@ -45,6 +45,13 @@ var ServerHTTP = function(config) {
         console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
         log.appendToLog("É necessário efetuar as configurações SSH para a comunicação remota.");
     }
+    cp.exec("sudo route -A inet6 add aaaa::/64 gw bbbb::100", function(error, stdout, stderr) {
+        if (error) {
+            console.log("Erro ao tentar adicionar a rota.");
+        } else {
+            console.log("A rota foi adicionada com sucesso.")
+        }
+    });
 };
 
 /**
