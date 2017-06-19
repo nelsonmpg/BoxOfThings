@@ -126,7 +126,7 @@ ServerHTTP.prototype.start = function() {
 
     console.log('Server HTTP Wait %d'.green.bold, self.port);
     log.appendToLog('Server HTTP Wait ' + self.port);
-    callHtmlPage();
+    // callHtmlPage();
 };
 
 var callHtmlPage = function() {
