@@ -127,7 +127,7 @@ module.exports = {
                 }
 
                 for (var i = 0; i < arr.length / mult; i++) {
-                    self.insertRoute({ address: "[" + arr[i * mult].toString().splt("/")[0] + "]", from: arr[i * mult + 1], time: arr[i * mult + 2] });
+                    self.insertRoute({ address: "[" + arr[i * mult].split("/")[0] + "]", from: arr[i * mult + 1], time: arr[i * mult + 2] });
                 }
             }
 
