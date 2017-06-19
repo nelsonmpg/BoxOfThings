@@ -162,7 +162,7 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
 function removeProbChars(data){
 	var normalString ="";
 	for(var x=0; x<data.length; ++x){
-		let c = data.charCodeAt(x);
+		var c = data.charCodeAt(x);
 		if(c >= 0 && c <= 31){
 		    //console.log( 'problematic character found at position ' + x);
 		    normalString = data.substring(0,x);
