@@ -128,7 +128,7 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
             }
         }
         res.on('data', function(msg) {
-            console.log('Data:', msg);
+            // console.log('Data:', msg);
             log.appendToLog('Data:', msg);
         })
 
@@ -144,6 +144,8 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
                     response.json(res.payload);
                 } else if (typeof response === "object") {
                     response.write(JSON.stringify(res.payload));
+                } else {
+                    response(JSON.stringify(res.payload));
                 }
 
             }
