@@ -35,8 +35,8 @@ module.exports = {
             console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
         });
     },
-    getValuesFromSensors: function(){
-	Route.getAllAdressDistinct(callMoteFunctions);
+    getValuesFromSensors: function() {
+        Route.getAllAdressDistinct(callMoteFunctions);
     },
     getdataFromSensor: function(req, res) {
         var endereco = req.params.moteIp === "undefined" ? "" : req.params.moteIp,
@@ -46,7 +46,7 @@ module.exports = {
             payload = req.params.payload === "undefined" ? "" : req.params.payload,
             mMethod = req.params.mMethod === "undefined" ? "GET" : req.params.mMethod,
             mObserve = req.params.mObserve === "undefined" ? "" : req.params.mObserve;
-            
+
         resource = resource.replace("§", "?");
         getdataFromSensorReq(endereco, folder, resource, params, payload, mMethod, mObserve, key, res);
     },
@@ -159,50 +159,48 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
     }
 }
 
-function removeProbChars(data){
-	var normalString ="";
-	for(var x=0; x<data.length; ++x){
-		var c = data.charCodeAt(x);
-		if(c >= 0 && c <= 31){
-		    //console.log( 'problematic character found at position ' + x);
-		    normalString = data.substring(0,x);
-		    break;
-		}else {
-			//console.log(data[x]);		
-		}
-	}
-	return normalString;
+function removeProbChars(data) {
+    var normalString = "";
+    for (var x = 0; x < data.length; ++x) {
+        var c = data.charCodeAt(x);
+        if (c >= 0 && c <= 31) {
+            //console.log( 'problematic character found at position ' + x);
+            normalString = data.substring(0, x);
+            break;
+        } else {
+            //console.log(data[x]);     
+        }
+    }
+    return normalString;
 }
 
-function callMoteFunctions(routes){
-	for(var i in routes){
-		try{
-			getdataFromSensorReq(routes[i], "data", "AllValues", "", "", "get", false, key, function(data) {	
-		
-			try {
-				console.log(data);
-				data = removeProbChars(data);
-				var obJson = JSON.parse(data).Sensors;
+function callMoteFunctions(routes) {
+    for (var i in routes) {
+        try {
+            getdataFromSensorReq(routes[i], "data", "AllValues", "", "", "get", false, key, function(data) {
 
-				/****************** O INSERT FUNCIONA ******************/	
-				var obj = {
-					ip: routes[i],
-					temperature: (obJson.Temperature.toString() == "00.-1") ? "-1" : obJson.Temperature,
-					humidity: (obJson.Humidity.toString() == "00.-1") ? "-1" : obJson.Humidity,
-					loudness: (obJson.Loudness.toString() == "00.-1") ? "-1" : obJson.Loudness,
-					light: (obJson.Light.toString() == "00.-1") ? "-1" : obJson.Light
-				};
-		
-				//console.log("\nSimular insert:\n",obj);
-				Sensor.insertData(obj);	 
-				/********************************************************/
-	
-			} catch (e) {
-			    console.error(e);
-			    
-			}
-	   	 });
-		//try fim do for
-		}catch(e){ console.error(e);}
-	}
+                try {
+                    data = removeProbChars(data);
+                    var obJson = JSON.parse(data).Sensors;
+
+                    /****************** O INSERT FUNCIONA ******************/
+                    var obj = {
+                        ip: routes[i],
+                        temperature: (obJson.Temperature.toString() == "00.-1") ? "-1" : obJson.Temperature,
+                        humidity: (obJson.Humidity.toString() == "00.-1") ? "-1" : obJson.Humidity,
+                        loudness: (obJson.Loudness.toString() == "00.-1") ? "-1" : obJson.Loudness,
+                        light: (obJson.Light.toString() == "00.-1") ? "-1" : obJson.Light
+                    };                
+
+                    console.log("\nSimular insert:\n",obj);
+                    Sensor.insertData(obj);
+                    /********************************************************/
+
+                } catch (e) {
+                    console.error(e);
+                }
+            });
+            //try fim do for
+        } catch (e) { console.error(e); }
+    }
 }
