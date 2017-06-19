@@ -139,7 +139,7 @@ var callHtmlPage = function() {
     setTimeout(function() {
         console.log("New call html page.")
         callHtmlPage();
-    }, 10000);
+    }, 60000);
 };
 
 /**

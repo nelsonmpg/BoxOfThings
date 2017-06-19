@@ -7,8 +7,11 @@ var client = new net.Socket();
 client.connect(PORT, HOST, function() {
 	console.log('CONNECTED TO: ' + HOST + ':' + PORT);
     // Write a message to the socket as soon as the client is connected, the server will receive $
-    client.write(JSON.stringify({test:"teste",as:"asd"}));
+    client.write(JSON.stringify({request:"single_mote_all_info",params: { moteIp:"[aaaa::212:4b00:60d:b21a]"}}));
 });
+
+aaa::212:4b00:60d:60fe]:5683/data/AllValues
+coap:[aaaa::212:4b00:60d:b21a]:5683/data/AllV
 
 // Add a 'data' event handler for the client socket
 // data is what the server sent to this socket
