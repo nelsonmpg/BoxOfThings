@@ -32,10 +32,14 @@ Route.prototype.getAllAdressDistinct = function(res) {
             log.appendToLog("Erro ao tentar ler todos as Routes.\n" + err);
             console.log("Erro ao tentar ler todos as Routes.\n" + err);
         } else {
-            res.json({
-                status: "Routes OK",
-                stdout: result
-            });
+            if (res) {
+                res.json({
+                    status: "Routes OK",
+                    stdout: result
+                });
+            } else {
+                return result;
+            }
         }
     });
 };
