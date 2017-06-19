@@ -175,7 +175,7 @@ function removeProbChars(data){
 }
 
 function callMoteFunctions(routes){
-console-log(routes);
+console.log(routes);
 	for(var i in routes){
 		try{
 			getdataFromSensorReq(routes[i].address, "data", "AllValues", "", "", "get", false, key, function(data) {	
