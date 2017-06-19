@@ -175,10 +175,9 @@ function removeProbChars(data){
 }
 
 function callMoteFunctions(routes){
-console.log(routes);
 	for(var i in routes){
 		try{
-			getdataFromSensorReq(routes[i].address, "data", "AllValues", "", "", "get", false, key, function(data) {	
+			getdataFromSensorReq(routes[i], "data", "AllValues", "", "", "get", false, key, function(data) {	
 		
 			try {
 				console.log(data);
@@ -187,7 +186,7 @@ console.log(routes);
 
 				/****************** O INSERT FUNCIONA ******************/	
 				var obj = {
-					ip: routes[i].address,
+					ip: routes[i],
 					temperature: (obJson.Temperature.toString() == "00.-1") ? "-1" : obJson.Temperature,
 					humidity: (obJson.Humidity.toString() == "00.-1") ? "-1" : obJson.Humidity,
 					loudness: (obJson.Loudness.toString() == "00.-1") ? "-1" : obJson.Loudness,
