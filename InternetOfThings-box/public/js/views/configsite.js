@@ -114,7 +114,7 @@ window.ConfigSiteView = Backbone.View.extend({
             function(data) {
                 var opts = '<li><a href="#">&nbsp;</a></li>';
                 for (var i in data.stdout) {
-                    opts += '<li><a href="#">data.stdout[i].split("/")[0]</a></li>';
+                    opts += '<li><a href="#">' + data.stdout[i] + '</a></li>';
                 }
                 self.enrecoOpts = opts;
 
