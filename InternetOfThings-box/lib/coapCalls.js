@@ -110,7 +110,7 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
         try {
             //console.log(CryptoJS.enc.Utf8.stringify(decrypted3));
             // console.log(CryptoJS.enc.Hex.stringify(decrypted3));
-            console.log(CryptoJS.enc.Utf8.stringify(decrypted3));
+            // console.log(CryptoJS.enc.Utf8.stringify(decrypted3));
 
             // log.appendToLog(CryptoJS.enc.Hex.stringify(decrypted3));
             log.appendToLog(CryptoJS.enc.Utf8.stringify(decrypted3));
@@ -119,12 +119,16 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
                 response.json(CryptoJS.enc.Utf8.stringify(decrypted3));
             } else if (typeof response === "object") {
                 response.write(JSON.stringify(CryptoJS.enc.Utf8.stringify(decrypted3)));
+            } else {
+                response(CryptoJS.enc.Utf8.stringify(decrypted3));
             }
         } catch (err) {
             if (response instanceof http.ServerResponse) {
                 response.send(err);
             } else if (typeof response === "object") {
                 response.write(JSON.stringify(err));
+            } else {
+                response(JSON.stringify(err));
             }
         }
         res.on('data', function(msg) {
@@ -147,7 +151,6 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
                 } else {
                     response(JSON.stringify(res.payload));
                 }
-
             }
         } catch (e) {
             console.log("payload error - " + e);
@@ -192,9 +195,9 @@ function callMoteFunctions(routes) {
                         humidity: (obJson.Humidity.toString() == "00.-1") ? "-1" : obJson.Humidity,
                         loudness: (obJson.Loudness.toString() == "00.-1") ? "-1" : obJson.Loudness,
                         light: (obJson.Light.toString() == "00.-1") ? "-1" : obJson.Light
-                    };                
+                    };
 
-                    console.log("\nSimular insert:\n",obj);
+                    console.log("\nSimular insert:\n", obj);
                     Sensor.insertData(obj);
                     /********************************************************/
 
