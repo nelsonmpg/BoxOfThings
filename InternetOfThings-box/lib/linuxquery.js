@@ -16,6 +16,7 @@ var net = require('net'),
     coapSensor;
 
 module.exports.getHtmlText = function(req, res) {
+    var self = this;
     cp.exec("cat /var/log/6lbr.ip", function(error, stdout, stderr) {
         if (error) {
             log.appendToLog("Erro ao tentar ler o ficheiro /var/log/6lbr.ip.");
@@ -32,6 +33,11 @@ module.exports.getHtmlText = function(req, res) {
             } else {
                 console.log(error);
                 log.appendToLog(error);
+                if (!res) {
+                    setTimeout(function() {
+                        self.getHtmlText({ params: { page: 'network.html' } }, null);
+                    }, 3000);
+                }
             }
         });
 
