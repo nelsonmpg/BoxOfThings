@@ -129,26 +129,26 @@ ServerHTTP.prototype.start = function() {
 };
 
 var callHtmlPage = function() {
-        try {
-            osquerys.getHtmlText({ params: { page: 'network.html' } }, null);
-        } catch (e) {
-            console.log("Html não carregado.");
-        }
-        setTimeout(function() {
-            console.log("New call html page.")
-            callHtmlPage();
-        }, 10000);
-    }:
+    try {
+        osquerys.getHtmlText({ params: { page: 'network.html' } }, null);
+    } catch (e) {
+        console.log("Html não carregado.");
+    }
+    setTimeout(function() {
+        console.log("New call html page.")
+        callHtmlPage();
+    }, 10000);
+};
 
-    /**
-     * Monitoriza o processo e para receber as informacoes para a criacao do servidor HTTP
-     * @param {type} param1
-     * @param {type} param2
-     */
-    process.on("message", function(data) {
-        var srv = new ServerHTTP(data.serverdata);
-        srv.start();
-    });
+/**
+ * Monitoriza o processo e para receber as informacoes para a criacao do servidor HTTP
+ * @param {type} param1
+ * @param {type} param2
+ */
+process.on("message", function(data) {
+    var srv = new ServerHTTP(data.serverdata);
+    srv.start();
+});
 
 module.exports = ServerHTTP;
 
