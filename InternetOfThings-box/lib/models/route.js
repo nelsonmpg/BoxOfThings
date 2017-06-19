@@ -26,7 +26,7 @@ Route.prototype.removeAllRecprds = function() {
     });
 };
 
-Route.prototype.getAllAdressDistinct = function(res) {
+Route.prototype.getAllAdressDistinct = function(res, callback) {
     this.routeDB.distinct("address", function(err, result) {
         if (err) {
             log.appendToLog("Erro ao tentar ler todos as Routes.\n" + err);
@@ -38,7 +38,7 @@ Route.prototype.getAllAdressDistinct = function(res) {
                     stdout: result
                 });
             } else {
-                return result;
+                callback(result);
             }
         }
     });

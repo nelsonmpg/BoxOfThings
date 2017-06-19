@@ -36,7 +36,7 @@ module.exports = {
         });
     },
     getValuesFromSensors: function(){
-	Route.getAllAdressDistinct(callMoteFunctions);
+	Route.getAllAdressDistinct(null, callMoteFunctions);
     },
     getdataFromSensor: function(req, res) {
         var endereco = req.params.moteIp === "undefined" ? "" : req.params.moteIp,
