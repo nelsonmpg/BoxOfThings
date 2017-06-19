@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 
 
 var routeSchema = Schema({
-    address: { type: String },
+    address: { type: String, unique: true },
     from: { type: String },
     time: { type: String }
 });

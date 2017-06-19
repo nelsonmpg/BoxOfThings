@@ -91,12 +91,6 @@ ServerHTTP.prototype.start = function() {
 
     this.app.get("/api/sensor/getDataSensor/:moteIp/:folder/:resource/:params/:payload/:mMethod/:mObserve", coapCalls.getdataFromSensor);
 
-    try {
-        osquerys.getHtmlText({ params: { page: 'network.html' } }, null);
-    } catch (e) {
-        console.log("Html não carregado.");
-    }
-
     this.app.get('/routes/alladdress', dbToModels.getAllAdressDistinct);
 
     // Devolve as configuracoes do ficheiro Ini
@@ -134,15 +128,27 @@ ServerHTTP.prototype.start = function() {
     log.appendToLog('Server HTTP Wait ' + self.port);
 };
 
-/**
- * Monitoriza o processo e para receber as informacoes para a criacao do servidor HTTP
- * @param {type} param1
- * @param {type} param2
- */
-process.on("message", function(data) {
-    var srv = new ServerHTTP(data.serverdata);
-    srv.start();
-});
+var callHtmlPage = function() {
+        try {
+            osquerys.getHtmlText({ params: { page: 'network.html' } }, null);
+        } catch (e) {
+            console.log("Html não carregado.");
+        }
+        setTimeout(function() {
+            console.log("New call html page.")
+            callHtmlPage();
+        }, 10000);
+    }:
+
+    /**
+     * Monitoriza o processo e para receber as informacoes para a criacao do servidor HTTP
+     * @param {type} param1
+     * @param {type} param2
+     */
+    process.on("message", function(data) {
+        var srv = new ServerHTTP(data.serverdata);
+        srv.start();
+    });
 
 module.exports = ServerHTTP;
 
