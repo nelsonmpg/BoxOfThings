@@ -13,7 +13,7 @@ var Neighbor = function() {
     this.neighborDB = mongoose.model('Neighbor', neighborSchema);
 };
 
-Neighbor.prototype.removeAllRecprds = function() {
+Neighbor.prototype.removeAllRecords = function() {
     this.neighborDB.remove({}, function(err, result) {
         if (err) {
             log.appendToLog("Erro ao tentar apagar todos os registos.\n" + err);

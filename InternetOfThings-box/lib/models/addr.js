@@ -13,7 +13,7 @@ var Addr = function() {
     this.addrDB = mongoose.model('Addr', addrSchema);
 };
 
-Addr.prototype.removeAllRecprds = function() {
+Addr.prototype.removeAllRecords = function() {
     this.addrDB.remove({}, function(err, result) {
         if (err) {
             log.appendToLog("Erro ao tentar apagar todos os registos.\n" + err);

@@ -32,9 +32,9 @@ module.exports = {
     },
 
     removeOldRecords: function() {
-        // Addr.removeAllRecprds();
-        // Neighbor.removeAllRecprds();
-        // Route.removeAllRecprds();
+        Addr.removeAllRecords();
+        Neighbor.removeAllRecords();
+        Route.removeAllRecords();
     },
 
     loginUser: function(req, res) {
@@ -127,7 +127,7 @@ module.exports = {
                 }
 
                 for (var i = 0; i < arr.length / mult; i++) {
-                    self.insertRoute({ address: arr[i * mult], from: arr[i * mult + 1], time: arr[i * mult + 2] });
+                    self.insertRoute({ address: "[" + arr[i * mult].splt("/")[0] + "]", from: arr[i * mult + 1], time: arr[i * mult + 2] });
                 }
             }
 

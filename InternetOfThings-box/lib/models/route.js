@@ -14,7 +14,7 @@ var Route = function() {
     this.routeDB = mongoose.model('Route', routeSchema);
 };
 
-Route.prototype.removeAllRecprds = function() {
+Route.prototype.removeAllRecords = function() {
     this.routeDB.remove({}, function(err, result) {
         if (err) {
             log.appendToLog("Erro ao tentar apagar todos os registos.\n" + err);
