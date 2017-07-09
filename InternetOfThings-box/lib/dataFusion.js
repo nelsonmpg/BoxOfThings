@@ -21,8 +21,8 @@ module.exports = {
 
         var keys = Object.keys(entries[0]);
         console.log(keys);
-        for (var key in keys) {
-            console.log(key);
+        for (var i in keys) {
+            console.log(keys[i]);
         };
     },
 
