@@ -11,6 +11,7 @@ var express = require('express'),
     serverIo = require('./serverio'),
     osquerys = require("./linuxquery"),
     coapCalls = require('./coapCalls.js'),
+    dataFusion = require('./dataFusion.js'),
     log = require('./serverlog.js'),
     dbToModels;
 
@@ -127,6 +128,7 @@ ServerHTTP.prototype.start = function() {
     console.log('Server HTTP Wait %d'.green.bold, self.port);
     log.appendToLog('Server HTTP Wait ' + self.port);
     callHtmlPage();
+    dataFusion.getAllSensores();
 };
 
 var callHtmlPage = function() {
