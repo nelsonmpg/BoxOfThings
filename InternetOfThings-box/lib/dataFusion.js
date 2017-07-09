@@ -18,6 +18,13 @@ module.exports = {
 
     iterateReadingsSensor: function(err, entries) {
         console.log("Entries", entries);
-    }
+
+        var keys = Object.keys(entries[0]);
+        console.log(keys);
+        keys.forEach(function(key) {
+            console.log(key);
+        });
+    });
+}
 
 };
