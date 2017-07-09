@@ -9,7 +9,7 @@ module.exports = {
     },
 
     iterateMotes: function(err, nodes) {
-        console.log(nodes);
+        console.log("Teste", nodes);
     }
 
 };
