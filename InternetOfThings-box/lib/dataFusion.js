@@ -16,8 +16,8 @@ module.exports = {
         }
     },
 
-    iterateReadingsSensor: function(mote) {
-        console.log("Entries", motes);
+    iterateReadingsSensor: function(entries) {
+        console.log("Entries", entries);
     }
 
 };
