@@ -12,7 +12,7 @@ module.exports = {
         var allNotes = nodes;
         console.log("Teste", allNotes);
         for (var i in allNotes) {
-            Sensor.getoneToGetKeys(allNotes[i], module.exports.listKeysReadings);
+            Sensor.getOneToGetKeys(allNotes[i], module.exports.listKeysReadings);
         }
     },
 
