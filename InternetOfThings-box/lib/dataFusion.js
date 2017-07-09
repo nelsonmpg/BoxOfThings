@@ -17,7 +17,8 @@ module.exports = {
     },
 
     iterateReadingsSensor: function(err, entries) {
-        console.log("Entries", entries);
+        console.log("Entries", entries[0]);
+        console.log("Entries", entries[1]);
 
         var keys = Object.keys(entries[0]);
         console.log(keys);
