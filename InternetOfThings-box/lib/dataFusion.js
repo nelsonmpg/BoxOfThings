@@ -12,16 +12,12 @@ module.exports = {
         var allNotes = nodes;
         console.log("Teste", allNotes);
         for (var i in allNotes) {
-            Sensor.getOneToGetKeys(allNotes[i], module.exports.listKeysReadings);
+            Sensor.getAllReadingsToSensor(allNotes[i], module.exports.iterateReadingsSensor);
         }
     },
 
-    listKeysReadings: function(mote) {
-        console.log("Entries", mote);
-    },
-
-    iterateReadingsSensor: function() {
-
+    iterateReadingsSensor: function(mote) {
+        console.log("Entries", motes);
     }
 
 };

@@ -39,10 +39,6 @@ Sensor.prototype.getDistinctSensores = function(callback) {
     this.SensorDB.distinct("ip", callback);
 };
 
-Sensor.prototype.getOneToGetKeys = function(ip, callback){
-    this.SensorDB.findOne({ "ip": ip }, callback)
-};
-
 Sensor.prototype.getAllReadingsToSensor = function(ip, callback) {
     this.SensorDB.find({ "ip": ip }, callback);
 };
