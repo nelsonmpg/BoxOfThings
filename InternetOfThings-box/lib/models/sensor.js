@@ -6,6 +6,7 @@ var mongoose = require('mongoose'),
 // create a schema Sensor
 var sensorSchema = new Schema({
     ip: { type: String },
+    readingDate: { type: Date, default: Date.now },
     temperature: { type: String },
     humidity: { type: String },
     loudness: { type: String },
@@ -21,6 +22,7 @@ Sensor.prototype.insertData = function(data) {
     var self = this;
     // Recebendo os parâmetros da requisição
     // create a new user
+    data.readingDate = Date.now();
     var newSensorData = self.SensorDB(data);
 
     // save the user
@@ -31,6 +33,10 @@ Sensor.prototype.insertData = function(data) {
         log.appendToLog('Sensor value add / created!');
         console.log('Sensor value add / created!');
     });
+};
+
+Sensor.prototype.getDistinctSensores = function(callback){
+     this.SensorDB.distinct("ip", callback);
 };
 
 module.exports = Sensor;

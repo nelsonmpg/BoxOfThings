@@ -1,0 +1,47 @@
+6lbr
+[aaaa::212:4b00:60d:b305]
+https://github.com/cetic/6lbr/wiki/Other-Linux-Software-Configuration
+
+sudo apt-get install libncurses5-dev libncursesw5-dev
+
+git clone https://github.com/cetic/6lbr
+cd 6lbr
+git checkout -b 6lbr-1.4.1
+git submodule update --init --recursive
+
+/home/pi/../6lbr/examples/6lbr/tools/nvm_tool --print /etc/6lbr/nvm.dat
+sudo /bin/sh /usr/lib/6lbr/6lbr /etc/6lbr/6lbr.conf
+
+
+aptitude purge 6lbr
+apt-get install libncurses5-dev bridge-utils
+
+nvm_tool --new --channel 26 nvm.dat
+
+sudo route -A inet6 add aaaa::/64 gw bbbb::100
+
+
+
+
+MODE=ROUTER
+#MODE=SMART-BRIDGE
+#MODE=RPL-RELAY
+#MODE=FULL-TRANSPARENT-BRIDGE
+#MODE=NDP-ROUTER
+#MODE=6LR
+#MODE=RPL-ROOT
+
+RAW_ETH=0
+BRIDGE=0
+#CREATE_BRIDGE=1
+#DEV_BRIDGE=br0
+DEV_TAP=tap0
+DEV_ETH=eth0
+#RAW_ETH_FCS=0
+
+#WWW_6LBR=$LIB_6LBR/www
+
+DEV_RADIO=/dev/ttyUSB0
+BAUDRATE=115200
+
+LOG_LEVEL=4 #INFO and above only

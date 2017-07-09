@@ -27,8 +27,6 @@ module.exports = {
             email: cfg.user,
             pass: md5(btoa(cfg.pass))
         }, null);
-
-        self.removeOldRecords();
     },
 
     removeOldRecords: function() {

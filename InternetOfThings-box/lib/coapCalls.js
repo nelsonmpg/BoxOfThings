@@ -7,7 +7,8 @@ var coap = require('coap'),
     Sensor = require('./models/sensor.js'),
     Route = require('./models/route.js'),
     log = require('./serverlog.js'),
-    key = CryptoJS.enc.Hex.parse('B007AFD752937AFF5A4192268A803BB7');
+    key = CryptoJS.enc.Hex.parse('B007AFD752937AFF5A4192268A803BB7'),
+    replaceRegx = /\u0000/gi;
 
 Sensor = new Sensor();
 Route = new Route();
@@ -63,7 +64,8 @@ module.exports = {
 
     mote_action: function(req, res) {
         console.log(req.params.moteIpreq.params.resource, req.params.color, req.params.mode);
-        getdataFromSensorReq(req.params.moteIp, 'actuators', req.params.resource, '?leds=' + req.params.color, 'mode=' + req.params.mode, 'POST', false, key, res);
+        getdataFromSensorReq(req.params.moteIp, 'actuators', req.params.resource, '?leds=' + req.params.color
+, 'mode=' + req.params.mode, 'POST', false, key, res);
     }
 };
 
@@ -116,11 +118,11 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
             log.appendToLog(CryptoJS.enc.Utf8.stringify(decrypted3));
 
             if (response instanceof http.ServerResponse) {
-                response.json(CryptoJS.enc.Utf8.stringify(decrypted3));
+                response.json(CryptoJS.enc.Utf8.stringify(decrypted3)..replace(replaceRegx, ''));
             } else if (typeof response === "object") {
-                response.write(JSON.stringify(CryptoJS.enc.Utf8.stringify(decrypted3)));
+                response.write(JSON.stringify(CryptoJS.enc.Utf8.stringify(decrypted3)..replace(replaceRegx, '')));
             } else {
-                response(CryptoJS.enc.Utf8.stringify(decrypted3));
+                response(CryptoJS.enc.Utf8.stringify(decrypted3)..replace(replaceRegx, ''));
             }
         } catch (err) {
             if (response instanceof http.ServerResponse) {
