@@ -21,10 +21,9 @@ module.exports = {
 
         var keys = Object.keys(entries[0]);
         console.log(keys);
-        keys.forEach(function(key) {
+        for (var key in keys) {
             console.log(key);
-        });
-    });
-}
+        };
+    },
 
 };
