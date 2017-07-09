@@ -9,7 +9,19 @@ module.exports = {
     },
 
     iterateMotes: function(err, nodes) {
-        console.log("Teste", nodes);
+        var allNotes = nodes;
+        console.log("Teste", allNotes);
+        for (var i in allNotes) {
+            Sensor.getoneToGetKeys(allNotes[i], module.exports.listKeysReadings);
+        }
+    },
+
+    listKeysReadings: function(entries) {
+        console.log("Entries", entries);
+    },
+
+    iterateReadingsSensor: function() {
+
     }
 
 };

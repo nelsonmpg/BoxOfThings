@@ -35,8 +35,16 @@ Sensor.prototype.insertData = function(data) {
     });
 };
 
-Sensor.prototype.getDistinctSensores = function(callback){
-     this.SensorDB.distinct("ip", callback);
+Sensor.prototype.getDistinctSensores = function(callback) {
+    this.SensorDB.distinct("ip", callback);
+};
+
+Sensor.prototype.getoneToGetKeys = function(ip){
+    this.SensorDB.findOne({ "ip": ip }, callback)
+};
+
+Sensor.prototype.getAllReadingsToSensor = function(ip, callback) {
+    this.SensorDB.find({ "ip": ip }, callback);
 };
 
 module.exports = Sensor;
