@@ -29,7 +29,8 @@ module.exports.getHtmlText = function(req, res) {
                     dbToModels.parseHtml(body);
                 }
             } else {
-                console.log("Error -> ", error);
+                return error;
+                // console.log("Error -> ", error);
                 // console.log("Restart 6lbr");
                 // cp.exec("sudo service 6lbr restart", function(error, stdout, stderr) {
                 //     if (error) {
@@ -37,11 +38,11 @@ module.exports.getHtmlText = function(req, res) {
                 //         return;
                 //     }
                 //     console.log("A reiniciar o serviço 6lbr.".green);
-                    if (!res) {
-                        setTimeout(function() {
-                            self.getHtmlText({ params: { page: 'network.html' } }, null);
-                        }, 60 * 1000);
-                    }
+                    // if (!res) {
+                    //     setTimeout(function() {
+                    //         self.getHtmlText({ params: { page: 'network.html' } }, null);
+                    //     }, 60 * 1000);
+                    // }
                 // });
             }
         });
