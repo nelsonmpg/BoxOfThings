@@ -137,7 +137,7 @@ var callHtmlPage = function() {
             return;
         }
         console.log("http://[" + stdout.replace(/\n|\t/g, "") + "]");
-        var options = { method: 'HEAD', host: "http://[" + stdout.replace(/\n|\t/g, "") + "]", port: 80, path: '/' },
+        var options = { method: 'HEAD', host: "http://[" + stdout.replace(/\n|\t/g, "") + "]", port: 80, path: '/network.html' },
             req = http.request(options, function(r) {
                 console.log(JSON.stringify(r.headers));
             });
