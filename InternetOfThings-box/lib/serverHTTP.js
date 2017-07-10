@@ -116,7 +116,16 @@ ServerHTTP.prototype.start = function() {
 
     console.log('Server HTTP Wait %d'.green.bold, self.port);
     callHtmlPage();
-    dataFusion.getAllSensores();
+    callDataFusion();
+
+};
+
+var callDataFusion = function() {
+    console.log("Start Counter Data Fusion.");
+    setTimeout(function() {
+        console.log("New call Data Fusion.");
+        dataFusion.getAllSensores();
+    }, 5 * 60 * 1000);
 };
 
 var callHtmlPage = function() {
@@ -127,7 +136,7 @@ var callHtmlPage = function() {
         console.log("Html não carregado.");
     }
     setTimeout(function() {
-        console.log("New call html page.")
+        console.log("New call html page.");
         callHtmlPage();
     }, 10 * 1000);
 };

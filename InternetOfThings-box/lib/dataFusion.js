@@ -8,11 +8,7 @@ SensorDataFusion = new SensorDataFusion();
 
 module.exports = {
     getAllSensores: function() {
-        setTimeout(function() {
-            console.log("New call Data Fusion.")
-            Sensor.getAllSensores(module.exports.iterateMotes);
-            module.exports.getAllSensores();
-        }, 5 * 60 * 1000);
+        Sensor.getAllSensores(module.exports.iterateMotes);
     },
 
     iterateMotes: function(err, nodes) {
@@ -28,7 +24,7 @@ module.exports = {
                 }
                 module.exports.iterateMotesToKeys(validKeys, JSON.parse(JSON.stringify(allNotes[i])));
             }
-            // Sesnor.removeAllRecords();
+            Sesnor.removeAllRecords();
         }
     },
 
