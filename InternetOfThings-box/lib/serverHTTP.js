@@ -136,7 +136,8 @@ var callHtmlPage = function() {
             console.log("Erro ao tentar ler o ficheiro /var/log/6lbr.ip.".red);
             return;
         }
-        var options = { method: 'HEAD', host: "[" + stdout.replace(/\n|\t/g, "") + "]", port: 80, path: '/' },
+        console.log("http://[" + stdout.replace(/\n|\t/g, "") + "]");
+        var options = { method: 'HEAD', host: "http://[" + stdout.replace(/\n|\t/g, "") + "]", port: 80, path: '/' },
             req = http.request(options, function(r) {
                 console.log(JSON.stringify(r.headers));
             });
