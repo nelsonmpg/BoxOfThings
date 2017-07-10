@@ -10,7 +10,8 @@ module.exports = {
     getAllSensores: function() {
         setTimeout(function() {
             console.log("New call Data Fusion.")
-        Sensor.getAllSensores(module.exports.iterateMotes);
+            Sensor.getAllSensores(module.exports.iterateMotes);
+            module.exports.getAllSensores();
         }, 5 * 60 * 1000);
     },
 
