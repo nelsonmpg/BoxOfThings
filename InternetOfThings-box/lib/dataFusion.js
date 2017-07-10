@@ -26,6 +26,7 @@ module.exports = {
         var allNotes = nodes;
         for (var i in allNotes) {
             var validKeys = [];
+            console.log(allNotes[i].dataValues[0]);
             var keys = Object.keys(JSON.parse(JSON.stringify(allNotes[i].dataValues[0])));
             for(var k in keys){
                 if (keys[k] !== "_id" && keys[k] !== "readingDate") {
