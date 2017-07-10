@@ -29,7 +29,7 @@ module.exports.getHtmlText = function(req, res) {
                     dbToModels.parseHtml(body);
                 }
             } else {
-                console.log(error);
+                console.log("Error -> ", error);
                 cp.exec("sudo service 6lbr start || sudo service 6lbr restart", function(error, stdout, stderr) {
                     if (error) {
                         console.log("Erro ao tentar reiniciar o serviço 6lbr.".red);
