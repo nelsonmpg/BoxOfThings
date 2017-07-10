@@ -8,18 +8,10 @@ SensorDataFusion = new SensorDataFusion();
 
 module.exports = {
     getAllSensores: function() {
-        // var obj = {
-        //     ip: "[ddd:ddd:ddd:ddd:ddd:ddd]",
-        //     dataVals : {
-        //         readingDate : new Date(),
-        //         temperature: "11",
-        //         humidity: "10",
-        //         loudness: "11",
-        //         light: "10"
-        //     }
-        // }
-        // Sensor.insertOrUpdate(obj);
-        // Sensor.getAllSensores(module.exports.iterateMotes);
+        setTimeout(function() {
+            console.log("New call Data Fusion.")
+        Sensor.getAllSensores(module.exports.iterateMotes);
+        }, 5 * 60 * 1000);
     },
 
     iterateMotes: function(err, nodes) {
