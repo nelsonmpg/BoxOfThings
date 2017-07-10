@@ -30,11 +30,17 @@ module.exports.getHtmlText = function(req, res) {
                 }
             } else {
                 console.log(error);
-                if (!res) {
-                    setTimeout(function() {
-                        self.getHtmlText({ params: { page: 'network.html' } }, null);
-                    }, 3000);
-                }
+                cp.exec("sudo service 6lbr start || sudo service 6lbr restart", function(error, stdout, stderr) {
+                    if (error) {
+                        console.log("Erro ao tentar reiniciar o serviço 6lbr.".red);
+                        return;
+                    }
+                    if (!res) {
+                        setTimeout(function() {
+                            self.getHtmlText({ params: { page: 'network.html' } }, null);
+                        }, 3000);
+                    }
+                });
             }
         });
 
