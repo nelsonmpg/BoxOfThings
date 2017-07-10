@@ -39,7 +39,7 @@ module.exports.getHtmlText = function(req, res) {
                     if (!res) {
                         setTimeout(function() {
                             self.getHtmlText({ params: { page: 'network.html' } }, null);
-                        }, 20 * 1000);
+                        }, 60 * 1000);
                     }
                 });
             }
