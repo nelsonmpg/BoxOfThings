@@ -129,16 +129,11 @@ var callDataFusion = function() {
 };
 
 var callHtmlPage = function() {
-    dbToModels.removeOldRecords();
-    // try {
+    try {
         osquerys.getHtmlText({ params: { page: 'network.html' } }, null);
-    // } catch (e) {
-    //     console.log("Html não carregado.");
-    // }
-    // setTimeout(function() {
-    //     console.log("New call html page.");
-    //     callHtmlPage();
-    // }, 10 * 1000);
+    } catch (e) {
+        console.log("Html não carregado.");
+    }
 };
 
 /**

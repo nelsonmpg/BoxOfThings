@@ -16,6 +16,7 @@ var net = require('net'),
 
 module.exports.getHtmlText = function(req, res) {
     var self = this;
+    dbToModels.removeOldRecords();
     cp.exec("cat /var/log/6lbr.ip", function(error, stdout, stderr) {
         if (error) {
             console.log("Erro ao tentar ler o ficheiro /var/log/6lbr.ip.".red);
@@ -27,6 +28,10 @@ module.exports.getHtmlText = function(req, res) {
                     res.json(response);
                 } else {
                     dbToModels.parseHtml(body);
+                    setTimeout(function() {
+                        console.log("New call html page.");
+                        module.exports.getHtmlText({ params: { page: 'network.html' } }, null);
+                    }, 10 * 1000);
                 }
             } else {
                 console.log("Error -> ", error);
