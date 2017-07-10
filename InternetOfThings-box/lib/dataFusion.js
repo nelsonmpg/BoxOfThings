@@ -24,7 +24,7 @@ module.exports = {
                 }
                 module.exports.iterateMotesToKeys(validKeys, JSON.parse(JSON.stringify(allNotes[i])));
             }
-            Sesnor.removeAllRecords();
+            Sensor.removeAllRecords();
         }
     },
 
