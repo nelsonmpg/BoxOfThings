@@ -95,19 +95,19 @@ function filterOutliers(someArray, key, resultObj) {
     for (var i = values.length - 1; i >= 0; i--) {
         tmp = parseFloat(values[i][key]);
         if ((tmp <= maxValue) && (tmp >= minValue)) {
-            var valaux = parseFloat(values[i][key]);
+            var valaux = (parseFloat(values[i][key]).toFixed(2));
             averagecalc += valaux;
             carcountAverage++;
 
             if (resultObj.Max < valaux) {
                 resultObj.dateOfMax = dateTimeFormat(values[i].readingDate);
+                resultObj.Max = valaux;
             }
-            resultObj.Max = (Math.max(resultObj.Max, valaux)).toFixed(2);
 
             if (resultObj.Min > valaux) {
                 resultObj.dateOfMin = dateTimeFormat(values[i].readingDate);
+                resultObj.Min = valaux;
             }
-            resultObj.Min = (Math.min(resultObj.Min, valaux)).toFixed(2);
 
             if (resultObj.lowerRangeOfReadingDate > parseISOString(values[i].readingDate)) {
                 resultObj.lowerRangeOfReadingDate = dateTimeFormat(values[i].readingDate);
