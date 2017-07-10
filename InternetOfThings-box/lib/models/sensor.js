@@ -1,16 +1,18 @@
 // grab the things we need
 var mongoose = require('mongoose'),
-    log = require('./../serverlog.js'),
-    Schema = mongoose.Schema;
+Schema = mongoose.Schema;
 
 // create a schema Sensor
 var sensorSchema = new Schema({
     ip: { type: String },
-    readingDate: { type: Date, default: Date.now },
-    temperature: { type: String },
-    humidity: { type: String },
-    loudness: { type: String },
-    light: { type: String }
+    dataValues : [{
+        readingDate: { type: Date, default: Date.now },
+        temperature: { type: String },
+        humidity: { type: String },
+        loudness: { type: String },
+        light: { type: String },
+        teste: { type: String }
+    }]
 });
 
 var Sensor = function() {
@@ -18,7 +20,7 @@ var Sensor = function() {
 };
 
 Sensor.prototype.insertData = function(data) {
-    console.log("Insert");
+    // console.log("Insert");
     var self = this;
     // Recebendo os parâmetros da requisição
     // create a new user
@@ -30,17 +32,32 @@ Sensor.prototype.insertData = function(data) {
         if (err) {
             return;
         }
-        log.appendToLog('Sensor value add / created!');
         console.log('Sensor value add / created!');
     });
 };
 
-Sensor.prototype.getDistinctSensores = function(callback) {
-    this.SensorDB.distinct("ip", callback);
+Sensor.prototype.insertOrUpdate = function(data){
+    var self = this;    
+    self.SensorDB.update({"ip": data.ip}, { $push : {dataValues : data.dataVals}}, {upsert: true}, function(err, result){
+        if (err) {
+            return;
+        }
+        console.log('Sensor value add / created!', result);
+    });
 };
 
-Sensor.prototype.getAllReadingsToSensor = function(ip, callback) {
-    this.SensorDB.find({ "ip": ip }, callback);
+Sensor.prototype.getAllSensores = function(callback) {
+    this.SensorDB.find({}, callback);
+};
+
+Sensor.prototype.removeAllRecords = function(){
+    this.SensorDB.remove({}, function(err, result) {
+        if (err) {
+            console.log("Error to remove all");
+            return;
+        }
+        cosole.log("REmove all records", result);
+    });
 };
 
 module.exports = Sensor;

@@ -1,6 +1,5 @@
 var mongoose = require('mongoose'),
     fs = require('fs'),
-    log = require('./../serverlog.js'),
     Schema = mongoose.Schema;
 
 
@@ -17,10 +16,8 @@ var Route = function() {
 Route.prototype.removeAllRecords = function() {
     this.routeDB.remove({}, function(err, result) {
         if (err) {
-            log.appendToLog("Erro ao tentar apagar todos os registos.\n" + err);
             console.log("Erro ao tentar apagar todos os registos.\n" + err);
         } else {
-            log.appendToLog("Foram apagados todos os registos 'Route'. - " + result);
             console.log("Foram apagados todos os registos 'Route'. - " + result);
         }
     });
@@ -29,7 +26,6 @@ Route.prototype.removeAllRecords = function() {
 Route.prototype.getAllAdressDistinct = function(res) {
     this.routeDB.distinct("address", function(err, result) {
         if (err) {
-            log.appendToLog("Erro ao tentar ler todos as Routes.\n" + err);
             console.log("Erro ao tentar ler todos as Routes.\n" + err);
         } else {
             if (typeof res === "function") {
@@ -53,11 +49,9 @@ Route.prototype.insertData = function(data) {
     // save the user
     newRouteData.save(function(err) {
         if (err) {
-            log.appendToLog(err);
             console.log(err);
             return;
         }
-        log.appendToLog('Route value insert.');
         console.log('Route value insert!');
     });
 };

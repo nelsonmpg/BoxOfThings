@@ -1,7 +1,6 @@
 // grab the things we need
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema,
-    log = require('./../serverlog.js');
+    Schema = mongoose.Schema;
 
 // create a schema User
 var userSchema = new Schema({
@@ -18,13 +17,12 @@ User.prototype.loginUser = function(params, res) {
     var self = this;
     this.UserDB.findOne(params, function(err, user) {
         if (err) {
-            log.appendToLog(err);
             res.json({
                 status: "error",
                 stdout: err
             });
         } else if (!user) {
-            log.appendToLog("O utilizador não foi encontrrado");
+            console.log("O utilizador não foi encontrrado");
             res.json({
                 status: "login error",
                 stdout: "O utilizador não foi encontrrado"
@@ -49,7 +47,6 @@ User.prototype.InsertUser = function(params, res) {
         if (err) {
             return;
         }
-        log.appendToLog('User created!');
         console.log('User created!');
         if (res) {
             res.json('ok ');

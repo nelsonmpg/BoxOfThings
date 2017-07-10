@@ -12,7 +12,6 @@ var express = require('express'),
     osquerys = require("./linuxquery"),
     coapCalls = require('./coapCalls.js'),
     dataFusion = require('./dataFusion.js'),
-    log = require('./serverlog.js'),
     dbToModels;
 
 /**
@@ -44,7 +43,6 @@ var ServerHTTP = function(config) {
         osquerys.createconnetionSSH(coapCalls);
     } else {
         console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
-        log.appendToLog("É necessário efetuar as configurações SSH para a comunicação remota.");
     }
     cp.exec("sudo route -A inet6 add aaaa::/64 gw bbbb::100", function(error, stdout, stderr) {
         if (error) {
@@ -116,17 +114,7 @@ ServerHTTP.prototype.start = function() {
     console.log("                              \\./             ._|  ".green.bold);
     console.log("                              /'\\                  ".green.bold);
 
-    log.appendToLog("                       .__                          ");
-    log.appendToLog("                       [__)                         ");
-    log.appendToLog("                       [__)                         ");
-    log.appendToLog("._.    ,              ,   .__.._  .___..            ");
-    log.appendToLog(" | ._ -+- _ ._.._  _ -+-  |  ||,    |  |_ *._  _  __");
-    log.appendToLog("_|_[ ) | (/,[  [ )(/, |   |__||     |  [ )|[ )(_]_) ");
-    log.appendToLog("                              \\./             ._|  ");
-    log.appendToLog("                              /'\\                  ");
-
     console.log('Server HTTP Wait %d'.green.bold, self.port);
-    log.appendToLog('Server HTTP Wait ' + self.port);
     callHtmlPage();
     dataFusion.getAllSensores();
 };

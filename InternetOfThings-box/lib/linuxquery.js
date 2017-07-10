@@ -10,7 +10,6 @@ var net = require('net'),
     macaddress = require('macaddress'),
     fileconfig = './MainConfig.ini',
     sshfileconfig = './configssh.json',
-    log = require('./serverlog.js'),
     dbToModels = require('./dbToModel.js'),
     configSSH = null,
     coapSensor;
@@ -19,7 +18,6 @@ module.exports.getHtmlText = function(req, res) {
     var self = this;
     cp.exec("cat /var/log/6lbr.ip", function(error, stdout, stderr) {
         if (error) {
-            log.appendToLog("Erro ao tentar ler o ficheiro /var/log/6lbr.ip.");
             console.log("Erro ao tentar ler o ficheiro /var/log/6lbr.ip.".red);
             return;
         }
@@ -32,7 +30,6 @@ module.exports.getHtmlText = function(req, res) {
                 }
             } else {
                 console.log(error);
-                log.appendToLog(error);
                 if (!res) {
                     setTimeout(function() {
                         self.getHtmlText({ params: { page: 'network.html' } }, null);
@@ -127,7 +124,6 @@ module.exports.savesettings = function(req, res) {
     var json = JSON.stringify(req.body.data);
     fs.writeFile(sshfileconfig, json, 'utf8', function(err) {
         if (err) {
-            log.appendToLog(err);
             res.status(500).send({
                 status: "erro ao gravar as configurações SSH.",
                 stdout: err
@@ -163,10 +159,8 @@ module.exports.savesettings = function(req, res) {
 
                 fs.writeFile(fileconfig, saveini, 'utf8', function(err) {
                     if (err) {
-                        log.appendToLog("Erro ao tentar gravar o ficheiro global de configuracao.");
                         console.log("Erro ao tentar gravar o ficheiro global de configuracao.".red.bold);
                     } else {
-                        log.appendToLog("O ficheiro de configuração global foi atualizado.");
                         console.log("O ficheiro de configuração global foi atualizado.".green.bold);
                     }
                 });
@@ -175,12 +169,10 @@ module.exports.savesettings = function(req, res) {
                     stdout: "successs"
                 });
             } else {
-                log.appendToLog("Erro ao atualizar o ficheiro MainConfig.");
                 res.send({
                     status: "ok",
                     stdout: "Erro ao atualizar o ficheiro MainConfig."
                 });
-                log.appendToLog("Erro ao ler o ficherio de configuracao global.");
                 Console.log("Erro ao ler o ficherio de configuracao global.".red.bold);
             }
         }
@@ -200,7 +192,6 @@ module.exports.createconnetionSSH = function(coap) {
         cp.execSync("sh ./removeAllSSHTunnels.sh");
 
     } catch (e) {
-        log.appendToLog("Script não executado.");
         console.log("Script não executado.");
     }
 
@@ -221,8 +212,6 @@ module.exports.createconnetionSSH = function(coap) {
                 strBox = strBox.replace(/","/g, '" --').replace(/":"/g, ' "').replace(/{"/, "--").replace(/}/g, "");
                 ssh.exec('node ' + configSSH.remotepathscript + ' ' + configSSH.remoteport + ' ' + strBox, {
                     err: function(stderr) {
-                        log.appendToLog("A execução do script remoto não foi executada.");
-                        log.appendToLog(stderr);
                         console.log("A execução do script remoto não foi executada.".red.bold);
                         console.log(stderr);
                     },
@@ -234,42 +223,33 @@ module.exports.createconnetionSSH = function(coap) {
                                     configSSH.remoteport = resultSsh.port;
                                     fs.writeFile('configssh.json', JSON.stringify(configSSH), 'utf8', function(err) {
                                         if (err) {
-                                            log.appendToLog("Erro ao tentar gravar o ficheiro.");
                                             console.log("Erro ao tentar gravar o ficheiro.".red.bold);
                                         } else {
-                                            log.appendToLog("O ficheiro de configuração do SSH foi atualizado.");
                                             console.log("O ficheiro de configuração do SSH foi atualizado.".green.bold);
                                         }
                                     });
                                 }
                             } else {
-                                log.appendToLog("Erro ao tentar ler os dados rcebidos do cliente remoto.");
                                 console.log("Erro ao tentar ler os dados rcebidos do cliente remoto.".red.bold);
                             }
 
                             self.createReverseTunnel();
 
                             net.createServer(coapSensor.serverListening).listen(configSSH.localport, configSSH.localip);
-                            log.appendToLog('Server listening Tunnel SSH on local ' + configSSH.localip + ':' + configSSH.localport + ' and remote ' + configSSH.remoteip + ':' + configSSH.remoteport);
                             console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.bold, configSSH.localip, configSSH.localport, configSSH.remoteip, configSSH.remoteport);
-                            log.appendToLog("Remote access Box user '" + configSSH.localip + "' port '" + configSSH.remoteport + "'.");
                             console.log("Remote access Box 'user %s port %s'.".blue.bold, configSSH.localip, configSSH.remoteport);
                         } else {
-                            log.appendToLog("Erro ao tentar converter o ficheiro para JSON.");
                             console.log("Erro ao tentar converter o ficheiro para JSON.".red.bold);
                         }
                     }
                 }).start();
             } else {
-                log.appendToLog("O caminho para a chave privada da box não existe.")
                 console.log("O caminho para a chave privada da box não existe.".red.bold);
             }
         } else {
-            log.appendToLog("É necessário efetuar as configurações SSH para a comunicação remota.")
             console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
         }
     } else {
-        log.appendToLog("É necessário efetuar as configurações SSH para a comunicação remota.")
         console.log("É necessário efetuar as configurações SSH para a comunicação remota.".red.bold);
     }
 };
@@ -279,16 +259,10 @@ module.exports.createReverseTunnel = function() {
     // inicia o tunel ssh com a cloud
     cp.exec("sh ./runTunneling.sh " + configSSH.remoteport + " " + configSSH.localip + " " + configSSH.localport + " " + configSSH.remoteuser + " '" + configSSH.remoteip + "' " + configSSH.sshport, function(error, stdout, stderr) {
         if (error instanceof Error) {
-
-            log.appendToLog('exec error: ' + error);
-            log.appendToLog("Erro na criação do tunel SHH port : " + configSSH.remoteip + ":" + configSSH.remoteport);
             console.log('exec error: ' + error);
             console.log("Erro na criação do tunel SHH port : %s:%s".red.bold, configSSH.remoteip, configSSH.remoteport);
             return;
         }
-        log.appendToLog('stdout ', stdout);
-        log.appendToLog('stderr ', stderr);
-        log.appendToLog("tunnel ssh created!!!");
         console.log('stdout ', stdout);
         console.log('stderr ', stderr);
         console.log("tunnel ssh created!!!".green.bold);

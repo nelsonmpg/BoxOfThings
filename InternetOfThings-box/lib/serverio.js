@@ -1,8 +1,7 @@
 /* global module, process */
 
 _ = require('underscore');
-var cp = require('child_process'),
-    log = require('./serverlog.js');
+var cp = require('child_process');
 
 /**
  * Class do Socket
@@ -31,15 +30,9 @@ ServerSktIo.prototype.init = function() {
         console.log("User - " + socket.id);
         console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
-        log.appendToLog("+++++++++++++++++++++ ADD ++++++++++++++++++++++++++");
-        log.appendToLog("Connected - " + c.address + " : " + c.port);
-        log.appendToLog("User - " + socket.id);
-        log.appendToLog("++++++++++++++++++++++++++++++++++++++++++++++++++++");
-
         // deteta quando o cliente se desconecta do servidor e e removido da lista do servidor
         socket.on('disconnect', function() {
             console.log("Client Disconnect...");
-            log.appendToLog("Client Disconnect...");
         });
 
         var shell = cp.spawn('/bin/bash');
@@ -77,7 +70,6 @@ ServerSktIo.prototype.init = function() {
 //excepcoes para os erros encontrados
 //process.on('uncaughtException', function (err) {
 //   console.log('Excepcao capturada: ' + err);
-//   log.appendToLog('Excepcao capturada: ' + err);
 //});
 
 module.exports = ServerSktIo;

@@ -11,8 +11,7 @@ var mongoose = require('mongoose'),
     ini = require('ini'),
     fs = require('fs'),
     md5 = require('md5'),
-    btoa = require('btoa'),
-    log = require('./serverlog.js');
+    btoa = require('btoa');
 
 User = new User();
 Addr = new Addr();
