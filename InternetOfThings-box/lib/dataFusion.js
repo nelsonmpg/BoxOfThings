@@ -24,17 +24,19 @@ module.exports = {
 
     iterateMotes: function(err, nodes) {
         var allNotes = nodes;
-        for (var i in allNotes) {
-            var validKeys = [];
-            var keys = Object.keys(JSON.parse(JSON.stringify(allNotes[i].dataValues[0])));
-            for (var k in keys) {
-                if (keys[k] !== "_id" && keys[k] !== "readingDate") {
-                    validKeys.push(keys[k]);
+        if (allNotes.length > 0) {
+            for (var i in allNotes) {
+                var validKeys = [];
+                var keys = Object.keys(JSON.parse(JSON.stringify(allNotes[i].dataValues[0])));
+                for (var k in keys) {
+                    if (keys[k] !== "_id" && keys[k] !== "readingDate") {
+                        validKeys.push(keys[k]);
+                    }
                 }
+                module.exports.iterateMotesToKeys(validKeys, JSON.parse(JSON.stringify(allNotes[i])));
             }
-            module.exports.iterateMotesToKeys(validKeys, JSON.parse(JSON.stringify(allNotes[i])));
+            // Sesnor.removeAllRecords();
         }
-        // Sesnor.removeAllRecords();
     },
 
     iterateMotesToKeys: function(keys, mote) {
