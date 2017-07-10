@@ -111,7 +111,6 @@ function filterOutliers(someArray, key, resultObj) {
             if (resultObj.upperRangeOfReadingDate < parseISOString(values[i].readingDate)) {
                 resultObj.upperRangeOfReadingDate = dateTimeFormat(values[i].readingDate);
             }
-
         }
     }
     resultObj.Average = (averagecalc / carcountAverage).toFixed(2);

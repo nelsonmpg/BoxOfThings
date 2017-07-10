@@ -6,7 +6,7 @@ module.exports.connectDB = function(config) {
     // connect to mongo db
     mongoose.Promise = global.Promise;
     connStr = config.dataBaseType + '://' + config.host + '/' + config.dbname;
-    mongoose.connect(connStr, function(err) {
+    mongoose.connect(connStr, { useMongoClient: true }, function(err) {
         if (err) {
             throw err;
         }
