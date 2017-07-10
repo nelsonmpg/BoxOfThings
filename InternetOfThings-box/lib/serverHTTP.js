@@ -130,26 +130,8 @@ var callDataFusion = function() {
 
 var callHtmlPage = function() {
     dbToModels.removeOldRecords();
-
-    cp.exec("cat /var/log/6lbr.ip", function(error, stdout, stderr) {
-        if (error) {
-            console.log("Erro ao tentar ler o ficheiro /var/log/6lbr.ip.".red);
-            return;
-        }
-        console.log("http://[" + stdout.replace(/\n|\t/g, "") + "]");
-        var options = { method: 'HEAD', host: "http://[" + stdout.replace(/\n|\t/g, "") + "]/network.html", port: 80, path: '/' },
-            req = http.request(options, function(r) {
-                console.log(JSON.stringify(r.headers));
-            });
-        req.end();
-
-
-    });
-
-
-
     // try {
-    //     osquerys.getHtmlText({ params: { page: 'network.html' } }, null);
+        osquerys.getHtmlText({ params: { page: 'network.html' } }, null);
     // } catch (e) {
     //     console.log("Html não carregado.");
     // }
