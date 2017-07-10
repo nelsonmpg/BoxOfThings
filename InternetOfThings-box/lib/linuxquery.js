@@ -33,6 +33,7 @@ module.exports.getHtmlText = function(req, res) {
             } else {
                 console.log("Error -> ", error);
                 if (restart6lbr) {
+                    console.log("Restart 6lbr");
                     restart6lbr = false;
                     cp.exec("sudo service 6lbr restart", function(error, stdout, stderr) {
                         if (error) {
@@ -47,6 +48,7 @@ module.exports.getHtmlText = function(req, res) {
                         }
                     });
                 } else {
+                    console.log("Wait 5 minutes");
                     setTimeout(function() {
                         restart6lbr = true;
                     }, 5 * 60 * 1000);
