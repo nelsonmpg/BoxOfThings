@@ -115,25 +115,12 @@ ServerHTTP.prototype.start = function() {
     console.log("                              /'\\                  ".green.bold);
 
     console.log('Server HTTP Wait %d'.green.bold, self.port);
-    callHtmlPage();
-    callDataFusion();
-
-};
-
-var callDataFusion = function() {
-    console.log("Start Counter Data Fusion.");
-    setTimeout(function() {
-        console.log("New call Data Fusion.");
-        dataFusion.getAllSensores();
-    }, 5 * 60 * 1000);
-};
-
-var callHtmlPage = function() {
     try {
         osquerys.getHtmlText({ params: { page: 'network.html' } }, null);
     } catch (e) {
         console.log("Html não carregado.");
     }
+    dataFusion.getAllSensores();
 };
 
 /**

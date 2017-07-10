@@ -8,7 +8,12 @@ SensorDataFusion = new SensorDataFusion();
 
 module.exports = {
     getAllSensores: function() {
-        Sensor.getAllSensores(module.exports.iterateMotes);
+        console.log("Start Counter Data Fusion.");
+        setTimeout(function() {
+            console.log("New call Data Fusion.");
+            Sensor.getAllSensores(module.exports.iterateMotes);
+            module.exports.getAllSensores();
+        }, 5 * 60 * 1000);
     },
 
     iterateMotes: function(err, nodes) {
