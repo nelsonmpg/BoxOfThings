@@ -36,16 +36,23 @@ module.exports.getHtmlText = function(req, res) {
             } else {
                 console.log("Error -> ", error);
                 console.log("Restart 6lbr");
-                cp.exec("sudo service 6lbr restart", function(error, stdout, stderr) {
+                cp.exec("sudo route -A inet6 add aaaa::/64 gw bbbb::100", function(error, stdout, stderr) {
                     if (error) {
-                        console.log("Erro ao tentar reiniciar o serviço 6lbr.".red);
-                        return;
-                    }
-                    console.log("A reiniciar o serviço 6lbr.".green);
-                    if (!res) {
-                        setTimeout(function() {
-                            self.getHtmlText({ params: { page: 'network.html' } }, null);
-                        }, 60 * 1000);
+                        console.log("Erro ao tentar adicionar a rota.");
+                    } else {
+                        console.log("A rota foi adicionada com sucesso.");
+                        cp.exec("sudo service 6lbr restart", function(error, stdout, stderr) {
+                            if (error) {
+                                console.log("Erro ao tentar reiniciar o serviço 6lbr.".red);
+                                return;
+                            }
+                            console.log("A reiniciar o serviço 6lbr.".green);
+                            if (!res) {
+                                setTimeout(function() {
+                                    self.getHtmlText({ params: { page: 'network.html' } }, null);
+                                }, 1 * 60 * 1000);
+                            }
+                        });
                     }
                 });
             }
