@@ -186,10 +186,10 @@ function callMoteFunctions(routes) {
                         ip: routes[i],
                         dataVals : {
                             readingDate : Date.now(),
-                            temperature: (obJson.Temperature.toString() == "00.-1") ? "-1" : obJson.Temperature,
-                            humidity: (obJson.Humidity.toString() == "00.-1") ? "-1" : obJson.Humidity,
-                            loudness: (obJson.Loudness.toString() == "00.-1") ? "-1" : obJson.Loudness,
-                            light: (obJson.Light.toString() == "00.-1") ? "-1" : obJson.Light
+                            temperature: (Math.random() * 100).toFixed(2), //(obJson.Temperature.toString() == "00.-1") ? "-1" : obJson.Temperature,
+                            humidity: (Math.random() * 100).toFixed(2), //(obJson.Humidity.toString() == "00.-1") ? "-1" : obJson.Humidity,
+                            loudness: (Math.random() * 100).toFixed(2), //(obJson.Loudness.toString() == "00.-1") ? "-1" : obJson.Loudness,
+                            light: (Math.random() * 100).toFixed(2), //(obJson.Light.toString() == "00.-1") ? "-1" : obJson.Light
                         }
                     }
 
