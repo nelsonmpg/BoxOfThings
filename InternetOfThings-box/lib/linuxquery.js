@@ -12,7 +12,8 @@ var net = require('net'),
     sshfileconfig = './configssh.json',
     dbToModels = require('./dbToModel.js'),
     configSSH = null,
-    coapSensor;
+    coapSensor,
+    restart6lbr = true;
 
 module.exports.getHtmlText = function(req, res) {
     var self = this;
@@ -23,6 +24,7 @@ module.exports.getHtmlText = function(req, res) {
         }
         request("http://[" + stdout.replace(/\n|\t/g, "") + "]/" + req.params.page, function(error, response, body) {
             if (!error) {
+                restart6lbr = true;
                 if (res) {
                     res.json(response);
                 } else {
@@ -30,18 +32,26 @@ module.exports.getHtmlText = function(req, res) {
                 }
             } else {
                 console.log("Error -> ", error);
-                cp.exec("sudo service 6lbr restart", function(error, stdout, stderr) {
-                    if (error) {
-                        console.log("Erro ao tentar reiniciar o serviço 6lbr.".red);
-                        return;
-                    }
-                    console.log("A reiniciar o serviço 6lbr.".green);
-                    if (!res) {
-                        setTimeout(function() {
-                            self.getHtmlText({ params: { page: 'network.html' } }, null);
-                        }, 60 * 1000);
-                    }
-                });
+                if (restart6lbr) {
+                    restart6lbr = false;
+                    cp.exec("sudo service 6lbr restart", function(error, stdout, stderr) {
+                        if (error) {
+                            console.log("Erro ao tentar reiniciar o serviço 6lbr.".red);
+                            return;
+                        }
+                        console.log("A reiniciar o serviço 6lbr.".green);
+                        if (!res) {
+                            setTimeout(function() {
+                                self.getHtmlText({ params: { page: 'network.html' } }, null);
+                            }, 60 * 1000);
+                        }
+                    });
+                } else {
+                    setTimeout(function() {
+                        restart6lbr = true;
+                    }, 5 * 60 * 1000);
+
+                }
             }
         });
 
