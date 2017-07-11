@@ -31,7 +31,7 @@ module.exports.getHtmlText = function(req, res) {
                         dbToModels.removeOldRecords();
                         console.log("New call html page.");
                         module.exports.getHtmlText({ params: { page: 'network.html' } }, null);
-                    }, 20 * 1000);
+                    }, 10 * 1000);
                 }
             } else {
                 console.log("Error -> ", error);
