@@ -106,7 +106,7 @@ function filterOutliers(someArray, key, resultObj) {
 
     // Then filter anything beyond or beneath these values.
     // var filteredValues = [];
-    var averagecalc = 0;
+    var averagecalc = 0.0;
     var countAverage = 0;
     for (var i = values.length - 1; i >= 0; i--) {
         tmp = parseFloat(values[i][key]);
@@ -134,6 +134,7 @@ function filterOutliers(someArray, key, resultObj) {
             }
         }
     }
+    console.log("Teste --------------------------------------- ", averagecalc, countAverage);
     resultObj.Average = (averagecalc / countAverage).toFixed(2);
 
     return resultObj;
