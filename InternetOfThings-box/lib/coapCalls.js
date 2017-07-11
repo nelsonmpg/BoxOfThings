@@ -210,9 +210,9 @@ var callMoteFunctions = function(routes) {
             getdataFromSensorReq(routes[i], ".well-known", "core", "", "", "GET", false, key, function(data) {
                 try {
                     console.log(data);
-                    var metodosReceive = getMoteMethods(routes[i], data);
-                    console.log(util.inspect(metodosReceive, false, null, true));
-                    Sensor.insertSensormethods(metodosReceive.ip, metodosReceive);
+                    var methodsReceive = getMoteMethods(routes[i], data);
+                    console.log(util.inspect(methodsReceive, false, null, true));
+                    Sensor.insertSensorMethods(methodsReceive.ip, methodsReceive);
                 } catch (e) {
                     console.error(e);
                 }
