@@ -23,7 +23,7 @@ module.exports = {
         // // console.log("\nSimular insert:\n", obj);
         // Sensor.insertOrUpdate(obj);
         // Sensor.insertSensorMetodos(obj.ip, [ {folder: "teste2",resource : "456456"}, {folder: "teste4",resource : "999999"}]);
-
+console.log(dateTimeFormat(new Date()));
         console.log("Start Counter Data Fusion.");
         setTimeout(function() {
             console.log("New call Data Fusion.");
@@ -106,22 +106,22 @@ function filterOutliers(someArray, key, resultObj) {
     // Then filter anything beyond or beneath these values.
     // var filteredValues = [];
     var averagecalc = 0;
-    carcountAverage = 0;
+    var countAverage = 0;
     for (var i = values.length - 1; i >= 0; i--) {
         tmp = parseFloat(values[i][key]);
         if ((tmp <= maxValue) && (tmp >= minValue)) {
-            var valaux = (parseFloat(values[i][key]).toFixed(2));
-            averagecalc += valaux;
-            carcountAverage++;
+            var valAux = parseFloat(values[i][key]).toFixed(2);
+            averagecalc += valAux;
+            countAverage++;
 
-            if (resultObj.Max < valaux) {
+            if (resultObj.Max < valAux) {
                 resultObj.dateOfMax = dateTimeFormat(values[i].readingDate);
-                resultObj.Max = valaux;
+                resultObj.Max = valAux;
             }
 
-            if (resultObj.Min > valaux) {
+            if (resultObj.Min > valAux) {
                 resultObj.dateOfMin = dateTimeFormat(values[i].readingDate);
-                resultObj.Min = valaux;
+                resultObj.Min = valAux;
             }
 
             if (resultObj.lowerRangeOfReadingDate > parseISOString(values[i].readingDate)) {
@@ -133,7 +133,7 @@ function filterOutliers(someArray, key, resultObj) {
             }
         }
     }
-    resultObj.Average = (averagecalc / carcountAverage).toFixed(2);
+    resultObj.Average = (averagecalc / countAverage).toFixed(2);
 
     return resultObj;
 };
@@ -146,27 +146,18 @@ function dateTimeFormat(date) {
         date = parseISOString(date);
     }
     day = date.getDate();
-    if (day.toString().length === 1) {
-        day = "0" + day;
-    }
     var month = date.getMonth() + 1;
-    if (month.toString().length === 1) {
-        month = "0" + month;
-    }
     var year = date.getFullYear();
     var hour = date.getHours();
-    if (hour.toString().length === 1) {
-        hour = "0" + hour;
-    }
     var minute = date.getMinutes();
-    if (minute.toString().length === 1)
-        minute = "0" + minute;
     var second = date.getSeconds();
-    if (second.toString().length === 1) {
-        second = "0" + second;
-    }
-    var dT = day + "-" + month + "-" + year + " " + hour + ":" + minute + ":" + second;
-    return dT;
+
+    return year + "-" +     
+        (month.toString().length === 1 ? "0" + month : month) + "-" + 
+        (day.toString().length === 1 ? "0" + day : day) + " " + 
+        (hour.toString().length === 1 ? "0" + hour : hour) + ":" + 
+        (minute.toString().length === 1 ? "0" + minute : minute) + ":" + 
+        (second.toString().length === 1 ? "0" + second : second);
 }
 
 function parseISOString(s) {
