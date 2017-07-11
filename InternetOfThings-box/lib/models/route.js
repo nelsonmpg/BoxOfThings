@@ -28,7 +28,6 @@ Route.prototype.getAllAdressDistinct = function(res) {
         if (err) {
             console.log("Erro ao tentar ler todos as Routes.\n" + err);
         } else {
-            console.log(result);
             if (typeof res === "function") {
                 res(result);
             } else {
