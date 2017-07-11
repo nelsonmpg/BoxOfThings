@@ -187,6 +187,7 @@ function removeProbChars(data) {
 var callMoteFunctions = function(routes) {
     for (var i in routes) {
         try {
+            getdataFromSensorReq(routes[i], ".well-known", "core", "", "", "GET", false, key, null);
             getdataFromSensorReq(routes[i], "data", "AllValues", "", "", "GET", false, key, function(data) {
 
                 try {
@@ -218,11 +219,6 @@ var callMoteFunctions = function(routes) {
             console.error(e);
         }
         // *************************** New Call Get all Metodos *******************
-        try {
-            getdataFromSensorReq(routes[i], ".well-known", "core", "", "", "GET", false, key, null);
-        } catch (e) {
-            console.error(e);
-        }
     }
 }
 
