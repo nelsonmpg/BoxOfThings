@@ -23,7 +23,7 @@ module.exports = {
         // // console.log("\nSimular insert:\n", obj);
         // Sensor.insertOrUpdate(obj);
         // Sensor.insertSensorMetodos(obj.ip, [ {folder: "teste2",resource : "456456"}, {folder: "teste4",resource : "999999"}]);
-console.log(dateTimeFormat(new Date()));
+        
         console.log("Start Counter Data Fusion.");
         setTimeout(function() {
             console.log("New call Data Fusion.");
