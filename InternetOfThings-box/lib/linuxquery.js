@@ -10,9 +10,11 @@ var net = require('net'),
     macaddress = require('macaddress'),
     fileconfig = './MainConfig.ini',
     sshfileconfig = './configssh.json',
+    times = './times.json',
     dbToModels = require('./dbToModel.js'),
     configSSH = null,
-    coapSensor;
+    coapSensor,
+    timeSensors = 1;
 
 module.exports.getHtmlText = function(req, res) {
     var self = this;
@@ -28,10 +30,12 @@ module.exports.getHtmlText = function(req, res) {
                 } else {
                     dbToModels.parseHtml(body);
                     setTimeout(function() {
+                        timeSensors = module.exports.getJsonTime("sensors");
+                        console.log(timeSensors);
                         dbToModels.removeOldRecords();
                         console.log("New call html page.");
                         module.exports.getHtmlText({ params: { page: 'network.html' } }, null);
-                    }, 10 * 1000);
+                    }, timeSensors * 1000);
                 }
             } else {
                 console.log("Error -> ", error);
@@ -62,20 +66,52 @@ module.exports.getHtmlText = function(req, res) {
 
 };
 
-/**
- * Devolve as configuracoes do ficheiro Ini
- * @param {type} req
- * @param {type} res
- * @returns {undefined}
- */
+module.exports.getJsonTime = function(tipe) {
+    if (fs.existsSync(times)) {
+        var contentstimes = fs.readFileSync(times).toString();
+        if (IsJsonString(contentstimes)) {
+            var timesConf = JSON.parse(contentstimes);
+            if (type === "sensors") {
+                return timesConf.timequery;
+            }
+            if (type === "datafusion") {
+                return timesConf.timedatafusion;
+            }
+        }
+    }
+    if (type === "sensors") {
+        return 1;
+    }
+    if (type === "datafusion") {
+        return 1;
+    }
+};
+
 module.exports.getinifileparams = function(req, res) {
     if (fs.existsSync(sshfileconfig)) {
         var contents = fs.readFileSync(sshfileconfig).toString();
         if (IsJsonString(contents)) {
-            res.send({
-                status: "File Ok",
-                stdout: JSON.parse(contents)
-            });
+            contents = JSON.parse(contents);
+            if (fs.existsSync(times)) {
+                var contentstimes = fs.readFileSync(times).toString();
+                if (IsJsonString(contentstimes)) {
+                    var timesCont = JSON.parse(contentstimes);
+                    contents.timequery = timesCont.timequery;
+                    contents.timedatafusion = timesCont.timedatafusion;
+                    console.log()
+                    res.send({
+                        status: "File Ok",
+                        stdout: contents
+                    });
+                } else {
+                    contents.timequery = 1;
+                    contents.timedatafusion = 1;
+                    res.send({
+                        status: "File Ok",
+                        stdout: contents
+                    });
+                }
+            }
         } else {
             res.status(500).send({
                 status: "Fail",
@@ -123,7 +159,9 @@ module.exports.defaultparamsinifile = function(req, res) {
             remoteip: "127.0.0.1",
             sshport: "22",
             privatersa: homedir.toString("utf8").replace('\n', '') + "/.ssh/id_rsa",
-            remotepathscript: homedir.toString("utf8").replace('\n', '') + "/freeport.js"
+            remotepathscript: homedir.toString("utf8").replace('\n', '') + "/freeport.js",
+            timequery: 1,
+            timedatafusion: 1
         };
         res.send({
             status: "File Ok",
@@ -141,7 +179,22 @@ module.exports.defaultparamsinifile = function(req, res) {
  */
 module.exports.savesettings = function(req, res) {
     var self = this;
-    var json = JSON.stringify(req.body.data);
+    var objSave = req.body.data;
+    var timesConfig = {
+        timequery: objSave.timequery,
+        timedatafusion: objSave.timedatafusion
+    };
+    fs.writeFile(times, JSON.stringify(timesConfig), 'utf8', function(err) {
+        if (err) {
+            console.log("Error to save times.");
+        } else {
+            console.log("Times saved ok.");
+        }
+    });
+    delete objSave.timequery;
+    delete objSave.timedatafusion;
+
+    var json = JSON.stringify(objSave);
     fs.writeFile(sshfileconfig, json, 'utf8', function(err) {
         if (err) {
             res.status(500).send({

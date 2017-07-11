@@ -1,6 +1,8 @@
 var mongoose = require('mongoose'),
     Sensor = require('./models/sensor.js'),
-    SensorDataFusion = require("./models/sensorDataFusion");
+    SensorDataFusion = require("./models/sensorDataFusion"),
+    linuxquery = require("./linuxquery.js"),
+    timeDatafusion = 1;
 var util = require('util');
 
 Sensor = new Sensor();
@@ -24,12 +26,14 @@ module.exports = {
         // Sensor.insertOrUpdate(obj);
         // Sensor.insertSensorMetodos(obj.ip, [ {folder: "teste2",resource : "456456"}, {folder: "teste4",resource : "999999"}]);
 
-        console.log("Start Counter Data Fusion.");
+        console.log("Start Counter Data Fusion.");        
         setTimeout(function() {
+            timeDatafusion = linuxquery.getJsonTime("datafusion");
+            console.log(timeDatafusion);
             console.log("New call Data Fusion.");
             Sensor.getAllSensores(module.exports.iterateMotes);
             module.exports.getAllSensores();
-        }, 5 * 60 * 1000);
+        }, timeDatafusion * 60 * 1000);
     },
 
     iterateMotes: function(err, nodes) {

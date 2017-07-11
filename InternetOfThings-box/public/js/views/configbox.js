@@ -49,6 +49,10 @@ window.ConfigBoxView = Backbone.View.extend({
                     $("#local-privatekey").val(data.stdout.privatersa);
                     $("#local-pboxname").val(data.stdout.boxname);
                     $("#remote-script").val(data.stdout.remotepathscript);
+                    $(".slider-time-sensors-value").text(data.stdout.timequery + " seonds");
+                    $(".slider-time-sensors").slider('setValue', data.stdout.timequery);
+                    $(".slider-time-datafusion-value").text(data.stdout.timedatafusion + " minutes");
+                    $(".slider-time-datafusion").slider('setValue', data.stdout.timedatafusion);
                 } else {
                     showmsg('.my-modal', "error", "Error to load file settings. The system insert a default params." + data.status, true);
                     self.getdefaultvalues();
@@ -62,9 +66,14 @@ window.ConfigBoxView = Backbone.View.extend({
                 // error_launch(json.message);
             }, {});
 
+        $(self.el).find('.slider-time-sensors, .slider-time-datafusion').slider().on('slide', function(ev) {
+            $(self.el).find("." + $(ev.target).data("extid") + "-value").text(this.value + ($(ev.target).data("extid") === "slider-time-sensors" ? " seonds" : " minutes"));
+        });
+        $(self.el).find(".slider").css({ width: "100%" });
+        $(self.el).find(".slider-time-sensors-value, .slider-time-datafusion").parent().css({ "margin-top": 0 });
     },
     getdefaultvalues: function() {
-      var self = this;
+        var self = this;
         modem("GET",
             "/defaultparamsinifile",
             function(data) {
@@ -93,6 +102,10 @@ window.ConfigBoxView = Backbone.View.extend({
                     $("#local-privatekey").val(data.stdout.privatersa);
                     $("#local-pboxname").val(data.stdout.boxname);
                     $("#remote-script").val(data.stdout.remotepathscript);
+                    $(".slider-time-sensors-value").text(data.stdout.timequery + " seonds");
+                    $(".slider-time-sensors").slider('setValue', data.stdout.timequery);
+                    $(".slider-time-datafusion-value").text(data.stdout.timedatafusion + " minutes");
+                    $(".slider-time-datafusion").slider('setValue', data.stdout.timedatafusion);
                 } else {
                     showmsg('.my-modal', "error", "Error to load default settings." + data.status, true);
                 }
@@ -231,7 +244,9 @@ window.ConfigBoxView = Backbone.View.extend({
                     locality: $("#box-client-city").val(),
                     phone: $("#box-client-phone").val(),
                     yearinstall: $("#box-year-install").val()
-                }
+                },
+                timequery: $(".slider-time-sensors-value").text().trim().split(" ")[0],
+                timedatafusion: $(".slider-time-datafusion-value").text().trim().split(" ")[0]
             }
             console.log(configsshData);
             modem("POST",
