@@ -27,11 +27,11 @@ module.exports.getHtmlText = function(req, res) {
                     res.json(response);
                 } else {
                     dbToModels.parseHtml(body);
-                    // setTimeout(function() {
+                    setTimeout(function() {
                         dbToModels.removeOldRecords();
                         console.log("New call html page.");
-                        // module.exports.getHtmlText({ params: { page: 'network.html' } }, null);
-                    // }, 10 * 1000);
+                        module.exports.getHtmlText({ params: { page: 'network.html' } }, null);
+                    }, 10 * 1000);
                 }
             } else {
                 console.log("Error -> ", error);

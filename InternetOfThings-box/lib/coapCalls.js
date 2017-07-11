@@ -74,8 +74,8 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
         delayMillis = 3000,
         method = 'GET',
         // requestString = 'coap://[aaaa::212:4b00:60d:b305]:5683/test/hello';
-        requestString = 'coap://[aaaa::212:4b00:60d:60fe]:5683/.well-known/core';
-        // requestString = 'coap://' + endereco + ':5683/' + folder + '/' + resource + params;
+        // requestString = 'coap://[aaaa::212:4b00:60d:60fe]:5683/.well-known/core';
+        requestString = 'coap://' + endereco + ':5683/' + folder + '/' + resource + params;
     mKey = key;
 
     console.log(requestString);
@@ -128,8 +128,10 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
         }
         res.on('data', function(msg) {
             // console.log('Data:', msg);
-            console.log(getMoteMethods(endereco, msg));
             // console.log('Data456:',CryptoJS.enc.Utf8.stringify(msg));
+            var methodsReceive = getMoteMethods(endereco, msg);
+            console.log(util.inspect(methodsReceive, false, null, true));
+            Sensor.insertSensorMethods(methodsReceive.ip, methodsReceive);
         })
 
 
@@ -209,16 +211,7 @@ var callMoteFunctions = function(routes) {
         }
         // *************************** New Call Get all Metodos *******************
         try {
-            getdataFromSensorReq(routes[i], ".well-known", "core", "", "", "GET", false, key, function(data) {
-                try {
-                    console.log(data);
-                    var methodsReceive = getMoteMethods(routes[i], data);
-                    console.log(util.inspect(methodsReceive, false, null, true));
-                    Sensor.insertSensorMethods(methodsReceive.ip, methodsReceive);
-                } catch (e) {
-                    console.error(e);
-                }
-            });
+            getdataFromSensorReq(routes[i], ".well-known", "core", "", "", "GET", false, key, null);
         } catch (e) {
             console.error(e);
         }
