@@ -4,6 +4,9 @@
 *..swp
 */node_modules/
 /node_modules/
+node_modules/
+nodeApi/node_modules/
+Scripts a integrar/Farinha/node_modules/
 InternetOfThings-box/node_modules/
 InternetOfThings-box/npm-debug.log
 InternetOfThings-box/*.ini
