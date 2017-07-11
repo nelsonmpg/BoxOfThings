@@ -110,20 +110,24 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
             // console.log(CryptoJS.enc.Hex.stringify(decrypted3));
             // console.log(CryptoJS.enc.Utf8.stringify(decrypted3));
 
-            if (response instanceof http.ServerResponse) {
-                response.json(CryptoJS.enc.Utf8.stringify(decrypted3).replace(replaceRegex, ''));
-            } else if (typeof response === "object") {
-                response.write(JSON.stringify(CryptoJS.enc.Utf8.stringify(decrypted3).replace(replaceRegex, '')));
-            } else {
-                response(CryptoJS.enc.Utf8.stringify(decrypted3));
+            if (response) {
+                if (response instanceof http.ServerResponse) {
+                    response.json(CryptoJS.enc.Utf8.stringify(decrypted3).replace(replaceRegex, ''));
+                } else if (typeof response === "object") {
+                    response.write(JSON.stringify(CryptoJS.enc.Utf8.stringify(decrypted3).replace(replaceRegex, '')));
+                } else {
+                    response(CryptoJS.enc.Utf8.stringify(decrypted3));
+                }
             }
         } catch (err) {
-            if (response instanceof http.ServerResponse) {
-                response.send(err);
-            } else if (typeof response === "object") {
-                response.write(JSON.stringify(err));
-            } else {
-                response(JSON.stringify(err));
+            if (response) {
+                if (response instanceof http.ServerResponse) {
+                    response.send(err);
+                } else if (typeof response === "object") {
+                    response.write(JSON.stringify(err));
+                } else {
+                    response(JSON.stringify(err));
+                }
             }
         }
         res.on('data', function(msg) {
@@ -141,12 +145,14 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
                 process.stderr.write('\x1b[1m(' + res.code + ')\x1b[0m\n');
                 console.log(res.payload);
                 console.log("Teste - " + res.payload);
-                if (response instanceof http.ServerResponse) {
-                    response.json(res.payload);
-                } else if (typeof response === "object") {
-                    response.write(JSON.stringify(res.payload));
-                } else {
-                    response(JSON.stringify(res.payload));
+                if (response) {
+                    if (response instanceof http.ServerResponse) {
+                        response.json(res.payload);
+                    } else if (typeof response === "object") {
+                        response.write(JSON.stringify(res.payload));
+                    } else {
+                        response(JSON.stringify(res.payload));
+                    }
                 }
             }
         } catch (e) {
