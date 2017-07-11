@@ -8,6 +8,22 @@ SensorDataFusion = new SensorDataFusion();
 
 module.exports = {
     getAllSensores: function() {
+        // var obj = {
+        //     ip: "[456:456:456:456:456]",
+        //     metodos : [],
+        //     dataVals : {
+        //         readingDate : Date.now(),
+        //         temperature: (Math.random() * 100).toFixed(2), //(obJson.Temperature.toString() == "00.-1") ? "-1" : obJson.Temperature,
+        //         humidity: (Math.random() * 100).toFixed(2), //(obJson.Humidity.toString() == "00.-1") ? "-1" : obJson.Humidity,
+        //         loudness: (Math.random() * 100).toFixed(2), //(obJson.Loudness.toString() == "00.-1") ? "-1" : obJson.Loudness,
+        //         light: (Math.random() * 100).toFixed(2), //(obJson.Light.toString() == "00.-1") ? "-1" : obJson.Light
+        //     }
+        // }
+
+        // // console.log("\nSimular insert:\n", obj);
+        // Sensor.insertOrUpdate(obj);
+        // Sensor.insertSensorMetodos(obj.ip, [ {folder: "teste2",resource : "456456"}, {folder: "teste4",resource : "999999"}]);
+
         console.log("Start Counter Data Fusion.");
         setTimeout(function() {
             console.log("New call Data Fusion.");
@@ -28,7 +44,7 @@ module.exports = {
                     }
                 }
                 module.exports.iterateMotesToKeys(validKeys, JSON.parse(JSON.stringify(allNotes[i])));
-                Sensor.removeAllRecords('{"ip" : ' + allNotes[i].ip + '}');
+                Sensor.removeAllRecords('{"ip" : "' + allNotes[i].ip + '"}');
             }
         }
     },
@@ -56,10 +72,9 @@ module.exports = {
             valForKey.values = filterOutliers(mote.dataValues, keys[key], valForKey.values);
             moteResult.readings.push(valForKey);
         }
-        console.log(util.inspect(moteResult, false, null));
+        console.log(util.inspect(moteResult, false, null, true));
         SensorDataFusion.insertDataFusion(moteResult);
     }
-
 };
 
 

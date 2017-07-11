@@ -5,6 +5,10 @@ Schema = mongoose.Schema;
 // create a schema Sensor
 var sensorSchema = new Schema({
     ip: { type: String },
+    metodos : [{
+        folder:  { type: String },
+        resource : { type: String }
+    }],
     dataValues : [{
         readingDate: { type: Date, default: Date.now },
         temperature: { type: String },
@@ -58,6 +62,16 @@ Sensor.prototype.removeAllRecords = function(params){
         }
         console.log("Remove all records", result);
     });
+};
+
+Sensor.prototype.insertSensorMetodos = function(moteip, sensorMetodos){
+ this.SensorDB.update({"ip" : moteip}, {$set : {metodos : sensorMetodos}}, {upsert: true}, function(err, result){
+    if (err) {
+        return;
+    }
+    console.log('Sensor metodos add / created!', result);
+});
+
 };
 
 module.exports = Sensor;

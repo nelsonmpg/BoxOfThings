@@ -8,6 +8,7 @@ Sensor = require('./models/sensor.js'),
 Route = require('./models/route.js'),
 key = CryptoJS.enc.Hex.parse('B007AFD752937AFF5A4192268A803BB7'),
 replaceRegex = /\u0000/gi;
+var util = require('util');
 
 Sensor = new Sensor();
 Route = new Route();
@@ -172,10 +173,10 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
     return normalString;
 }
 
-function callMoteFunctions(routes) {
+var callMoteFunctions = function(routes) {
     for (var i in routes) {
         try {
-            getdataFromSensorReq(routes[i], "data", "AllValues", "", "", "get", false, key, function(data) {
+            getdataFromSensorReq(routes[i], "data", "AllValues", "", "", "GET", false, key, function(data) {
 
                 try {
                     data = removeProbChars(data);
@@ -202,6 +203,59 @@ function callMoteFunctions(routes) {
                 }
             });
             //try fim do for
-        } catch (e) { console.error(e); }
+        } catch (e) { 
+            console.error(e); 
+        }
+        // *************************** New Call Get all Metodos *******************
+        try {
+            getdataFromSensorReq(routes[i], ".well-known", "core", "", "", "GET", false, key, function(data) { 
+                try {
+                    console.log(data);
+                    var metodosReceive = getMoteMethods(routes[i], data);
+                    console.log(util.inspect(metodosReceive, false, null, true));
+                    Sensor.insertSensorMetodos(metodosReceive.ip, metodosReceive);
+                } catch (e) {
+                    console.error(e);
+                }
+            });
+        } catch (e) { 
+            console.error(e); 
+        }
     }
 }
+
+var getMoteMethods = function(ipDoMote, data){
+    // resource/.well-known/core
+    //Trocar isto pela chamada da função getdatalalalalas
+    //ou seja, chamar a função e enviar para aqui por param (data) os dados desencriptados
+    // var data = '</.well-known/core>;ct=40,</test/ola>;title="Olá Mundo1: ?len=0..";rt="Text",</test/hello>;title="Hello world: ?len=0..";rt="Text",</actuators/leds>;title="LEDs: ?color=r|g|b, POST/PUT mode=on|off";rt="Control",</actuators/toggle>;title="Red LED";rt="Control",</sensors/button>;title="Event demo";obs,</test/separate>;title="Separate demo",</test/push>;title="Periodic demo";obs,</test/sub>;title="Sub-resource demo",</sensors/sht25>;title="Temperature and Humidity";rt="SHT25",</sensors/zoul>;title="Zoul on-board sensors";rt="zoul"',
+    //Para chamar a função usar isto:
+    //GET
+    //FOLDER: .well-known
+    //RESOURCE: core
+    // requestString = 'coap://[aaaa::212:4b00:60d:b305]:5683/.well-known/core';
+    // var getdataFromSensorReq = function("[aaaa::212:4b00:60d:b305]", ".well-known", "core", "", "", "GET", "", "", "") {
+
+        resSplit = data.split(','),
+        values = [];
+        for(var i = 0; i < resSplit.length; i++){
+            if(resSplit[i].startsWith("<")){
+                var lastIndex = resSplit[i].lastIndexOf('>');
+                values.push(resSplit[i].substr(1, lastIndex));
+            }   
+        }
+
+        var objectToInsert = {ip : ipDoMote},
+        dataArray = [];
+
+        for(var i = 0; i < values.length; i++){
+            var lineVals = values[i].split('/'),
+            obj = {
+                folder: lineVals[1],
+                resource : lineVals[2]
+            };
+            dataArray.push(obj);
+        }
+        objectToInsert.data = dataArray;
+        return objectToInsert;
+    }
