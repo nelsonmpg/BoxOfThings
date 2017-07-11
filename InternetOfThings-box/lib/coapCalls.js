@@ -253,7 +253,7 @@ var getMoteMethods = function(ipDoMote, data) {
         var lineVals = values[i].split('/'),
             obj = {
                 folder: lineVals[1],
-                resource: lineVals[2]
+                resource: lineVals[2].replace(/>/g, "")
             };
         dataArray.push(obj);
     }
