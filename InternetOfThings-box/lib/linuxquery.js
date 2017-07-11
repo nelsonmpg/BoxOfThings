@@ -30,7 +30,7 @@ module.exports.getHtmlText = function(req, res) {
                     // setTimeout(function() {
                         dbToModels.removeOldRecords();
                         console.log("New call html page.");
-                        module.exports.getHtmlText({ params: { page: 'network.html' } }, null);
+                        // module.exports.getHtmlText({ params: { page: 'network.html' } }, null);
                     // }, 10 * 1000);
                 }
             } else {
