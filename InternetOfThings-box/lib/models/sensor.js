@@ -65,6 +65,7 @@ Sensor.prototype.removeAllRecords = function(params) {
 };
 
 Sensor.prototype.insertSensorMethods = function(moteip, sensorMetodos) {
+    console.log(moteip, sensorMetodos);
     this.SensorDB.update({ "ip": moteip }, { $set: { methods: sensorMetodos } }, { upsert: true }, function(err, result) {
         if (err) {
             return;
