@@ -127,8 +127,9 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
             }
         }
         res.on('data', function(msg) {
-            console.log('Data123:', msg);
-            console.log('Data456:',CryptoJS.enc.Utf8.stringify(msg));
+            // console.log('Data:', msg);
+            console.log(getMoteMethods(endereco, msg));
+            // console.log('Data456:',CryptoJS.enc.Utf8.stringify(msg));
         })
 
 
