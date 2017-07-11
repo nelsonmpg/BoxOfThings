@@ -66,7 +66,7 @@ module.exports.getHtmlText = function(req, res) {
 
 };
 
-module.exports.getJsonTime = function(tipe) {
+module.exports.getJsonTime = function(type) {
     if (fs.existsSync(times)) {
         var contentstimes = fs.readFileSync(times).toString();
         if (IsJsonString(contentstimes)) {
