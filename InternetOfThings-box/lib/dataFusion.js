@@ -112,7 +112,7 @@ function filterOutliers(someArray, key, resultObj) {
         tmp = parseFloat(values[i][key]);
         if ((tmp <= maxValue) && (tmp >= minValue)) {
             var valAux = parseFloat(values[i][key]).toFixed(2);
-            averagecalc += valAux;
+            averagecalc += valAux * 1;
             countAverage++;
 
             if (resultObj.Max < valAux) {
@@ -134,7 +134,6 @@ function filterOutliers(someArray, key, resultObj) {
             }
         }
     }
-    console.log("Teste --------------------------------------- ", averagecalc, countAverage);
     resultObj.Average = (averagecalc / countAverage).toFixed(2);
 
     return resultObj;
