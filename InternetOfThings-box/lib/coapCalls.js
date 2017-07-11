@@ -247,12 +247,14 @@ var getMoteMethods = function(ipDoMote, data) {
         dataArray = [];
 
     for (var i = 0; i < values.length; i++) {
-        var lineVals = values[i].split('/'),
-            obj = {
+        var lineVals = values[i].split('/');
+        if (lineVals.length > 1) {
+            var obj = {
                 folder: lineVals[1],
                 resource: lineVals[2].replace(/>/g, "")
             };
-        dataArray.push(obj);
+            dataArray.push(obj);
+        }
     }
     objectToInsert.data = dataArray;
     return objectToInsert;
