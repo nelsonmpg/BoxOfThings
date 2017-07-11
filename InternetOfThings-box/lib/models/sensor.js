@@ -1,15 +1,15 @@
 // grab the things we need
 var mongoose = require('mongoose'),
-Schema = mongoose.Schema;
+    Schema = mongoose.Schema;
 
 // create a schema Sensor
 var sensorSchema = new Schema({
     ip: { type: String },
-    metodos : [{
-        folder:  { type: String },
-        resource : { type: String }
+    metodos: [{
+        folder: { type: String },
+        resource: { type: String }
     }],
-    dataValues : [{
+    dataValues: [{
         readingDate: { type: Date, default: Date.now },
         temperature: { type: String },
         humidity: { type: String },
@@ -40,9 +40,9 @@ Sensor.prototype.insertData = function(data) {
     });
 };
 
-Sensor.prototype.insertOrUpdate = function(data){
-    var self = this;    
-    self.SensorDB.update({"ip": data.ip}, { $push : {dataValues : data.dataVals}}, {upsert: true}, function(err, result){
+Sensor.prototype.insertOrUpdate = function(data) {
+    var self = this;
+    self.SensorDB.update({ "ip": data.ip }, { $push: { dataValues: data.dataVals } }, { upsert: true }, function(err, result) {
         if (err) {
             return;
         }
@@ -54,7 +54,7 @@ Sensor.prototype.getAllSensores = function(callback) {
     this.SensorDB.find({}, callback);
 };
 
-Sensor.prototype.removeAllRecords = function(params){
+Sensor.prototype.removeAllRecords = function(params) {
     this.SensorDB.remove(params, function(err, result) {
         if (err) {
             console.log("Error to remove all");
@@ -64,13 +64,13 @@ Sensor.prototype.removeAllRecords = function(params){
     });
 };
 
-Sensor.prototype.insertSensorMetodos = function(moteip, sensorMetodos){
- this.SensorDB.update({"ip" : moteip}, {$set : {metodos : sensorMetodos}}, {upsert: true}, function(err, result){
-    if (err) {
-        return;
-    }
-    console.log('Sensor metodos add / created!', result);
-});
+Sensor.prototype.insertSensorMetodos = function(moteip, sensorMetodos) {
+    this.SensorDB.update({ "ip": moteip }, { $set: { metodos: sensorMetodos } }, { upsert: true }, function(err, result) {
+        if (err) {
+            return;
+        }
+        console.log('Sensor metodos add / created!', result);
+    });
 
 };
 

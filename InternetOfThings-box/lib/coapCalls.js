@@ -1,13 +1,13 @@
 require('colors');
 var coap = require('coap'),
-http = require('http'),
-URL = require('url'),
-http = require('http'),
-CryptoJS = require("crypto-js"),
-Sensor = require('./models/sensor.js'),
-Route = require('./models/route.js'),
-key = CryptoJS.enc.Hex.parse('B007AFD752937AFF5A4192268A803BB7'),
-replaceRegex = /\u0000/gi;
+    http = require('http'),
+    URL = require('url'),
+    http = require('http'),
+    CryptoJS = require("crypto-js"),
+    Sensor = require('./models/sensor.js'),
+    Route = require('./models/route.js'),
+    key = CryptoJS.enc.Hex.parse('B007AFD752937AFF5A4192268A803BB7'),
+    replaceRegex = /\u0000/gi;
 var util = require('util');
 
 Sensor = new Sensor();
@@ -38,12 +38,12 @@ module.exports = {
     },
     getdataFromSensor: function(req, res) {
         var endereco = req.params.moteIp === "undefined" ? "" : req.params.moteIp,
-        folder = req.params.folder === "undefined" ? "" : req.params.folder,
-        resource = req.params.resource === "undefined" ? "" : req.params.resource,
-        params = req.params.params === "undefined" ? "" : req.params.params,
-        payload = req.params.payload === "undefined" ? "" : req.params.payload,
-        mMethod = req.params.mMethod === "undefined" ? "GET" : req.params.mMethod,
-        mObserve = req.params.mObserve === "undefined" ? "" : req.params.mObserve;
+            folder = req.params.folder === "undefined" ? "" : req.params.folder,
+            resource = req.params.resource === "undefined" ? "" : req.params.resource,
+            params = req.params.params === "undefined" ? "" : req.params.params,
+            payload = req.params.payload === "undefined" ? "" : req.params.payload,
+            mMethod = req.params.mMethod === "undefined" ? "GET" : req.params.mMethod,
+            mObserve = req.params.mObserve === "undefined" ? "" : req.params.mObserve;
 
         resource = resource.replace("§", "?");
         getdataFromSensorReq(endereco, folder, resource, params, payload, mMethod, mObserve, key, res);
@@ -61,8 +61,7 @@ module.exports = {
 
     mote_action: function(req, res) {
         console.log(req.params.moteIpreq.params.resource, req.params.color, req.params.mode);
-        getdataFromSensorReq(req.params.moteIp, 'actuators', req.params.resource, '?leds=' + req.params.color
-            , 'mode=' + req.params.mode, 'POST', false, key, res);
+        getdataFromSensorReq(req.params.moteIp, 'actuators', req.params.resource, '?leds=' + req.params.color, 'mode=' + req.params.mode, 'POST', false, key, res);
     }
 };
 
@@ -70,42 +69,42 @@ module.exports = {
 var getdataFromSensorReq = function(endereco, folder, resource, params, payload, mMethod, mObserve, key, response) {
 
     var req,
-    request = coap.request,
-    url,
-    delayMillis = 3000,
-    method = 'GET',
+        request = coap.request,
+        url,
+        delayMillis = 3000,
+        method = 'GET',
         // requestString = 'coap://[aaaa::212:4b00:60d:b305]:5683/test/hello';
         requestString = 'coap://' + endereco + ':5683/' + folder + '/' + resource + params;
-        mKey = key;
+    mKey = key;
 
-        console.log(requestString);
+    console.log(requestString);
 
-        url = URL.parse(requestString);
-        url.method = mMethod;
-        url.observe = mObserve;
-        url.confirmable = false;
+    url = URL.parse(requestString);
+    url.method = mMethod;
+    url.observe = mObserve;
+    url.confirmable = false;
 
-        coap.parameters.exchangeLifetime = 30;
+    coap.parameters.exchangeLifetime = 30;
 
-        req = request(url);
-        if (!mObserve) {
-            req.setOption('Block2', new Buffer([0x02]));
-        }
+    req = request(url);
+    if (!mObserve) {
+        req.setOption('Block2', new Buffer([0x02]));
+    }
 
-        req.on('response', function(res) {
-            res.setEncoding('utf8');
+    req.on('response', function(res) {
+        res.setEncoding('utf8');
 
-            var data = CryptoJS.enc.Hex.parse(res.payload.toString("hex"));
+        var data = CryptoJS.enc.Hex.parse(res.payload.toString("hex"));
 
-            var encrypted = {};
-            encrypted.key = mKey;
-            encrypted.ciphertext = data;
+        var encrypted = {};
+        encrypted.key = mKey;
+        encrypted.ciphertext = data;
 
-            var decrypted3 = CryptoJS.AES.decrypt(encrypted, mKey, {
-                mode: CryptoJS.mode.ECB,
-                padding: CryptoJS.pad.NoPadding
-            });
-            try {
+        var decrypted3 = CryptoJS.AES.decrypt(encrypted, mKey, {
+            mode: CryptoJS.mode.ECB,
+            padding: CryptoJS.pad.NoPadding
+        });
+        try {
             //console.log(CryptoJS.enc.Utf8.stringify(decrypted3));
             // console.log(CryptoJS.enc.Hex.stringify(decrypted3));
             // console.log(CryptoJS.enc.Utf8.stringify(decrypted3));
@@ -151,18 +150,18 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
         }
     });
 
-        if (method === 'GET' || method === 'DELETE' || payload) {
-            req.end(payload);
-        } else {
-            process.stdin.pipe(req);
-        }
+    if (method === 'GET' || method === 'DELETE' || payload) {
+        req.end(payload);
+    } else {
+        process.stdin.pipe(req);
     }
+}
 
-    function removeProbChars(data) {
-        var normalString = "";
-        for (var x = 0; x < data.length; ++x) {
-            var c = data.charCodeAt(x);
-            if (c >= 0 && c <= 31) {
+function removeProbChars(data) {
+    var normalString = "";
+    for (var x = 0; x < data.length; ++x) {
+        var c = data.charCodeAt(x);
+        if (c >= 0 && c <= 31) {
             //console.log( 'problematic character found at position ' + x);
             normalString = data.substring(0, x);
             break;
@@ -185,8 +184,8 @@ var callMoteFunctions = function(routes) {
                     /****************** O INSERT FUNCIONA ******************/
                     var obj = {
                         ip: routes[i],
-                        dataVals : {
-                            readingDate : Date.now(),
+                        dataVals: {
+                            readingDate: Date.now(),
                             temperature: (Math.random() * 100).toFixed(2), //(obJson.Temperature.toString() == "00.-1") ? "-1" : obJson.Temperature,
                             humidity: (Math.random() * 100).toFixed(2), //(obJson.Humidity.toString() == "00.-1") ? "-1" : obJson.Humidity,
                             loudness: (Math.random() * 100).toFixed(2), //(obJson.Loudness.toString() == "00.-1") ? "-1" : obJson.Loudness,
@@ -203,12 +202,12 @@ var callMoteFunctions = function(routes) {
                 }
             });
             //try fim do for
-        } catch (e) { 
-            console.error(e); 
+        } catch (e) {
+            console.error(e);
         }
         // *************************** New Call Get all Metodos *******************
         try {
-            getdataFromSensorReq(routes[i], ".well-known", "core", "", "", "GET", false, key, function(data) { 
+            getdataFromSensorReq(routes[i], ".well-known", "core", "", "", "GET", false, key, function(data) {
                 try {
                     console.log(data);
                     var metodosReceive = getMoteMethods(routes[i], data);
@@ -218,13 +217,13 @@ var callMoteFunctions = function(routes) {
                     console.error(e);
                 }
             });
-        } catch (e) { 
-            console.error(e); 
+        } catch (e) {
+            console.error(e);
         }
     }
 }
 
-var getMoteMethods = function(ipDoMote, data){
+var getMoteMethods = function(ipDoMote, data) {
     // resource/.well-known/core
     //Trocar isto pela chamada da função getdatalalalalas
     //ou seja, chamar a função e enviar para aqui por param (data) os dados desencriptados
@@ -236,26 +235,26 @@ var getMoteMethods = function(ipDoMote, data){
     // requestString = 'coap://[aaaa::212:4b00:60d:b305]:5683/.well-known/core';
     // var getdataFromSensorReq = function("[aaaa::212:4b00:60d:b305]", ".well-known", "core", "", "", "GET", "", "", "") {
 
-        resSplit = data.split(','),
+    resSplit = data.split(','),
         values = [];
-        for(var i = 0; i < resSplit.length; i++){
-            if(resSplit[i].startsWith("<")){
-                var lastIndex = resSplit[i].lastIndexOf('>');
-                values.push(resSplit[i].substr(1, lastIndex));
-            }   
+    for (var i = 0; i < resSplit.length; i++) {
+        if (resSplit[i].startsWith("<")) {
+            var lastIndex = resSplit[i].lastIndexOf('>');
+            values.push(resSplit[i].substr(1, lastIndex));
         }
+    }
 
-        var objectToInsert = {ip : ipDoMote},
+    var objectToInsert = { ip: ipDoMote },
         dataArray = [];
 
-        for(var i = 0; i < values.length; i++){
-            var lineVals = values[i].split('/'),
+    for (var i = 0; i < values.length; i++) {
+        var lineVals = values[i].split('/'),
             obj = {
                 folder: lineVals[1],
-                resource : lineVals[2]
+                resource: lineVals[2]
             };
-            dataArray.push(obj);
-        }
-        objectToInsert.data = dataArray;
-        return objectToInsert;
+        dataArray.push(obj);
     }
+    objectToInsert.data = dataArray;
+    return objectToInsert;
+}

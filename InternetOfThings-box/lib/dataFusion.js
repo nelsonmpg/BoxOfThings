@@ -1,6 +1,6 @@
 var mongoose = require('mongoose'),
-Sensor = require('./models/sensor.js'),
-SensorDataFusion = require("./models/sensorDataFusion");
+    Sensor = require('./models/sensor.js'),
+    SensorDataFusion = require("./models/sensorDataFusion");
 var util = require('util');
 
 Sensor = new Sensor();
@@ -23,7 +23,7 @@ module.exports = {
         // // console.log("\nSimular insert:\n", obj);
         // Sensor.insertOrUpdate(obj);
         // Sensor.insertSensorMetodos(obj.ip, [ {folder: "teste2",resource : "456456"}, {folder: "teste4",resource : "999999"}]);
-        
+
         console.log("Start Counter Data Fusion.");
         setTimeout(function() {
             console.log("New call Data Fusion.");
@@ -52,6 +52,7 @@ module.exports = {
     iterateMotesToKeys: function(keys, mote) {
         var moteResult = {
             moteip: mote.ip,
+            metodos: mote.metodos,
             dateOfEntry: dateTimeFormat(new Date()),
             readings: []
         };
@@ -93,7 +94,7 @@ function filterOutliers(someArray, key, resultObj) {
      * is not an int, then really you should average the two elements on either 
      * side to find q1.
      */
-     var q1 = values[Math.floor((values.length / 4))];
+    var q1 = values[Math.floor((values.length / 4))];
     // Likewise for q3. 
     var ceilVar = Math.ceil((values.length * (3 / 4)));
     var q3 = values[ceilVar > values.length - 1 ? values.length - 1 : ceilVar];
@@ -152,11 +153,11 @@ function dateTimeFormat(date) {
     var minute = date.getMinutes();
     var second = date.getSeconds();
 
-    return year + "-" +     
-        (month.toString().length === 1 ? "0" + month : month) + "-" + 
-        (day.toString().length === 1 ? "0" + day : day) + " " + 
-        (hour.toString().length === 1 ? "0" + hour : hour) + ":" + 
-        (minute.toString().length === 1 ? "0" + minute : minute) + ":" + 
+    return year + "-" +
+        (month.toString().length === 1 ? "0" + month : month) + "-" +
+        (day.toString().length === 1 ? "0" + day : day) + " " +
+        (hour.toString().length === 1 ? "0" + hour : hour) + ":" +
+        (minute.toString().length === 1 ? "0" + minute : minute) + ":" +
         (second.toString().length === 1 ? "0" + second : second);
 }
 
