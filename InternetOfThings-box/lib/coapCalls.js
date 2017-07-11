@@ -131,11 +131,13 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
             }
         }
         res.on('data', function(msg) {
-            // console.log('Data:', msg);
-            // console.log('Data456:',CryptoJS.enc.Utf8.stringify(msg));
-            var methodsReceive = getMoteMethods(endereco, msg);
-            // console.log(util.inspect(methodsReceive, false, null, true));
-            Sensor.insertSensorMethods(methodsReceive.ip, methodsReceive.data);
+            if (!response) {
+                // console.log('Data:', msg);
+                // console.log('Data456:',CryptoJS.enc.Utf8.stringify(msg));
+                var methodsReceive = getMoteMethods(endereco, msg);
+                // console.log(util.inspect(methodsReceive, false, null, true));
+                Sensor.insertSensorMethods(methodsReceive.ip, methodsReceive.data);
+            }
         })
 
 
