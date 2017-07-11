@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 // create a schema Sensor
 var sensorSchema = new Schema({
     ip: { type: String },
-    metodos: [{
+    methods: [{
         folder: { type: String },
         resource: { type: String }
     }],
@@ -65,11 +65,11 @@ Sensor.prototype.removeAllRecords = function(params) {
 };
 
 Sensor.prototype.insertSensorMetodos = function(moteip, sensorMetodos) {
-    this.SensorDB.update({ "ip": moteip }, { $set: { metodos: sensorMetodos } }, { upsert: true }, function(err, result) {
+    this.SensorDB.update({ "ip": moteip }, { $set: { methods: sensorMetodos } }, { upsert: true }, function(err, result) {
         if (err) {
             return;
         }
-        console.log('Sensor metodos add / created!', result);
+        console.log('Sensor methods add / created!', result);
     });
 
 };

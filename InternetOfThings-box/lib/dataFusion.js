@@ -52,7 +52,7 @@ module.exports = {
     iterateMotesToKeys: function(keys, mote) {
         var moteResult = {
             moteip: mote.ip,
-            metodos: mote.metodos,
+            methods: mote.methods,
             dateOfEntry: dateTimeFormat(new Date()),
             readings: []
         };

@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
 
 var sensorDataFusionSchema = new Schema({
     moteip: { type: String },
-    metodos: [{
+    methods: [{
         folder: { type: String },
         resource: { type: String }
     }],

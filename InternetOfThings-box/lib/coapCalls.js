@@ -212,7 +212,7 @@ var callMoteFunctions = function(routes) {
                     console.log(data);
                     var metodosReceive = getMoteMethods(routes[i], data);
                     console.log(util.inspect(metodosReceive, false, null, true));
-                    Sensor.insertSensorMetodos(metodosReceive.ip, metodosReceive);
+                    Sensor.insertSensormethods(metodosReceive.ip, metodosReceive);
                 } catch (e) {
                     console.error(e);
                 }
