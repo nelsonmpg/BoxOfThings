@@ -8,6 +8,7 @@ module.exports = {
         request({
             url: "http://" + lxqry.getHost() + ":4000/insert",
             json: true,
+            method: 'POST',
             headers: {
                 "content-type": "application/json",
             },
