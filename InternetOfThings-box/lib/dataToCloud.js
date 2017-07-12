@@ -36,12 +36,12 @@ module.exports = {
                 res.on('end', function() {
                     console.log(responseString);
                 });
-                req.on('error', function(e) {
-                    console.error(e);
-                });
             });
             req.write(jsonObject);
             req.end();
+            req.on('error', function(e) {
+                console.error(e);
+            });
         } catch (e) {
             console.log("Erro ao tentar ligar ao servidor remoto!!!")
         }
