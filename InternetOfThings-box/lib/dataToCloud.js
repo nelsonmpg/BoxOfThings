@@ -16,19 +16,20 @@ module.exports = {
             host: lxqry.getHost(),
             port: 4000,
             path: '/insert',
-            method: 'POST'
+            method: 'POST',
+            headers : postheaders
         };
 
-        console.log(options);
-
-        http.request(options, function(res) {
+        var reqPost = http.request(options, function(res) {
           console.log('STATUS: ' + res.statusCode);
-          console.log('HEADERS: ' + JSON.stringify(res.headers));
+
           res.setEncoding('utf8');
           res.on('data', function (chunk) {
             console.log('BODY: ' + chunk);
         });
-      }).end();
+      });
+        reqPost.write(jsonObject);
+        reqPost.end();
     },
 
     getDataCloud : function(){
@@ -39,13 +40,14 @@ module.exports = {
       //       method: 'GET'
       //   };
 
-      //   http.request(options, function(res) {
+      //   var reqGet = http.request(options, function(res) {
       //     console.log('STATUS: ' + res.statusCode);
       //     console.log('HEADERS: ' + JSON.stringify(res.headers));
       //     res.setEncoding('utf8');
       //     res.on('data', function (chunk) {
       //       console.log('BODY: ' + chunk);
       //   });
-      // }).end();
+      // });
+      // reqGet.end();
   }
 }
