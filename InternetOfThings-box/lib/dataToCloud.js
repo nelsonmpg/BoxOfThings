@@ -1,10 +1,24 @@
 var http = require('http'),
 lxqry = require("./linuxquery.js");
-var querystring = require('querystring');
+var request = require('request');
 
 module.exports = {
     sendDataToCloud : function(dataFusionObj){
-        var jsonObject = querystring.stringify(dataFusionObj);
+
+        request({
+            url: "http://" + lxqry.getHost() + ":4000/insert",
+            json: true,
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(dataFusionObj)
+        }, function(error, response, body) {
+            console.log(error, response, body);
+        });
+
+
+        /*
+        var jsonObject = JSON.stringify(dataFusionObj);
 
         var postheaders = {
             'Content-Type' : 'application/json',
@@ -36,7 +50,7 @@ module.exports = {
             });
         } catch (e){
             console.log("Erro ao tentar ligar ao servidor remoto!!!")
-        }
+        }*/
     },
 
     getDataCloud : function(){
