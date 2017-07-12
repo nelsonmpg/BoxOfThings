@@ -17,6 +17,7 @@ module.exports = {
             port: 4000,
             path: '/insert',
             method: 'POST',
+            body : dataFusionObj,
             headers: postheaders
         };
 
