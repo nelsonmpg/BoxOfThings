@@ -1,10 +1,15 @@
 var http = require('http'),
     lxqry = require("./linuxquery.js"),
     querystring = require('querystring');
+var request = require("request");
 
 module.exports = {
     sendDataToCloud: function(dataFusionObj) {
 
+      
+
+
+/*
         var jsonObject = querystring.stringify(dataFusionObj);
 
         var postheaders = {
@@ -37,14 +42,14 @@ module.exports = {
                     console.log(responseString);
                 });
             });
-            req.write(dataFusionObj);
+            req.write(jsonObject);
             req.end();
             req.on('error', function(e) {
                 console.error(e);
             });
         } catch (e) {
             console.log("Erro ao tentar ligar ao servidor remoto!!!")
-        }
+        }*/
     },
 
     getDataCloud: function() {
