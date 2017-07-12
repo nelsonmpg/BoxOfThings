@@ -4,7 +4,9 @@ lxqry = require("./linuxquery.js");
 
 module.exports = {
     sendDataToCloud : function(dataFusionObj){
-        var jsonObject = JSON.stringify(dataFusionObj);
+
+        var data = querystring.stringify(dataFusionObj);
+        // var jsonObject = JSON.stringify(dataFusionObj);
 
         var options = {
             host: lxqry.getHost(),
@@ -13,7 +15,7 @@ module.exports = {
             method: 'POST',
             headers : {
                 'Content-Type' : 'application/json',
-                 data : jsonObject
+                'Content-Length' : Buffer.byteLength(data, 'utf8')
             }
         };
 
@@ -27,7 +29,7 @@ module.exports = {
                 console.log('BODY: ' + chunk);
             });
           });
-            reqPost.write(jsonObject);
+            reqPost.write(data);
             reqPost.end();
             reqPost.on('error', function(e) {
                 console.error(e);
