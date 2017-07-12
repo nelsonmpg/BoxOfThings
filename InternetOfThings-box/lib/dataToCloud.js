@@ -9,7 +9,7 @@ module.exports = {
         var options = {
             host: lxqry.getHost(),
             port: 4000,
-            path: '/insert/' + jsonObject,
+            path: '/insert',
             method: 'POST',
             headers : {
                 'Content-Type' : 'application/json',
