@@ -70,7 +70,7 @@ module.exports = {
 
     iterateMotesToKeys: function(keys, mote) {
         var moteResult = {
-            moteip: mtoe.ip,
+            moteip: mote.ip,
             methods: mote.methods,
             dateOfEntry: dateTimeFormat(new Date()),
             readings: []
