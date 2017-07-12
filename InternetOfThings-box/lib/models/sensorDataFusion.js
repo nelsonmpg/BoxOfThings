@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
-Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    sendData = require('./dataToCloud.js');
 
 var sensorDataFusionSchema = new Schema({
     moteip: { type: String },
@@ -40,7 +41,8 @@ SensorDataFusion.prototype.insertDataFusion = function(data) {
             console.log("Error", err);
             return;
         }
-        console.log('Sensor Data Fusion value add / created!'/*, result*/);
+        console.log('Sensor Data Fusion value add / created!' /*, result*/ );
+        sendData.sendDataToCloud(data);
     });
 };
 
