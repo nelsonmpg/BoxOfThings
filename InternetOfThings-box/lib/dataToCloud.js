@@ -16,7 +16,7 @@ module.exports = {
             port: 4000,
             path: '/insert',
             method: 'POST',
-            headers : postheaders
+            data : postheaders
         };
 
         try {
