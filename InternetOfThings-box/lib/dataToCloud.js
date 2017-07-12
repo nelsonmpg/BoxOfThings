@@ -1,29 +1,15 @@
 var http = require('http'),
 lxqry = require("./linuxquery.js");
-var request = require('request');
 
 module.exports = {
     sendDataToCloud : function(dataFusionObj){
 
-        request({
-            url: "http://" + lxqry.getHost() + ":4000/insert",
-            json: true,
-            method: 'POST',
-            headers: {
-                "content-type": "application/json",
-            },
-            body: JSON.stringify(dataFusionObj)
-        }, function(error, response, body) {
-            console.log(error, response, body);
-        });
 
-
-        /*
         var jsonObject = JSON.stringify(dataFusionObj);
 
         var postheaders = {
             'Content-Type' : 'application/json',
-            'Content-Length' : Buffer.byteLength(jsonObject)
+            'Content-Length' : jsonObject.length
         };
 
         var options = {
@@ -36,22 +22,31 @@ module.exports = {
 
         try {
 
-            var reqPost = http.request(options, function(res) {
+            var req = http.request(options, function(res) {
               console.log('STATUS: ' + res.statusCode);
 
               res.setEncoding('utf8');
-              res.on('data', function (chunk) {
-                console.log('BODY: ' + chunk);
-            });
+              
+              var responseString = '';
+
+              res.on('data', function(data) {
+                  responseString += data;
+              });
+
+              res.on('end', function() {
+                  console.log(responseString);
+                  var responseObject = JSON.parse(responseString);
+                  console.log(responseObject);
+              });
           });
-            reqPost.write(jsonObject);
-            reqPost.end();
-            reqPost.on('error', function(e) {
+            req.write(jsonObject);
+            req.end();
+            req.on('error', function(e) {
                 console.error(e);
             });
         } catch (e){
             console.log("Erro ao tentar ligar ao servidor remoto!!!")
-        }*/
+        }
     },
 
     getDataCloud : function(){
