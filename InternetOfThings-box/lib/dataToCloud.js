@@ -17,7 +17,6 @@ module.exports = {
             port: 4000,
             path: '/insert',
             method: 'POST',
-            body : dataFusionObj,
             headers: postheaders
         };
 
@@ -38,7 +37,7 @@ module.exports = {
                     console.log(responseString);
                 });
             });
-            req.write(jsonObject);
+            req.write(dataFusionObj);
             req.end();
             req.on('error', function(e) {
                 console.error(e);

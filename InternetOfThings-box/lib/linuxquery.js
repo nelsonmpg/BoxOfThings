@@ -31,7 +31,7 @@ module.exports.getHtmlText = function(req, res) {
                     dbToModels.parseHtml(body);
                     setTimeout(function() {
                         timeSensors = module.exports.getJsonTime("sensors");
-                        console.log(timeSensors);
+                        // console.log(timeSensors);
                         dbToModels.removeOldRecords();
                         console.log("New call html page.");
                         module.exports.getHtmlText({ params: { page: 'network.html' } }, null);
