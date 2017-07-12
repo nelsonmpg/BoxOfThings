@@ -9,6 +9,7 @@ window.ConfigBoxView = Backbone.View.extend({
     pathRegex: /^(\/[^\/ ]*)+\/?$/,
     macRegex: /^[0-9a-f]{1,2}([\.:-])(?:[0-9a-f]{1,2}\1){4}[0-9a-f]{1,2}$/,
     ipRegex: /^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$/,
+    ValidHostnameRegex: /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/,
     portRegex: /^0*(?:6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{1,3}|[0-9])$/,
     events: {
         "keyup .valid-input": "checkImputs",
@@ -125,7 +126,7 @@ window.ConfigBoxView = Backbone.View.extend({
                 switch ($(obj).data("typevalue")) {
                     case "local-ip":
                     case "remote-ip":
-                        if ($(obj).val().trim().match(self.ipRegex)) {
+                        if ($(obj).val().trim().match(self.ipRegex) || $(obj).val().trim().match(self.ValidHostnameRegex)) {
                             testOk = true;
                         } else {
                             testOk = false;
