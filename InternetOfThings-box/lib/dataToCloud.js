@@ -14,13 +14,12 @@ module.exports = {
             path: '/insert',
             method: 'POST',
             headers : {
-                'Content-Type' : 'application/json',
-                'Content-Length' : Buffer.byteLength(data, 'utf8')
+                'Content-Type' : 'application/x-www-form-urlencoded',
+                'Content-Length' : Buffer.byteLength(data)
             }
         };
 
         try {
-
             var reqPost = http.request(options, function(res) {
               console.log('STATUS: ' + res.statusCode);
 
