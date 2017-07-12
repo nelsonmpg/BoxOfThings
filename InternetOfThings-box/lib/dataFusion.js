@@ -28,13 +28,31 @@ module.exports = {
         // Sensor.insertSensorMetodos(obj.ip, [ {folder: "teste2",resource : "456456"}, {folder: "teste4",resource : "999999"}]);
 
         console.log("Start Counter Data Fusion.");        
+        jsonObject = JSON.stringify({
+            "message" : "The web of things is approaching, let do some tests to be ready!",
+            "name" : "Test message posted with node.js",
+            "caption" : "Some tests with node.js",
+            "link" : "http://www.youscada.com",
+            "description" : "this is a description",
+            "picture" : "http://youscada.com/wp-content/uploads/2012/05/logo2.png",
+            "actions" : [ {
+                "name" : "youSCADA",
+                "link" : "http://www.youscada.com"
+            } ]
+        });
 
+        // prepare the header
+        var postheaders = {
+            'Content-Type' : 'application/json',
+            'Content-Length' : Buffer.byteLength(jsonObject, 'utf8')
+        };
 
         var options = {
             host: "172.16.132.92",
             port: 4000,
-            path: '/Teste',
-            method: 'GET'
+            path: '/insert',
+            method: 'POST',
+            headers : postheaders
         };
 
         http.request(options, function(res) {
@@ -45,7 +63,7 @@ module.exports = {
             console.log('BODY: ' + chunk);
         });
       }).end();
-        
+
 
         setTimeout(function() {
             timeDatafusion = linuxquery.getJsonTime("datafusion");
