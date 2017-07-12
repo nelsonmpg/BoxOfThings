@@ -1,11 +1,11 @@
 var http = require('http'),
-lxqry = require("./linuxquery.js");
-
+lxqry = require("./linuxquery.js"),
+quersytring = require('querystring');
 
 module.exports = {
     sendDataToCloud : function(dataFusionObj){
 
-        var data = querystring.stringify(dataFusionObj);
+        var data = quersytring.stringify(dataFusionObj);
         // var jsonObject = JSON.stringify(dataFusionObj);
 
         var options = {
