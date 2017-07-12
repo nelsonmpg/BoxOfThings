@@ -126,6 +126,17 @@ module.exports.getinifileparams = function(req, res) {
     }
 };
 
+module.exports.getHost = function(){
+     if (fs.existsSync(sshfileconfig)) {
+        var contents = fs.readFileSync(sshfileconfig).toString();
+        if (IsJsonString(contents)) {
+            contents = JSON.parse(contents);
+            return contents.remoteip;
+        }
+    }
+     return "127.0.0.1";
+};
+
 module.exports.defaultparamsinifile = function(req, res) {
     var t1 = cp.execSync('cat /proc/cpuinfo | grep Serial | cut -d" " -f2');
     var t2 = cp.execSync('cat /proc/meminfo | grep Total | tr -s " " " " | cut -d":" -f2 | cut -d" " -f2 | awk \'{ x += $1 } ; END { print x}\'');
