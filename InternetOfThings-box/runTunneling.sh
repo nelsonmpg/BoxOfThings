@@ -6,7 +6,7 @@ done
 
 `ssh -fN -R $1:$2:$3 $4@$5 -p $6 2> createTunnel.log`
 
-echo "ssh -fN -R $1:$2:$3 $4@$5 -p $6 2> createTunnel.log"
+echo "ssh -N -R $1:$2:$3 $4@$5 -p $6 2> createTunnel.log"
 echo "tunnel run."
 
 # Ciar tunel
