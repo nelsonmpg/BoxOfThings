@@ -1,15 +1,15 @@
 var http = require('http'),
-lxqry = require("./linuxquery.js");
+    lxqry = require("./linuxquery.js"),
+    querystring = require('querystring');
 
 module.exports = {
-    sendDataToCloud : function(dataFusionObj){
+    sendDataToCloud: function(dataFusionObj) {
 
-
-        var jsonObject = JSON.stringify(dataFusionObj);
+        var jsonObject = querystring.stringify(dataFusionObj);
 
         var postheaders = {
-            'Content-Type' : 'application/json',
-            'Content-Length' : jsonObject.length
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(jsonObject)
         };
 
         var options = {
@@ -17,37 +17,37 @@ module.exports = {
             port: 4000,
             path: '/insert',
             method: 'POST',
-            headers : postheaders
+            headers: postheaders
         };
 
         try {
 
             var req = http.request(options, function(res) {
-              console.log('STATUS: ' + res.statusCode);
+                console.log('STATUS: ' + res.statusCode);
 
-              res.setEncoding('utf8');
-              
-              var responseString = '';
+                res.setEncoding('utf8');
 
-              res.on('data', function(data) {
-                  responseString += data;
-              });
+                var responseString = '';
 
-              res.on('end', function() {
-                  console.log(responseString);
-              });
-          });
+                res.on('data', function(data) {
+                    responseString += data;
+                });
+
+                res.on('end', function() {
+                    console.log(responseString);
+                });
+                req.on('error', function(e) {
+                    console.error(e);
+                });
+            });
             req.write(jsonObject);
             req.end();
-            req.on('error', function(e) {
-                console.error(e);
-            });
-        } catch (e){
+        } catch (e) {
             console.log("Erro ao tentar ligar ao servidor remoto!!!")
         }
     },
 
-    getDataCloud : function(){
+    getDataCloud: function() {
         var options = {
             host: lxqry.getHost(),
             port: 4000,
@@ -58,18 +58,18 @@ module.exports = {
         try {
 
             var reqGet = http.request(options, function(res) {
-              console.log('STATUS: ' + res.statusCode);
-              console.log('HEADERS: ' + JSON.stringify(res.headers));
-              res.setEncoding('utf8');
-              res.on('data', function (chunk) {
-                console.log('BODY: ' + chunk);
+                console.log('STATUS: ' + res.statusCode);
+                console.log('HEADERS: ' + JSON.stringify(res.headers));
+                res.setEncoding('utf8');
+                res.on('data', function(chunk) {
+                    console.log('BODY: ' + chunk);
+                });
             });
-          });
             reqGet.end();
             reqGet.on('error', function(e) {
                 console.error(e);
             });
-        } catch (e){
+        } catch (e) {
             console.log("Erro ao tentar ligar ao servidor remoto!!!")
         }
     }
