@@ -21,6 +21,59 @@ module.exports = {
         //         light: (Math.random() * 100).toFixed(2), //(obJson.Light.toString() == "00.-1") ? "-1" : obJson.Light
         //     }
         // }
+        // var options = {
+        //  url: 'http://cloudiot.cm-golega.pt:3000/sensors',
+        //  method: 'POST',
+        //  form: {
+        //     'objecttype': 'sensoriot', 
+        //     'boxname': 'BoxIoT', 
+        //     'boxmac': macaddress, 
+        //     'sensorid': '1.0', 
+        //     'sensorname': '1.0', 
+        //     'sensortype': sensortipo, 
+        //     'sensorvalue': Math.round( Math.random() * (100 - 1) + 1)}
+        // }
+
+        // // Start the request
+        // request(options, function (error, response, body) {
+        //  if (!error && response.statusCode == 200) {
+        //  // Print out the response body
+        //  console.log(body)
+        //  }
+        //  });
+
+
+        // var options = {
+        //  url: 'http://cloudiot.cm-golega.pt:3000/boxes',
+        //  method: 'POST',
+        //  form: {
+        //     'objecttype': 'boxiot', 
+        //     'name': 'BoxIoT', 
+        //     'mac': macaddress, 
+        //     'model': '1.0', 
+        //     'version': '1.0', 
+        //     'serial': Math.round( Math.random() * (10000000000000 - 1) + 1), 
+        //     'type': '1.0', 
+        //     'manuf': 'PT-PT', 
+        //     'coordN': '0.0', 
+        //     'coordW': '0.0', 
+        //     'clientName': 'Teste', 
+        //     'address': 'Rua sobe', 
+        //     'code': '2000-000', 
+        //     'locality': 'Tomar', 
+        //     'phone':  '987654321', 
+        //     'yearinstall': datetime}
+        // }
+
+
+
+        // // Start the request
+        // request(options, function (error, response, body) {
+        //  if (!error && response.statusCode == 200) {
+        //  // Print out the response body
+        //  console.log(body)
+        //  }
+        //  });
 
         // // console.log("\nSimular insert:\n", obj);
         // Sensor.insertOrUpdate(obj);
