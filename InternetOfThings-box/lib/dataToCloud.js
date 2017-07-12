@@ -35,8 +35,6 @@ module.exports = {
 
               res.on('end', function() {
                   console.log(responseString);
-                  var responseObject = JSON.parse(responseString);
-                  console.log(responseObject);
               });
           });
             req.write(jsonObject);
