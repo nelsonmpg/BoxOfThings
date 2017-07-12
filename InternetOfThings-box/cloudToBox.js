@@ -1,17 +1,24 @@
 var net = require('net');
 var HOST = 'localhost';
-var PORT = 8000; 
+var PORT = 30001; 
 
 var client = new net.Socket();
 
 client.connect(PORT, HOST, function() {
 	console.log('CONNECTED TO: ' + HOST + ':' + PORT);
-    // Write a message to the socket as soon as the client is connected, the server will receive $
-    client.write(JSON.stringify({request:"single_mote_all_info",params: { moteIp:"[aaaa::212:4b00:60d:b21a]"}}));
+    client.write(JSON.stringify({request:"single_mote_all_info",params: { moteIp:"[aaaa::212:4b00:60d:60fe]"}}));
+
+    client.write(JSON.stringify({request:"single_mote_single_info",params: { moteIp:"[aaaa::212:4b00:60d:60fe]", resource : "Temperature"}}));
+
+    client.write(JSON.stringify({request:"mote_action",params: { moteIp:"[aaaa::212:4b00:60d:60fe]", resource : "LedGreen", color :"g", mode : "on"}}));
 });
 
-// aaa::212:4b00:60d:60fe]:5683/data/AllValues
-// coap:[aaaa::212:4b00:60d:b21a]:5683/data/AllV
+/*
+coap://[aaaa::212:4b00:60d:60fe]:5683/data/AllValues
+coap://[aaaa::212:4b00:60d:b305]:5683/data/AllValues
+
+ */
+
 
 // Add a 'data' event handler for the client socket
 // data is what the server sent to this socket

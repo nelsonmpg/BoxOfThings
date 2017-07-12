@@ -25,7 +25,6 @@ module.exports = {
                 module.exports[req.request](req, sock);
 
             } catch (e) {
-                log.appendToLog("Invalid args - " + e, data.toString('utf8'));
                 console.log("Invalid args - " + e, data.toString('utf8'));
             }
         });
