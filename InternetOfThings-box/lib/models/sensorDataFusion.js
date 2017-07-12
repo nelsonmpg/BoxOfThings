@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+Schema = mongoose.Schema;
+var http = require('http');
 
 var sensorDataFusionSchema = new Schema({
     moteip: { type: String },
@@ -27,7 +28,6 @@ var SensorDataFusion = function() {
     this.SensorDataFusionDB = mongoose.model('SensorDataFusion', sensorDataFusionSchema);
 };
 
-
 SensorDataFusion.prototype.insertDataFusion = function(data) {
     console.log("Insert");
     var self = this;
@@ -41,7 +41,25 @@ SensorDataFusion.prototype.insertDataFusion = function(data) {
             console.log("Error", err);
             return;
         }
-        console.log('Sensor Data Fusion value add / created!', result);
+        console.log('Sensor Data Fusion value add / created!'/*, result*/);
+
+        var options = {
+            host: "172.16.132.92",
+            port: 4000,
+            path: '/Teste',
+            method: 'GET'
+        };
+
+        http.request(options, function(res) {
+          console.log('STATUS: ' + res.statusCode);
+          console.log('HEADERS: ' + JSON.stringify(res.headers));
+          res.setEncoding('utf8');
+          res.on('data', function (chunk) {
+            console.log('BODY: ' + chunk);
+        });
+      }).end();
+
+
     });
 };
 

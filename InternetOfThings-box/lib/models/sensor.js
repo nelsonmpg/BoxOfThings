@@ -60,7 +60,7 @@ Sensor.prototype.removeAllRecords = function(params) {
             console.log("Error to remove all");
             return;
         }
-        console.log("Remove all records", result);
+        console.log("Remove all records"/*, result*/);
     });
 };
 

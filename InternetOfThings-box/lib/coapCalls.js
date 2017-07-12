@@ -223,7 +223,6 @@ var callMoteFunctions = function(routes) {
 }
 
 var getMoteMethods = function(ipDoMote, data) {
-    // resource/.well-known/core
     //Trocar isto pela chamada da função getdatalalalalas
     //ou seja, chamar a função e enviar para aqui por param (data) os dados desencriptados
     // var data = '</.well-known/core>;ct=40,</test/ola>;title="Olá Mundo1: ?len=0..";rt="Text",</test/hello>;title="Hello world: ?len=0..";rt="Text",</actuators/leds>;title="LEDs: ?color=r|g|b, POST/PUT mode=on|off";rt="Control",</actuators/toggle>;title="Red LED";rt="Control",</sensors/button>;title="Event demo";obs,</test/separate>;title="Separate demo",</test/push>;title="Periodic demo";obs,</test/sub>;title="Sub-resource demo",</sensors/sht25>;title="Temperature and Humidity";rt="SHT25",</sensors/zoul>;title="Zoul on-board sensors";rt="zoul"',
@@ -231,8 +230,6 @@ var getMoteMethods = function(ipDoMote, data) {
     //GET
     //FOLDER: .well-known
     //RESOURCE: core
-    // requestString = 'coap://[aaaa::212:4b00:60d:b305]:5683/.well-known/core';
-    // var getdataFromSensorReq = function("[aaaa::212:4b00:60d:b305]", ".well-known", "core", "", "", "GET", "", "", "") {
 
     resSplit = data.split(','),
         values = [];
