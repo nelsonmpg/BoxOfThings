@@ -1,25 +1,26 @@
 var http = require('http'),
-lxqry = require("./linuxquery.js"),
-quersytring = require('querystring');
+lxqry = require("./linuxquery.js");
+
 
 module.exports = {
     sendDataToCloud : function(dataFusionObj){
+        var jsonObject = JSON.stringify(dataFusionObj);
 
-        var data = quersytring.stringify(dataFusionObj);
-        // var jsonObject = JSON.stringify(dataFusionObj);
+        var postheaders = {
+            'Content-Type' : 'application/json',
+            'Content-Length' : Buffer.byteLength(jsonObject)
+        };
 
         var options = {
             host: lxqry.getHost(),
             port: 4000,
             path: '/insert',
             method: 'POST',
-            headers : {
-                'Content-Type' : 'application/x-www-form-urlencoded',
-                'Content-Length' : Buffer.byteLength(data)
-            }
+            headers : postheaders
         };
 
         try {
+
             var reqPost = http.request(options, function(res) {
               console.log('STATUS: ' + res.statusCode);
 
@@ -28,7 +29,7 @@ module.exports = {
                 console.log('BODY: ' + chunk);
             });
           });
-            reqPost.write(data);
+            reqPost.write(jsonObject);
             reqPost.end();
             reqPost.on('error', function(e) {
                 console.error(e);
