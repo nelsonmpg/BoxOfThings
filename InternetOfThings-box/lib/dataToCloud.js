@@ -11,13 +11,9 @@ module.exports = {
             port: 4000,
             path: '/insert',
             method: 'POST',
-            body : {
-                'Content-Type' : 'application/json',
-                data : jsonObject
-            },
             headers : {
                 'Content-Type' : 'application/json',
-                'Content-Length' : Buffer.byteLength(jsonObject, 'utf8')
+                 data : jsonObject
             }
         };
 
