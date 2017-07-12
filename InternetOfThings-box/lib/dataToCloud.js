@@ -6,7 +6,6 @@ module.exports = {
     sendDataToCloud : function(dataFusionObj){
         var jsonObject = JSON.stringify(dataFusionObj);
 
-        // prepare the header
         var postheaders = {
             'Content-Type' : 'application/json',
             'Content-Length' : Buffer.byteLength(jsonObject, 'utf8')
@@ -20,16 +19,21 @@ module.exports = {
             headers : postheaders
         };
 
-        var reqPost = http.request(options, function(res) {
-          console.log('STATUS: ' + res.statusCode);
+        try {
 
-          res.setEncoding('utf8');
-          res.on('data', function (chunk) {
-            console.log('BODY: ' + chunk);
-        });
-      });
-        reqPost.write(jsonObject);
-        reqPost.end();
+            var reqPost = http.request(options, function(res) {
+              console.log('STATUS: ' + res.statusCode);
+
+              res.setEncoding('utf8');
+              res.on('data', function (chunk) {
+                console.log('BODY: ' + chunk);
+            });
+          });
+            reqPost.write(jsonObject);
+            reqPost.end();
+        } catch (e){
+            console.log("Erro ao tentar ligar ao servidor remoto!!!")
+        }
     },
 
     getDataCloud : function(){
