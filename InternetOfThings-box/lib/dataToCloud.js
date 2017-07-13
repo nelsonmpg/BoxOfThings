@@ -16,7 +16,7 @@ module.exports = {
         // Start the request
         request(options, function (error, response, body) {
             if (error) {
-                console-log(error);
+                console.log(error);
             }
             if (!error && response.statusCode == 200) {
                 // Print out the response body
