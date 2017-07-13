@@ -54,7 +54,6 @@ module.exports = {
             }
             module.exports.sendDataToCloudDataFusion(parcialObj, 'sensors');
         }
-        module.exports.sendDataBoxTypes();
     },
 
     sendDataBoxTypes : function(){
@@ -64,6 +63,7 @@ module.exports = {
             boxValues.objecttype = 'BoxIOT';
             module.exports.sendDataToCloudDataFusion(boxValues, 'boxes');
         }
+        // module.exports.sendDataBoxTypes();
     },
 
     getDataCloud : function() {

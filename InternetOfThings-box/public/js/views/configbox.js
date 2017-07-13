@@ -13,7 +13,10 @@ window.ConfigBoxView = Backbone.View.extend({
     portRegex: /^0*(?:6553[0-5]|655[0-2][0-9]|65[0-4][0-9]{2}|6[0-4][0-9]{3}|[1-5][0-9]{4}|[1-9][0-9]{1,3}|[0-9])$/,
     events: {
         "keyup .valid-input": "checkImputs",
-        "click #save-settings": "savesettings"
+        "click #save-settings": "savesettings"/*,
+        "keyup #remote-ip": function(){
+            $("#host-name").val($("#remote-ip").val());
+        }*/
     },
     initialize: function() {},
     init: function() {
@@ -50,6 +53,8 @@ window.ConfigBoxView = Backbone.View.extend({
                     $("#local-privatekey").val(data.stdout.privatersa);
                     $("#local-pboxname").val(data.stdout.boxname);
                     $("#remote-script").val(data.stdout.remotepathscript);
+                    $("#host-port").val(data.stdout.remotePortDatafusion);
+                    $("#host-name").val(data.stdout.remoteServerDatafusion);
                     $(".slider-time-sensors-value").text(data.stdout.timequery + " seonds");
                     $(".slider-time-sensors").slider('setValue', data.stdout.timequery);
                     $(".slider-time-datafusion-value").text(data.stdout.timedatafusion + " minutes");
@@ -103,6 +108,8 @@ window.ConfigBoxView = Backbone.View.extend({
                     $("#local-privatekey").val(data.stdout.privatersa);
                     $("#local-pboxname").val(data.stdout.boxname);
                     $("#remote-script").val(data.stdout.remotepathscript);
+                    $("#host-port").val(data.stdout.remotePortDatafusion);
+                    $("#host-name").val(data.stdout.remoteServerDatafusion);
                     $(".slider-time-sensors-value").text(data.stdout.timequery + " seonds");
                     $(".slider-time-sensors").slider('setValue', data.stdout.timequery);
                     $(".slider-time-datafusion-value").text(data.stdout.timedatafusion + " minutes");
@@ -126,86 +133,88 @@ window.ConfigBoxView = Backbone.View.extend({
                 switch ($(obj).data("typevalue")) {
                     case "local-ip":
                     case "remote-ip":
-                        if ($(obj).val().trim().match(self.ipRegex) || $(obj).val().trim().match(self.ValidHostnameRegex)) {
-                            testOk = true;
-                        } else {
-                            testOk = false;
-                        }
-                        break;
+                    case "host-name":
+                    if ($(obj).val().trim().match(self.ipRegex) || $(obj).val().trim().match(self.ValidHostnameRegex)) {
+                        testOk = true;
+                    } else {
+                        testOk = false;
+                    }
+                    break;
                     case "local-port":
                     case "remote-port":
                     case "remote-defport":
-                        if ($(obj).val().trim().match(self.portRegex)) {
-                            testOk = true;
-                        } else {
-                            testOk = false;
-                        }
-                        break;
+                    case "host-port":
+                    if ($(obj).val().trim().match(self.portRegex)) {
+                        testOk = true;
+                    } else {
+                        testOk = false;
+                    }
+                    break;
                     case "remote-user":
-                        if ($(obj).val().trim().match(self.userRegex)) {
-                            testOk = true;
-                        } else {
-                            testOk = false;
-                        }
-                        break;
+                    if ($(obj).val().trim().match(self.userRegex)) {
+                        testOk = true;
+                    } else {
+                        testOk = false;
+                    }
+                    break;
                     case "local-privatekey":
                     case "remote-script":
-                        if ($(obj).val().trim().match(self.pathRegex)) {
-                            testOk = true;
-                        } else {
-                            testOk = false;
-                        }
-                        break;
+                    if ($(obj).val().trim().match(self.pathRegex)) {
+                        testOk = true;
+                    } else {
+                        testOk = false;
+                    }
+                    break;
                     case "box-mac":
-                        if ($(obj).val().trim().match(self.macRegex)) {
-                            testOk = true;
-                        } else {
-                            testOk = false;
-                        }
-                        break;
+                    if ($(obj).val().trim().match(self.macRegex)) {
+                        testOk = true;
+                    } else {
+                        testOk = false;
+                    }
+                    break;
                     case "box-name":
                     case "box-local":
                     case "box-client-name":
                     case "box-client-address":
                     case "box-client-city":
-                        if ($(obj).val().trim().length > 3) {
-                            testOk = true;
-                        } else {
-                            testOk = false;
-                        }
-                        break;
+                    if ($(obj).val().trim().length > 3) {
+                        testOk = true;
+                    } else {
+                        testOk = false;
+                    }
+                    break;
                     case "box-model":
                     case "box-version":
                     case "box-type":
                     case "box-latitude":
                     case "box-longitude":
-                        if ($(obj).val().trim().match(self.numberRegex) && $(obj).val().trim().length > 0) {
-                            testOk = true;
-                        } else {
-                            testOk = false;
-                        }
-                        break;
+                    if ($(obj).val().trim().match(self.numberRegex) && $(obj).val().trim().length > 0) {
+                        testOk = true;
+                    } else {
+                        testOk = false;
+                    }
+                    break;
                     case "box-client-postalcode":
-                        if ($(obj).val().trim().match(self.cpostalRegex)) {
-                            testOk = true;
-                        } else {
-                            testOk = false;
-                        }
-                        break;
+                    if ($(obj).val().trim().match(self.cpostalRegex)) {
+                        testOk = true;
+                    } else {
+                        testOk = false;
+                    }
+                    break;
                     case "box-client-phone":
-                        if ($(obj).val().trim().match(self.phoneRegex)) {
-                            testOk = true;
-                        } else {
-                            testOk = false;
-                        }
-                        break;
+                    if ($(obj).val().trim().match(self.phoneRegex)) {
+                        testOk = true;
+                    } else {
+                        testOk = false;
+                    }
+                    break;
                     case "box-year-install":
-                        if ($(obj).val().trim().match(self.yearRegex)) {
-                            testOk = true;
-                        } else {
-                            testOk = false;
-                        }
-                        break;
+                    if ($(obj).val().trim().match(self.yearRegex)) {
+                        testOk = true;
+                    } else {
+                        testOk = false;
+                    }
+                    break;
                 }
 
                 if (testOk) {
@@ -215,61 +224,63 @@ window.ConfigBoxView = Backbone.View.extend({
                 }
             }
         });
-    },
-    savesettings: function() {
-        var self = this;
-        self.checkImputs();
-        if (($(".valid-input").length == $(".fa-check").length) ? true : false) {
-            var configsshData = {
-                localip: $("#local-ip").val(),
-                localport: $("#local-port").val(),
-                remoteport: $("#remote-port").val(),
-                remoteuser: $("#remote-user").val(),
-                remoteip: $("#remote-ip").val(),
-                sshport: $("#remote-defport").val(),
-                privatersa: $("#local-privatekey").val(),
-                remotepathscript: $("#remote-script").val(),
-                boxparams: {
-                    name: $("#box-name").val(),
-                    mac: $("#box-mac").val(),
-                    model: $("#box-model").val(),
-                    version: $("#box-version").val(),
-                    Serial: $("#box-name-code").val(),
-                    type: $("#box-type").val(),
-                    manuf: $("#box-local").val(),
-                    coordN: $("#box-latitude").val(),
-                    coordW: $("#box-longitude").val(),
-                    clientName: $("#box-client-name").val(),
-                    address: $("#box-client-address").val(),
-                    code: $("#box-client-postalcode").val(),
-                    locality: $("#box-client-city").val(),
-                    phone: $("#box-client-phone").val(),
-                    yearinstall: $("#box-year-install").val()
-                },
-                timequery: $(".slider-time-sensors-value").text().trim().split(" ")[0],
-                timedatafusion: $(".slider-time-datafusion-value").text().trim().split(" ")[0]
-            }
-            console.log(configsshData);
-            modem("POST",
-                "/savesettings",
-                function(data) {
-                    if (data.status === "ok") {
-                        showmsg('.my-modal', "warning", "The file is saved restart node system.", false);
-                    } else {
-                        showmsg('.my-modal', "error", "Error to save settings." + data.status, false);
-                    }
-                },
-                function(xhr, ajaxOptions, thrownError) {
-                    var json = JSON.parse(xhr.responseText);
-                    error_launch(json.message);
-                }, { data: configsshData });
-        } else {
-            showmsg('.my-modal', "error", "Bad Values to Save, check the <i class='icon fa fa-close'>.", true);
+},
+savesettings: function() {
+    var self = this;
+    self.checkImputs();
+    if (($(".valid-input").length == $(".fa-check").length) ? true : false) {
+        var configsshData = {
+            localip: $("#local-ip").val(),
+            localport: $("#local-port").val(),
+            remoteport: $("#remote-port").val(),
+            remoteuser: $("#remote-user").val(),
+            remoteip: $("#remote-ip").val(),
+            sshport: $("#remote-defport").val(),
+            privatersa: $("#local-privatekey").val(),
+            remotepathscript: $("#remote-script").val(),
+            remotePortDatafusion: $("#host-port").val(),
+            remoteServerDatafusion: $("#host-name").val(),
+            boxparams: {
+                name: $("#box-name").val(),
+                mac: $("#box-mac").val(),
+                model: $("#box-model").val(),
+                version: $("#box-version").val(),
+                Serial: $("#box-name-code").val(),
+                type: $("#box-type").val(),
+                manuf: $("#box-local").val(),
+                coordN: $("#box-latitude").val(),
+                coordW: $("#box-longitude").val(),
+                clientName: $("#box-client-name").val(),
+                address: $("#box-client-address").val(),
+                code: $("#box-client-postalcode").val(),
+                locality: $("#box-client-city").val(),
+                phone: $("#box-client-phone").val(),
+                yearinstall: $("#box-year-install").val()
+            },
+            timequery: $(".slider-time-sensors-value").text().trim().split(" ")[0],
+            timedatafusion: $(".slider-time-datafusion-value").text().trim().split(" ")[0]
         }
-    },
-    render: function() {
-        var self = this;
-        $(this.el).html(this.template());
-        return this;
+        console.log(configsshData);
+        modem("POST",
+            "/savesettings",
+            function(data) {
+                if (data.status === "ok") {
+                    showmsg('.my-modal', "warning", "The file is saved restart node system.", false);
+                } else {
+                    showmsg('.my-modal', "error", "Error to save settings." + data.status, false);
+                }
+            },
+            function(xhr, ajaxOptions, thrownError) {
+                var json = JSON.parse(xhr.responseText);
+                error_launch(json.message);
+            }, { data: configsshData });
+    } else {
+        showmsg('.my-modal', "error", "Bad Values to Save, check the <i class='icon fa fa-close'>.", true);
     }
+},
+render: function() {
+    var self = this;
+    $(this.el).html(this.template());
+    return this;
+}
 });

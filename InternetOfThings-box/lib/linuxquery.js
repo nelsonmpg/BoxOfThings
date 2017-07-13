@@ -61,9 +61,7 @@ module.exports.getHtmlText = function(req, res) {
                 });
             }
         });
-
     });
-
 };
 
 module.exports.getJsonTime = function(type) {
@@ -131,10 +129,16 @@ module.exports.getRemoteHostVals = function(type){
     }
     switch (type){
         case "host":
-        return contents.remoteip == undefined ? "127.0.0.1" : contents.remoteip;
+        return contents.remoteServerDatafusion == undefined ? "127.0.0.1" : contents.remoteServerDatafusion;
         break;
         case "port":
         return contents.remotePortDatafusion == undefined ? 3000 : contents.remotePortDatafusion;
+        break;
+        case "boxname":
+        return contents.boxparams == undefined ? "BoxIoT" : contents.boxparams.name;
+        break;
+        case "boxmac":
+        return contents.boxparams == undefined ? "ff:ff:ff:ff:ff:ff" : contents.boxparams.mac;
         break;
         case "boxData":
         return contents.boxparams;
@@ -176,6 +180,8 @@ module.exports.defaultparamsinifile = function(req, res) {
             sshport: "22",
             privatersa: homedir.toString("utf8").replace('\n', '') + "/.ssh/id_rsa",
             remotepathscript: homedir.toString("utf8").replace('\n', '') + "/freeport.js",
+            remotePortDatafusion: "3000",
+            remoteServerDatafusion: "127.0.0.1",
             timequery: 1,
             timedatafusion: 1
         };
