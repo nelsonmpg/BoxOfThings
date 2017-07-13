@@ -78,16 +78,79 @@ module.exports = {
         // // console.log("\nSimular insert:\n", obj);
         // Sensor.insertOrUpdate(obj);
         // Sensor.insertSensorMetodos(obj.ip, [ {folder: "teste2",resource : "456456"}, {folder: "teste4",resource : "999999"}]);
+        // var obj = {
+        //     'objecttype': 'sensoriot', 
+        //     'boxname': 'BoxIoT', 
+        //     'boxmac': "macaddress", 
+        //     'sensorid': '1.0', 
+        //     'sensorname': '1.0', 
+        //     'sensortype': "sensortipo", 
+        //     'sensorvalue': Math.round( Math.random() * (100 - 1) + 1)
+        // }
         var obj = {
-            'objecttype': 'sensoriot', 
-            'boxname': 'BoxIoT', 
-            'boxmac': "macaddress", 
-            'sensorid': '1.0', 
-            'sensorname': '1.0', 
-            'sensortype': "sensortipo", 
-            'sensorvalue': Math.round( Math.random() * (100 - 1) + 1)
+            boxname: "BoxIotTeste", 
+            boxmac: "[123:1234:1234:1324:1342]", 
+            moteip: "[3465:3465:3465:3456:3456]",
+            methods: [{
+                folder: "teste",
+                resource: "val1"
+            },{
+                folder: "teste",
+                resource: "val2"
+            },{
+                folder: "teste",
+                resource: "val3"
+            },{
+                folder: "teste",
+                resource: "val4"
+            }],
+            dateOfEntry: new Date(),
+            readings: [{
+                sensorType: "temp",
+                values: {
+                    Average: "12",
+                    Max: "23",
+                    dateOfMax: new Date(),
+                    Min: "12",
+                    dateOfMin: new Date(),
+                    lowerRangeOfReadingDate: new Date(),
+                    upperRangeOfReadingDate: new Date()
+                }
+            },{
+                sensorType: "humy",
+                values: {
+                    Average: "432",
+                    Max: "4334",
+                    dateOfMax: new Date(),
+                    Min: "34",
+                    dateOfMin:new Date(),
+                    lowerRangeOfReadingDate: new Date(),
+                    upperRangeOfReadingDate: new Date()
+                }
+            },{
+                sensorType: "light",
+                values: {
+                    Average: "22",
+                    Max: "123",
+                    dateOfMax: new Date(),
+                    Min:"12",
+                    dateOfMin: new Date(),
+                    lowerRangeOfReadingDate: new Date(),
+                    upperRangeOfReadingDate: new Date()
+                }
+            },{
+                sensorType: "sound",
+                values: {
+                    Average: "232",
+                    Max: "43",
+                    dateOfMax: new Date(),
+                    Min: "43",
+                    dateOfMin: new Date(),
+                    lowerRangeOfReadingDate: new Date(),
+                    upperRangeOfReadingDate: new Date()
+                }
+            }]
         }
-        
 
         sendData.sendDataToCloud(obj);
 
