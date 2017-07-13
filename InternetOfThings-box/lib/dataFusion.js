@@ -10,76 +10,7 @@ Sensor = new Sensor();
 SensorDataFusion = new SensorDataFusion();
 
 module.exports = {
-    getAllSensores: function() {        
-        // var obj = {
-        //     boxname: linuxquery.getRemoteHostVals("boxname"), 
-        //     boxmac: linuxquery.getRemoteHostVals("boxmac"), 
-        //     moteip: "[3465:3465:3465:3456:3456]",
-        //     methods: [{
-        //         folder: "teste",
-        //         resource: "val1"
-        //     },{
-        //         folder: "teste",
-        //         resource: "val2"
-        //     },{
-        //         folder: "teste",
-        //         resource: "val3"
-        //     },{
-        //         folder: "teste",
-        //         resource: "val4"
-        //     }],
-        //     dateOfEntry: new Date(),
-        //     readings: [{
-        //         sensorType: "temp",
-        //         values: {
-        //             Average: "12",
-        //             Max: "23",
-        //             dateOfMax: new Date(),
-        //             Min: "12",
-        //             dateOfMin: new Date(),
-        //             lowerRangeOfReadingDate: new Date(),
-        //             upperRangeOfReadingDate: new Date()
-        //         }
-        //     },{
-        //         sensorType: "humy",
-        //         values: {
-        //             Average: "432",
-        //             Max: "4334",
-        //             dateOfMax: new Date(),
-        //             Min: "34",
-        //             dateOfMin:new Date(),
-        //             lowerRangeOfReadingDate: new Date(),
-        //             upperRangeOfReadingDate: new Date()
-        //         }
-        //     },{
-        //         sensorType: "light",
-        //         values: {
-        //             Average: "22",
-        //             Max: "123",
-        //             dateOfMax: new Date(),
-        //             Min:"12",
-        //             dateOfMin: new Date(),
-        //             lowerRangeOfReadingDate: new Date(),
-        //             upperRangeOfReadingDate: new Date()
-        //         }
-        //     },{
-        //         sensorType: "sound",
-        //         values: {
-        //             Average: "232",
-        //             Max: "43",
-        //             dateOfMax: new Date(),
-        //             Min: "43",
-        //             dateOfMin: new Date(),
-        //             lowerRangeOfReadingDate: new Date(),
-        //             upperRangeOfReadingDate: new Date()
-        //         }
-        //     }]
-        // }
-        
-        // SensorDataFusion.insertDataFusion(obj);
-        // sendData.sendDataToCloudDataFusion(obj, 'sensors');
-        //sendData.sendDataToCloudParcial(obj, 'sensors');
-
+    getAllSensores: function() { 
         console.log("Start Counter Data Fusion.");
         setTimeout(function() {
             console.log("New call Data Fusion.");
@@ -102,8 +33,10 @@ module.exports = {
                     }
                 }
                 module.exports.iterateMotesToKeys(validKeys, JSON.parse(JSON.stringify(allNotes[i])));
-                Sensor.removeAllRecords('{"ip" : "' + allNotes[i].ip + '"}');
+                Sensor.removeAllRecords({"ip" : allNotes[i].ip });
             }
+        } else {
+            console.log("No Records to DataFusion.");
         }
     },
 

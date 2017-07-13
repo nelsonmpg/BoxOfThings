@@ -55,6 +55,7 @@ Sensor.prototype.getAllSensores = function(callback) {
 };
 
 Sensor.prototype.removeAllRecords = function(params) {
+    console.log(params);
     this.SensorDB.remove(params, function(err, result) {
         if (err) {
             console.log("Error to remove all");
