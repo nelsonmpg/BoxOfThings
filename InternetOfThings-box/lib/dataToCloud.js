@@ -41,7 +41,7 @@ module.exports = {
         }
     },
 
-    sendDataToCloudParcial = function(fullDataFusionObj){
+    sendDataToCloudParcial : function(fullDataFusionObj){
         for (var i in fullDataFusionObj.readings) {
             var parcialObj = {
                 'objecttype': 'sensoriot', 
