@@ -27,7 +27,7 @@ module.exports = {
 
 
 
-        var jsonObject = querystring.stringify(dataFusionObj);
+        var jsonObject = JSON.stringify(dataFusionObj);
 
         var postheaders = {
             'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ module.exports = {
                     console.log(responseString);
                 });
             });
-            req.write(jsonObject);
+            req.write(dataFusionObj);
             req.end();
             req.on('error', function(e) {
                 console.error(e);
