@@ -2,19 +2,19 @@
 
 require('colors');
 var net = require('net'),
-    cp = require('child_process'),
-    fs = require('fs'),
-    ini = require('ini'),
-    request = require("request"),
-    SSH = require('simple-ssh'),
-    macaddress = require('macaddress'),
-    fileconfig = './MainConfig.ini',
-    sshfileconfig = './configssh.json',
-    times = './times.json',
-    dbToModels = require('./dbToModel.js'),
-    configSSH = null,
-    coapSensor,
-    timeSensors = 1;
+cp = require('child_process'),
+fs = require('fs'),
+ini = require('ini'),
+request = require("request"),
+SSH = require('simple-ssh'),
+macaddress = require('macaddress'),
+fileconfig = './MainConfig.ini',
+sshfileconfig = './configssh.json',
+times = './times.json',
+dbToModels = require('./dbToModel.js'),
+configSSH = null,
+coapSensor,
+timeSensors = 1;
 
 module.exports.getHtmlText = function(req, res) {
     var self = this;
@@ -126,15 +126,29 @@ module.exports.getinifileparams = function(req, res) {
     }
 };
 
-module.exports.getHost = function(){
-     if (fs.existsSync(sshfileconfig)) {
-        var contents = fs.readFileSync(sshfileconfig).toString();
-        if (IsJsonString(contents)) {
-            contents = JSON.parse(contents);
+module.exports.getRemoteHostVals = function(type){
+ if (fs.existsSync(sshfileconfig)) {
+    var contents = fs.readFileSync(sshfileconfig).toString();
+    if (IsJsonString(contents)) {
+        contents = JSON.parse(contents);
+        switch (type){
+            case "host":
             return contents.remoteip;
+            break;
+            case "port":
+            return contents.remotePortDatafusion;
+            break;
         }
+
     }
-     return "127.0.0.1";
+}
+switch (type){
+    case "host":
+    return "127.0.0.1";
+    break;
+    case "port":
+    return 3000;
+}
 };
 
 module.exports.defaultparamsinifile = function(req, res) {
@@ -188,7 +202,7 @@ module.exports.defaultparamsinifile = function(req, res) {
  * @param {type} res
  * @returns {undefined}
  */
-module.exports.savesettings = function(req, res) {
+ module.exports.savesettings = function(req, res) {
     var self = this;
     var objSave = req.body.data;
     var timesConfig = {
@@ -227,19 +241,19 @@ module.exports.savesettings = function(req, res) {
                     databasepass: config.userportal.pass
                 };
                 var saveini = "" +
-                    "; Config Global\n" +
-                    "[global]\n" +
-                    "portlocalserver = " + datavals.portlocalserver + "\n" +
-                    "configok = true\n\n" +
-                    "; definicao da base de dados\n" +
-                    "[database]\n" +
-                    "dataBaseType = " + datavals.dataBaseType + "\n" +
-                    "host = " + datavals.dataBasehost + "\n" +
-                    "dbname = " + datavals.databasedbname + "\n\n" +
-                    "; Utilizador por defeito de acesso ao portal\n" +
-                    "[userportal]\n" +
-                    "user = " + datavals.databaseuser + "\n" +
-                    "pass = " + datavals.databasepass + "\n";
+                "; Config Global\n" +
+                "[global]\n" +
+                "portlocalserver = " + datavals.portlocalserver + "\n" +
+                "configok = true\n\n" +
+                "; definicao da base de dados\n" +
+                "[database]\n" +
+                "dataBaseType = " + datavals.dataBaseType + "\n" +
+                "host = " + datavals.dataBasehost + "\n" +
+                "dbname = " + datavals.databasedbname + "\n\n" +
+                "; Utilizador por defeito de acesso ao portal\n" +
+                "[userportal]\n" +
+                "user = " + datavals.databaseuser + "\n" +
+                "pass = " + datavals.databasepass + "\n";
 
                 fs.writeFile(fileconfig, saveini, 'utf8', function(err) {
                     if (err) {
@@ -358,7 +372,7 @@ module.exports.createReverseTunnel = function() {
  * @param {type} file
  * @returns {Boolean}
  */
-var checkconfigexist = function(file) {
+ var checkconfigexist = function(file) {
     var config;
     try {
         // try to get the override configuration file if it exists
