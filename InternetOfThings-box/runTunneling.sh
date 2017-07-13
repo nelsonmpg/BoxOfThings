@@ -4,7 +4,7 @@ for x in "$(ps aux | grep  "ssh -fN -R" | grep -v pts/0 |  tr -s " " " " | cut -
 	sudo kill -9 $x
 done
 
-`ssh -fN -R $1:$2:$3 $4@$5 -p $6 2> createTunnel.log`
+`ssh -N -R $1:$2:$3 $4@$5 -p $6 2> createTunnel.log`
 
 echo "ssh -N -R $1:$2:$3 $4@$5 -p $6 2> createTunnel.log"
 echo "tunnel run."

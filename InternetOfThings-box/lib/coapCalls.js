@@ -32,6 +32,11 @@ module.exports = {
             console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
         });
     },
+
+    updateCheckSensor : function(req, res){
+
+    },
+
     getValuesFromSensors: function() {
         Route.getAllAdressDistinct(callMoteFunctions);
     },

@@ -59,9 +59,9 @@ Sensor.prototype.insertOrUpdate = function(data) {
                     return;
                 }
                 console.log('Sensor keys and ck update!', result);
+                self.getSensorNotCheck();
             });
         }
-        // self.getSensorNotCheck();
     });
 };
 
