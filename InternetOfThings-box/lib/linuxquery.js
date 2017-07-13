@@ -127,28 +127,20 @@ module.exports.getinifileparams = function(req, res) {
 };
 
 module.exports.getRemoteHostVals = function(type){
- if (fs.existsSync(sshfileconfig)) {
-    var contents = fs.readFileSync(sshfileconfig).toString();
-    if (IsJsonString(contents)) {
-        contents = JSON.parse(contents);
-        switch (type){
-            case "host":
-            return contents.remoteip;
-            break;
-            case "port":
-            return contents.remotePortDatafusion;
-            break;
+    var contents = "";
+    if (fs.existsSync(sshfileconfig)) {
+        contents = fs.readFileSync(sshfileconfig).toString();
+        if (IsJsonString(contents)) {
+            contents = JSON.parse(contents);
         }
-
     }
-}
-switch (type){
-    case "host":
-    return "127.0.0.1";
-    break;
-    case "port":
-    return 3000;
-}
+    switch (type){
+        case "host":
+        return contents.remoteip ? "127.0.0.1" : contents.remoteip;
+        break;
+        case "port":
+        return contents.remotePortDatafusion ? 3000 : contents.remotePortDatafusion;
+    }
 };
 
 module.exports.defaultparamsinifile = function(req, res) {

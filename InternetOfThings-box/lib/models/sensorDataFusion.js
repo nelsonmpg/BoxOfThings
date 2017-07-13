@@ -44,7 +44,8 @@ SensorDataFusion.prototype.insertDataFusion = function(data) {
             return;
         }
         console.log('Sensor Data Fusion value add / created!' /*, result*/ );
-        sendData.sendDataToCloud(data);
+        // sendData.sendDataToCloud(data, 'sensors');
+        sendData.sendDataToCloudParcial(obj, 'sensors');
     });
 };
 

@@ -3,7 +3,7 @@ lxqry = require("./linuxquery.js"),
 querystring = require('querystring');
 
 module.exports = {
-    sendDataToCloudDataFusion: function(dataFusionObj) {
+    sendDataToCloudDataFusion: function(dataFusionObj, path) {
         var jsonObject = JSON.stringify(dataFusionObj);
 
         var postheaders = {
@@ -14,7 +14,7 @@ module.exports = {
         var options = {
             host: lxqry.getRemoteHostVals("host"),
             port: lxqry.getRemoteHostVals("port"),
-            path: '/insert',
+            path: '/' + path,
             method: 'POST',
             headers: postheaders
         };
@@ -52,7 +52,7 @@ module.exports = {
                 sensortype: "Sensor-" + (i * 1 + 1), 
                 sensorvalue: fullDataFusionObj.readings[i].Average
             }
-            module.exports.sendDataToCloudDataFusion(parcialObj);
+            module.exports.sendDataToCloudDataFusion(parcialObj, 'sensors');
         }
    },
 

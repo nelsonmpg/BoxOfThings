@@ -76,8 +76,8 @@ module.exports = {
             }]
         }
 
-        // sendData.sendDataToCloudDataFusion(obj);
-        sendData.sendDataToCloudParcial(obj);
+        // sendData.sendDataToCloudDataFusion(obj, 'sensors');
+        sendData.sendDataToCloudParcial(obj, 'sensors');
 
         console.log("Start Counter Data Fusion.");
         setTimeout(function() {
