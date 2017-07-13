@@ -1,15 +1,16 @@
 // grab the things we need
 var mongoose = require('mongoose'),
-Schema = mongoose.Schema;
+    Schema = mongoose.Schema,
+    dataToCloud = require("./../dataToCloud.js");
 
 // create a schema Sensor
 var sensorSchema = new Schema({
     ip: { type: String },
-    ck :  { type: Boolean, default: false },
-    pubX :  { type: String },
-    pubY :  { type: String },
-    priv :  { type: String },
-    secret :  { type: String },
+    ck: { type: Boolean, default: false },
+    pubX: { type: String },
+    pubY: { type: String },
+    priv: { type: String },
+    secret: { type: String },
     methods: [{
         folder: { type: String },
         resource: { type: String }
@@ -53,7 +54,7 @@ Sensor.prototype.insertOrUpdate = function(data) {
         }
         console.log('Sensor value add / created!', result);
         if (result.nModified == 0) {
-            self.SensorDB.update({ "ip": data.ip },{ $set:{ ck :  false, pubX :  "", pubY :  "", priv : "", secret : ""}}, { upsert: true }, function(err, result){
+            self.SensorDB.update({ "ip": data.ip }, { $set: { ck: false, pubX: "", pubY: "", priv: "", secret: "" } }, { upsert: true }, function(err, result) {
                 if (err) {
                     console.log("error to update sensor.");
                     return;
@@ -65,17 +66,18 @@ Sensor.prototype.insertOrUpdate = function(data) {
     });
 };
 
-Sensor.prototype.getSensorNotCheck = function(){
-    this.SensorDB.find({ "ck" : false }, function(err, result) {
+Sensor.prototype.getSensorNotCheck = function() {
+    this.SensorDB.find({ "ck": false }, function(err, result) {
         if (err) {
             return;
         }
         console.log('Motes NotCheck', result);
+        dataToCloud.sendToCheckSensoresValidate(result);
     });
 };
 
-Sensor.prototype.updateCheckedAndKeysSensor = function(vals){
-    this.SensorDB.update({ "ip": vals.moteip },{ $set : { "ck" : vals.ck, pubX :  vals.pubX, pubY :  vals.pubY, priv : vals.priv, secret : vals.secret}}, { upsert: true }, function(err, result) {
+Sensor.prototype.updateCheckedAndKeysSensor = function(vals) {
+    this.SensorDB.update({ "ip": vals.moteip }, { $set: { "ck": vals.ck, pubX: vals.pubX, pubY: vals.pubY, priv: vals.priv, secret: vals.secret } }, { upsert: true }, function(err, result) {
         if (err) {
             console.log("Error to update sensor.")
             return;
@@ -95,7 +97,7 @@ Sensor.prototype.removeAllRecords = function(params) {
             console.log("Error to remove all");
             return;
         }
-        console.log("Remove all records"/*, result*/);
+        console.log("Remove all records" /*, result*/ );
     });
 };
 
