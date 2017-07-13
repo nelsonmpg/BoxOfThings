@@ -67,23 +67,18 @@ module.exports.getHtmlText = function(req, res) {
 };
 
 module.exports.getJsonTime = function(type) {
+    var timesConf = "";
     if (fs.existsSync(times)) {
         var contentstimes = fs.readFileSync(times).toString();
         if (IsJsonString(contentstimes)) {
-            var timesConf = JSON.parse(contentstimes);
-            if (type === "sensors") {
-                return timesConf.timequery;
-            }
-            if (type === "datafusion") {
-                return timesConf.timedatafusion;
-            }
+            timesConf = JSON.parse(contentstimes);
         }
     }
     if (type === "sensors") {
-        return 1;
+        return timesConf.timequery == undefined ? 1 : timesConf.timequery;
     }
     if (type === "datafusion") {
-        return 1;
+        return timesConf.timedatafusion == undefined ? 1 : timesConf.timedatafusion;
     }
 };
 
@@ -140,6 +135,10 @@ module.exports.getRemoteHostVals = function(type){
         break;
         case "port":
         return contents.remotePortDatafusion == undefined ? 3000 : contents.remotePortDatafusion;
+        break;
+        case "boxData":
+        return contents.boxparams;
+        break;
     }
 };
 

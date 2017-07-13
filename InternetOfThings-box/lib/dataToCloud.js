@@ -54,32 +54,37 @@ module.exports = {
             }
             module.exports.sendDataToCloudDataFusion(parcialObj, 'sensors');
         }
-   },
+    },
 
-   getDataCloud: function() {
-    var options = {
-        host: lxqry.getHost(),
-        port: 4000,
-        path: '/Teste',
-        method: 'GET'
-    };
+    sendDataBoxTypes : function(){
+// if (undefined) {}
+        console.log(lxqry.getRemoteHostVals("boxData"));
+    }.
 
-    try {
+    getDataCloud: function() {
+        var options = {
+            host: lxqry.getHost(),
+            port: 4000,
+            path: '/Teste',
+            method: 'GET'
+        };
 
-        var reqGet = http.request(options, function(res) {
-            console.log('STATUS: ' + res.statusCode);
-            console.log('HEADERS: ' + JSON.stringify(res.headers));
-            res.setEncoding('utf8');
-            res.on('data', function(chunk) {
-                console.log('BODY: ' + chunk);
+        try {
+
+            var reqGet = http.request(options, function(res) {
+                console.log('STATUS: ' + res.statusCode);
+                console.log('HEADERS: ' + JSON.stringify(res.headers));
+                res.setEncoding('utf8');
+                res.on('data', function(chunk) {
+                    console.log('BODY: ' + chunk);
+                });
             });
-        });
-        reqGet.end();
-        reqGet.on('error', function(e) {
-            console.error(e);
-        });
-    } catch (e) {
-        console.log("Erro ao tentar ligar ao servidor remoto!!!")
+            reqGet.end();
+            reqGet.on('error', function(e) {
+                console.error(e);
+            });
+        } catch (e) {
+            console.log("Erro ao tentar ligar ao servidor remoto!!!")
+        }
     }
-}
 }
