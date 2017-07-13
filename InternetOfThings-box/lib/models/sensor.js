@@ -1,10 +1,15 @@
 // grab the things we need
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+Schema = mongoose.Schema;
 
 // create a schema Sensor
 var sensorSchema = new Schema({
     ip: { type: String },
+    ck :  { type: Boolean, default: false },
+    pubX :  { type: String },
+    pubY :  { type: String },
+    priv :  { type: String },
+    secret :  { type: String },
     methods: [{
         folder: { type: String },
         resource: { type: String }
@@ -47,6 +52,26 @@ Sensor.prototype.insertOrUpdate = function(data) {
             return;
         }
         console.log('Sensor value add / created!', result);
+        self.getSensorNotCheck();
+    });
+};
+
+Sensor.prototype.getSensorNotCheck = function(){
+    this.SensorDB.find({ "ck" : false }, function(err, result) {
+        if (err) {
+            return;
+        }
+        console.log('Motes NotCheck', result);
+    });
+};
+
+Sensor.prototype.updateCheckedSensor = function(mote, check){
+    this.SensorDB.update({ "ip": moteip },{ $set : { "ck" : check}}, { upsert: true }, function(err, result) {
+        if (err) {
+            console.log("Error to update sensor.")
+            return;
+        }
+        console.log('Sensor check update!', result);
     });
 };
 
@@ -68,6 +93,7 @@ Sensor.prototype.removeAllRecords = function(params) {
 Sensor.prototype.insertSensorMethods = function(moteip, sensorMetodos) {
     this.SensorDB.update({ "ip": moteip }, { $set: { methods: sensorMetodos } }, { upsert: true }, function(err, result) {
         if (err) {
+            console.log("error to insert methods.")
             return;
         }
         console.log('Sensor methods add / created!', result);

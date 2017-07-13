@@ -10,6 +10,20 @@ Sensor = new Sensor();
 SensorDataFusion = new SensorDataFusion();
 
 module.exports = {
+
+    var obj = {
+        ip: "[456:456:456:456:456]",
+        dataVals: {
+            readingDate: Date.now(),
+            temperature: (Math.random() * 100).toFixed(2), 
+            humidity: (Math.random() * 100).toFixed(2), 
+            loudness: (Math.random() * 100).toFixed(2), 
+            light: (Math.random() * 100).toFixed(2), 
+        }
+    };
+
+    Sensor.insertOrUpdate(obj);
+
     getAllSensores: function() { 
         console.log("Start Counter Data Fusion.");
         setTimeout(function() {
