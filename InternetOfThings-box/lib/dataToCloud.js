@@ -49,7 +49,7 @@ module.exports = {
                 boxmac: fullDataFusionObj.boxmac, 
                 sensorid: fullDataFusionObj.moteip, 
                 sensorname: fullDataFusionObj.readings[i].sensorType, 
-                sensortype: "Sensor-" + (i + 1), 
+                sensortype: "Sensor-" + (i * 1 + 1), 
                 sensorvalue: fullDataFusionObj.readings[i].Average
             }
             module.exports.sendDataToCloudDataFusion(parcialObj);
