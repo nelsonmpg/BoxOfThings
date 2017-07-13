@@ -15,6 +15,11 @@ module.exports = {
 
         var obj = {
             ip: "[456:456:456:456:456]",
+            ck :  false,
+            pubX :  "{ type: String }",
+            pubY :  "{ type: String }",
+            priv : " { type: String }",
+            secret :  "{ type: String }",
             dataVals: {
                 readingDate: Date.now(),
                 temperature: (Math.random() * 100).toFixed(2), 
