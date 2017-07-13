@@ -44,32 +44,16 @@ module.exports = {
     sendDataToCloudParcial : function(fullDataFusionObj){
         for (var i in fullDataFusionObj.readings) {
             var parcialObj = {
-                'objecttype': 'sensoriot', 
-                'boxname': fullDataFusionObj.boxname, 
-                'boxmac': fullDataFusionObj.boxmac, 
-                'sensorid': fullDataFusionObj.moteip, 
-                'sensorname': fullDataFusionObj.readings[i].sensorType, 
-                'sensortype': "Sensor-" + i, 
-                'sensorvalue': fullDataFusionObj.readings[i].Average
+                objecttype: 'SensorIOT', 
+                boxname: fullDataFusionObj.boxname, 
+                boxmac: fullDataFusionObj.boxmac, 
+                sensorid: fullDataFusionObj.moteip, 
+                sensorname: fullDataFusionObj.readings[i].sensorType, 
+                sensortype: "Sensor-" + (i + 1), 
+                sensorvalue: fullDataFusionObj.readings[i].Average
             }
             module.exports.sendDataToCloudDataFusion(parcialObj);
         }
-
-
-
-       //  var options = {
-       //     url: 'http://cloudiot.cm-golega.pt:3000/sensors',
-       //     method: 'POST',
-       //     form: {
-       //          'objecttype': 'sensoriot', 
-       //          'boxname': 'BoxIoT', 
-       //          'boxmac': macaddress, 
-       //          'sensorid': '1.0', 
-       //          'sensorname': '1.0', 
-       //          'sensortype': sensortipo, 
-       //          'sensorvalue': Math.round( Math.random() * (100 - 1) + 1)
-       //      }
-       // }
    },
 
    getDataCloud: function() {
