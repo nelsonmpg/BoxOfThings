@@ -1,12 +1,25 @@
 var http = require('http'),
-    lxqry = require("./linuxquery.js"),
-    querystring = require('querystring');
+lxqry = require("./linuxquery.js"),
+querystring = require('querystring');
 var request = require("request");
 
 module.exports = {
     sendDataToCloud: function(dataFusionObj) {
+        var options = {
+         // url: 'http://cloudiot.cm-golega.pt:3000/sensors',
+         url : "http://" + lxqry.getHost() + ":4000/insert"
+         method: 'POST',
+         form: dataFusionObj
+     }
 
-      
+        // Start the request
+        request(options, function (error, response, body) {
+         if (!error && response.statusCode == 200) {
+                // Print out the response body
+                console.log(body)
+            }
+        });
+
 
 
 /*
