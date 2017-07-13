@@ -58,10 +58,10 @@ Sensor.prototype.insertOrUpdate = function(data) {
                     console.log("error to update sensor.");
                     return;
                 }
-                console.log('Sensor update!', result);
+                console.log('Sensor keys and ck update!', result);
             });
         }
-        self.getSensorNotCheck();
+        // self.getSensorNotCheck();
     });
 };
 
