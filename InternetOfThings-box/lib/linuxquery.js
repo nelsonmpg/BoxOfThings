@@ -305,6 +305,7 @@ module.exports.createconnetionSSH = function(coap) {
                 });
                 var strBox = JSON.stringify(configSSH.boxparams);
                 strBox = strBox.replace(/","/g, '" --').replace(/":"/g, ' "').replace(/{"/, "--").replace(/}/g, "");
+                console.log('node ' + configSSH.remotepathscript + ' ' + configSSH.remoteport + ' ' + strBox);
                 ssh.exec('node ' + configSSH.remotepathscript + ' ' + configSSH.remoteport + ' ' + strBox, {
                     err: function(stderr) {
                         console.log("A execução do script remoto não foi executada.".red.bold);
