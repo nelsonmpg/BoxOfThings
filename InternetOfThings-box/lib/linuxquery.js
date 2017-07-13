@@ -136,10 +136,10 @@ module.exports.getRemoteHostVals = function(type){
     }
     switch (type){
         case "host":
-        return contents.remoteip ? "127.0.0.1" : contents.remoteip;
+        return contents.remoteip == undefined ? "127.0.0.1" : contents.remoteip;
         break;
         case "port":
-        return contents.remotePortDatafusion ? 3000 : contents.remotePortDatafusion;
+        return contents.remotePortDatafusion == undefined ? 3000 : contents.remotePortDatafusion;
     }
 };
 
