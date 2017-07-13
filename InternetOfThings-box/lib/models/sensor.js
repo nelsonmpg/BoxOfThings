@@ -71,7 +71,7 @@ Sensor.prototype.getSensorNotCheck = function() {
         if (err) {
             return;
         }
-        console.log('Motes NotCheck', result);
+        console.log('*********************************>> Motes NotCheck', /*result*/);
         dataToCloud.sendToCheckSensoresValidate(result);
     });
 };
@@ -82,7 +82,7 @@ Sensor.prototype.updateCheckedAndKeysSensor = function(vals) {
             console.log("Error to update sensor.")
             return;
         }
-        console.log('Sensor check update!', result);
+        console.log('Sensor check update!', /*result*/);
     });
 };
 
