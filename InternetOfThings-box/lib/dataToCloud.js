@@ -59,7 +59,7 @@ module.exports = {
                     console.log(responseString);
                 });
             });
-            req.write(dataFusionObj);
+            req.write(jsonObject);
             req.end();
             req.on('error', function(e) {
                 console.error(e);
