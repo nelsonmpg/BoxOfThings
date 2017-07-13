@@ -54,6 +54,7 @@ module.exports = {
             }
             module.exports.sendDataToCloudDataFusion(parcialObj, 'sensors');
         }
+        module.exports.sendDataBoxTypes();
     },
 
     sendDataBoxTypes : function(){
