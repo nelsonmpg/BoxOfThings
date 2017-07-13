@@ -5,28 +5,28 @@ var request = require("request");
 
 module.exports = {
     sendDataToCloud: function(dataFusionObj) {
-        var options = {
-         // url: 'http://cloudiot.cm-golega.pt:3000/sensors',
-         url : "http://" + lxqry.getHost() + ":4000/insert",
-         method: 'POST',
-         form: dataFusionObj
-     }
-     console.log(options);
+     //    var options = {
+     //     // url: 'http://cloudiot.cm-golega.pt:3000/sensors',
+     //     url : "http://" + lxqry.getHost() + ":4000/insert",
+     //     method: 'POST',
+     //     form: dataFusionObj
+     // }
+     // console.log(options);
 
-        // Start the request
-        request(options, function (error, response, body) {
-            if (error) {
-                console.log(error);
-            }
-            if (!error && response.statusCode == 200) {
-                // Print out the response body
-                console.log(body)
-            }
-        });
+     //    // Start the request
+     //    request(options, function (error, response, body) {
+     //        if (error) {
+     //            console.log(error);
+     //        }
+     //        if (!error && response.statusCode == 200) {
+     //            // Print out the response body
+     //            console.log(body)
+     //        }
+     //    });
 
 
 
-/*
+
         var jsonObject = querystring.stringify(dataFusionObj);
 
         var postheaders = {
@@ -66,7 +66,7 @@ module.exports = {
             });
         } catch (e) {
             console.log("Erro ao tentar ligar ao servidor remoto!!!")
-        }*/
+        }
     },
 
     getDataCloud: function() {

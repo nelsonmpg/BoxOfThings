@@ -1,8 +1,10 @@
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema,
-    sendData = require('./../dataToCloud.js');
+Schema = mongoose.Schema,
+sendData = require('./../dataToCloud.js');
 
 var sensorDataFusionSchema = new Schema({
+    boxname: { type: String }, 
+    boxmac: { type: String }, 
     moteip: { type: String },
     methods: [{
         folder: { type: String },
