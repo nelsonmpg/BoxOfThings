@@ -58,11 +58,11 @@ module.exports = {
     },
 
     sendDataBoxTypes : function(){
-// if (undefined) {}
+        // if (undefined) {}
         console.log(lxqry.getRemoteHostVals("boxData"));
-    }.
+    },
 
-    getDataCloud: function() {
+    getDataCloud : function() {
         var options = {
             host: lxqry.getHost(),
             port: 4000,
