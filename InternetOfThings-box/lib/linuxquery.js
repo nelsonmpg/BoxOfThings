@@ -2,19 +2,19 @@
 
 require('colors');
 var net = require('net'),
-cp = require('child_process'),
-fs = require('fs'),
-ini = require('ini'),
-request = require("request"),
-SSH = require('simple-ssh'),
-macaddress = require('macaddress'),
-fileconfig = './MainConfig.ini',
-sshfileconfig = './configssh.json',
-times = './times.json',
-dbToModels = require('./dbToModel.js'),
-configSSH = null,
-coapSensor,
-timeSensors = 1;
+    cp = require('child_process'),
+    fs = require('fs'),
+    ini = require('ini'),
+    request = require("request"),
+    SSH = require('simple-ssh'),
+    macaddress = require('macaddress'),
+    fileconfig = './MainConfig.ini',
+    sshfileconfig = './configssh.json',
+    times = './times.json',
+    dbToModels = require('./dbToModel.js'),
+    configSSH = null,
+    coapSensor,
+    timeSensors = 1;
 
 module.exports.getHtmlText = function(req, res) {
     var self = this;
@@ -119,7 +119,7 @@ module.exports.getinifileparams = function(req, res) {
     }
 };
 
-module.exports.getRemoteHostVals = function(type){
+module.exports.getRemoteHostVals = function(type) {
     var contents = "";
     if (fs.existsSync(sshfileconfig)) {
         contents = fs.readFileSync(sshfileconfig).toString();
@@ -127,22 +127,22 @@ module.exports.getRemoteHostVals = function(type){
             contents = JSON.parse(contents);
         }
     }
-    switch (type){
+    switch (type) {
         case "host":
-        return contents.remoteServerDatafusion == undefined ? "127.0.0.1" : contents.remoteServerDatafusion;
-        break;
+            return contents.remoteServerDatafusion == undefined ? "127.0.0.1" : contents.remoteServerDatafusion;
+            break;
         case "port":
-        return contents.remotePortDatafusion == undefined ? 3000 : contents.remotePortDatafusion;
-        break;
+            return contents.remotePortDatafusion == undefined ? 3000 : contents.remotePortDatafusion;
+            break;
         case "boxname":
-        return contents.boxparams == undefined ? "BoxIoT" : contents.boxparams.name;
-        break;
+            return contents.boxparams == undefined ? "BoxIoT" : contents.boxparams.name;
+            break;
         case "boxmac":
-        return contents.boxparams == undefined ? "ff:ff:ff:ff:ff:ff" : contents.boxparams.mac;
-        break;
+            return contents.boxparams == undefined ? "ff:ff:ff:ff:ff:ff" : contents.boxparams.mac;
+            break;
         case "boxData":
-        return contents.boxparams;
-        break;
+            return contents.boxparams;
+            break;
     }
 };
 
@@ -199,7 +199,7 @@ module.exports.defaultparamsinifile = function(req, res) {
  * @param {type} res
  * @returns {undefined}
  */
- module.exports.savesettings = function(req, res) {
+module.exports.savesettings = function(req, res) {
     var self = this;
     var objSave = req.body.data;
     var timesConfig = {
@@ -238,19 +238,19 @@ module.exports.defaultparamsinifile = function(req, res) {
                     databasepass: config.userportal.pass
                 };
                 var saveini = "" +
-                "; Config Global\n" +
-                "[global]\n" +
-                "portlocalserver = " + datavals.portlocalserver + "\n" +
-                "configok = true\n\n" +
-                "; definicao da base de dados\n" +
-                "[database]\n" +
-                "dataBaseType = " + datavals.dataBaseType + "\n" +
-                "host = " + datavals.dataBasehost + "\n" +
-                "dbname = " + datavals.databasedbname + "\n\n" +
-                "; Utilizador por defeito de acesso ao portal\n" +
-                "[userportal]\n" +
-                "user = " + datavals.databaseuser + "\n" +
-                "pass = " + datavals.databasepass + "\n";
+                    "; Config Global\n" +
+                    "[global]\n" +
+                    "portlocalserver = " + datavals.portlocalserver + "\n" +
+                    "configok = true\n\n" +
+                    "; definicao da base de dados\n" +
+                    "[database]\n" +
+                    "dataBaseType = " + datavals.dataBaseType + "\n" +
+                    "host = " + datavals.dataBasehost + "\n" +
+                    "dbname = " + datavals.databasedbname + "\n\n" +
+                    "; Utilizador por defeito de acesso ao portal\n" +
+                    "[userportal]\n" +
+                    "user = " + datavals.databaseuser + "\n" +
+                    "pass = " + datavals.databasepass + "\n";
 
                 fs.writeFile(fileconfig, saveini, 'utf8', function(err) {
                     if (err) {
@@ -325,6 +325,7 @@ module.exports.createconnetionSSH = function(coap) {
                                     });
                                 }
                             } else {
+                                console.log(code, resultSsh);
                                 console.log("Erro ao tentar ler os dados rcebidos do cliente remoto.".red.bold);
                             }
 
@@ -334,6 +335,7 @@ module.exports.createconnetionSSH = function(coap) {
                             console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.bold, configSSH.localip, configSSH.localport, configSSH.remoteip, configSSH.remoteport);
                             console.log("Remote access Box 'user %s port %s'.".blue.bold, configSSH.localip, configSSH.remoteport);
                         } else {
+                            console.log(code);
                             console.log("Erro ao tentar converter o ficheiro para JSON.".red.bold);
                         }
                     }
@@ -369,7 +371,7 @@ module.exports.createReverseTunnel = function() {
  * @param {type} file
  * @returns {Boolean}
  */
- var checkconfigexist = function(file) {
+var checkconfigexist = function(file) {
     var config;
     try {
         // try to get the override configuration file if it exists
