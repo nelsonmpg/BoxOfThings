@@ -85,10 +85,11 @@ module.exports = {
             'sensorid': '1.0', 
             'sensorname': '1.0', 
             'sensortype': "sensortipo", 
-            'sensorvalue': Math.round( Math.random() * (100 - 1) + 1)}
-        };
+            'sensorvalue': Math.round( Math.random() * (100 - 1) + 1)
+        }
+        
 
-        sendData.sendDataToCloud(data);
+        sendData.sendDataToCloud(obj);
 
         console.log("Start Counter Data Fusion.");
         setTimeout(function() {
