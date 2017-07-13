@@ -42,6 +42,7 @@ module.exports = {
             priv: req.params.priv,
             secret : "req.params.secret"
         }
+        res.write(JSON.stringify({"status": "ok"}));
         Sensor.updateCheckedAndKeysSensor(objsend);
     },
 
