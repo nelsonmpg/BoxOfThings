@@ -311,6 +311,7 @@ module.exports.createconnetionSSH = function(coap) {
                         console.log(stderr);
                     },
                     out: function(code) {
+                        console.log("Code", code);
                         if (IsJsonString(code)) {
                             var resultSsh = JSON.parse(code);
                             if (resultSsh.port != "" && resultSsh.port != undefined && resultSsh.port != "undefined" && resultSsh.port != null) {
