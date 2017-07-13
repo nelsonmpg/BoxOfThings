@@ -58,7 +58,7 @@ module.exports = {
 
     sendToCheckSensoresValidate: function(motesip) {
         for (var i in motesip) {
-            console.log(motesip[i]);
+            console.log("Mote for -> ", motesip[i]);
         }
     },
 
