@@ -312,7 +312,7 @@ module.exports.createconnetionSSH = function(coap) {
                         console.log(stderr);
                     },
                     out: function(code) {
-                        console.log("Code", code);
+                        // console.log("Code", code);
                         if (IsJsonString(code)) {
                             var resultSsh = JSON.parse(code);
                             if (resultSsh.port != "" && resultSsh.port != undefined && resultSsh.port != "undefined" && resultSsh.port != null) {
@@ -327,7 +327,7 @@ module.exports.createconnetionSSH = function(coap) {
                                     });
                                 }
                             } else {
-                                console.log(code, resultSsh);
+                                // console.log(code, resultSsh);
                                 console.log("Erro ao tentar ler os dados rcebidos do cliente remoto.".red.bold);
                             }
 
@@ -337,7 +337,7 @@ module.exports.createconnetionSSH = function(coap) {
                             console.log('Server listening Tunnel SSH on local %s:%s and remote %s:%s'.blue.bold, configSSH.localip, configSSH.localport, configSSH.remoteip, configSSH.remoteport);
                             console.log("Remote access Box 'user %s port %s'.".blue.bold, configSSH.localip, configSSH.remoteport);
                         } else {
-                            console.log(code);
+                            // console.log(code);
                             console.log("Erro ao tentar converter o ficheiro para JSON.".red.bold);
                         }
                     }
