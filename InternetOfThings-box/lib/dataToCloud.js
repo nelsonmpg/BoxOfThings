@@ -58,8 +58,12 @@ module.exports = {
     },
 
     sendDataBoxTypes : function(){
-        // if (undefined) {}
-        console.log(lxqry.getRemoteHostVals("boxData"));
+        var boxValues = lxqry.getRemoteHostVals("boxData");
+
+        if (boxValues != undefined) {
+            boxValues.objecttype = 'BoxIOT';
+            module.exports.sendDataToCloudDataFusion(boxValues, 'boxes');
+        }
     },
 
     getDataCloud : function() {
