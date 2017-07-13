@@ -60,9 +60,9 @@ module.exports = {
         for (var i in motesip) {
             console.log(motesip[i]);
         }
-    }
+    },
 
-        sendDataBoxTypes: function() {
+    sendDataBoxTypes: function() {
         var boxValues = lxqry.getRemoteHostVals("boxData");
 
         if (boxValues != undefined) {
