@@ -5,7 +5,7 @@ var http = require('http'),
 module.exports = {
     sendDataToCloudDataFusion: function(dataFusionObj, path) {
         var jsonObject = JSON.stringify(dataFusionObj);
-
+console.log(jsonObject);
         var postheaders = {
             'Content-Type': 'application/json',
             'Content-Length': Buffer.byteLength(jsonObject)
