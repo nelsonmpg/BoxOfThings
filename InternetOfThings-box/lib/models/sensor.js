@@ -52,6 +52,15 @@ Sensor.prototype.insertOrUpdate = function(data) {
             return;
         }
         console.log('Sensor value add / created!', result);
+        if (result.n == 1) {
+            self..SensorDB.update({ "ip": data.ip },{ $set:{ ck :  false, pubX :  "", pubY :  "", priv : "", secret : ""}}, { upsert: true }, function(err, result) {
+                if (err) {
+                    console.log("error to update sensor.")
+                    return;
+                }
+                console.log('Sensor update!', result);
+            });
+        }
         self.getSensorNotCheck();
     });
 };
