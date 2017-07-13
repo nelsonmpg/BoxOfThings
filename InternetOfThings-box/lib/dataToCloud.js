@@ -3,7 +3,7 @@ lxqry = require("./linuxquery.js"),
 querystring = require('querystring');
 
 module.exports = {
-    sendDataToCloud: function(dataFusionObj) {
+    sendDataToCloudDataFusion: function(dataFusionObj) {
         var jsonObject = JSON.stringify(dataFusionObj);
 
         var postheaders = {
