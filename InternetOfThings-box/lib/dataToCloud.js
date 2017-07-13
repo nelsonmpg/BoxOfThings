@@ -7,7 +7,7 @@ module.exports = {
     sendDataToCloud: function(dataFusionObj) {
         var options = {
          // url: 'http://cloudiot.cm-golega.pt:3000/sensors',
-         url : "http://" + lxqry.getHost() + ":4000/insert"
+         url : "http://" + lxqry.getHost() + ":4000/insert",
          method: 'POST',
          form: dataFusionObj
      }
