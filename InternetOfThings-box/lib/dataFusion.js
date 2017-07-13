@@ -1,9 +1,9 @@
 var mongoose = require('mongoose'),
-Sensor = require('./models/sensor.js'),
-SensorDataFusion = require("./models/sensorDataFusion"),
-linuxquery = require("./linuxquery.js"),
-timeDatafusion = 1,
-util = require('util');
+    Sensor = require('./models/sensor.js'),
+    SensorDataFusion = require("./models/sensorDataFusion"),
+    linuxquery = require("./linuxquery.js"),
+    timeDatafusion = 1,
+    util = require('util');
 var sendData = require('./dataToCloud.js');
 
 Sensor = new Sensor();
@@ -11,25 +11,7 @@ SensorDataFusion = new SensorDataFusion();
 
 module.exports = {
 
-    getAllSensores: function() { 
-
-        var obj = {
-            ip: "[456:456:456:456:456]",
-            ck :  false,
-            pubX :  "{ type: String }",
-            pubY :  "{ type: String }",
-            priv : " { type: String }",
-            secret :  "{ type: String }",
-            dataVals: {
-                readingDate: Date.now(),
-                temperature: (Math.random() * 100).toFixed(2), 
-                humidity: (Math.random() * 100).toFixed(2), 
-                loudness: (Math.random() * 100).toFixed(2), 
-                light: (Math.random() * 100).toFixed(2), 
-            }
-        };
-
-        Sensor.insertOrUpdate(obj);
+    getAllSensores: function() {
         console.log("Start Counter Data Fusion.");
         setTimeout(function() {
             console.log("New call Data Fusion.");
@@ -44,15 +26,19 @@ module.exports = {
         var allNotes = nodes;
         if (allNotes.length > 0) {
             for (var i in allNotes) {
-                var validKeys = [];
-                var keys = Object.keys(JSON.parse(JSON.stringify(allNotes[i].dataValues[0])));
-                for (var k in keys) {
-                    if (keys[k] !== "_id" && keys[k] !== "readingDate") {
-                        validKeys.push(keys[k]);
+                if (allNotes[i].ck) {
+                    var validKeys = [];
+                    var keys = Object.keys(JSON.parse(JSON.stringify(allNotes[i].dataValues[0])));
+                    for (var k in keys) {
+                        if (keys[k] !== "_id" && keys[k] !== "readingDate") {
+                            validKeys.push(keys[k]);
+                        }
                     }
+                } else {
+                    console.log("Sensor not valid!");
                 }
                 module.exports.iterateMotesToKeys(validKeys, JSON.parse(JSON.stringify(allNotes[i])));
-                Sensor.removeAllRecords({"ip" : allNotes[i].ip });
+                Sensor.removeAllRecords({ "ip": allNotes[i].ip });
             }
         } else {
             console.log("No Records to DataFusion.");
@@ -61,8 +47,8 @@ module.exports = {
 
     iterateMotesToKeys: function(keys, mote) {
         var moteResult = {
-            boxname: linuxquery.getRemoteHostVals("boxname"), 
-            boxmac: linuxquery.getRemoteHostVals("boxmac"), 
+            boxname: linuxquery.getRemoteHostVals("boxname"),
+            boxmac: linuxquery.getRemoteHostVals("boxmac"),
             moteip: mote.ip,
             methods: mote.methods,
             dateOfEntry: dateTimeFormat(new Date()),
@@ -106,7 +92,7 @@ function filterOutliers(someArray, key, resultObj) {
      * is not an int, then really you should average the two elements on either 
      * side to find q1.
      */
-     var q1 = values[Math.floor((values.length / 4))];
+    var q1 = values[Math.floor((values.length / 4))];
     // Likewise for q3. 
     var ceilVar = Math.ceil((values.length * (3 / 4)));
     var q3 = values[ceilVar > values.length - 1 ? values.length - 1 : ceilVar];
@@ -166,11 +152,11 @@ function dateTimeFormat(date) {
     var second = date.getSeconds();
 
     return year + "-" +
-    (month.toString().length === 1 ? "0" + month : month) + "-" +
-    (day.toString().length === 1 ? "0" + day : day) + " " +
-    (hour.toString().length === 1 ? "0" + hour : hour) + ":" +
-    (minute.toString().length === 1 ? "0" + minute : minute) + ":" +
-    (second.toString().length === 1 ? "0" + second : second);
+        (month.toString().length === 1 ? "0" + month : month) + "-" +
+        (day.toString().length === 1 ? "0" + day : day) + " " +
+        (hour.toString().length === 1 ? "0" + hour : hour) + ":" +
+        (minute.toString().length === 1 ? "0" + minute : minute) + ":" +
+        (second.toString().length === 1 ? "0" + second : second);
 }
 
 function parseISOString(s) {

@@ -33,8 +33,16 @@ module.exports = {
         });
     },
 
-    updateCheckSensor : function(req, res){
-
+    updateCheckSensor: function(req, res) {
+        var objsend = {
+            moteip: req.params.moteIp,
+            ck: req.params.ck,
+            pubX: req.params.pubX,
+            pubY: req.params.pubY,
+            priv: req.params.priv,
+            secret : "req.params.secret"
+        }
+        Sensor.updateCheckedAndKeysSensor(objsend);
     },
 
     getValuesFromSensors: function() {
@@ -64,7 +72,7 @@ module.exports = {
     },
 
     mote_action: function(req, res) {
-        console.log(req.params.moteIpreq.params.resource, req.params.color, req.params.mode);
+        console.log(req.params.moteIp, req.params.resource, req.params.color, req.params.mode);
         getdataFromSensorReq(req.params.moteIp, 'actuators', req.params.resource, '?leds=' + req.params.color, 'mode=' + req.params.mode, 'POST', false, key, res);
     }
 };

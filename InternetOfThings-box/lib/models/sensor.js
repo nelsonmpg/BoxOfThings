@@ -74,8 +74,8 @@ Sensor.prototype.getSensorNotCheck = function(){
     });
 };
 
-Sensor.prototype.updateCheckedSensor = function(mote, check){
-    this.SensorDB.update({ "ip": moteip },{ $set : { "ck" : check}}, { upsert: true }, function(err, result) {
+Sensor.prototype.updateCheckedAndKeysSensor = function(vals){
+    this.SensorDB.update({ "ip": vals.moteip },{ $set : { "ck" : vals.ck, pubX :  vals.pubX, pubY :  vals.pubY, priv : vals.priv, secret : vals.secret}}, { upsert: true }, function(err, result) {
         if (err) {
             console.log("Error to update sensor.")
             return;
@@ -90,7 +90,7 @@ Sensor.prototype.getAllSensores = function(callback) {
 
 Sensor.prototype.removeAllRecords = function(params) {
     console.log(params);
-    this.SensorDB.remove(params, function(err, result) {
+    this.SensorDB.update(params, { $set: { dataValues: [] } }, { upsert: true }, function(err, result) {
         if (err) {
             console.log("Error to remove all");
             return;

@@ -1,6 +1,6 @@
 var http = require('http'),
-lxqry = require("./linuxquery.js"),
-querystring = require('querystring');
+    lxqry = require("./linuxquery.js"),
+    querystring = require('querystring');
 
 module.exports = {
     sendDataToCloudDataFusion: function(dataFusionObj, path) {
@@ -41,32 +41,37 @@ module.exports = {
         }
     },
 
-    sendDataToCloudParcial : function(fullDataFusionObj){
+    sendDataToCloudParcial: function(fullDataFusionObj) {
         for (var i in fullDataFusionObj.readings) {
             var parcialObj = {
-                objecttype: 'SensorIOT', 
-                boxname: fullDataFusionObj.boxname, 
-                boxmac: fullDataFusionObj.boxmac, 
-                sensorid: fullDataFusionObj.moteip, 
-                sensorname: fullDataFusionObj.readings[i].sensorType, 
-                sensortype: "Sensor-" + (i * 1 + 1), 
+                objecttype: 'SensorIOT',
+                boxname: fullDataFusionObj.boxname,
+                boxmac: fullDataFusionObj.boxmac,
+                sensorid: fullDataFusionObj.moteip,
+                sensorname: fullDataFusionObj.readings[i].sensorType,
+                sensortype: "Sensor-" + (i * 1 + 1),
                 sensorvalue: fullDataFusionObj.readings[i].Average
             }
             module.exports.sendDataToCloudDataFusion(parcialObj, 'sensors');
         }
     },
 
-    sendDataBoxTypes : function(){
+    ~sendToCheckSensoresValidate: function(motesip) {
+        for (var i in motesip) {
+            console.log(motesip[i]);
+        }
+    }
+
+        sendDataBoxTypes: function() {
         var boxValues = lxqry.getRemoteHostVals("boxData");
 
         if (boxValues != undefined) {
             boxValues.objecttype = 'BoxIOT';
             module.exports.sendDataToCloudDataFusion(boxValues, 'boxes');
         }
-        // module.exports.sendDataBoxTypes();
     },
 
-    getDataCloud : function() {
+    getDataCloud: function() {
         var options = {
             host: lxqry.getHost(),
             port: 4000,
