@@ -14,7 +14,8 @@ var express = require('express'),
     dataFusion = require('./dataFusion.js'),
     dbToModels;
 
-var ServerHTTP = function(config) {
+var ServerHTTP = function(config) {        
+    ServerUdp = new ServerUdp();    
     var self = this;
     this.app = express();
     this.server = http.Server(this.app);
@@ -52,7 +53,7 @@ var ServerHTTP = function(config) {
  * Inicia o servodor
  * @returns {undefined}
  */
-ServerHTTP.prototype.start = function() {
+ ServerHTTP.prototype.start = function() {
     var self = this;
     self.server.listen(self.port);
     this.skt = new serverIo({ server: self }).init();
@@ -117,6 +118,16 @@ ServerHTTP.prototype.start = function() {
         console.log("Html não carregado.", e);
     }
     dataFusion.getAllSensores();
+    ServerUdp.start();
+    callServerUdpRToS();
+};
+
+
+var callServerUdpRToS = function(){
+     setTimeout(function() {
+        ServerUdp.pedeDados();
+        callServerUdpRToS();
+    }, 1 * 60 * 1000);
 };
 
 /**
@@ -124,19 +135,19 @@ ServerHTTP.prototype.start = function() {
  * @param {type} param1
  * @param {type} param2
  */
-process.on("message", function(data) {
+ process.on("message", function(data) {
     var srv = new ServerHTTP(data.serverdata);
     srv.start();
 });
 
-module.exports = ServerHTTP;
+ module.exports = ServerHTTP;
 
 /**
  * Verifica se o ficheiro existe
  * @param {type} file
  * @returns {Boolean}
  */
-var checkconfigexist = function(file) {
+ var checkconfigexist = function(file) {
     var config;
     try {
         // try to get the override configuration file if it exists

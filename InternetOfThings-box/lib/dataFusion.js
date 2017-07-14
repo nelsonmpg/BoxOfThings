@@ -15,7 +15,7 @@ module.exports = {
         var obj = {
             ip: "[aaaa::212:4b00:60d:60fe]",
             dataVals: {
-                readingDate:utils.dateTimeFormat(new Date()),
+                readingDate: utils.dateTimeFormat(new Date()),
                 temperature: (Math.random() * 100).toFixed(2), 
                 humidity: (Math.random() * 100).toFixed(2), 
                 loudness: (Math.random() * 100).toFixed(2), 

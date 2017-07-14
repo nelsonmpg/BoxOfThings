@@ -17,12 +17,8 @@ var net = require('net'),
     coapSensor,
     timeSensors = 1;
 
-ServerUdp = new ServerUdp();
-ServerUdp.start();
-
 module.exports.getHtmlText = function(req, res) {
     var self = this;
-    ServerUdp.pedeDados();
     cp.exec("cat /var/log/6lbr.ip", function(error, stdout, stderr) {
         if (error) {
             console.log("Erro ao tentar ler o ficheiro /var/log/6lbr.ip.".red);

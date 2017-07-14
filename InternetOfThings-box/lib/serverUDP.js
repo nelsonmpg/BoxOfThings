@@ -6,9 +6,9 @@ dados = new Buffer("123456"),
 Sensor = require('./models/sensor.js'),
 utils = require('./utils.js');
 
-Sensor = new Sensor();
 
 var ServerUdp = function() {
+	Sensor = new Sensor();
 	this.server = dgram.createSocket('udp4');
 	this.sensores = [];	
 };

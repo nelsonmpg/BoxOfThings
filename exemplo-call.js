@@ -2,7 +2,7 @@
 var obj = {
     ip: "[456:456:456:456:456]",
     dataVals: {
-        readingDate: Date.now(),
+        readingDate: utils.dateTimeFormat(new Date()),
         temperature: (Math.random() * 100).toFixed(2), 
         humidity: (Math.random() * 100).toFixed(2), 
         loudness: (Math.random() * 100).toFixed(2), 
@@ -37,44 +37,44 @@ readings: [{
         values: {
             Average: "12",
             Max: "23",
-            dateOfMax: new Date(),
+            dateOfMax: utils.dateTimeFormat(new Date()),
             Min: "12",
-            dateOfMin: new Date(),
-            lowerRangeOfReadingDate: new Date(),
-            upperRangeOfReadingDate: new Date()
+            dateOfMin: utils.dateTimeFormat(new Date()),
+            lowerRangeOfReadingDate: utils.dateTimeFormat(new Date()),
+            upperRangeOfReadingDate: utils.dateTimeFormat(new Date())
     }
 },{
         sensorType: "humy",
         values: {
             Average: "432",
             Max: "4334",
-            dateOfMax: new Date(),
+            dateOfMax: utils.dateTimeFormat(new Date()),
             Min: "34",
-            dateOfMin:new Date(),
-            lowerRangeOfReadingDate: new Date(),
-            upperRangeOfReadingDate: new Date()
+            dateOfMin: utils.dateTimeFormat(new Date()),
+            lowerRangeOfReadingDate: utils.dateTimeFormat(new Date()),
+            upperRangeOfReadingDate: utils.dateTimeFormat(new Date())
     }
 },{
         sensorType: "light",
         values: {
             Average: "22",
             Max: "123",
-            dateOfMax: new Date(),
+            dateOfMax: utils.dateTimeFormat(new Date()),
             Min:"12",
-            dateOfMin: new Date(),
-            lowerRangeOfReadingDate: new Date(),
-            upperRangeOfReadingDate: new Date()
+            dateOfMin: utils.dateTimeFormat(new Date()),
+            lowerRangeOfReadingDate: utils.dateTimeFormat(new Date()),
+            upperRangeOfReadingDate: utils.dateTimeFormat(new Date())
     }
 },{
         sensorType: "sound",
         values: {
             Average: "232",
             Max: "43",
-            dateOfMax: new Date(),
+            dateOfMax: utils.dateTimeFormat(new Date()),
             Min: "43",
-            dateOfMin: new Date(),
-            lowerRangeOfReadingDate: new Date(),
-            upperRangeOfReadingDate: new Date()
+            dateOfMin: utils.dateTimeFormat(new Date()),
+            lowerRangeOfReadingDate: utils.dateTimeFormat(new Date()),
+            upperRangeOfReadingDate: utils.dateTimeFormat(new Date())
     }
 }]
 };
