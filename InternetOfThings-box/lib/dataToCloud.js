@@ -1,5 +1,5 @@
 var http = require('http'),
-    lxqry = require("./linuxquery.js");
+lxqry = require("./linuxquery.js");
 
 module.exports = {
     sendDataToCloudDataFusion: function(dataFusionObj, path) {
@@ -58,6 +58,13 @@ module.exports = {
     sendToCheckSensoresValidate: function(motesip) {
         for (var i in motesip) {
             console.log("Mote for -> ", motesip[i]);
+            var parcialObj = {
+                objecttype: 'SensorIOT',
+                boxname: linuxquery.getRemoteHostVals("boxname"),
+                boxmac: linuxquery.getRemoteHostVals("boxmac"),
+                sensorid: motesip[i]
+            }
+            module.exports.sendDataToCloudDataFusion(parcialObj, 'sensorscheck');
         }
     },
 
