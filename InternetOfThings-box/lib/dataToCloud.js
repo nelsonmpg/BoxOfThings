@@ -19,29 +19,33 @@ module.exports = {
         // console.log(options);
 
         try {
-        httpspost('https://' + linuxquery.getRemoteHostVals("host") + ':' + linuxquery.getRemoteHostVals("port") + '/' + path, dataFusionObj, function(res) {
-            res.setEncoding('utf8');
-            // res.on('data', function(chunk) {
-            //     console.log(chunk);
-            // });
-        // });
-
-
-
-
-        //     var req = https.request(options, function(res) {
-        //         console.log('STATUS: ' + res.statusCode);
-        //         res.setEncoding('utf8');
-                var responseString = '';
-                res.on('data', function(data) {
-                    responseString += data;
+            httpspost('https://' + linuxquery.getRemoteHostVals("host") + ':' + linuxquery.getRemoteHostVals("port") + '/' + path, dataFusionObj, function(res) {
+                res.setEncoding('utf8');
+                res.on('data', function(chunk) {
+                    console.log(chunk);
                 });
                 res.on('end', function() {
-                    console.log("response - ",responseString);
+                    console.log("response - ");
                 });
+
             });
-        //     req.write(jsonObject);
-        //     req.end();
+
+
+
+
+            //     var req = https.request(options, function(res) {
+            //         console.log('STATUS: ' + res.statusCode);
+            //         res.setEncoding('utf8');
+            // var responseString = '';
+            //     res.on('data', function(data) {
+            //         responseString += data;
+            //     });
+            //     res.on('end', function() {
+            //         console.log("response - ",responseString);
+            //     });
+            // });
+            //     req.write(jsonObject);
+            //     req.end();
             // req.on('error', function(e) {
             //     console.error("error -> ", e);
             // });
