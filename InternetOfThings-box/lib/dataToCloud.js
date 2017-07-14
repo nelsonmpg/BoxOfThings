@@ -42,9 +42,6 @@ console.log(jsonObject);
     },
 
     sendDataToCloudParcial: function(fullDataFusionObj) {
-      console.log("--------------------------------------------------------------------------");
-      console.log(fullDataFusionObj);
-      console.log("--------------------------------------------------------------------------");
         for (var i in fullDataFusionObj.readings) {
             var parcialObj = {
                 objecttype: 'SensorIOT',
