@@ -17,6 +17,7 @@ module.exports = {
             method: 'POST',
             headers: postheaders
         };
+        console.log(options);
 
         try {
             var req = http.request(options, function(res) {
