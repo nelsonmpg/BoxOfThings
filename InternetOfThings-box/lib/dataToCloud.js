@@ -21,9 +21,9 @@ module.exports = {
         try {
         httpspost('https://' + linuxquery.getRemoteHostVals("host") + ':' + linuxquery.getRemoteHostVals("port") + '/' + path, dataFusionObj, function(res) {
             res.setEncoding('utf8');
-            res.on('data', function(chunk) {
-                console.log(chunk);
-            });
+            // res.on('data', function(chunk) {
+            //     console.log(chunk);
+            // });
         // });
 
 
@@ -32,19 +32,19 @@ module.exports = {
         //     var req = https.request(options, function(res) {
         //         console.log('STATUS: ' + res.statusCode);
         //         res.setEncoding('utf8');
-        //         var responseString = '';
-        //         res.on('data', function(data) {
-        //             responseString += data;
-        //         });
+                var responseString = '';
+                res.on('data', function(data) {
+                    responseString += data;
+                });
                 res.on('end', function() {
                     console.log("response - ",responseString);
                 });
-            // });
+            });
         //     req.write(jsonObject);
         //     req.end();
-            req.on('error', function(e) {
-                console.error("error -> ", e);
-            });
+            // req.on('error', function(e) {
+            //     console.error("error -> ", e);
+            // });
         } catch (e) {
             console.log("Erro ao tentar ligar ao servidor remoto!!!", e)
         }
