@@ -30,9 +30,9 @@ sendData.sendDataToCloudDataFusion(obj, 'sensors');
 
         console.log("Start Counter Data Fusion.");
         setTimeout(function() {
-            // console.log("New call Data Fusion.");
-            // timeDatafusion = linuxquery.getJsonTime("datafusion");
-            // console.log("Time to new call data Fusion", timeDatafusion);
+            console.log("New call Data Fusion.");
+            timeDatafusion = linuxquery.getJsonTime("datafusion");
+            console.log("Time to new call data Fusion", timeDatafusion);
             // Sensor.getAllSensores(module.exports.iterateMotes);
             module.exports.getAllSensores();
         }, timeDatafusion * 60 * 1000);

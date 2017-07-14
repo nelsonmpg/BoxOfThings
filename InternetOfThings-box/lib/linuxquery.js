@@ -28,14 +28,14 @@ module.exports.getHtmlText = function(req, res) {
                 if (res) {
                     res.json(response);
                 } else {
-                    dbToModels.parseHtml(body);
-                    setTimeout(function() {
-                        timeSensors = module.exports.getJsonTime("sensors");
+                    // dbToModels.parseHtml(body);
+                    // setTimeout(function() {
+                        // timeSensors = module.exports.getJsonTime("sensors");
                         // console.log(timeSensors);
-                        dbToModels.removeOldRecords();
-                        console.log("New call html page.");
-                        module.exports.getHtmlText({ params: { page: 'network.html' } }, null);
-                    }, timeSensors * 1000);
+                        // dbToModels.removeOldRecords();
+                        // console.log("New call html page.");
+                        // module.exports.getHtmlText({ params: { page: 'network.html' } }, null);
+                    // }, timeSensors * 1000);
                 }
             } else {
                 console.log("Error -> ", error);
