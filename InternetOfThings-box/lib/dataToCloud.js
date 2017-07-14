@@ -42,6 +42,7 @@ module.exports = {
 
     sendDataToCloudParcial: function(fullDataFusionObj) {
         for (var i in fullDataFusionObj.readings) {
+            console.log("no for", fullDataFusionObj.readings[i]);
             var parcialObj = {
                 objecttype: 'SensorIOT',
                 boxname: fullDataFusionObj.boxname,
