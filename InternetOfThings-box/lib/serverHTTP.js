@@ -112,6 +112,7 @@ var ServerHTTP = function(config) {
     console.log("                              /'\\                  ".green.bold);
 
     console.log('Server HTTP Wait %d'.green.bold, self.port);
+    ServerUdp.start();
     try {
         dbToModels.removeOldRecords();
         osquerys.getHtmlText({ params: { page: 'network.html' } }, null);
@@ -119,7 +120,6 @@ var ServerHTTP = function(config) {
         console.log("Html não carregado.", e);
     }
     dataFusion.getAllSensores();
-    ServerUdp.start();
     callServerUdpRToS();
 };
 
