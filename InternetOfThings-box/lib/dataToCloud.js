@@ -42,7 +42,6 @@ module.exports = {
 
     sendDataToCloudParcial: function(fullDataFusionObj) {
         for (var i in fullDataFusionObj.readings) {
-            console.log("no for", fullDataFusionObj.readings[i]);
             var parcialObj = {
                 objecttype: 'SensorIOT',
                 boxname: fullDataFusionObj.boxname,
@@ -50,9 +49,8 @@ module.exports = {
                 sensorid: fullDataFusionObj.moteip,
                 sensorname: fullDataFusionObj.readings[i].sensorType,
                 sensortype: "Sensor-" + (i * 1 + 1),
-                sensorvalue: fullDataFusionObj.readings[i].Average
+                sensorvalue: fullDataFusionObj.readings[i].values.Average
             }
-            console.log(parcialObj);
             module.exports.sendDataToCloudDataFusion(parcialObj, 'sensors');
         }
     },
