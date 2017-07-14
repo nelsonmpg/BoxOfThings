@@ -12,7 +12,7 @@ module.exports = {
 
     getAllSensores: function() {
         var obj = {
-            ip: "[456:456:456:456:123]",
+            ip: "[aaaa::212:4b00:60d:60fe]",
             dataVals: {
                 readingDate: Date.now(),
                 temperature: (Math.random() * 100).toFixed(2), 
