@@ -7,7 +7,7 @@ module.exports = {
 
         var options = {
             host: linuxquery.getRemoteHostVals("host"),
-            port: linuxquery.getRemoteHostVals("port"),
+            port: 443, //linuxquery.getRemoteHostVals("port"),
             path: '/' + path,
             method: 'POST',
             headers: {
