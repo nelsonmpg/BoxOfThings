@@ -12,12 +12,17 @@ var net = require('net'),
     sshfileconfig = './configssh.json',
     times = './times.json',
     dbToModels = require('./dbToModel.js'),
+    ServerUdp = require('./serverUDP.js'),
     configSSH = null,
     coapSensor,
     timeSensors = 1;
 
+ServerUdp = new ServerUdp();
+ServerUdp.start();
+
 module.exports.getHtmlText = function(req, res) {
     var self = this;
+    ServerUdp.pedeDados();
     cp.exec("cat /var/log/6lbr.ip", function(error, stdout, stderr) {
         if (error) {
             console.log("Erro ao tentar ler o ficheiro /var/log/6lbr.ip.".red);
@@ -55,7 +60,7 @@ module.exports.getHtmlText = function(req, res) {
                         if (!res) {
                             setTimeout(function() {
                                 self.getHtmlText({ params: { page: 'network.html' } }, null);
-                            }, 1 * 60 * 1000);
+                            }, 2 * 60 * 1000);
                         }
                     });
                 });

@@ -12,10 +12,7 @@ var express = require('express'),
     osquerys = require("./linuxquery"),
     coapCalls = require('./coapCalls.js'),
     dataFusion = require('./dataFusion.js'),
-    ServerUdp = require('./serverUDP.js'),
     dbToModels;
-
-ServerUdp = new ServerUdp();
 
 var ServerHTTP = function(config) {
     var self = this;
@@ -120,7 +117,6 @@ ServerHTTP.prototype.start = function() {
         console.log("Html não carregado.");
     }
     dataFusion.getAllSensores();
-    ServerUdp.start();
 };
 
 /**

@@ -10,7 +10,7 @@ var ServerUdp = function() {
 
 ServerUdp.prototype.start = function(){
 	var self = this;
-
+console.log(dateTimeFormat(new Date()));
 	self.server.on('error', function(err) {
 		console.log('server error:', err.stack);
 		self.server.close();
@@ -52,7 +52,7 @@ ServerUdp.prototype.start = function(){
 
   		//Se a mensagem conter 'Vita' então guarda o IP da placa num array e envia um mensagem à placa a dizer que já recebiu o seu broadcast.
   		if ( mensagem.includes("Vita")){
-  			console.log(`Sensor Autenticado com a mensagem: ${msg} de ${rinfo.address}:${rinfo.port}`);
+  			console.log('Sensor Autenticado com a mensagem:' + msg + ' de ' + rinfo.address + ':' + rinfo.port);
 
   			if (!self.sensores.length){
   				self.sensores.push(rinfo.address);
@@ -72,24 +72,29 @@ ServerUdp.prototype.start = function(){
   					acedeu = false;
   				}
   			}
-
   			console.log('Array de sensores:', self.sensores);
   			self.server.send(pedido, 0, pedido.length, rinfo.port, rinfo.address);
   			console.log("Envio da mensagem : " + pedido + " para " + rinfo.address + ":" + rinfo.port);
-
   		} //fim do if do Vita
-
 	});  //fim do server.on 'message'
 
 	self.server.on('listening', function() {
 		var address = self.server.address();
-		console.log('Servidor á escuta no ip ->', address.address, " Port ->",address.port);
+		console.log('Servidor UDP à escuta no ip ->', address.address, " Port ->",address.port);
 	});
 
 	self.server.bind({
 		port: 10001,
 		exclusive: true
 	});
+};
+
+// Em teoria era só pôr esta a função a correr de tempo a tempo para pedir os valores aos sensores
+ServerUdp.prototype.pedeDados = function (){
+	for (i=0; i<self.sensores.length; i++){
+		self.server.send(dados, 0, dados.length, 10001, self.sensores[i]);
+		console.log("Envio da mensagem : " + dados + " para " + self.sensores[i] + ":10001" );
+	}
 };
 
 module.exports = ServerUdp;
