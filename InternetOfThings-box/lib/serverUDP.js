@@ -11,7 +11,7 @@ var ServerUdp = function() {
 
 ServerUdp.prototype.start = function(){
 	var self = this;
-	console.log(utilsdateTimeFormat(new Date()));
+	console.log(utils.dateTimeFormat(new Date()));
 	self.server.on('error', function(err) {
 		console.log('server error:', err.stack);
 		self.server.close();
