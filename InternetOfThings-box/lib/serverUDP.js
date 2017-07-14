@@ -11,7 +11,7 @@ var ServerUdp = function() {
 
 ServerUdp.prototype.start = function(){
 	var self = this;
-	console.log(utils.dateTimeFormat(new Date()));
+
 	self.server.on('error', function(err) {
 		console.log('server error:', err.stack);
 		self.server.close();
@@ -30,16 +30,13 @@ ServerUdp.prototype.start = function(){
   			console.log("Envio da mensagem : " + dados + " para " + rinfo.address + ":" + rinfo.port);
   		}
 
-
   		//Se a mensagem conter 'yolo' então é porque é a mensagem que contém os valores dos sensores. Aqui guada-se os valores num txt chamado de 'log.txt'
   		if ( mensagem.includes("yolo")){
     		//retira o 'yolo#' da mensagem, tornando-se um array de duas posições. A primeira vai estar vazia e a segunda contém os dados
     		var res = mensagem.split("yolo#");
 
-    		var time =  new Date();
-
     		//Concatena a data com os dados dos sensores
-    		var str = time.getDate() + '-' + time.getMonth() + '-' + time.getFullYear() + ' ' + time.getHours() + ':' + time.getMinutes() +'#' + res[1];
+    		var str = utils.dateTimeFormat(new Date()) +'#' + res[1];
 
     		//Guarda a string 'str' no ficheiro 'log.txt'
     		fs.appendFile("log.txt", str + "\r\n", function(error) {
