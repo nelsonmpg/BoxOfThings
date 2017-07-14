@@ -1,5 +1,5 @@
 var http = require('http'),
-linuxquery = require("./linuxquery.js");
+    linuxquery = require("./linuxquery.js");
 
 module.exports = {
     sendDataToCloudDataFusion: function(dataFusionObj, path) {

@@ -1,10 +1,10 @@
 var mongoose = require('mongoose'),
-Sensor = require('./models/sensor.js'),
-SensorDataFusion = require("./models/sensorDataFusion"),
-linuxquery = require("./linuxquery.js"),
-timeDatafusion = 1,
-utils = require('./utils.js'),
-util = require('util');
+    Sensor = require('./models/sensor.js'),
+    SensorDataFusion = require("./models/sensorDataFusion"),
+    linuxquery = require("./linuxquery.js"),
+    timeDatafusion = 1,
+    utils = require('./utils.js'),
+    util = require('util');
 
 Sensor = new Sensor();
 SensorDataFusion = new SensorDataFusion();
@@ -12,20 +12,6 @@ SensorDataFusion = new SensorDataFusion();
 module.exports = {
 
     getAllSensores: function() {
-        var obj = {
-            ip: "[aaaa::212:4b00:60d:60fe]",
-            dataVals: {
-                readingDate: utils.dateTimeFormat(new Date()),
-                temperature: (Math.random() * 100).toFixed(2), 
-                humidity: (Math.random() * 100).toFixed(2), 
-                loudness: (Math.random() * 100).toFixed(2), 
-                light: (Math.random() * 100).toFixed(2), 
-            }
-        };
-
-        Sensor.insertOrUpdate(obj);
-
-
         console.log("Start Counter Data Fusion.");
         setTimeout(function() {
             console.log("New call Data Fusion.");
@@ -108,7 +94,7 @@ function filterOutliers(someArray, key, resultObj) {
      * is not an int, then really you should average the two elements on either 
      * side to find q1.
      */
-     var q1 = values[Math.floor((values.length / 4))];
+    var q1 = values[Math.floor((values.length / 4))];
     // Likewise for q3. 
     var ceilVar = Math.ceil((values.length * (3 / 4)));
     var q3 = values[ceilVar > values.length - 1 ? values.length - 1 : ceilVar];
@@ -151,4 +137,3 @@ function filterOutliers(someArray, key, resultObj) {
     resultObj.Average = (averagecalc / countAverage).toFixed(2);
     return resultObj;
 };
-

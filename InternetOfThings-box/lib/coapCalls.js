@@ -1,17 +1,17 @@
 require('colors');
 var coap = require('coap'),
-http = require('http'),
-URL = require('url'),
-http = require('http'),
-CryptoJS = require("crypto-js"),
-BN = require('bn.js'),
-EC = require('elliptic').ec,
-ec = new EC('p192'),
-Sensor = require('./models/sensor.js'),
-Route = require('./models/route.js'),
-key = CryptoJS.enc.Hex.parse('B007AFD752937AFF5A4192268A803BB7'),
-replaceRegex = /\u0000/gi,
-util = require('util');
+    http = require('http'),
+    URL = require('url'),
+    http = require('http'),
+    CryptoJS = require("crypto-js"),
+    BN = require('bn.js'),
+    EC = require('elliptic').ec,
+    ec = new EC('p192'),
+    Sensor = require('./models/sensor.js'),
+    Route = require('./models/route.js'),
+    key = CryptoJS.enc.Hex.parse('B007AFD752937AFF5A4192268A803BB7'),
+    replaceRegex = /\u0000/gi,
+    util = require('util');
 
 Sensor = new Sensor();
 Route = new Route();
@@ -42,7 +42,7 @@ module.exports = {
             ck: req.params.ck,
             pubX: req.params.pubX,
             pubY: req.params.pubY,
-            secret: GeraChaveSimetrica('11FA2B68851DEDA9B0CE4D6EFD76F4623DD4600FEB5824EF' /*req.params.pubX*/,'1B2585D62B7E6055C8534362A55F7F4F6EAB50F376CF18CE'/*req.params.pubY*/)
+            secret: GeraChaveSimetrica('11FA2B68851DEDA9B0CE4D6EFD76F4623DD4600FEB5824EF' /*req.params.pubX*/ , '1B2585D62B7E6055C8534362A55F7F4F6EAB50F376CF18CE' /*req.params.pubY*/ )
         }
         Sensor.updateCheckedAndKeysSensor(objsend, res);
     },
@@ -52,12 +52,12 @@ module.exports = {
     },
     getdataFromSensor: function(req, res) {
         var endereco = req.params.moteIp === "undefined" ? "" : req.params.moteIp,
-        folder = req.params.folder === "undefined" ? "" : req.params.folder,
-        resource = req.params.resource === "undefined" ? "" : req.params.resource,
-        params = req.params.params === "undefined" ? "" : req.params.params,
-        payload = req.params.payload === "undefined" ? "" : req.params.payload,
-        mMethod = req.params.mMethod === "undefined" ? "GET" : req.params.mMethod,
-        mObserve = req.params.mObserve === "undefined" ? "" : req.params.mObserve;
+            folder = req.params.folder === "undefined" ? "" : req.params.folder,
+            resource = req.params.resource === "undefined" ? "" : req.params.resource,
+            params = req.params.params === "undefined" ? "" : req.params.params,
+            payload = req.params.payload === "undefined" ? "" : req.params.payload,
+            mMethod = req.params.mMethod === "undefined" ? "GET" : req.params.mMethod,
+            mObserve = req.params.mObserve === "undefined" ? "" : req.params.mObserve;
 
         resource = resource.replace("§", "?");
         getdataFromSensorReq(endereco, folder, resource, params, payload, mMethod, mObserve, key, res);
@@ -83,43 +83,43 @@ module.exports = {
 var getdataFromSensorReq = function(endereco, folder, resource, params, payload, mMethod, mObserve, key, response) {
 
     var req,
-    request = coap.request,
-    url,
-    delayMillis = 3000,
-    method = 'GET',
+        request = coap.request,
+        url,
+        delayMillis = 3000,
+        method = 'GET',
         // requestString = 'coap://[aaaa::212:4b00:60d:b305]:5683/test/hello';
         // requestString = 'coap://[aaaa::212:4b00:60d:60fe]:5683/.well-known/core';
         requestString = 'coap://' + endereco + ':5683/' + folder + '/' + resource + params;
-        mKey = key;
+    mKey = key;
 
-        console.log(requestString);
+    console.log(requestString);
 
-        url = URL.parse(requestString);
-        url.method = mMethod;
-        url.observe = mObserve;
-        url.confirmable = false;
+    url = URL.parse(requestString);
+    url.method = mMethod;
+    url.observe = mObserve;
+    url.confirmable = false;
 
-        coap.parameters.exchangeLifetime = 30;
+    coap.parameters.exchangeLifetime = 30;
 
-        req = request(url);
-        if (!mObserve) {
-            req.setOption('Block2', new Buffer([0x02]));
-        }
+    req = request(url);
+    if (!mObserve) {
+        req.setOption('Block2', new Buffer([0x02]));
+    }
 
-        req.on('response', function(res) {
-            res.setEncoding('utf8');
+    req.on('response', function(res) {
+        res.setEncoding('utf8');
 
-            var data = CryptoJS.enc.Hex.parse(res.payload.toString("hex"));
+        var data = CryptoJS.enc.Hex.parse(res.payload.toString("hex"));
 
-            var encrypted = {};
-            encrypted.key = mKey;
-            encrypted.ciphertext = data;
+        var encrypted = {};
+        encrypted.key = mKey;
+        encrypted.ciphertext = data;
 
-            var decrypted3 = CryptoJS.AES.decrypt(encrypted, mKey, {
-                mode: CryptoJS.mode.ECB,
-                padding: CryptoJS.pad.NoPadding
-            });
-            try {
+        var decrypted3 = CryptoJS.AES.decrypt(encrypted, mKey, {
+            mode: CryptoJS.mode.ECB,
+            padding: CryptoJS.pad.NoPadding
+        });
+        try {
             //console.log(CryptoJS.enc.Utf8.stringify(decrypted3));
             // console.log(CryptoJS.enc.Hex.stringify(decrypted3));
             // console.log(CryptoJS.enc.Utf8.stringify(decrypted3));
@@ -176,18 +176,18 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
         }
     });
 
-        if (method === 'GET' || method === 'DELETE' || payload) {
-            req.end(payload);
-        } else {
-            process.stdin.pipe(req);
-        }
+    if (method === 'GET' || method === 'DELETE' || payload) {
+        req.end(payload);
+    } else {
+        process.stdin.pipe(req);
     }
+}
 
-    function removeProbChars(data) {
-        var normalString = "";
-        for (var x = 0; x < data.length; ++x) {
-            var c = data.charCodeAt(x);
-            if (c >= 0 && c <= 31) {
+function removeProbChars(data) {
+    var normalString = "";
+    for (var x = 0; x < data.length; ++x) {
+        var c = data.charCodeAt(x);
+        if (c >= 0 && c <= 31) {
             //console.log( 'problematic character found at position ' + x);
             normalString = data.substring(0, x);
             break;
@@ -246,7 +246,7 @@ var getMoteMethods = function(ipDoMote, data) {
     //RESOURCE: core
 
     resSplit = data.split(','),
-    values = [];
+        values = [];
     for (var i = 0; i < resSplit.length; i++) {
         if (resSplit[i].startsWith("<")) {
             var lastIndex = resSplit[i].lastIndexOf('>');
@@ -255,7 +255,7 @@ var getMoteMethods = function(ipDoMote, data) {
     }
 
     var objectToInsert = { ip: ipDoMote },
-    dataArray = [];
+        dataArray = [];
 
     for (var i = 0; i < values.length; i++) {
         var lineVals = values[i].split('/');
@@ -277,21 +277,21 @@ var GeraChaveSimetrica = function(xB, yB) {
     var OwnX = '11FA2B68851DEDA9B0CE4D6EFD76F4623DD4600FEB5824EF';
     var OwnY = '1B2585D62B7E6055C8534362A55F7F4F6EAB50F376CF18CE';
     //Gera chave 
-    var OwnPubKey = { 
-        x: OwnX.toString('hex'), 
-        y: OwnY.toString('hex') 
+    var OwnPubKey = {
+        x: OwnX.toString('hex'),
+        y: OwnY.toString('hex')
     };
     //Faz o par de chaves
     var OwnKeyPair = ec.keyFromPublic(OwnPubKey, 'hex');
     //define chave privada
-    OwnKeyPair.priv = new BN('A722747CCF51EB381BA75A75A74DF4EB31633C852E0D97EE',16);
+    OwnKeyPair.priv = new BN('A722747CCF51EB381BA75A75A74DF4EB31633C852E0D97EE', 16);
 
     // console.log("Mote x:" + xB.toString('hex'));
     // console.log("Mote y:" + yB.toString('hex'));
 
-    var pubB = { 
-        x: xB.toString('hex'), 
-        y: yB.toString('hex') 
+    var pubB = {
+        x: xB.toString('hex'),
+        y: yB.toString('hex')
     };
 
     var key2 = ec.keyFromPublic(pubB, 'hex');
