@@ -16,7 +16,7 @@ module.exports = {
         //         'Content-Length': jsonObject.length /*Buffer.byteLength(jsonObject)*/
         //     }
         // };
-        console.log(options);
+        // console.log(options);
 
         httpspost('https://' + linuxquery.getRemoteHostVals("host") + ':' + linuxquery.getRemoteHostVals("port") + '/' + path, dataFusionObj, function(res) {
             res.setEncoding('utf8');
