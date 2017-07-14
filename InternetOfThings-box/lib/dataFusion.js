@@ -6,8 +6,8 @@ var mongoose = require('mongoose'),
     utils = require('./utils.js'),
     util = require('util');
 
-var sendData = require('./../dataToCloud.js');
- 
+var sendData = require('./dataToCloud.js');
+
 Sensor = new Sensor();
 SensorDataFusion = new SensorDataFusion();
 
