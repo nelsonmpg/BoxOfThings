@@ -2,19 +2,19 @@
 
 require('colors');
 var net = require('net'),
-    cp = require('child_process'),
-    fs = require('fs'),
-    ini = require('ini'),
-    request = require("request"),
-    SSH = require('simple-ssh'),
-    macaddress = require('macaddress'),
-    fileconfig = './MainConfig.ini',
-    sshfileconfig = './configssh.json',
-    times = './times.json',
-    dbToModels = require('./dbToModel.js'),
-    configSSH = null,
-    coapSensor,
-    timeSensors = 1;
+cp = require('child_process'),
+fs = require('fs'),
+ini = require('ini'),
+request = require("request"),
+SSH = require('simple-ssh'),
+macaddress = require('macaddress'),
+fileconfig = './MainConfig.ini',
+sshfileconfig = './configssh.json',
+times = './times.json',
+dbToModels = require('./dbToModel.js'),
+configSSH = null,
+coapSensor,
+timeSensors = 1;
 
 module.exports.getHtmlText = function(req, res) {
     var self = this;
@@ -129,20 +129,20 @@ module.exports.getRemoteHostVals = function(type) {
     }
     switch (type) {
         case "host":
-            return contents.remoteServerDatafusion == undefined ? "127.0.0.1" : contents.remoteServerDatafusion;
-            break;
+        return contents.remoteServerDatafusion == undefined ? "127.0.0.1" : contents.remoteServerDatafusion;
+        break;
         case "port":
-            return contents.remotePortDatafusion == undefined ? 3000 : contents.remotePortDatafusion;
-            break;
+        return contents.remotePortDatafusion == undefined ? 3000 : contents.remotePortDatafusion;
+        break;
         case "boxname":
-            return contents.boxparams == undefined ? "BoxIoT" : contents.boxparams.name;
-            break;
+        return contents.boxparams == undefined ? "BoxIoT" : contents.boxparams.name;
+        break;
         case "boxmac":
-            return contents.boxparams == undefined ? "ff:ff:ff:ff:ff:ff" : contents.boxparams.mac;
-            break;
+        return contents.boxparams == undefined ? "ff:ff:ff:ff:ff:ff" : contents.boxparams.mac;
+        break;
         case "boxData":
-            return contents.boxparams;
-            break;
+        return contents.boxparams;
+        break;
     }
 };
 
@@ -199,7 +199,7 @@ module.exports.defaultparamsinifile = function(req, res) {
  * @param {type} res
  * @returns {undefined}
  */
-module.exports.savesettings = function(req, res) {
+ module.exports.savesettings = function(req, res) {
     var self = this;
     var objSave = req.body.data;
     var timesConfig = {
@@ -238,19 +238,19 @@ module.exports.savesettings = function(req, res) {
                     databasepass: config.userportal.pass
                 };
                 var saveini = "" +
-                    "; Config Global\n" +
-                    "[global]\n" +
-                    "portlocalserver = " + datavals.portlocalserver + "\n" +
-                    "configok = true\n\n" +
-                    "; definicao da base de dados\n" +
-                    "[database]\n" +
-                    "dataBaseType = " + datavals.dataBaseType + "\n" +
-                    "host = " + datavals.dataBasehost + "\n" +
-                    "dbname = " + datavals.databasedbname + "\n\n" +
-                    "; Utilizador por defeito de acesso ao portal\n" +
-                    "[userportal]\n" +
-                    "user = " + datavals.databaseuser + "\n" +
-                    "pass = " + datavals.databasepass + "\n";
+                "; Config Global\n" +
+                "[global]\n" +
+                "portlocalserver = " + datavals.portlocalserver + "\n" +
+                "configok = true\n\n" +
+                "; definicao da base de dados\n" +
+                "[database]\n" +
+                "dataBaseType = " + datavals.dataBaseType + "\n" +
+                "host = " + datavals.dataBasehost + "\n" +
+                "dbname = " + datavals.databasedbname + "\n\n" +
+                "; Utilizador por defeito de acesso ao portal\n" +
+                "[userportal]\n" +
+                "user = " + datavals.databaseuser + "\n" +
+                "pass = " + datavals.databasepass + "\n";
 
                 fs.writeFile(fileconfig, saveini, 'utf8', function(err) {
                     if (err) {
@@ -362,9 +362,11 @@ module.exports.createReverseTunnel = function() {
             console.log("Erro na criação do tunel SHH port : %s:%s".red.bold, configSSH.remoteip, configSSH.remoteport);
             return;
         }
-        console.log('stdout ', stdout);
-        console.log('stderr ', stderr);
-        console.log("tunnel ssh created!!!".green.bold);
+        // console.log('stdout ', stdout);
+        if (stderr) {
+            console.log('stderr ', stderr);
+        }
+        console.log("tunnel SSH Complete!!!".green.bold);
     });
 };
 
@@ -373,7 +375,7 @@ module.exports.createReverseTunnel = function() {
  * @param {type} file
  * @returns {Boolean}
  */
-var checkconfigexist = function(file) {
+ var checkconfigexist = function(file) {
     var config;
     try {
         // try to get the override configuration file if it exists
