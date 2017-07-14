@@ -95,7 +95,7 @@ ServerUdp.prototype.start = function(){
 
 	self.server.on('listening', function() {
 		var address = self.server.address();
-		console.log('Servidor UDP à escuta no ip -> %s Port -> %s'.green.bold, address.address,address.port);
+		console.log('Server UDP listening  ip -> %s Port -> %s'.green.bold, address.address,address.port);
 	});
 
 	self.server.bind({
