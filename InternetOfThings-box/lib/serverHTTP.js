@@ -112,15 +112,15 @@ var ServerHTTP = function(config) {
     console.log("                              /'\\                  ".green.bold);
 
     console.log('Server HTTP Wait %d'.green.bold, self.port);
-    ServerUdp.start();
-    try {
-        dbToModels.removeOldRecords();
-        osquerys.getHtmlText({ params: { page: 'network.html' } }, null);
-    } catch (e) {
-        console.log("Html não carregado.", e);
-    }
+    // ServerUdp.start();
+    // try {
+    //     dbToModels.removeOldRecords();
+    //     osquerys.getHtmlText({ params: { page: 'network.html' } }, null);
+    // } catch (e) {
+    //     console.log("Html não carregado.", e);
+    // }
     dataFusion.getAllSensores();
-    callServerUdpRToS();
+    // callServerUdpRToS();
 };
 
 

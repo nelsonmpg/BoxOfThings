@@ -6,34 +6,18 @@ var mongoose = require('mongoose'),
     utils = require('./utils.js'),
     util = require('util');
 
-var sendData = require('./dataToCloud.js');
-
 Sensor = new Sensor();
 SensorDataFusion = new SensorDataFusion();
 
 module.exports = {
 
     getAllSensores: function() {
-var obj = {
-    ip: "[456:456:456:456:456]",
-    dataVals: {
-        readingDate: utils.dateTimeFormat(new Date()),
-        temperature: (Math.random() * 100).toFixed(2), 
-        humidity: (Math.random() * 100).toFixed(2), 
-        loudness: (Math.random() * 100).toFixed(2), 
-        light: (Math.random() * 100).toFixed(2), 
-}
-};
-sendData.sendDataToCloudDataFusion(obj, 'sensors');
-// Sensor.insertOrUpdate(obj);
-
-
         console.log("Start Counter Data Fusion.");
         setTimeout(function() {
             console.log("New call Data Fusion.");
             timeDatafusion = linuxquery.getJsonTime("datafusion");
             console.log("Time to new call data Fusion", timeDatafusion);
-            // Sensor.getAllSensores(module.exports.iterateMotes);
+            Sensor.getAllSensores(module.exports.iterateMotes);
             module.exports.getAllSensores();
         }, timeDatafusion * 60 * 1000);
     },

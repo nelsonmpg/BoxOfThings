@@ -1,51 +1,35 @@
-var https = require('https'),
-    linuxquery = require("./linuxquery.js"),
-    httpspost = require('https-post');;
+var http = require('http'),
+    linuxquery = require("./linuxquery.js");
 
 module.exports = {
     sendDataToCloudDataFusion: function(dataFusionObj, path) {
-        // var jsonObject = JSON.stringify(dataFusionObj);
+        var jsonObject = JSON.stringify(dataFusionObj);
 
-        // var options = {
-        //     host: linuxquery.getRemoteHostVals("host"),
-        //     port: linuxquery.getRemoteHostVals("port"),
-        //     path: '/' + path,
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Content-Length': jsonObject.length /*Buffer.byteLength(jsonObject)*/
-        //     }
-        // };
-        // console.log(options);
-
+        var options = {
+            host: linuxquery.getRemoteHostVals("host"),
+            port: linuxquery.getRemoteHostVals("port"),
+            path: '/' + path,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Content-Length': Buffer.byteLength(jsonObject)
+            }
+        };
+        console.log(options);
         try {
-            var req = httpspost('https://' + linuxquery.getRemoteHostVals("host") + ':' + linuxquery.getRemoteHostVals("port") + '/' + path, dataFusionObj, function(res) {
+            var req = http.request(options, function(res) {
+                console.log('STATUS: ' + res.statusCode);
                 res.setEncoding('utf8');
-                res.on('data', function(chunk) {
-                    console.log(chunk);
+                var responseString = '';
+                res.on('data', function(data) {
+                    responseString += data;
                 });
                 res.on('end', function() {
-                    console.log("response - ");
+                    console.log("response - ",responseString);
                 });
-
             });
-
-
-
-
-            //     var req = https.request(options, function(res) {
-            //         console.log('STATUS: ' + res.statusCode);
-            //         res.setEncoding('utf8');
-            // var responseString = '';
-            //     res.on('data', function(data) {
-            //         responseString += data;
-            //     });
-            //     res.on('end', function() {
-            //         console.log("response - ",responseString);
-            //     });
-            // });
-            //     req.write(jsonObject);
-            //     req.end();
+            req.write(jsonObject);
+            req.end();
             req.on('error', function(e) {
                 console.error("error -> ", e);
             });
@@ -101,7 +85,7 @@ module.exports = {
 
         try {
 
-            var reqGet = https.request(options, function(res) {
+            var reqGet = http.request(options, function(res) {
                 console.log('STATUS: ' + res.statusCode);
                 console.log('HEADERS: ' + JSON.stringify(res.headers));
                 res.setEncoding('utf8');
