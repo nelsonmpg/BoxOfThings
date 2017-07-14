@@ -9,7 +9,6 @@ var sensorSchema = new Schema({
     ck: { type: Boolean, default: false },
     pubX: { type: String },
     pubY: { type: String },
-    priv: { type: String },
     secret: { type: String },
     methods: [{
         folder: { type: String },
@@ -54,7 +53,7 @@ Sensor.prototype.insertOrUpdate = function(data) {
         }
         console.log('Sensor value add / created!', result);
         if (result.nModified == 0) {
-            self.SensorDB.update({ "ip": data.ip }, { $set: { ck: false, pubX: "", pubY: "", priv: "", secret: "" } }, { upsert: true }, function(err, result) {
+            self.SensorDB.update({ "ip": data.ip }, { $set: { ck: false, pubX: "", pubY: "", secret: "" } }, { upsert: true }, function(err, result) {
                 if (err) {
                     console.log("error to update sensor.");
                     return;
@@ -77,7 +76,7 @@ Sensor.prototype.getSensorNotCheck = function() {
 };
 
 Sensor.prototype.updateCheckedAndKeysSensor = function(vals, res) {
-    this.SensorDB.update({ "ip": vals.moteip }, { $set: { "ck": vals.ck, pubX: vals.pubX, pubY: vals.pubY, priv: vals.priv, secret: vals.secret } }, { upsert: true }, function(err, result) {
+    this.SensorDB.update({ "ip": vals.moteip }, { $set: { "ck": vals.ck, pubX: vals.pubX, pubY: vals.pubY, secret: vals.secret } }, { upsert: true }, function(err, result) {
         if (err) {
             console.log("Error to update sensor.");
             res.write(JSON.stringify({ "status": "Error" }));

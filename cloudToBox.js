@@ -16,7 +16,7 @@ client.connect(PORT, HOST, function() {
     // client.write(JSON.stringify({request:"mote_action",params: { moteIp:"[aaaa::212:4b00:60d:60fe]", resource : "LedGreen", color :"g", mode : "on"}}));
     // client.write(JSON.stringify({request:"mote_action",params: { moteIp:"[aaaa::212:4b00:60d:b305]", resource : "LedGreen", color :"g", mode : "on"}}));
 
-client.write(JSON.stringify({"request": "updateCheckSensor","params": {"moteIp": "[aaaa::212:4b00:60d:60fe]","ck": true,"pubX": "chave pubX","pubY": "chave pubY","priv": "chave priv" }}));
+client.write(JSON.stringify({"request": "updateCheckSensor","params": {"moteIp": "[aaaa::212:4b00:60d:60fe]","ck": true,"pubX": "chave pubX","pubY": "chave pubY" }}));
 
 });
 
