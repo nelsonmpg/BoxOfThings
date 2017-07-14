@@ -4,7 +4,7 @@ module.exports = {
 		try {
 			day = date.getDate();
 		} catch (e) {
-			date = parseISOString(date);
+			date = module.exports.parseISOString(date);
 		}
 		day = date.getDate();
 		var month = date.getMonth() + 1;
