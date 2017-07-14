@@ -5,19 +5,17 @@ module.exports = {
     sendDataToCloudDataFusion: function(dataFusionObj, path) {
         var jsonObject = JSON.stringify(dataFusionObj);
 
-        var postheaders = {
-            'Content-Type': 'application/json',
-            'Content-Length': Buffer.byteLength(jsonObject)
-        };
-
         var options = {
             host: linuxquery.getRemoteHostVals("host"),
             port: linuxquery.getRemoteHostVals("port"),
             path: '/' + path,
             method: 'POST',
-            headers: postheaders
+            headers: {
+                'Content-Type': 'application/json',
+                'Content-Length': Buffer.byteLength(jsonObject)
+            }
         };
-console.log(options);
+        console.log(options);
         try {
             var req = https.request(options, function(res) {
                 console.log('STATUS: ' + res.statusCode);
@@ -36,7 +34,7 @@ console.log(options);
                 console.error(e);
             });
         } catch (e) {
-            console.log("Erro ao tentar ligar ao servidor remoto!!!")
+            console.log("Erro ao tentar ligar ao servidor remoto!!!", e)
         }
     },
 
