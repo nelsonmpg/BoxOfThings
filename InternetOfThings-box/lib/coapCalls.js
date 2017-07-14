@@ -287,8 +287,8 @@ var GeraChaveSimetrica = function(xB, yB) {
     //define chave privada
     OwnKeyPair.priv = new BN('A722747CCF51EB381BA75A75A74DF4EB31633C852E0D97EE',16);
 
-    console.log("Mote x:" + xB.toString('hex'));
-    console.log("Mote y:" + yB.toString('hex'));
+    // console.log("Mote x:" + xB.toString('hex'));
+    // console.log("Mote y:" + yB.toString('hex'));
 
     var pubB = { 
         x: xB.toString('hex'), 
@@ -298,20 +298,21 @@ var GeraChaveSimetrica = function(xB, yB) {
     var key2 = ec.keyFromPublic(pubB, 'hex');
 
     //console.log(OwnKeyPair);
-    console.log(key2.getPublic());
+    // console.log(key2.getPublic());
     //gera chave partilhada
     var shared1 = OwnKeyPair.derive(key2.getPublic());
-    console.log("Partilhada " + shared1.toString(16));
+    // console.log("Partilhada " + shared1.toString(16));
 
     //PARA POR CHAVE NO MESMO FORMATO DO QUE ESTA NOS MOTES
     var res = shared1.toString(16).match(/.{2}/g);
     var final = ""
     res.reverse().forEach(function(entry, idx, array) {
-        if (idx < 16)
+        if (idx < 16) {
             final += entry;
+        }
     });
 
-    console.log(final);
+    // console.log(final);
     // FIM - GERAR CHAVE SIMETRICA
     return final;
 
