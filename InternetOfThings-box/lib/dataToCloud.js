@@ -17,7 +17,7 @@ module.exports = {
             method: 'POST',
             headers: postheaders
         };
-
+console.log(options);
         try {
             var req = https.request(options, function(res) {
                 console.log('STATUS: ' + res.statusCode);
