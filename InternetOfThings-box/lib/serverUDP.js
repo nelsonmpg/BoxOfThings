@@ -107,6 +107,7 @@ ServerUdp.prototype.start = function(){
 // Em teoria era só pôr esta a função a correr de tempo a tempo para pedir os valores aos sensores
 ServerUdp.prototype.pedeDados = function (){
 	var self = this;
+	console.log("New Call RToS Sensors");
 	for (i=0; i<self.sensores.length; i++){
 		self.server.send(dados, 0, dados.length, 10001, self.sensores[i]);
 		console.log("Envio da mensagem : " + dados + " para " + self.sensores[i] + ":10001" );
