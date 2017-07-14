@@ -12,7 +12,6 @@ var net = require('net'),
     sshfileconfig = './configssh.json',
     times = './times.json',
     dbToModels = require('./dbToModel.js'),
-    ServerUdp = require('./serverUDP.js'),
     configSSH = null,
     coapSensor,
     timeSensors = 1;
