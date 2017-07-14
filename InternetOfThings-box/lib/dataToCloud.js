@@ -1,41 +1,53 @@
 var https = require('https'),
-    linuxquery = require("./linuxquery.js");
+    linuxquery = require("./linuxquery.js"),
+    https.post = require('https-post');;
 
 module.exports = {
     sendDataToCloudDataFusion: function(dataFusionObj, path) {
-        var jsonObject = JSON.stringify(dataFusionObj);
+        // var jsonObject = JSON.stringify(dataFusionObj);
 
-        var options = {
-            host: linuxquery.getRemoteHostVals("host"),
-            port: 443, //linuxquery.getRemoteHostVals("port"),
-            path: '/' + path,
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Content-Length': jsonObject.length/*Buffer.byteLength(jsonObject)*/
-            }
-        };
+        // var options = {
+        //     host: linuxquery.getRemoteHostVals("host"),
+        //     port: linuxquery.getRemoteHostVals("port"),
+        //     path: '/' + path,
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Content-Length': jsonObject.length /*Buffer.byteLength(jsonObject)*/
+        //     }
+        // };
         console.log(options);
-        try {
-            var req = https.request(options, function(res) {
-                console.log('STATUS: ' + res.statusCode);
-                res.setEncoding('utf8');
-                var responseString = '';
-                res.on('data', function(data) {
-                    responseString += data;
-                });
-                res.on('end', function() {
-                    console.log("response - ",responseString);
-                });
+
+        https.post('https://' + linuxquery.getRemoteHostVals("host") + ':' + linuxquery.getRemoteHostVals("port") + '/' + path, dataFusionObj, function(res) {
+            res.setEncoding('utf8');
+            res.on('data', function(chunk) {
+                console.log(chunk);
             });
-            req.write(jsonObject);
-            req.end();
-            req.on('error', function(e) {
-                console.error("error -> ", e);
-            });
-        } catch (e) {
-            console.log("Erro ao tentar ligar ao servidor remoto!!!", e)
-        }
+        });
+
+
+
+
+        // try {
+        //     var req = https.request(options, function(res) {
+        //         console.log('STATUS: ' + res.statusCode);
+        //         res.setEncoding('utf8');
+        //         var responseString = '';
+        //         res.on('data', function(data) {
+        //             responseString += data;
+        //         });
+        //         res.on('end', function() {
+        //             console.log("response - ",responseString);
+        //         });
+        //     });
+        //     req.write(jsonObject);
+        //     req.end();
+        //     req.on('error', function(e) {
+        //         console.error("error -> ", e);
+        //     });
+        // } catch (e) {
+        //     console.log("Erro ao tentar ligar ao servidor remoto!!!", e)
+        // }
     },
 
     sendDataToCloudParcial: function(fullDataFusionObj) {
