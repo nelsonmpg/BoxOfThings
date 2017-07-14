@@ -1,11 +1,10 @@
 var http = require('http'),
-    lxqry = require("./linuxquery.js"),
-    querystring = require('querystring');
+    lxqry = require("./linuxquery.js");
 
 module.exports = {
     sendDataToCloudDataFusion: function(dataFusionObj, path) {
         var jsonObject = JSON.stringify(dataFusionObj);
-        
+
         var postheaders = {
             'Content-Type': 'application/json',
             'Content-Length': Buffer.byteLength(jsonObject)

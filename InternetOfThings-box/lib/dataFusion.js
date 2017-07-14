@@ -4,7 +4,6 @@ var mongoose = require('mongoose'),
     linuxquery = require("./linuxquery.js"),
     timeDatafusion = 1,
     util = require('util');
-var sendData = require('./dataToCloud.js');
 
 Sensor = new Sensor();
 SensorDataFusion = new SensorDataFusion();
@@ -73,7 +72,7 @@ module.exports = {
             valForKey.values = filterOutliers(mote.dataValues, keys[key], valForKey.values);
             moteResult.readings.push(valForKey);
         }
-        console.log(util.inspect(moteResult, false, null, true));
+        // console.log(util.inspect(moteResult, false, null, true));
         SensorDataFusion.insertDataFusion(moteResult);
     }
 };
