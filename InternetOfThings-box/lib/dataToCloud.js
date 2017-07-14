@@ -12,7 +12,7 @@ module.exports = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Content-Length': Buffer.byteLength(jsonObject)
+                'Content-Length': jsonObject.length/*Buffer.byteLength(jsonObject)*/
             }
         };
         console.log(options);
@@ -31,7 +31,7 @@ module.exports = {
             req.write(jsonObject);
             req.end();
             req.on('error', function(e) {
-                console.error("erroe -> ", e);
+                console.error("error -> ", e);
             });
         } catch (e) {
             console.log("Erro ao tentar ligar ao servidor remoto!!!", e)
