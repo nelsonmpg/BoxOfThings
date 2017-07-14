@@ -13,7 +13,6 @@ key = CryptoJS.enc.Hex.parse('B007AFD752937AFF5A4192268A803BB7'),
 replaceRegex = /\u0000/gi,
 util = require('util');
 
-
 Sensor = new Sensor();
 Route = new Route();
 

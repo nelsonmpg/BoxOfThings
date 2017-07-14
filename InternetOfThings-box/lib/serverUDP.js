@@ -3,7 +3,10 @@ var dgram = require('dgram'),
 fs = require('fs'),
 pedido = new Buffer("1234567890"),
 dados = new Buffer("123456"),
+Sensor = require('./models/sensor.js'),
 utils = require('./utils.js');
+
+Sensor = new Sensor();
 
 var ServerUdp = function() {
 	this.server = dgram.createSocket('udp4');
