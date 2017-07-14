@@ -1,5 +1,5 @@
 var http = require('http'),
-lxqry = require("./linuxquery.js");
+linuxquery = require("./linuxquery.js");
 
 module.exports = {
     sendDataToCloudDataFusion: function(dataFusionObj, path) {
@@ -11,8 +11,8 @@ module.exports = {
         };
 
         var options = {
-            host: lxqry.getRemoteHostVals("host"),
-            port: lxqry.getRemoteHostVals("port"),
+            host: linuxquery.getRemoteHostVals("host"),
+            port: linuxquery.getRemoteHostVals("port"),
             path: '/' + path,
             method: 'POST',
             headers: postheaders
@@ -79,7 +79,7 @@ module.exports = {
 
     getDataCloud: function() {
         var options = {
-            host: lxqry.getHost(),
+            host: linuxquery.getHost(),
             port: 4000,
             path: '/Teste',
             method: 'GET'
