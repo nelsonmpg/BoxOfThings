@@ -15,7 +15,7 @@ module.exports = {
         var obj = {
             ip: "[aaaa::212:4b00:60d:60fe]",
             dataVals: {
-                readingDate: Date.now(),
+                readingDate:utils.dateTimeFormat(new Date()),
                 temperature: (Math.random() * 100).toFixed(2), 
                 humidity: (Math.random() * 100).toFixed(2), 
                 loudness: (Math.random() * 100).toFixed(2), 
@@ -77,9 +77,9 @@ module.exports = {
                 values: {
                     Average: 0,
                     Max: Number.MIN_VALUE,
-                    dateOfMax: new Date(0),
+                    dateOfMax: utils.dateTimeFormat(new Date(0)),
                     Min: Number.MAX_VALUE,
-                    dateOfMin: new Date(0),
+                    dateOfMin: utils.dateTimeFormat(new Date(0)),
                     lowerRangeOfReadingDate: Infinity,
                     upperRangeOfReadingDate: -Infinity
                 }
