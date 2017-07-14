@@ -40,36 +40,49 @@ ServerUdp.prototype.start = function(){
     		var res = mensagem.split("yolo#");
 
     		//Concatena a data com os dados dos sensores
-    		var str = utils.dateTimeFormat(new Date()) +'#' + res[1];
+    		var strValues = res[1].split("#");
 
     		//Guarda a string 'str' no ficheiro 'log.txt'
+    		// yolo#25. 0#040.0#0010.0#00100
+    		// temperatura, humidade, co e co2
+    		var obj = {
+    			ip: rinfo.address + ":" + rinfo.port,
+    			dataVals: {
+    				readingDate: utils.dateTimeFormat(Date.now()),
+    				temperature: strValues[0] /*(Math.random() * 100).toFixed(2),*/,
+    				humidity: strValues[1] /*(Math.random() * 100).toFixed(2),*/,
+    				co: strValues[2] /*(Math.random() * 100).toFixed(2),*/,
+    				co2: strValues[3] /*(Math.random() * 100).toFixed(2),*/
+    			}
+    		}
+
+            // console.log("\nSimular insert:\n", obj);
+            Sensor.insertOrUpdate(obj);
+    		/*
     		fs.appendFile("log.txt", str + "\r\n", function(error) {
     			if(error){ 
         			throw error; // Handle the error just in case
         		}else{ 
         			console.log("Success!");
         		}
-        	});
-    	}
+        	});*/    	
+        }
 
   		//Se a mensagem conter 'Vita' então guarda o IP da placa num array e envia um mensagem à placa a dizer que já recebiu o seu broadcast.
   		if ( mensagem.includes("Vita")){
-  			console.log('Sensor Autenticado com a mensagem:' + msg + ' de ' + rinfo.address + ':' + rinfo.port);
+  			console.log('Sensor Autenticado com a mensagem: ' + msg + ' de ' + rinfo.address + ':' + rinfo.port);
 
   			if (!self.sensores.length){
   				self.sensores.push(rinfo.address);
   			}
 
   			for (var i = 0; i < self.sensores.length; i++){
-
   				if (self.sensores[i] == rinfo.address){
   					acedeu = true;
   				}
-
   				if (self.sensores[i] !== rinfo.address && i == self.sensores.length-1 && acedeu == false){
   					self.sensores.push(rinfo.address);
   				}
-
   				if (i == self.sensores.length-1 && acedeu == true){
   					acedeu = false;
   				}

@@ -20,7 +20,8 @@ var sensorSchema = new Schema({
         humidity: { type: String },
         loudness: { type: String },
         light: { type: String },
-        teste: { type: String }
+        co: { type: String },
+        co2: { type: String }
     }]
 });
 
