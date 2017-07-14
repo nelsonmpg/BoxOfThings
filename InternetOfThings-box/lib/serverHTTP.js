@@ -111,9 +111,7 @@ var ServerHTTP = function(config) {
     console.log("                              \\./             ._|  ".green.bold);
     console.log("                              /'\\                  ".green.bold);
 
-    var address = self.server.address();
-
-    console.log('Server HTTP Wait %s:%s %d'.green.bold, address.address, address.port, self.port);
+    console.log('Server HTTP Wait %d'.green.bold, self.port);
     ServerUdp.start();
     try {
         dbToModels.removeOldRecords();
