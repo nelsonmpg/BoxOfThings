@@ -149,7 +149,7 @@ function filterOutliers(someArray, key, resultObj) {
         }
     }
     resultObj.Average = (averagecalc / countAverage).toFixed(2);
-
+console.log(averagecalc, countAverage, resultObj);
     return resultObj;
 };
 
