@@ -48,6 +48,10 @@ module.exports = {
     },
 
     iterateMotesToKeys: function(keys, mote) {
+console.log("-----------------------------------------------------------------------------------------------");
+console.log("----------------------------------- Teste", keys, mote);
+console.log("-----------------------------------------------------------------------------------------------");
+
         var moteResult = {
             boxname: linuxquery.getRemoteHostVals("boxname"),
             boxmac: linuxquery.getRemoteHostVals("boxmac"),
