@@ -51,6 +51,7 @@ module.exports = {
                 sensortype: "Sensor-" + (i * 1 + 1),
                 sensorvalue: fullDataFusionObj.readings[i].Average
             }
+            console.log(parcialObj);
             module.exports.sendDataToCloudDataFusion(parcialObj, 'sensors');
         }
     },
