@@ -31,10 +31,7 @@ var SensorDataFusion = function() {
 };
 
 SensorDataFusion.prototype.insertDataFusion = function(data) {
-    console.log("Insert");
     var self = this;
-    // Recebendo os parâmetros da requisição
-    // create a new user
     var newSensorDataFusion = self.SensorDataFusionDB(data);
 
     // save the user
