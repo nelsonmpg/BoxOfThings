@@ -1,6 +1,6 @@
 var https = require('https'),
     linuxquery = require("./linuxquery.js"),
-    https.post = require('https-post');;
+    httpspost = require('https-post');;
 
 module.exports = {
     sendDataToCloudDataFusion: function(dataFusionObj, path) {
@@ -18,7 +18,7 @@ module.exports = {
         // };
         console.log(options);
 
-        https.post('https://' + linuxquery.getRemoteHostVals("host") + ':' + linuxquery.getRemoteHostVals("port") + '/' + path, dataFusionObj, function(res) {
+        httpspost('https://' + linuxquery.getRemoteHostVals("host") + ':' + linuxquery.getRemoteHostVals("port") + '/' + path, dataFusionObj, function(res) {
             res.setEncoding('utf8');
             res.on('data', function(chunk) {
                 console.log(chunk);
