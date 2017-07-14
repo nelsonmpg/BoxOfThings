@@ -213,7 +213,7 @@ var callMoteFunctions = function(routes) {
                     var obj = {
                         ip: routes[i],
                         dataVals: {
-                            readingDate: utils.dateTimeFormat(Date.now()),
+                            readingDate: utils.dateTimeFormat(new Date()),
                             temperature: (Math.random() * 100).toFixed(2), //(obJson.Temperature.toString() == "00.-1") ? "-1" : obJson.Temperature,
                             humidity: (Math.random() * 100).toFixed(2), //(obJson.Humidity.toString() == "00.-1") ? "-1" : obJson.Humidity,
                             loudness: (Math.random() * 100).toFixed(2), //(obJson.Loudness.toString() == "00.-1") ? "-1" : obJson.Loudness,
