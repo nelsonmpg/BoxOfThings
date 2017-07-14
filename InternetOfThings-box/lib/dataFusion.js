@@ -24,7 +24,7 @@ var obj = {
         light: (Math.random() * 100).toFixed(2), 
 }
 };
-sendData.sendDataToCloud(obj, 'sensors');
+sendData.sendDataToCloudDataFusion(obj, 'sensors');
 // Sensor.insertOrUpdate(obj);
 
 
