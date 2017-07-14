@@ -62,7 +62,7 @@ module.exports = {
                 objecttype: 'SensorIOT',
                 boxname: linuxquery.getRemoteHostVals("boxname"),
                 boxmac: linuxquery.getRemoteHostVals("boxmac"),
-                sensorid: motesip[i]
+                sensorid: motesip[i].ip
             }
             module.exports.sendDataToCloudDataFusion(parcialObj, 'sensorscheck');
         }
