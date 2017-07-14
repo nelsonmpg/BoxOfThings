@@ -1,7 +1,8 @@
 var dgram = require('dgram'),	
 fs = require('fs'),
 pedido = new Buffer("1234567890"),
-dados = new Buffer("123456");
+dados = new Buffer("123456"),
+utils = require('./utils.js');
 
 var ServerUdp = function() {
 	this.server = dgram.createSocket('udp4');
@@ -10,7 +11,7 @@ var ServerUdp = function() {
 
 ServerUdp.prototype.start = function(){
 	var self = this;
-console.log(dateTimeFormat(new Date()));
+	console.log(utilsdateTimeFormat(new Date()));
 	self.server.on('error', function(err) {
 		console.log('server error:', err.stack);
 		self.server.close();

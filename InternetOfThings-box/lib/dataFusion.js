@@ -3,6 +3,7 @@ Sensor = require('./models/sensor.js'),
 SensorDataFusion = require("./models/sensorDataFusion"),
 linuxquery = require("./linuxquery.js"),
 timeDatafusion = 1,
+utils = require('./utils.js'),
 util = require('util');
 
 Sensor = new Sensor();
@@ -66,7 +67,7 @@ module.exports = {
             boxmac: linuxquery.getRemoteHostVals("boxmac"),
             moteip: mote.ip,
             methods: mote.methods,
-            dateOfEntry: dateTimeFormat(new Date()),
+            dateOfEntry: utils.dateTimeFormat(new Date()),
             readings: []
         };
 
@@ -129,21 +130,21 @@ function filterOutliers(someArray, key, resultObj) {
             countAverage++;
 
             if (resultObj.Max < valAux) {
-                resultObj.dateOfMax = dateTimeFormat(values[i].readingDate);
+                resultObj.dateOfMax = utils.dateTimeFormat(values[i].readingDate);
                 resultObj.Max = valAux;
             }
 
             if (resultObj.Min > valAux) {
-                resultObj.dateOfMin = dateTimeFormat(values[i].readingDate);
+                resultObj.dateOfMin = utils.dateTimeFormat(values[i].readingDate);
                 resultObj.Min = valAux;
             }
 
-            if (resultObj.lowerRangeOfReadingDate > parseISOString(values[i].readingDate)) {
-                resultObj.lowerRangeOfReadingDate = dateTimeFormat(values[i].readingDate);
+            if (resultObj.lowerRangeOfReadingDate > utils.parseISOString(values[i].readingDate)) {
+                resultObj.lowerRangeOfReadingDate = utils.dateTimeFormat(values[i].readingDate);
             }
 
-            if (resultObj.upperRangeOfReadingDate < parseISOString(values[i].readingDate)) {
-                resultObj.upperRangeOfReadingDate = dateTimeFormat(values[i].readingDate);
+            if (resultObj.upperRangeOfReadingDate < utils.parseISOString(values[i].readingDate)) {
+                resultObj.upperRangeOfReadingDate = utils.dateTimeFormat(values[i].readingDate);
             }
         }
     }
@@ -152,29 +153,3 @@ function filterOutliers(someArray, key, resultObj) {
     return resultObj;
 };
 
-function dateTimeFormat(date) {
-    var day;
-    try {
-        day = date.getDate();
-    } catch (e) {
-        date = parseISOString(date);
-    }
-    day = date.getDate();
-    var month = date.getMonth() + 1;
-    var year = date.getFullYear();
-    var hour = date.getHours();
-    var minute = date.getMinutes();
-    var second = date.getSeconds();
-
-    return year + "-" +
-    (month.toString().length === 1 ? "0" + month : month) + "-" +
-    (day.toString().length === 1 ? "0" + day : day) + " " +
-    (hour.toString().length === 1 ? "0" + hour : hour) + ":" +
-    (minute.toString().length === 1 ? "0" + minute : minute) + ":" +
-    (second.toString().length === 1 ? "0" + second : second);
-}
-
-function parseISOString(s) {
-    var b = s.split(/\D+/);
-    return new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
-}
