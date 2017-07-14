@@ -1,3 +1,4 @@
+require('colors');
 var dgram = require('dgram'),	
 fs = require('fs'),
 pedido = new Buffer("1234567890"),
@@ -78,7 +79,7 @@ ServerUdp.prototype.start = function(){
 
 	self.server.on('listening', function() {
 		var address = self.server.address();
-		console.log('Servidor UDP à escuta no ip ->', address.address, " Port ->",address.port);
+		console.log('Servidor UDP à escuta no ip -> %s Port -> %s'.green.bold, address.address,address.port);
 	});
 
 	self.server.bind({
