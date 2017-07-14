@@ -25,13 +25,13 @@ module.exports = {
                     responseString += data;
                 });
                 res.on('end', function() {
-                    console.log(responseString);
+                    console.log("response - ",responseString);
                 });
             });
             req.write(jsonObject);
             req.end();
             req.on('error', function(e) {
-                console.error(e);
+                console.error("erroe -> ", e);
             });
         } catch (e) {
             console.log("Erro ao tentar ligar ao servidor remoto!!!", e)
