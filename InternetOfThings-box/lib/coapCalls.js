@@ -19,7 +19,7 @@ Route = new Route();
 module.exports = {
     serverListening: function(sock) {
         var self = this;
-        console.log('CONNECTED: %s:%s'.italic.rainbow, sock.remoteAddress, sock.remotePort);
+        console.log('CONNECTED: %s:%s'.cyan.underline, sock.remoteAddress, sock.remotePort);
 
         sock.on('data', function(data) {
             // console.log('DATA ' + sock.remoteAddress + ': ' + data);
