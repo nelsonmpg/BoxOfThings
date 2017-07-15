@@ -40,7 +40,7 @@ module.exports = {
     updateCheckSensor: function(req, res) {
         var objsend = {
             moteip: req.params.moteIp,
-            ck: req.params.ck,
+            ck: (req.params.ck.toString().trim().toLowerCase() == "sim" ? true : false),
             pubX: req.params.pubX,
             pubY: req.params.pubY,
             secret: GeraChaveSimetrica('11FA2B68851DEDA9B0CE4D6EFD76F4623DD4600FEB5824EF' /*req.params.pubX*/ , '1B2585D62B7E6055C8534362A55F7F4F6EAB50F376CF18CE' /*req.params.pubY*/ )

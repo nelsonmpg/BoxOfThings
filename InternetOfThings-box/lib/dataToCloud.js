@@ -1,41 +1,56 @@
 var http = require('http'),
     linuxquery = require("./linuxquery.js");
+var request = require('request');
 
 module.exports = {
     sendDataToCloudDataFusion: function(dataFusionObj, path) {
-        var jsonObject = JSON.stringify(dataFusionObj);
-
         var options = {
-            host: linuxquery.getRemoteHostVals("host"),
-            port: linuxquery.getRemoteHostVals("port"),
-            path: '/' + path,
+            url: 'http://cloud.cm-golega.pt:3000/sensors',
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Content-Length': Buffer.byteLength(jsonObject)
-            }
-        };
-        // console.log(options);
-        try {
-            var req = http.request(options, function(res) {
-                console.log('STATUS: ' + res.statusCode);
-                res.setEncoding('utf8');
-                var responseString = '';
-                res.on('data', function(data) {
-                    responseString += data;
-                });
-                res.on('end', function() {
-                    console.log("Receive - ",responseString);
-                });
-            });
-            req.write(jsonObject);
-            req.end();
-            req.on('error', function(e) {
-                console.error("Error -> ", e);
-            });
-        } catch (e) {
-            console.log("Erro ao tentar ligar ao servidor remoto!!!", e)
+            form: dataFusionObj
         }
+        // Start the request
+        request(options, function(error, response, body) {
+            if (!error && response.statusCode == 200) {
+                // Print out the response body
+                console.log(body)
+            }
+        });
+
+
+        // var jsonObject = JSON.stringify(dataFusionObj);
+
+        // var options = {
+        //     host: linuxquery.getRemoteHostVals("host"),
+        //     port: linuxquery.getRemoteHostVals("port"),
+        //     path: '/' + path,
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Content-Length': Buffer.byteLength(jsonObject)
+        //     }
+        // };
+        // // console.log(options);
+        // try {
+        //     var req = http.request(options, function(res) {
+        //         console.log('STATUS: ' + res.statusCode);
+        //         res.setEncoding('utf8');
+        //         var responseString = '';
+        //         res.on('data', function(data) {
+        //             responseString += data;
+        //         });
+        //         res.on('end', function() {
+        //             console.log("Receive - ",responseString);
+        //         });
+        //     });
+        //     req.write(jsonObject);
+        //     req.end();
+        //     req.on('error', function(e) {
+        //         console.error("Error -> ", e);
+        //     });
+        // } catch (e) {
+        //     console.log("Erro ao tentar ligar ao servidor remoto!!!", e)
+        // }
     },
 
     sendDataToCloudParcial: function(fullDataFusionObj) {
