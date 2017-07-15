@@ -1,4 +1,4 @@
-var https = require('https'),
+var http = require('http'),
     linuxquery = require("./linuxquery.js");
 
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
         };
         // console.log(options);
         try {
-            var req = https.request(options, function(res) {
+            var req = http.request(options, function(res) {
                 console.log('STATUS: ' + res.statusCode);
                 res.setEncoding('utf8');
                 var responseString = '';
@@ -84,7 +84,7 @@ module.exports = {
 
         try {
 
-            var reqGet = https.request(options, function(res) {
+            var reqGet = http.request(options, function(res) {
                 console.log('STATUS: ' + res.statusCode);
                 console.log('HEADERS: ' + JSON.stringify(res.headers));
                 res.setEncoding('utf8');
