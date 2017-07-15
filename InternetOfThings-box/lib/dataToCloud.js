@@ -15,7 +15,7 @@ module.exports = {
                 'Content-Length': Buffer.byteLength(jsonObject)
             }
         };
-        console.log(options);
+        // console.log(options);
         try {
             var req = http.request(options, function(res) {
                 console.log('STATUS: ' + res.statusCode);
@@ -25,13 +25,13 @@ module.exports = {
                     responseString += data;
                 });
                 res.on('end', function() {
-                    console.log("response - ",responseString);
+                    console.log("Receive - ",responseString);
                 });
             });
             req.write(jsonObject);
             req.end();
             req.on('error', function(e) {
-                console.error("error -> ", e);
+                console.error("Error -> ", e);
             });
         } catch (e) {
             console.log("Erro ao tentar ligar ao servidor remoto!!!", e)

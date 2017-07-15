@@ -128,7 +128,7 @@ var callServerUdpRToS = function(){
      setTimeout(function() {
         ServerUdp.pedeDados();
         callServerUdpRToS();
-    }, 1 * 60 * 1000);
+    }, 5 * 60 * 1000);
 };
 
 /**
