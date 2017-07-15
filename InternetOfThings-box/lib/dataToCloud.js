@@ -56,7 +56,7 @@ module.exports = {
         for (var i in motesip) {
             console.log("Mote for -> ", motesip[i]);
             var parcialObj = {
-                objecttype: 'SensorIOT',
+                sensortype: "Sensor-" + (i * 1 + 1),
                 boxname: linuxquery.getRemoteHostVals("boxname"),
                 boxmac: linuxquery.getRemoteHostVals("boxmac"),
                 sensorid: motesip[i].ip
