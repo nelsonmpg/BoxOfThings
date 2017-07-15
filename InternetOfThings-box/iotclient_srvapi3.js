@@ -177,8 +177,8 @@ setInterval(function() {
         };
 
         request(options, function(err, res, body) {
-            var json = JSON.parse(body);
-            console.log(json);
+            // var json = JSON.parse(body);
+            console.log("Result", body);
         });
         // Configure the request
 
