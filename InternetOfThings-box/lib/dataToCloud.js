@@ -3,21 +3,6 @@ var http = require('http'),
 
 module.exports = {
     sendDataToCloudDataFusion: function(dataFusionObj, path) {
-// var options = {
-//             url: 'http://cloud.cm-golega.pt:3000/sensors',
-//             method: 'POST',
-//             form: dataFusionObj
-//         }
-//         console.log(options);
-//         // Start the request
-//         request(options, function(error, response, body) {
-//             if (!error && response.statusCode == 200) {
-//                 // Print out the response body
-//                 console.log(body)
-//             }
-//         });
-
-      
         var jsonObject = JSON.stringify(dataFusionObj);
 
         var options = {
@@ -40,7 +25,7 @@ module.exports = {
                     responseString += data;
                 });
                 res.on('end', function() {
-                    console.log("Receive - ",responseString);
+                    console.log("Receive - ", responseString);
                 });
             });
             req.write(jsonObject);
@@ -58,14 +43,15 @@ module.exports = {
             var parcialObj = {
                 boxname: fullDataFusionObj.boxname,
                 boxmac: fullDataFusionObj.boxmac,
-                sensorid: fullDataFusionObj.moteip,
-                sensorname: fullDataFusionObj.readings[i].sensorType,
-                sensortype: "Sensor-" + (i * 1 + 1),
+                senmac: fullDataFusionObj.moteip,
+                sensorid: (i * 1 + 1),
+                sensorname: "Sensor-" + (i * 1 + 1),
+                sensortype: fullDataFusionObj.readings[i].sensorType,
                 sensorvalue: fullDataFusionObj.readings[i].values.Average
             }
             module.exports.sendDataToCloudDataFusion(parcialObj, 'sensors');
         }
-    },
+    }, 
 
     sendToCheckSensoresValidate: function(motesip) {
         for (var i in motesip) {
