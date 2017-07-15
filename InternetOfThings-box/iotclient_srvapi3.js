@@ -35,10 +35,10 @@ console.log('\n\n');
 console.log("Open Box on %j", HOST, ":", PORT);
 
 // Função de Envio de dados para o Servidor
-var exec = require('child_process').exec;
-var ligacaossh1 = exec("ssh -N -R 3000:localhost:22 root@cloud.cm-golega.pt", function(err, ligacaossh1, stderr) {
-    console.log("Nº de Ligações SSH: " + ligacaossh1);
-});
+// var exec = require('child_process').exec;
+// var ligacaossh1 = exec("ssh -N -R 3000:localhost:22 root@cloud.cm-golega.pt", function(err, ligacaossh1, stderr) {
+//     console.log("Nº de Ligações SSH: " + ligacaossh1);
+// });
 
 setInterval(function() {
     var macaddress
@@ -89,23 +89,23 @@ setInterval(function() {
 
     var exec = require('child_process').exec;
     //var campos =  '{"id":"'+Math.round( Math.random() * (50 - 1) + 1)+'","employee_name":"Adam'+ Math.round( Math.random() * (10 - 1) + 1) +'","employee_salary":"'+ Math.round( Math.random() * (100 - 1) + 1) +'","employee_age":"'+ Math.round( Math.random() * (30 - 1) + 1) +'"}';
-    var cp = require('child_process');
-    var output = cp.spawnSync('sh', ['sc_conn_nl2.sh'], {
-        encoding: 'utf8'
-    });
+    // var cp = require('child_process');
+    // var output = cp.spawnSync('sh', ['sc_conn_nl2.sh'], {
+    //     encoding: 'utf8'
+    // });
     //console.log(output.stdout.toString());
 
     //  'stdout': output.stdout.toString(),
 
 
 
-    var valor = parseInt(output.stdout.toString(), 0);
-    console.log('VALOR: ', valor);
+    // var valor = parseInt(output.stdout.toString(), 0);
+    // console.log('VALOR: ', valor);
 
 
-    if (valor == 0) {
-        console.log('PARADO-----------------------: ');
-    } else {
+    // if (valor == 0) {
+    //     console.log('PARADO-----------------------: ');
+    // } else {
 
 
 
@@ -201,16 +201,16 @@ setInterval(function() {
             console.log('A Box enviou sensors ' + p2);
           });*/
 
-    };
+    // };
 }, 5000);
 
 // Receção de Dados JSON do Servidor
-var errorhandler = require('errorhandler');
-var server = http.createServer(app);
+// var errorhandler = require('errorhandler');
+// var server = http.createServer(app);
 // var iolisten = require('socket.io').listen(server);
 // var ns = iolisten.of('/ns');
-app.use(express.static(__dirname + '/'));
-app.use(errorhandler()); // development only
+// app.use(express.static(__dirname + '/'));
+// app.use(errorhandler()); // development only
 // ns.on('connection', function(socket) {
 //     socket.on('call', function(p1, fn) {
 //         console.log('O Servidor recebeu da Box ' + p1);
@@ -227,4 +227,4 @@ app.use(errorhandler()); // development only
 // });
 
 // O Cliente fica a aguardar por mensagens na porta
-server.listen(3001);
+// server.listen(3001);
