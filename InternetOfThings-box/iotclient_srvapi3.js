@@ -3,7 +3,7 @@ var express = require('express');
 var app = express();
 var fs = require('fs');
 var cp = require('child_process').exec;
-var io = require('socket.io-client');
+// var io = require('socket.io-client');
 var request = require('request');
 //var sys = require('sys');
 var sys = require('util');
@@ -20,7 +20,7 @@ console.log(serverUrl);
 //});
 
 console.log("Open server on %j", HOST, ":", PORT);
-var conn = io.connect(serverUrl);
+// var conn = io.connect(serverUrl);
 
 console.log('\n\n');
 console.log('          888 d8b      d8b          888   ');
@@ -207,24 +207,24 @@ setInterval(function() {
 // Receção de Dados JSON do Servidor
 var errorhandler = require('errorhandler');
 var server = http.createServer(app);
-var iolisten = require('socket.io').listen(server);
-var ns = iolisten.of('/ns');
+// var iolisten = require('socket.io').listen(server);
+// var ns = iolisten.of('/ns');
 app.use(express.static(__dirname + '/'));
 app.use(errorhandler()); // development only
-ns.on('connection', function(socket) {
-    socket.on('call', function(p1, fn) {
-        console.log('O Servidor recebeu da Box ' + p1);
+// ns.on('connection', function(socket) {
+//     socket.on('call', function(p1, fn) {
+//         console.log('O Servidor recebeu da Box ' + p1);
 
-    });
-});
+//     });
+// });
 // Fim de receção de Dados JSON do Servidor
 
 // Lê o ficheiro portas.JSON
-fs.readFile('portas.json', 'utf8', function(err, data) {
-    if (err) throw err;
-    var obj = JSON.parse(data);
-    console.log(data);
-});
+// fs.readFile('portas.json', 'utf8', function(err, data) {
+//     if (err) throw err;
+//     var obj = JSON.parse(data);
+//     console.log(data);
+// });
 
 // O Cliente fica a aguardar por mensagens na porta
 server.listen(3001);
