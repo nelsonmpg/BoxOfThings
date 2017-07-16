@@ -50,8 +50,7 @@ module.exports = {
     },
 
     getValuesFromSensors: function() {
-        Sensor.getSensorsAndKey(getValuesFromSensorsCallback);
-        Route.getAllAdressDistinct(callMoteFunctions);
+        Sensor.getSensorsAndKey(module.exports.getValuesFromSensorsCallback);
     },
 
     getValuesFromSensorsCallback: function(err, result) {
