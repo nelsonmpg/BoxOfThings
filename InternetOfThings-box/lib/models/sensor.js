@@ -92,7 +92,7 @@ Sensor.prototype.getAllSensores = function(callback) {
     this.SensorDB.find({}, callback);
 };
 
-Sensor.prototype.getSensorsAndKeys = function(callback) {
+Sensor.prototype.getSensorsAndKey = function(callback) {
     this.SensorDB.find({ ck: true }, { ip: 1, secret: 1 }, callback);
 };
 
