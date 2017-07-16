@@ -75,7 +75,7 @@ module.exports = {
             valForKey.values = filterOutliers(mote.dataValues, keys[key], valForKey.values);
             moteResult.readings.push(valForKey);
         }
-        console.log(util.inspect(moteResult, false, null, true));
+        // console.log(util.inspect(moteResult, false, null, true));
         SensorDataFusion.insertDataFusion(moteResult);
     }
 };
