@@ -249,10 +249,10 @@ var callMoteFunctions = function(routes) {
                         ip: routes[i],
                         dataValues: {
                             readingDate: utils.dateTimeFormat(new Date()),
-                            temperature: 0,
-                            humidity: 0,
-                            loudness: 0,
-                            light: 0
+                            temperature: undefined,
+                            humidity: undefined,
+                            loudness: undefined,
+                            light: undefined
                         }
                     }
                     console.log("\nSimular insert:\n", obj);
