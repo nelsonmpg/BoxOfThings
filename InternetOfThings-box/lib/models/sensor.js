@@ -71,7 +71,7 @@ Sensor.prototype.getSensorNotCheck = function() {
         if (err) {
             return;
         }
-        console.log('*********************************>> Motes NotCheck'/*, result*/);
+        console.log('*********************************>> Motes NotCheck' /*, result*/ );
         dataToCloud.sendToCheckSensoresValidate(result);
     });
 };
@@ -83,13 +83,17 @@ Sensor.prototype.updateCheckedAndKeysSensor = function(vals, res) {
             res.write(JSON.stringify({ "status": "Error" }));
             return;
         }
-        console.log('Sensor check update!'/*, result*/);
+        console.log('Sensor check update!' /*, result*/ );
         res.write(JSON.stringify({ "status": "ok" }));
     });
 };
 
 Sensor.prototype.getAllSensores = function(callback) {
     this.SensorDB.find({}, callback);
+};
+
+Sensor.prototype.getSensorsAndKeys = function(callback) {
+    this.SensorDB.find({ ck: true }, { ip: 1, secret: 1 }, callback);
 };
 
 Sensor.prototype.removeAllRecords = function(params) {
@@ -109,7 +113,7 @@ Sensor.prototype.insertSensorMethods = function(moteip, sensorMetodos) {
             console.log("error to insert methods.")
             return;
         }
-        console.log('Sensor methods add / created!'/*, result*/);
+        console.log('Sensor methods add / created!' /*, result*/ );
     });
 
 };

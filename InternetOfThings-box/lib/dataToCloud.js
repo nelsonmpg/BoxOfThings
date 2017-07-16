@@ -15,7 +15,7 @@ module.exports = {
                 'Content-Length': Buffer.byteLength(jsonObject)
             }
         };
-        console.log(options);
+        // console.log(options);
         try {
             var req = http.request(options, function(res) {
                 console.log('STATUS: ' + res.statusCode);
@@ -55,9 +55,10 @@ module.exports = {
 
     sendToCheckSensoresValidate: function(motesip) {
         for (var i in motesip) {
-            console.log("Mote for -> ", motesip[i]);
+            // console.log("Mote for -> ", motesip[i]);
             var parcialObj = {
-                sensortype: "Sensor-" + (i * 1 + 1),
+                sensorname: "Sensor-" + (i * 1 + 1),
+                sensortype: motesip[i].readings[i].sensorType,
                 boxname: linuxquery.getRemoteHostVals("boxname"),
                 boxmac: linuxquery.getRemoteHostVals("boxmac"),
                 sensorid: motesip[i].ip

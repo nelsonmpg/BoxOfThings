@@ -9,10 +9,11 @@ var coap = require('coap'),
     ec = new EC('p192'),
     Sensor = require('./models/sensor.js'),
     Route = require('./models/route.js'),
-    key = CryptoJS.enc.Hex.parse('B007AFD752937AFF5A4192268A803BB7'),
+    // key = CryptoJS.enc.Hex.parse('B007AFD752937AFF5A4192268A803BB7'),
     replaceRegex = /\u0000/gi,
     utils = require('./utils.js'),
-    util = require('util');
+    util = require('util')
+motesKeys = [];
 
 Sensor = new Sensor();
 Route = new Route();
@@ -40,17 +41,27 @@ module.exports = {
     updateCheckSensor: function(req, res) {
         var objsend = {
             moteip: req.params.moteIp,
-            ck: (req.params.ck.toString().trim().toLowerCase() == "sim" ? true : false),
+            ck: (req.params.ck.toString().trim().toLowerCase() == "sim" || req.params.ck.toString().trim().toLowerCase() == "yes" ? true : false),
             pubX: req.params.pubX,
             pubY: req.params.pubY,
-            secret: GeraChaveSimetrica('11FA2B68851DEDA9B0CE4D6EFD76F4623DD4600FEB5824EF' /*req.params.pubX*/ , '1B2585D62B7E6055C8534362A55F7F4F6EAB50F376CF18CE' /*req.params.pubY*/ )
+            secret: CryptoJS.enc.Hex.parse('B007AFD752937AFF5A4192268A803BB7')//GeraChaveSimetrica('11FA2B68851DEDA9B0CE4D6EFD76F4623DD4600FEB5824EF' /*req.params.pubX*/ , '1B2585D62B7E6055C8534362A55F7F4F6EAB50F376CF18CE' /*req.params.pubY*/ )
         }
         Sensor.updateCheckedAndKeysSensor(objsend, res);
     },
 
     getValuesFromSensors: function() {
+        Sensor.getSensorsAndKey(getValuesFromSensorsCallback);
         Route.getAllAdressDistinct(callMoteFunctions);
     },
+
+    getValuesFromSensorsCallback: function(err, result) {
+        for (var i in result) {
+            motesKeys[result[i].ip] = result[i].secret;
+        }
+        console.log(motesKeys);
+        Route.getAllAdressDistinct(callMoteFunctions);
+    },
+
     getdataFromSensor: function(req, res) {
         var endereco = req.params.moteIp === "undefined" ? "" : req.params.moteIp,
             folder = req.params.folder === "undefined" ? "" : req.params.folder,
@@ -202,25 +213,42 @@ function removeProbChars(data) {
 var callMoteFunctions = function(routes) {
     for (var i in routes) {
         try {
-            getdataFromSensorReq(routes[i], ".well-known", "core", "", "", "GET", false, key, null);
-            getdataFromSensorReq(routes[i], "data", "AllValues", "", "", "GET", false, key, function(data) {
+            var keymot = motesKeys[routes[i]];
+            if (keymot && keymot !== undefined && keymot.trim().length > 0) {
+                getdataFromSensorReq(routes[i], ".well-known", "core", "", "", "GET", false, keymot, null);
+                getdataFromSensorReq(routes[i], "data", "AllValues", "", "", "GET", false, keymot, function(data) {
+
+                    try {
+                        data = removeProbChars(data);
+                        var obJson = JSON.parse(data).Sensors;
+
+                        /****************** O INSERT FUNCIONA ******************/
+                        var obj = {
+                            ip: routes[i],
+                            dataVals: {
+                                readingDate: utils.dateTimeFormat(new Date()),
+                                temperature: (Math.random() * 100).toFixed(2), //(obJson.Temperature.toString() == "00.-1") ? "-1" : obJson.Temperature,
+                                humidity: (Math.random() * 100).toFixed(2), //(obJson.Humidity.toString() == "00.-1") ? "-1" : obJson.Humidity,
+                                loudness: (Math.random() * 100).toFixed(2), //(obJson.Loudness.toString() == "00.-1") ? "-1" : obJson.Loudness,
+                                light: (Math.random() * 100).toFixed(2), //(obJson.Light.toString() == "00.-1") ? "-1" : obJson.Light
+                            }
+                        }
+
+                        // console.log("\nSimular insert:\n", obj);
+                        Sensor.insertOrUpdate(obj);
+                        /********************************************************/
+
+                    } catch (e) {
+                        console.error(e);
+                    }
+                });
+            } else {
 
                 try {
-                    data = removeProbChars(data);
-                    var obJson = JSON.parse(data).Sensors;
-
-                    /****************** O INSERT FUNCIONA ******************/
+                    /****************** O INSERT default ******************/
                     var obj = {
-                        ip: routes[i],
-                        dataVals: {
-                            readingDate: utils.dateTimeFormat(new Date()),
-                            temperature: (Math.random() * 100).toFixed(2), //(obJson.Temperature.toString() == "00.-1") ? "-1" : obJson.Temperature,
-                            humidity: (Math.random() * 100).toFixed(2), //(obJson.Humidity.toString() == "00.-1") ? "-1" : obJson.Humidity,
-                            loudness: (Math.random() * 100).toFixed(2), //(obJson.Loudness.toString() == "00.-1") ? "-1" : obJson.Loudness,
-                            light: (Math.random() * 100).toFixed(2), //(obJson.Light.toString() == "00.-1") ? "-1" : obJson.Light
-                        }
+                        ip: routes[i]
                     }
-
                     // console.log("\nSimular insert:\n", obj);
                     Sensor.insertOrUpdate(obj);
                     /********************************************************/
@@ -228,7 +256,7 @@ var callMoteFunctions = function(routes) {
                 } catch (e) {
                     console.error(e);
                 }
-            });
+            }
             //try fim do for
         } catch (e) {
             console.error(e);
