@@ -114,8 +114,8 @@ window.ConfigSiteView = Backbone.View.extend({
             function(data) {
                 console.log(data);
                 var opts = '<li><a href="#">&nbsp;</a></li>';
-                for (var i in data.stdout) {
-                    opts += '<li><a href="#">' + data.stdout[i] + '</a></li>';
+                for (var i in data) {
+                    opts += '<li><a href="#">' + data[i].ip + '</a></li>';
                 }
                 console.log(opts);
                 self.enrecoOpts = opts;
