@@ -117,19 +117,19 @@ function filterOutliers(someArray, key, resultObj) {
             averagecalc += valAux * 1;
             countAverage++;
 
-            if (resultObj.Max < valAux) {
+            if (resultObj.Max * 1 < valAux * 1) {
                 resultObj.dateOfMax = utils.dateTimeFormat(values[i].readingDate);
                 resultObj.Max = valAux;
             }
 
-            if (resultObj.Min > valAux) {
+            if (resultObj.Min * 1 > valAux * 1) {
                 resultObj.dateOfMin = utils.dateTimeFormat(values[i].readingDate);
                 resultObj.Min = valAux;
             }
         }
     }
-    resultObj.lowerRangeOfReadingDate = utils.dateTimeFormat(values[0].readingDate);
-    resultObj.upperRangeOfReadingDate = utils.dateTimeFormat(values[values.length - 1].readingDate);
+    resultObj.lowerRangeOfReadingDate = utils.dateTimeFormat(values[values.length - 1].readingDate);
+    resultObj.upperRangeOfReadingDate = utils.dateTimeFormat(values[0].readingDate);
     resultObj.Average = (averagecalc / countAverage).toFixed(2);
     return resultObj;
 };
