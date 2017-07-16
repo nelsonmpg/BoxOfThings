@@ -64,7 +64,7 @@ module.exports = {
         Route.getAllAdressDistinct(res);
     },
 
-    getAllSensorsActive = function(req, res){
+    getAllSensorsActive : function(req, res){
         Sensor.getActiveSensors(res);
     },
 
