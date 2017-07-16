@@ -350,6 +350,6 @@ var GeraChaveSimetrica = function(xB, yB) {
     // console.log(final);
     // FIM - GERAR CHAVE SIMETRICA
     // return final;
-    result 'B007AFD752937AFF5A4192268A803BB7';
+    return 'B007AFD752937AFF5A4192268A803BB7';
 
 }
