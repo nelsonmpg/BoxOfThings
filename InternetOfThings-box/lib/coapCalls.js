@@ -214,6 +214,7 @@ var callMoteFunctions = function(routes) {
         try {
             var keymot = motesKeys[routes[i]];
             if (keymot && keymot !== undefined && keymot.trim().length > 0) {
+                console.log("Key", keymot);
                 getdataFromSensorReq(routes[i], ".well-known", "core", "", "", "GET", false, keymot, null);
                 getdataFromSensorReq(routes[i], "data", "AllValues", "", "", "GET", false, keymot, function(data) {
 
