@@ -128,8 +128,8 @@ function filterOutliers(someArray, key, resultObj) {
             }
         }
     }
-    resultObj.lowerRangeOfReadingDate = utils.dateTimeFormat(values[values.length - 1].readingDate);
-    resultObj.upperRangeOfReadingDate = utils.dateTimeFormat(values[0].readingDate);
+    resultObj.lowerRangeOfReadingDate = utils.dateTimeFormat(someArray[0].readingDate);
+    resultObj.upperRangeOfReadingDate = utils.dateTimeFormat(someArray[values.length - 1].readingDate);
     resultObj.Average = (averagecalc / countAverage).toFixed(2);
     return resultObj;
 };
