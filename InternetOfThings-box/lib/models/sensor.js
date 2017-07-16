@@ -79,7 +79,7 @@ Sensor.prototype.getSensorNotCheck = function() {
 Sensor.prototype.getActiveSensors = function(res) {
     this.SensorDB.find({ ck: true }, { ip: 1 }, function(err, result) {
         if (err) {
-            console.log("error get sensors.")
+            res.json(err);
             return;
         }
         res.json(result);

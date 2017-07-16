@@ -57,7 +57,7 @@ module.exports = {
         for (var i in result) {
             motesKeys[result[i].ip] = result[i].secret;
         }
-        console.log(motesKeys);
+        // console.log(motesKeys);
         Route.getAllAdressDistinct(callMoteFunctions);
     },
 

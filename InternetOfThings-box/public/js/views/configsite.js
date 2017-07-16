@@ -112,12 +112,10 @@ window.ConfigSiteView = Backbone.View.extend({
         modem("GET",
             "/routes/alladdress",
             function(data) {
-                console.log(data);
                 var opts = '<li><a href="#">&nbsp;</a></li>';
                 for (var i in data) {
                     opts += '<li><a href="#">' + data[i].ip + '</a></li>';
                 }
-                console.log(opts);
                 self.enrecoOpts = opts;
 
                 $("#btn-endereco-opts").html(self.enrecoOpts);
