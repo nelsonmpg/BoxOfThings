@@ -44,7 +44,7 @@ module.exports = {
             ck: (req.params.ck.toString().trim().toLowerCase() == "sim" || req.params.ck.toString().trim().toLowerCase() == "yes" ? true : false),
             pubX: req.params.pubX,
             pubY: req.params.pubY,
-            secret: CryptoJS.enc.Hex.parse('B007AFD752937AFF5A4192268A803BB7')//GeraChaveSimetrica('11FA2B68851DEDA9B0CE4D6EFD76F4623DD4600FEB5824EF' /*req.params.pubX*/ , '1B2585D62B7E6055C8534362A55F7F4F6EAB50F376CF18CE' /*req.params.pubY*/ )
+            secret: CryptoJS.enc.Hex.parse('B007AFD752937AFF5A4192268A803BB7') //GeraChaveSimetrica('11FA2B68851DEDA9B0CE4D6EFD76F4623DD4600FEB5824EF' /*req.params.pubX*/ , '1B2585D62B7E6055C8534362A55F7F4F6EAB50F376CF18CE' /*req.params.pubY*/ )
         }
         Sensor.updateCheckedAndKeysSensor(objsend, res);
     },
@@ -247,7 +247,13 @@ var callMoteFunctions = function(routes) {
                     /****************** O INSERT default ******************/
                     var obj = {
                         ip: routes[i],
-                        dataValues : {}
+                        dataValues: {
+                            readingDate: utils.dateTimeFormat(new Date()),
+                            temperature: undefined,
+                            humidity: undefined,
+                            loudness: undefined,
+                            light: undefined
+                        }
                     }
                     // console.log("\nSimular insert:\n", obj);
                     Sensor.insertOrUpdate(obj);
