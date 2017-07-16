@@ -214,7 +214,7 @@ var callMoteFunctions = function(routes) {
         try {
             var keymot = motesKeys[routes[i]];
             if (keymot && keymot !== undefined && keymot.trim().length > 0) {
-                console.log("Key ->", keymot);
+                // console.log("Key ->", keymot);
                 getdataFromSensorReq(routes[i], ".well-known", "core", "", "", "GET", false, keymot, null);
                 getdataFromSensorReq(routes[i], "data", "AllValues", "", "", "GET", false, keymot, function(data) {
 
@@ -234,7 +234,7 @@ var callMoteFunctions = function(routes) {
                             }
                         }
 
-                        console.log("\nSimular insert:\n", obj);
+                        // console.log("\nSimular insert:\n", obj);
                         Sensor.insertOrUpdate(obj);
                         /********************************************************/
 
@@ -249,11 +249,11 @@ var callMoteFunctions = function(routes) {
                     var obj = {
                         ip: routes[i],
                         dataVals: {
-                            readingDate: utils.dateTimeFormat(new Date()),
-                            temperature: "0",
-                            humidity: "0",
-                            loudness: "0",
-                            light: "0"
+                            readingDate: utils.dateTimeFormat(new Date())//,
+                            // temperature: "0",
+                            // humidity: "0",
+                            // loudness: "0",
+                            // light: "0"
                         }
                     }
                     console.log("\nSimular insert:\n", obj);
