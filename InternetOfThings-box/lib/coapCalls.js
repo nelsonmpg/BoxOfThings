@@ -71,22 +71,22 @@ module.exports = {
             mObserve = req.params.mObserve === "undefined" ? "" : req.params.mObserve;
 
         resource = resource.replace("§", "?");
-        getdataFromSensorReq(endereco, folder, resource, params, payload, mMethod, mObserve, key, res);
+        getdataFromSensorReq(endereco, folder, resource, params, payload, mMethod, mObserve, motesKeys[req.params.moteIp], res);
     },
 
     single_mote_all_info: function(req, res) {
         console.log(req.params.moteIp);
-        getdataFromSensorReq(req.params.moteIp, 'data', "AllValues", '', undefined, 'GET', true, key, res);
+        getdataFromSensorReq(req.params.moteIp, 'data', "AllValues", '', undefined, 'GET', true, motesKeys[req.params.moteIp], res);
     },
 
     single_mote_single_info: function(req, res) {
         console.log(req.params.moteIp, req.params.resource);
-        getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, key, res);
+        getdataFromSensorReq(req.params.moteIp, 'data', req.params.resource, '', undefined, 'GET', true, motesKeys[req.params.moteIp], res);
     },
 
     mote_action: function(req, res) {
         console.log(req.params.moteIp, req.params.resource, req.params.color, req.params.mode);
-        getdataFromSensorReq(req.params.moteIp, 'actuators', req.params.resource, '?leds=' + req.params.color, 'mode=' + req.params.mode, 'POST', false, key, res);
+        getdataFromSensorReq(req.params.moteIp, 'actuators', req.params.resource, '?leds=' + req.params.color, 'mode=' + req.params.mode, 'POST', false, motesKeys[req.params.moteIp], res);
     }
 };
 
@@ -101,8 +101,8 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
         // requestString = 'coap://[aaaa::212:4b00:60d:b305]:5683/test/hello';
         // requestString = 'coap://[aaaa::212:4b00:60d:60fe]:5683/.well-known/core';
         requestString = 'coap://' + endereco + ':5683/' + folder + '/' + resource + params,
-        mKey = CryptoJS.enc.Hex.parse(key); //('b007afd752937aff5a4192268a803bb7'); //CryptoJS.enc.Hex.parse(key);
-
+        mKey = CryptoJS.enc.Hex.parse(key); 
+        
     console.log(requestString);
 
     url = URL.parse(requestString);
@@ -256,7 +256,7 @@ var callMoteFunctions = function(routes) {
                             // light: "0"
                         }
                     }
-                    console.log("\nSimular insert:\n", obj);
+                    // console.log("\nSimular insert:\n", obj);
                     Sensor.insertOrUpdate(obj);
                     /********************************************************/
 

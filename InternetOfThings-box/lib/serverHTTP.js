@@ -87,7 +87,7 @@ var ServerHTTP = function(config) {
 
     this.app.get("/api/sensor/getDataSensor/:moteIp/:folder/:resource/:params/:payload/:mMethod/:mObserve", coapCalls.getdataFromSensor);
 
-    this.app.get('/routes/alladdress', dbToModels.getAllAdressDistinct);
+    this.app.get('/routes/alladdress', dbToModels.getAllSensorsActive);
 
     // Devolve as configuracoes do ficheiro Ini
     this.app.get("/paramsinifile", osquerys.getinifileparams);

@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
     cheerio = require('cheerio'),
     User = require('./models/user.js'),
     Addr = require('./models/addr.js'),
+    Sensor = require('./models/sensor.js'),
     Neighbor = require('./models/neighbor.js'),
     Route = require('./models/route.js'),
     connectDB = require('./models/connectDB.js'),
@@ -17,6 +18,7 @@ User = new User();
 Addr = new Addr();
 Neighbor = new Neighbor();
 Route = new Route();
+Sensor = new Sensor();
 
 module.exports = {
     configDB: function(cfg) {
@@ -60,6 +62,10 @@ module.exports = {
 
     getAllAdressDistinct: function(req, res) {
         Route.getAllAdressDistinct(res);
+    },
+
+    getAllSensorsActive = function(req, res){
+        Sensor.getActiveSensors(res);
     },
 
     readFile: function(file) {

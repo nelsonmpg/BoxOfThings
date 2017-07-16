@@ -76,6 +76,16 @@ Sensor.prototype.getSensorNotCheck = function() {
     });
 };
 
+Sensor.prototype.getActiveSensors = function(res) {
+    this.SensorDB.find({ ck: true }, { ip: 1 }, function(err, result) {
+        if (err) {
+            console.log("error get sensors.")
+            return;
+        }
+        res.json(result);
+    });
+};
+
 Sensor.prototype.updateCheckedAndKeysSensor = function(vals, res) {
     this.SensorDB.update({ "ip": vals.moteip }, { $set: { "ck": vals.ck, pubX: vals.pubX, pubY: vals.pubY, secret: vals.secret } }, { upsert: true }, function(err, result) {
         if (err) {
