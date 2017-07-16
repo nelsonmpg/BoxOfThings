@@ -255,7 +255,7 @@ var callMoteFunctions = function(routes) {
                             light: 0
                         }
                     }
-                    // console.log("\nSimular insert:\n", obj);
+                    console.log("\nSimular insert:\n", obj);
                     Sensor.insertOrUpdate(obj);
                     /********************************************************/
 
