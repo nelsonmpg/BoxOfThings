@@ -230,7 +230,7 @@ var callMoteFunctions = function(routes) {
                                 temperature: (Math.random() * 100).toFixed(2), //(obJson.Temperature.toString() == "00.-1") ? "-1" : obJson.Temperature,
                                 humidity: (Math.random() * 100).toFixed(2), //(obJson.Humidity.toString() == "00.-1") ? "-1" : obJson.Humidity,
                                 loudness: (Math.random() * 100).toFixed(2), //(obJson.Loudness.toString() == "00.-1") ? "-1" : obJson.Loudness,
-                                light: (Math.random() * 100).toFixed(2), //(obJson.Light.toString() == "00.-1") ? "-1" : obJson.Light
+                                light: (Math.random() * 100).toFixed(2) //(obJson.Light.toString() == "00.-1") ? "-1" : obJson.Light
                             }
                         }
 
