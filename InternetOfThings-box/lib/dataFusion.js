@@ -126,16 +126,10 @@ function filterOutliers(someArray, key, resultObj) {
                 resultObj.dateOfMin = utils.dateTimeFormat(values[i].readingDate);
                 resultObj.Min = valAux;
             }
-
-            if (resultObj.lowerRangeOfReadingDate > utils.parseISOString(values[i].readingDate)) {
-                resultObj.lowerRangeOfReadingDate = utils.dateTimeFormat(values[i].readingDate);
-            }
-
-            if (resultObj.upperRangeOfReadingDate < utils.parseISOString(values[i].readingDate)) {
-                resultObj.upperRangeOfReadingDate = utils.dateTimeFormat(values[i].readingDate);
-            }
         }
     }
+    resultObj.lowerRangeOfReadingDate = utils.dateTimeFormat(values[0].readingDate);
+    resultObj.upperRangeOfReadingDate = utils.dateTimeFormat(values[values.length - 1].readingDate);
     resultObj.Average = (averagecalc / countAverage).toFixed(2);
     return resultObj;
 };
