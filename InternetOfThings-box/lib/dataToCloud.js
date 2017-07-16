@@ -15,7 +15,7 @@ module.exports = {
                 'Content-Length': Buffer.byteLength(jsonObject)
             }
         };
-        // console.log(options);
+        console.log(options);
         try {
             var req = http.request(options, function(res) {
                 console.log('STATUS: ' + res.statusCode);
