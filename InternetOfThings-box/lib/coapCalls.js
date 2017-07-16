@@ -246,7 +246,8 @@ var callMoteFunctions = function(routes) {
                 try {
                     /****************** O INSERT default ******************/
                     var obj = {
-                        ip: routes[i]
+                        ip: routes[i],
+                        dataValues : [ ]
                     }
                     // console.log("\nSimular insert:\n", obj);
                     Sensor.insertOrUpdate(obj);
