@@ -44,7 +44,7 @@ module.exports = {
             ck: (req.params.ck.toString().trim().toLowerCase() == "sim" || req.params.ck.toString().trim().toLowerCase() == "yes" ? true : false),
             pubX: req.params.pubX,
             pubY: req.params.pubY,
-            secret: 'B007AFD752937AFF5A4192268A803BB7' //GeraChaveSimetrica('11FA2B68851DEDA9B0CE4D6EFD76F4623DD4600FEB5824EF' /*req.params.pubX*/ , '1B2585D62B7E6055C8534362A55F7F4F6EAB50F376CF18CE' /*req.params.pubY*/ )
+            secret: GeraChaveSimetrica(req.params.pubX, req.params.pubY)
         }
         Sensor.updateCheckedAndKeysSensor(objsend, res);
     },
@@ -102,7 +102,7 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
         // requestString = 'coap://[aaaa::212:4b00:60d:60fe]:5683/.well-known/core';
         requestString = 'coap://' + endereco + ':5683/' + folder + '/' + resource + params,
         mKey = CryptoJS.enc.Hex.parse(key); 
-        
+
     console.log(requestString);
 
     url = URL.parse(requestString);
@@ -349,6 +349,7 @@ var GeraChaveSimetrica = function(xB, yB) {
 
     // console.log(final);
     // FIM - GERAR CHAVE SIMETRICA
-    return final;
+    // return final;
+    result 'B007AFD752937AFF5A4192268A803BB7';
 
 }
