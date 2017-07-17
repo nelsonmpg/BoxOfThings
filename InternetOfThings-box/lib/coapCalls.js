@@ -242,7 +242,7 @@ var callMoteFunctions = function(routes) {
                             // obj.dataVals[varkey] = obJson[obJson[i]];
                         }
                         createobj  +="}";
-                        obj.dataVals = JSON.parse(createobj);
+                        obj.dataVals = JSON.parse(JSON.stringify(createobj));
 
                         console.log("\nSimular insert:\n", obj, createobj);
                         Sensor.insertOrUpdate(obj);
