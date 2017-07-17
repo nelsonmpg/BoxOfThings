@@ -240,7 +240,7 @@ var callMoteFunctions = function(routes) {
                             obj.dataVals[varkey] = (Math.random() * 100).toFixed(2); //(obJson[obJson[j]].toString() == "00.-1") ? "-1" : obJson[obJson[j]];
                         }
 
-                        console.log("\nSimular insert:\n", obj, obJson);
+                        console.log("\nSimular insert:\n", obj, obJson, obJson[T"emperature"]);
                         Sensor.insertOrUpdate(obj);
                         /********************************************************/
 
