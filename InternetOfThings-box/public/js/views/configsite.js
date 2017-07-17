@@ -21,7 +21,7 @@ window.ConfigSiteView = Backbone.View.extend({
                     "/api/singleMoteAllInfo/" + $("#api-endereco1").val(),
                     function(data) {
                         console.log(data);
-                        $("#textarea-text1").text(data);
+                        $("#textarea-text1").val(data);
                     },
                     function(xhr, ajaxOptions, thrownError) {
                         var json = JSON.parse(xhr.responseText);
@@ -37,7 +37,7 @@ window.ConfigSiteView = Backbone.View.extend({
                     "/api/singleMoteSingleInfo/" + $("#api-endereco2").val() + "/" + $("#api-resource2").val(),
                     function(data) {
                         console.log(data);
-                        $("#textarea-text2").text(data);
+                        $("#textarea-text2").val(data);
                     },
                     function(xhr, ajaxOptions, thrownError) {
                         var json = JSON.parse(xhr.responseText);
@@ -53,7 +53,7 @@ window.ConfigSiteView = Backbone.View.extend({
                     "/api/singleMoteSingleInfo/" + $("#api-endereco3").val().trim() + "/" + $("#api-resource3").val().trim() + "/" + $("#api-color").val().trim().toLowerCase().charAt(0) + "/" + $("#api-mode").val().trim().toLowerCase(),
                     function(data) {
                         console.log(data);
-                        $("#textarea-text3").text(data);
+                        $("#textarea-text3").val(data);
                     },
                     function(xhr, ajaxOptions, thrownError) {
                         var json = JSON.parse(xhr.responseText);
@@ -158,7 +158,7 @@ window.ConfigSiteView = Backbone.View.extend({
                 "/api/sensor/getDataSensor/" + endereco + "/" + folder + "/" + resource.replace("?", "§") + "/" + params + "/" + payload + "/" + mMethod + "/" + mObserve,
                 function(data) {
                     console.log(data);
-                    $("#textarea-text").text(data);
+                    $("#textarea-text").val(data);
                 },
                 function(xhr, ajaxOptions, thrownError) {
                     var json = JSON.parse(xhr.responseText);
