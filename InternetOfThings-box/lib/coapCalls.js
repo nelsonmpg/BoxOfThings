@@ -12,8 +12,8 @@ var coap = require('coap'),
     // key = CryptoJS.enc.Hex.parse('B007AFD752937AFF5A4192268A803BB7'),
     replaceRegex = /\u0000/gi,
     utils = require('./utils.js'),
-    util = require('util')
-motesKeys = [];
+    util = require('util'),
+    motesKeys = [];
 
 Sensor = new Sensor();
 Route = new Route();
