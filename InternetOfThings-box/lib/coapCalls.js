@@ -235,7 +235,7 @@ var callMoteFunctions = function(routes) {
                             obj.dataVals[varkey] = (Math.random() * 100).toFixed(2); //(obJson[objkeys[j]].toString() == "00.-1") ? "-1" : obJson[objkeys[j]];
                         }
 
-                        console.log("\nSimular insert:\n", obj);
+                        // console.log("\nSimular insert:\n", obj);
                         Sensor.insertOrUpdate(obj);
                         /********************************************************/
 
