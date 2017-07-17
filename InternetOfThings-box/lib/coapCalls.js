@@ -234,7 +234,7 @@ var callMoteFunctions = function(routes) {
                             }
                         }
                         var objkeys = Object.keys(obJson);
-                        var createobj = "{" + readingDate + ":" + utils.dateTimeFormat(new Date()) + ",";
+                        var createobj = "{ readingDate :" + utils.dateTimeFormat(new Date()) + ",";
                         for (var i in objkeys) {
                             var varkey = objkeys[i].toString().trim().toLowerCase() + "";
                             console.log("--++>", objkeys[i], varkey);
