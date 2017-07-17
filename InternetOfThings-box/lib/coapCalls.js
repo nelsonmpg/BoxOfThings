@@ -237,7 +237,7 @@ var callMoteFunctions = function(routes) {
                         for (var j in objkeys) {
                             var varkey = objkeys[j].toString().trim().toLowerCase() + "";
                             console.log("--++>", objkeys[j], varkey, obJson[obJson[j]]);
-                            obj.dataVals[varkey] = (Math.random() * 100).toFixed(2), //(obJson[obJson[j]].toString() == "00.-1") ? "-1" : obJson[obJson[j]];
+                            obj.dataVals[varkey] = (Math.random() * 100).toFixed(2); //(obJson[obJson[j]].toString() == "00.-1") ? "-1" : obJson[obJson[j]];
                         }
 
                         console.log("\nSimular insert:\n", obj, obJson);
