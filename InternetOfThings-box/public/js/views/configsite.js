@@ -50,7 +50,7 @@ window.ConfigSiteView = Backbone.View.extend({
         "click #api-sensoraction": function() {
             if ($("#api-endereco3").val().trim().length > 0 && $("#api-resource3").val().trim().length > 0 && $("#api-color").val().trim().length > 0 && $("#api-mode").val().trim().length > 0) {
                 modem("GET",
-                    "/api/singleMoteSingleInfo/" + $("#api-endereco3").val().trim() + "/" + $("#api-resource3").val().trim() + "/" + $("#api-color").val().trim().toLowerCase().charAt(0) + "/" + $("#api-mode").val().trim().toLowerCase(),
+                    "/api/moteAction/" + $("#api-endereco3").val().trim() + "/" + $("#api-resource3").val().trim() + "/" + $("#api-color").val().trim().toLowerCase().charAt(0) + "/" + $("#api-mode").val().trim().toLowerCase(),
                     function(data) {
                         console.log(data);
                         $("#textarea-text3").val(data);
