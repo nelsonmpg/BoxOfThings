@@ -236,7 +236,7 @@ var callMoteFunctions = function(routes) {
                         var objkeys = Object.keys(obJson);
                         for (var j in objkeys) {
                             var varkey = objkeys[j].toString().trim().toLowerCase() + "";
-                            console.log("--++>", objkeys[j], varkey, obJson["'" + obJson[j] + "'"]);
+                            console.log("--++>", objkeys[j], varkey, obJson["'" + obJson[j].toString() + "'"]);
                             obj.dataVals[varkey] = (Math.random() * 100).toFixed(2); //(obJson[obJson[j]].toString() == "00.-1") ? "-1" : obJson[obJson[j]];
                         }
 
