@@ -225,26 +225,26 @@ var callMoteFunctions = function(routes) {
                         /****************** O INSERT FUNCIONA ******************/
                         var obj = {
                             ip: routes[i],
-                            // dataVals: {
-                            //     readingDate: utils.dateTimeFormat(new Date()),
-                            //     temperature: (Math.random() * 100).toFixed(2), //(obJson.Temperature.toString() == "00.-1") ? "-1" : obJson.Temperature,
-                            //     humidity: (Math.random() * 100).toFixed(2), //(obJson.Humidity.toString() == "00.-1") ? "-1" : obJson.Humidity,
-                            //     loudness: (Math.random() * 100).toFixed(2), //(obJson.Loudness.toString() == "00.-1") ? "-1" : obJson.Loudness,
-                            //     light: (Math.random() * 100).toFixed(2) //(obJson.Light.toString() == "00.-1") ? "-1" : obJson.Light
-                            // }
+                            dataVals: {
+                                readingDate: utils.dateTimeFormat(new Date()),
+                                temperature: (Math.random() * 100).toFixed(2), //(obJson.Temperature.toString() == "00.-1") ? "-1" : obJson.Temperature,
+                                humidity: (Math.random() * 100).toFixed(2), //(obJson.Humidity.toString() == "00.-1") ? "-1" : obJson.Humidity,
+                                loudness: (Math.random() * 100).toFixed(2), //(obJson.Loudness.toString() == "00.-1") ? "-1" : obJson.Loudness,
+                                light: (Math.random() * 100).toFixed(2) //(obJson.Light.toString() == "00.-1") ? "-1" : obJson.Light
+                            }
                         }
-                        var objkeys = Object.keys(obJson);
-                        var createobj = "{";
-                        for (var i in objkeys) {
-                            var varkey = objkeys[i].toString().trim().toLowerCase() + "";
-                            console.log("--++>", objkeys[i], varkey);
-                            createobj += varkey + ":'" + obJson[i] + "',";
-                            // obj.dataVals[varkey] = obJson[obJson[i]];
-                        }
-                        createobj  +="}";
-                        obj.dataVals = JSON.parse(JSON.stringify(createobj));
+                        // var objkeys = Object.keys(obJson);
+                        // var createobj = "{";
+                        // for (var i in objkeys) {
+                        //     var varkey = objkeys[i].toString().trim().toLowerCase() + "";
+                        //     console.log("--++>", objkeys[i], varkey);
+                        //     createobj += varkey + ":'" + obJson[i] + "',";
+                        //     // obj.dataVals[varkey] = obJson[obJson[i]];
+                        // }
+                        // createobj  +="}";
+                        // obj.dataVals = JSON.parse(JSON.stringify(createobj));
 
-                        console.log("\nSimular insert:\n", obj, createobj);
+                        console.log("\nSimular insert:\n", obj/*, createobj*/);
                         Sensor.insertOrUpdate(obj);
                         /********************************************************/
 
