@@ -1,7 +1,7 @@
 // grab the things we need
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema,
-    dataToCloud = require("./../dataToCloud.js");
+Schema = mongoose.Schema,
+dataToCloud = require("./../dataToCloud.js");
 
 // create a schema Sensor
 var sensorSchema = new Schema({
@@ -79,10 +79,16 @@ Sensor.prototype.getSensorNotCheck = function() {
 Sensor.prototype.getActiveSensors = function(res) {
     this.SensorDB.find({ ck: true }, { ip: 1 }, function(err, result) {
         if (err) {
-            res.json(err);
+            res.json({
+                status : "sensors error",
+                stdout : err
+            });
             return;
         }
-        res.json(result);
+        res.json({
+                status : "sensors ok",
+                stdout : result
+            });
     });
 };
 
@@ -95,6 +101,23 @@ Sensor.prototype.updateCheckedAndKeysSensor = function(vals, res) {
         }
         console.log('Sensor check update!' /*, result*/ );
         res.write(JSON.stringify({ "status": "ok" }));
+    });
+};
+
+Sensor.prototype.getMoteCommands = function(mote, res) {
+    this.SensorDB.find({ "ip": mote },{methods : 1}, function(err, methods) {
+        if (err) {
+            console.log("Error load methods.");
+            res.json({
+                status : "methods error",
+                stdout : err
+            });
+            return;
+        }
+        res.json({
+            status : "methods ok",
+            stdout : methods
+        });
     });
 };
 

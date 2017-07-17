@@ -2,6 +2,7 @@ var mongoose = require('mongoose'),
 Schema = mongoose.Schema,
 sendData = require('./../dataToCloud.js');
 
+// create a schema para DataFusion
 var sensorDataFusionSchema = new Schema({
     boxname: { type: String }, 
     boxmac: { type: String }, 
