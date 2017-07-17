@@ -236,7 +236,7 @@ var callMoteFunctions = function(routes) {
                         var objkeys = Object.keys(obJson);
                         for (var i in objkeys) {
                             console.log("--++>", objkeys[i]);
-                            ~var varkey = objkeys[i].toLowerCase() + "";
+                            var varkey = objkeys[i].toLowerCase() + "";
                             obj.dataVals[varkey] = obJson[obJson[i]];
                         }
 
