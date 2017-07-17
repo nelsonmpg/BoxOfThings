@@ -25,13 +25,13 @@ module.exports = {
 
         sock.on('data', function(data) {
             // console.log('DATA ' + sock.remoteAddress + ': ' + data);
-            try {
+            // try {
                 var req = JSON.parse(data);
                 module.exports[req.request](req, sock);
 
-            } catch (e) {
-                console.log("Invalid args - " + e, data.toString('utf8'));
-            }
+            // } catch (e) {
+            //     console.log("Invalid args - " + e, data.toString('utf8'));
+            // }
         });
         sock.on('close', function(data) {
             console.log('CLOSED: ' + sock.remoteAddress + ' ' + sock.remotePort);
