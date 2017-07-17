@@ -101,7 +101,7 @@ var getdataFromSensorReq = function(endereco, folder, resource, params, payload,
         // requestString = 'coap://[aaaa::212:4b00:60d:b305]:5683/test/hello';
         // requestString = 'coap://[aaaa::212:4b00:60d:60fe]:5683/.well-known/core';
         requestString = 'coap://' + endereco + ':5683/' + folder + '/' + resource + params,
-        mKey = CryptoJS.enc.Hex.parse(key); 
+        mKey = CryptoJS.enc.Hex.parse(key);
 
     console.log(requestString);
 
@@ -225,13 +225,18 @@ var callMoteFunctions = function(routes) {
                         /****************** O INSERT FUNCIONA ******************/
                         var obj = {
                             ip: routes[i],
-                            dataVals: {
-                                readingDate: utils.dateTimeFormat(new Date()),
-                                temperature: (Math.random() * 100).toFixed(2), //(obJson.Temperature.toString() == "00.-1") ? "-1" : obJson.Temperature,
-                                humidity: (Math.random() * 100).toFixed(2), //(obJson.Humidity.toString() == "00.-1") ? "-1" : obJson.Humidity,
-                                loudness: (Math.random() * 100).toFixed(2), //(obJson.Loudness.toString() == "00.-1") ? "-1" : obJson.Loudness,
-                                light: (Math.random() * 100).toFixed(2) //(obJson.Light.toString() == "00.-1") ? "-1" : obJson.Light
-                            }
+                            // dataVals: {
+                            //     readingDate: utils.dateTimeFormat(new Date()),
+                            //     temperature: (Math.random() * 100).toFixed(2), //(obJson.Temperature.toString() == "00.-1") ? "-1" : obJson.Temperature,
+                            //     humidity: (Math.random() * 100).toFixed(2), //(obJson.Humidity.toString() == "00.-1") ? "-1" : obJson.Humidity,
+                            //     loudness: (Math.random() * 100).toFixed(2), //(obJson.Loudness.toString() == "00.-1") ? "-1" : obJson.Loudness,
+                            //     light: (Math.random() * 100).toFixed(2) //(obJson.Light.toString() == "00.-1") ? "-1" : obJson.Light
+                            // }
+                        }
+                        var objkeys = Object.keys(obJson);
+                        for (var i in objkeys) {
+                            console.log("--++>", objkeys[i]);
+                            obj.dataVals[obJson[i].toString().trim().toLowerCase()] = obJson[obJson[i]];
                         }
 
                         // console.log("\nSimular insert:\n", obj);
@@ -249,7 +254,7 @@ var callMoteFunctions = function(routes) {
                     var obj = {
                         ip: routes[i],
                         dataVals: {
-                            readingDate: utils.dateTimeFormat(new Date())//,
+                            readingDate: utils.dateTimeFormat(new Date()) //,
                             // temperature: "0",
                             // humidity: "0",
                             // loudness: "0",
