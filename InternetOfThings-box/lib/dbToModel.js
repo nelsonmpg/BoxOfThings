@@ -1,18 +1,18 @@
 /* global module */
 var mongoose = require('mongoose'),
-    htmlparser = require('htmlparser2'),
-    cheerio = require('cheerio'),
-    User = require('./models/user.js'),
-    Addr = require('./models/addr.js'),
-    Sensor = require('./models/sensor.js'),
-    Neighbor = require('./models/neighbor.js'),
-    Route = require('./models/route.js'),
-    connectDB = require('./models/connectDB.js'),
-    coapCalls = require('./coapCalls.js'),
-    ini = require('ini'),
-    fs = require('fs'),
-    md5 = require('md5'),
-    btoa = require('btoa');
+htmlparser = require('htmlparser2'),
+cheerio = require('cheerio'),
+User = require('./models/user.js'),
+Addr = require('./models/addr.js'),
+Sensor = require('./models/sensor.js'),
+Neighbor = require('./models/neighbor.js'),
+Route = require('./models/route.js'),
+connectDB = require('./models/connectDB.js'),
+coapCalls = require('./coapCalls.js'),
+ini = require('ini'),
+fs = require('fs'),
+md5 = require('md5'),
+btoa = require('btoa');
 
 User = new User();
 Addr = new Addr();
@@ -66,6 +66,10 @@ module.exports = {
 
     getAllSensorsActive : function(req, res){
         Sensor.getActiveSensors(res);
+    },
+
+    getmoteMethods: function(req, res){
+        Sensor.getMoteCommands(req.params.mote, res);
     },
 
     readFile: function(file) {

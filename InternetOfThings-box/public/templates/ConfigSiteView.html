@@ -10,10 +10,9 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="input-group">
-                            <!-- <span class="input-group-addon" id="sizing-addon1">endereco</span> -->
                             <div class="input-group-btn">
                                 <button type="button" id="btn-endereco" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Endereco <span class="caret"></span></button>
-                                <ul id="btn-endereco-opts" class="dropdown-menu">
+                                <ul id="btn-endereco-opts" data-dest="endereco" data-dest-dp="btn-resource2-opts" data-clear="dp-opt1" data-dest-dp2="btn-folder-opts" class="dropdown-menu querydb">
                                 </ul>
                             </div>
                             <input id="endereco" type="text" class="form-control" value="" aria-describedby="sizing-addon1">
@@ -23,19 +22,23 @@
                         <div class="input-group">
                             <div class="input-group-btn">
                                 <button type="button" id="btn-folder" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Folder <span class="caret"></span></button>
-                                <ul id="btn-folder-opts" class="dropdown-menu">
-                                    <li><a href="#">data</a></li>
+                                <ul id="btn-folder-opts" data-clear="dp-opt2" data-dest="folder" class="dropdown-menu">
+                                 <!--    <li><a href="#">data</a></li>
                                     <li><a href="#">test</a></li>
-                                    <li><a href="#">.well-known</a></li>
+                                    <li><a href="#">.well-known</a></li> -->
                                 </ul>
                             </div>
-                            <input id="folder" type="text" class="form-control" value="test" aria-describedby="sizing-addon2">
+                            <input id="folder" type="text" class="form-control dp-opt1" value="" aria-describedby="sizing-addon2">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
-                            <span class="input-group-addon" id="sizing-addon3">resource</span>
-                            <input id="resource" type="text" class="form-control" value="" aria-describedby="sizing-addon3">
+                            <div class="input-group-btn">
+                            <button type="button" id="btn-folder" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Resource <span class="caret"></span></button>
+                                <ul id="btn-resource2-opts" data-clear="dp-opt3" data-dest="resource" class="dropdown-menu">
+                                </ul>
+                            </div>
+                            <input id="resource" type="text" class="form-control dp-opt1 dp-opt2" value="" aria-describedby="sizing-addon3">
                         </div>
                     </div>
                 </div>
@@ -44,21 +47,20 @@
                     <div class="col-md-4">
                         <div class="input-group">
                             <span class="input-group-addon" id="sizing-addon4">params</span>
-                            <input id="params" type="text" class="form-control" value="" aria-describedby="sizing-addon4">
+                            <input id="params" type="text" class="form-control dp-opt1 dp-opt2 dp-opt3" value="" aria-describedby="sizing-addon4">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
                             <span class="input-group-addon" id="sizing-addon5">payload</span>
-                            <input id="payload" type="text" class="form-control" value="" aria-describedby="sizing-addon5">
+                            <input id="payload" type="text" class="form-control dp-opt1 dp-opt2 dp-opt3" value="" aria-describedby="sizing-addon5">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
-                            <!-- <span class="input-group-addon" id="sizing-addon6">mMethod</span> -->
                             <div class="input-group-btn">
                                 <button type="button" id="btn-mMethod" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">mMethod <span class="caret"></span></button>
-                                <ul id="btn-mMethod-opts" class="dropdown-menu">
+                                <ul id="btn-mMethod-opts" data-dest="mMethod" class="dropdown-menu">
                                     <li><a href="#">GET</a></li>
                                     <li><a href="#">POST</a></li>
                                 </ul>
@@ -72,7 +74,7 @@
                     <div class="col-md-4">
                         <div class="input-group">
                             <span class="input-group-addon" id="sizing-addon7">mObserve</span>
-                            <input id="mObserve" type="text" class="form-control" value="false" aria-describedby="sizing-addon7">
+                            <input id="mObserve" type="text" class="form-control dp-opt1 dp-opt2 dp-opt3" value="false" aria-describedby="sizing-addon7">
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -85,7 +87,7 @@
                         <label>Result</label>
                     </div>
                     <div class="col-md-10">
-                        <textarea id="textarea-text" name="text" style="width: 100%; height: 100%;"></textarea>
+                        <textarea id="textarea-text" class="dp-opt1 dp-opt2 dp-opt3" name="text" style="width: 100%; height: 100%;"></textarea>
                     </div>
                 </div>
                 <div class="row">&nbsp;</div>
@@ -108,7 +110,7 @@
                         <div class="input-group">
                             <div class="input-group-btn">
                                 <button type="button" id="btn-endereco1" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Endereco <span class="caret"></span></button>
-                                <ul id="btn-endereco1-opts1" class="dropdown-menu">
+                                <ul id="btn-endereco1-opts1" data-clear="dp-opt7" data-dest="api-endereco1" class="dropdown-menu">
                                 </ul>
                             </div>
                             <input id="api-endereco1" type="text" class="form-control" value="" aria-describedby="sizing-addon1">
@@ -124,7 +126,7 @@
                         <label>Result</label>
                     </div>
                     <div class="col-md-10">
-                        <textarea id="textarea-text1" name="text1" style="width: 100%; height: 100%;"></textarea>
+                        <textarea id="textarea-text1" class="dp-opt7" name="text1" style="width: 100%; height: 100%;"></textarea>
                     </div>
                 </div>
                 <div class="row">&nbsp;</div>
@@ -133,7 +135,7 @@
                         <div class="input-group">
                             <div class="input-group-btn">
                                 <button type="button" id="btn-endereco2" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Endereco <span class="caret"></span></button>
-                                <ul id="btn-endereco2-opts2" class="dropdown-menu">
+                                <ul id="btn-endereco2-opts2" data-clear="dp-opt4" data-dest="api-endereco2" data-dest-dp="btn-Resource1-opts" class="dropdown-menu querydb">
                                 </ul>
                             </div>
                             <input id="api-endereco2" type="text" class="form-control" value="" aria-describedby="sizing-addon1">
@@ -141,83 +143,93 @@
                     </div>
                     <div class="col-md-4">
                         <div class="input-group">
-                            <span class="input-group-addon" id="sizing-addon3">resource</span>
-                            <input id="api-resource2" type="text" class="form-control" value="" aria-describedby="sizing-addon3">
+                         <!--  <span class="input-group-addon" id="sizing-addon3">resource</span> -->
+                         <div class="input-group-btn">
+                            <button type="button" id="btn-resource-dp" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Resource <span class="caret"></span></button>
+                            <ul id="btn-Resource1-opts" data-clear="dp-opt8" data-dest="api-resource2" class="dropdown-menu">
+                            </ul>
                         </div>
-                    </div>
-                    <div class="col-md-4">
-                        <button id="api-getdata2" type="button" class="btn btn-success">Get Data Sensor</button>
+                        <input id="api-resource2" type="text" class="form-control dp-opt4" value="" aria-describedby="sizing-addon3"> 
                     </div>
                 </div>
-                <div class="row">&nbsp;</div>
-                <div class="row">
-                    <div class="col-md-2">
-                        <label>Result</label>
-                    </div>
-                    <div class="col-md-10">
-                        <textarea id="textarea-text2" name="text2" style="width: 100%; height: 100%;"></textarea>
-                    </div>
+                <div class="col-md-4">
+                    <button id="api-getdata2" type="button" class="btn btn-success">Get Data Sensor</button>
                 </div>
-                <div class="row">&nbsp;</div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="input-group">
-                            <div class="input-group-btn">
-                                <button type="button" id="btn-endereco3" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Endereco <span class="caret"></span></button>
-                                <ul id="btn-endereco3-opts3" class="dropdown-menu">
-                                </ul>
-                            </div>
-                            <input id="api-endereco3" type="text" class="form-control" value="" aria-describedby="sizing-addon1">
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="input-group">
-                            <span class="input-group-addon" id="lb-resource">resource</span>
-                            <input id="api-resource3" type="text" class="form-control" value="" aria-describedby="lb-resource">
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="input-group">
-                            <div class="input-group-btn">
-                                <button type="button" id="btn-color" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Color <span class="caret"></span></button>
-                                <ul id="btn-color-opts" class="dropdown-menu">
-                                    <li><a href="#">Blue</a></li>
-                                    <li><a href="#">Green</a></li>
-                                    <li><a href="#">Red</a></li>
-                                </ul>
-                            </div>
-                            <input id="api-color" type="text" readonly="true" class="form-control" value="" aria-describedby="sizing-addon1">
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="input-group">
-                            <div class="input-group-btn">
-                                <button type="button" id="btn-mode" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Modo <span class="caret"></span></button>
-                                <ul id="btn-mode-opts" class="dropdown-menu">
-                                    <li><a href="#">On</a></li>
-                                    <li><a href="#">Off</a></li>
-                                </ul>
-                            </div>
-                            <input id="api-mode" type="text" readonly="true" class="form-control" value="" aria-describedby="sizing-addon1">
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button id="api-sensoraction" type="button" class="btn btn-success">Sensor Action</button>
-                    </div>
-                </div>
-                <div class="row">&nbsp;</div>
-                <div class="row">
-                    <div class="col-md-2">
-                        <label>Result</label>
-                    </div>
-                    <div class="col-md-10">
-                        <textarea id="textarea-text3" name="text3" style="width: 100%; height: 100%;"></textarea>
-                    </div>
-                </div>
-                <div class="row">&nbsp;</div>
             </div>
+            <div class="row">&nbsp;</div>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Result</label>
+                </div>
+                <div class="col-md-10">
+                    <textarea id="textarea-text2" class="dp-opt4 dp-opt8" name="text2" style="width: 100%; height: 100%;"></textarea>
+                </div>
+            </div>
+            <div class="row">&nbsp;</div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <div class="input-group-btn">
+                            <button type="button" id="btn-endereco3" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Endereco <span class="caret"></span></button>
+                            <ul id="btn-endereco3-opts3" data-clear="dp-opt5" data-dest="api-endereco3" data-dest-dp="btn-resource3-opts3" class="dropdown-menu querydb">
+                            </ul>
+                        </div>
+                        <input id="api-endereco3" type="text" class="form-control" value="" aria-describedby="sizing-addon1">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="input-group">
+                        <!-- <span class="input-group-addon" id="lb-resource">resource</span> -->
+                        <div class="input-group-btn">
+                            <button type="button" id="btn-endereco3" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Resource <span class="caret"></span></button>
+                            <ul id="btn-resource3-opts3" data-clear="dp-opt6" data-dest="api-resource3" class="dropdown-menu">
+                            </ul>
+                        </div>
+                        <input id="api-resource3" type="text" class="form-control dp-opt5" value="" aria-describedby="lb-resource">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="input-group">
+                        <div class="input-group-btn">
+                            <button type="button" id="btn-color" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Color <span class="caret"></span></button>
+                            <ul id="btn-color-opts" data-dest="api-color" data-clear="dp-opt9" class="dropdown-menu">
+                                <li><a href="#">Blue</a></li>
+                                <li><a href="#">Green</a></li>
+                                <li><a href="#">Red</a></li>
+                            </ul>
+                        </div>
+                        <input id="api-color" type="text" readonly="true" class="form-control dp-opt5 dp-opt6" value="" aria-describedby="sizing-addon1">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="input-group">
+                        <div class="input-group-btn">
+                            <button type="button" id="btn-mode" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Modo <span class="caret"></span></button>
+                            <ul id="btn-mode-opts" data-dest="api-mode" data-clear="dp-opt10" class="dropdown-menu">
+                                <li><a href="#">On</a></li>
+                                <li><a href="#">Off</a></li>
+                            </ul>
+                        </div>
+                        <input id="api-mode" type="text" readonly="true" class="form-control dp-opt5 dp-opt6" value="" aria-describedby="sizing-addon1">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button id="api-sensoraction" type="button" class="btn btn-success">Sensor Action</button>
+                </div>
+            </div>
+            <div class="row">&nbsp;</div>
+            <div class="row">
+                <div class="col-md-2">
+                    <label>Result</label>
+                </div>
+                <div class="col-md-10">
+                    <textarea id="textarea-text3" class="dp-opt5 dp-opt6 dp-opt9 dp-opt10" name="text3" style="width: 100%; height: 100%;"></textarea>
+                </div>
+            </div>
+            <div class="row">&nbsp;</div>
         </div>
     </div>
+</div>
 </div>
 <div class="row">
     <div class="col-md-12">

@@ -13,6 +13,25 @@ var obj = {
 Sensor.insertOrUpdate(obj);
 // ------------------- Fim Exemplo insert nos sensores -------------------
 
+// ---------- Exemplo de insert dos metodos  do mote ---------------------
+var objm = [{
+            folder: "data",
+            resource: "testA"
+        },{
+            folder: "data",
+            resource: "testB"
+        },{
+            folder: "data",
+            resource: "testC"
+        },{
+            folder: "data",
+            resource: "testD"
+        }];
+        Sensor.insertSensorMethods(obj.ip, objm);
+
+// --------- Fim Exemplo de insert dos metodos  do mote ---------------
+
+
 // -----------  Exeplo de insert no data fusion ----------------------
 var obj = {
     boxname: linuxquery.getRemoteHostVals("boxname"), 

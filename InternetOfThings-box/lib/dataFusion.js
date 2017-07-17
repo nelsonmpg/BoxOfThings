@@ -1,10 +1,10 @@
 var mongoose = require('mongoose'),
-    Sensor = require('./models/sensor.js'),
-    SensorDataFusion = require("./models/sensorDataFusion"),
-    linuxquery = require("./linuxquery.js"),
-    timeDatafusion = 1,
-    utils = require('./utils.js'),
-    util = require('util');
+Sensor = require('./models/sensor.js'),
+SensorDataFusion = require("./models/sensorDataFusion"),
+linuxquery = require("./linuxquery.js"),
+timeDatafusion = 1,
+utils = require('./utils.js'),
+util = require('util');
 
 Sensor = new Sensor();
 SensorDataFusion = new SensorDataFusion();
@@ -96,7 +96,7 @@ function filterOutliers(someArray, key, resultObj) {
      * is not an int, then really you should average the two elements on either 
      * side to find q1.
      */
-    var q1 = values[Math.floor((values.length / 4))];
+     var q1 = values[Math.floor((values.length / 4))];
     // Likewise for q3. 
     var ceilVar = Math.ceil((values.length * (3 / 4)));
     var q3 = values[ceilVar > values.length - 1 ? values.length - 1 : ceilVar];

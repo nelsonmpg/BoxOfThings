@@ -89,6 +89,8 @@ var ServerHTTP = function(config) {
 
     this.app.get('/routes/alladdress', dbToModels.getAllSensorsActive);
 
+    this.app.get("/api/mote/:mote", dbToModels.getmoteMethods);
+
     // Devolve as configuracoes do ficheiro Ini
     this.app.get("/paramsinifile", osquerys.getinifileparams);
 
