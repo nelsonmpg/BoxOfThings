@@ -250,11 +250,7 @@ var callMoteFunctions = function(routes) {
                     var obj = {
                         ip: routes[i],
                         dataVals: {
-                            readingDate: utils.dateTimeFormat(new Date()) //,
-                            // temperature: "0",
-                            // humidity: "0",
-                            // loudness: "0",
-                            // light: "0"
+                            readingDate: utils.dateTimeFormat(new Date())
                         }
                     }
                     // console.log("\nSimular insert:\n", obj);
