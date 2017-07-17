@@ -234,13 +234,17 @@ var callMoteFunctions = function(routes) {
                             // }
                         }
                         var objkeys = Object.keys(obJson);
+                        var createobj = "{";
                         for (var i in objkeys) {
                             var varkey = objkeys[i].toString().trim().toLowerCase() + "";
                             console.log("--++>", objkeys[i], varkey);
-                            obj.dataVals[varkey] = obJson[obJson[i]];
+                            createobj += varkey + ":'" + obJson[i] + "',";
+                            // obj.dataVals[varkey] = obJson[obJson[i]];
                         }
+                        createobj  +="}";
+                        obj.dataVals = JSON.parse(createobj);
 
-                        console.log("\nSimular insert:\n", obj);
+                        console.log("\nSimular insert:\n", obj, createobj);
                         Sensor.insertOrUpdate(obj);
                         /********************************************************/
 
