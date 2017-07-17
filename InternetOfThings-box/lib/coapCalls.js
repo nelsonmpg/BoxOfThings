@@ -224,7 +224,7 @@ var callMoteFunctions = function(routes) {
 
                         /****************** O INSERT FUNCIONA ******************/
                         var obj = {
-                            ip: routes[i]//,
+                            ip: routes[i],
                             dataVals: {
                             //     readingDate: utils.dateTimeFormat(new Date()),
                             //     temperature: (Math.random() * 100).toFixed(2), //(obJson.Temperature.toString() == "00.-1") ? "-1" : obJson.Temperature,
