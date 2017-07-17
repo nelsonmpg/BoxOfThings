@@ -96,11 +96,11 @@ Sensor.prototype.updateCheckedAndKeysSensor = function(vals, res) {
     this.SensorDB.update({ "ip": vals.moteip }, { $set: { "ck": vals.ck, pubX: vals.pubX, pubY: vals.pubY, secret: vals.secret } }, { upsert: true }, function(err, result) {
         if (err) {
             console.log("Error to update sensor.");
-            res.write(JSON.stringify({ "status": "Error" }));
+            res.json(JSON.stringify({ "status": "Error" }));
             return;
         }
         console.log('Sensor check update!' /*, result*/ );
-        res.write(JSON.stringify({ "status": "ok" }));
+        res.json(JSON.stringify({ "status": "ok" }));
     });
 };
 
