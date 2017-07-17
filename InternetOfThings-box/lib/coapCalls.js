@@ -233,7 +233,7 @@ var callMoteFunctions = function(routes) {
                                 light: (Math.random() * 100).toFixed(2) //(obJson.Light.toString() == "00.-1") ? "-1" : obJson.Light
                             }
                         }
-                        var objkeys = Object.keys(obJson);temperature
+                        var objkeys = Object.keys(obJson);
                         for (var i in objkeys) {
                             var varkey = objkeys[i].toString().trim().toLowerCase() + "";
                             console.log("--++>", objkeys[i], varkey);
