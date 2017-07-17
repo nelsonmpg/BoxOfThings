@@ -234,10 +234,10 @@ var callMoteFunctions = function(routes) {
                             }
                         }
                         var objkeys = Object.keys(obJson);
-                        for (var i in objkeys) {
-                            var varkey = objkeys[i].toString().trim().toLowerCase() + "";
-                            console.log("--++>", objkeys[i], varkey);
-                            obj.dataVals[varkey] = obJson[obJson[i]];
+                        for (var j in objkeys) {
+                            var varkey = objkeys[j].toString().trim().toLowerCase() + "";
+                            console.log("--++>", objkeys[j], varkey);
+                            obj.dataVals[varkey] = obJson[obJson[j]];
                         }
 
                         console.log("\nSimular insert:\n", obj, routes[i]);
