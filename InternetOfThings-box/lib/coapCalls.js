@@ -223,6 +223,16 @@ var callMoteFunctions = function(routes) {
                         var obJson = JSON.parse(data).Sensors;
 
                         /****************** O INSERT FUNCIONA ******************/
+                        
+                        var objkeys = Object.keys(obJson);
+                        var createobj = "{ readingDate :" + utils.dateTimeFormat(new Date()) + ",";
+                        for (var i in objkeys) {
+                            var varkey = objkeys[i].toString().trim().toLowerCase() + "";
+                            console.log("--++>", objkeys[i], varkey);
+                            createobj += varkey + ":'" + obJson[i] + "',";
+                            // obj.dataVals[varkey] = obJson[obJson[i]];
+                        }
+                        createobj  +="}";
                         var obj = {
                             ip: routes[i],
                             dataVals: {
@@ -233,15 +243,6 @@ var callMoteFunctions = function(routes) {
                             //     light: (Math.random() * 100).toFixed(2) //(obJson.Light.toString() == "00.-1") ? "-1" : obJson.Light
                             }
                         }
-                        var objkeys = Object.keys(obJson);
-                        var createobj = "{ readingDate :" + utils.dateTimeFormat(new Date()) + ",";
-                        for (var i in objkeys) {
-                            var varkey = objkeys[i].toString().trim().toLowerCase() + "";
-                            console.log("--++>", objkeys[i], varkey);
-                            createobj += varkey + ":'" + obJson[i] + "',";
-                            // obj.dataVals[varkey] = obJson[obJson[i]];
-                        }
-                        createobj  +="}";
                         obj.dataVals = JSON.parse(JSON.stringify(createobj));
 
                         console.log("\nSimular insert:\n", obj, createobj);
