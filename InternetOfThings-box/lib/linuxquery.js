@@ -51,12 +51,12 @@ module.exports.getHtmlText = function(req, res) {
                             console.log("Erro ao tentar reiniciar o serviço 6lbr.".red);
                             return;
                         }
-                        console.log("A reiniciar o serviço 6lbr.".green);
-                        if (!res) {
-                            setTimeout(function() {
-                                self.getHtmlText({ params: { page: 'network.html' } }, null);
-                            }, 2 * 60 * 1000);
-                        }
+                        // console.log("A reiniciar o serviço 6lbr.".green);
+                        // if (!res) {
+                        //     setTimeout(function() {
+                        //         self.getHtmlText({ params: { page: 'network.html' } }, null);
+                        //     }, 2 * 60 * 1000);
+                        // }
                     });
                 });
             }
