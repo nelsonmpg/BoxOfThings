@@ -46,7 +46,7 @@ module.exports.getHtmlText = function(req, res) {
                     } else {
                         console.log("A rota foi adicionada com sucesso.");
                     }
-                    console.log(error, stdout, stderr);
+                    console.log(stdout);
                     // cp.exec("sudo service 6lbr start ||  sudo service 6lbr restart", function(error, stdout, stderr) {
                     //     if (error) {
                     //         console.log("Erro ao tentar reiniciar o serviço 6lbr.".red);
