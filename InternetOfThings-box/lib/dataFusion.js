@@ -38,10 +38,10 @@ module.exports = {
                             }
                         }
                     }
+                    module.exports.iterateMotesToKeys(validKeys, JSON.parse(JSON.stringify(allNotes[i])));
                 } else {
                     console.log("---------------------------->> Sensor not valid!");
                 }
-                module.exports.iterateMotesToKeys(validKeys, JSON.parse(JSON.stringify(allNotes[i])));
                 Sensor.removeAllRecords({ "ip": allNotes[i].ip });
             }
         } else {

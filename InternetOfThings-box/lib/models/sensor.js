@@ -130,7 +130,7 @@ Sensor.prototype.getSensorsAndKey = function(callback) {
 };
 
 Sensor.prototype.removeAllRecords = function(params) {
-    console.log(params);
+    // console.log(params);
     this.SensorDB.update(params, { $set: { dataValues: [] } }, { upsert: true }, function(err, result) {
         if (err) {
             console.log("Error to remove all");
